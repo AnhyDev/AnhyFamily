@@ -1,0 +1,79 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
+# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
+#
+# Внутрішні системні повідомлення плагіну AnhyShop
+#
+# 1 Загальне
+family_err_not_have_permission: "Ви не маєте дозволу на використання цієї команди."
+family_err_not_alloved_config: "Команда не дозволена в налаштуваннях конфігурації."
+family_err_command_only_player: "Ця команда може виконуватися тільки гравцем."
+family_err_command_format: "Формат команди: "
+#
+# 2 Завантаження конфігурацій
+family_err_folder_is_empty: "Папка порожня або сталася помилка при її читанні."
+family_err_folder_is_notexist: "Папка не існує або це не папка."
+family_err_reloading_configuration: "Помилка перезавантаження конфігурації."
+family_created_default_configuration: "Створена конфігурація за замовчуванням."
+family_configuration_reloaded: "Конфігурацію перезавантажено."
+family_language_reloaded: "Мовні файли та конфігурацію перезавантажено."
+#
+# 3 Різне
+family_player: "Гравець "
+family_player_not_found: " не знайдений або не в мережі."
+#
+# 4 Робота з статтю
+family_gender_male: "Чоловіча"
+family_gender_female: "Жіноча"
+family_gender_non-binary: "Небінарне"
+family_gender_undecided: "Не визначено"
+family_set_gender: "Ваша стать була встановлена як "
+family_gender_already_selected: "Ви вже обрали стать раніше."
+family_gender_incorrectly_specified: "Невірно вказана стать. Використовуйте MALE, FEMALE або NON_BINARY."
+family_gender_player: "Стать гравця "
+family_gender_player_reset: " скинута на 'Не визначено'."
+family_gender_player_set_to: " встановлена на "
+#
+# 5 InfoGenerator
+family_player_unknown: "Невідомий гравець"
+family_info_previous_lastname: "Попереднє прізвище: "
+family_info_role_father: "Батько: "
+family_info_role_mother: "Мати: "
+family_info_role_guardian: "Опікун: "
+family_info_role_son: "Син: "
+family_info_role_daughter: "Дочка: "
+family_info_role_child: "Дитина: "
+family_info_role_relative: "Рідня: "
+family_info_role_husband: "Чоловік: "
+family_info_role_wife: "Дружина: "
+family_info_role_partner: "Співмешканець: "
+family_info_family_not_found: "Сім'я не знайдена."
+family_info_spouse_not_found: "відсутній(я)"
+family_info_father_unknown: "невідомий"
+family_info_mother_unknown: "невідома"
+family_info_children: " Діти: "
+family_info_children_none: "відсутні"
+#
+# 6 FamilyTree
+family_tree_title: "Фамільне дерево "
+family_tree_ancestors: "Предки "
+family_tree_descendants: "Нащадки "
+family_tree_level_prefix_0: "└─ "
+family_tree_level_prefix_1: "┌─ "
+family_tree_level_prefix_2: "┌─ "
+family_tree_level_prefix_3: "┌─ "
+family_tree_level_prefix_other: "┌─ "
+#
+# 7 Set Family
+family_setfamily_permission_needed: "Потрібно бути старшим, щоб обрати прізвище"
+family_setfamily_command_format: "Параметри: /family setfamily <myfamily>"
+family_setfamily_player_not_found: "Гравець не знайдений в БД."
+family_setfamily_family_selected: "Прізвище обране: "
+family_setfamily_family_already_exists1: "Прізвище вже існує: "
+family_setfamily_family_already_exists2: ", щоб змінити його, зверніться до священика"
+
+

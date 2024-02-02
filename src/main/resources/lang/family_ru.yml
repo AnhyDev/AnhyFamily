@@ -1,0 +1,172 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
+# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
+
+# Внутренние системные сообщения плагина AnhyShop
+
+# 1 Общее
+family_err_not_have_permission: "У вас нет разрешения на использование этой команды."
+family_err_not_alloved_config: "Команда не разрешена в настройках конфигурации."
+family_err_command_only_player: "Эта команда может выполняться только игроком."
+family_err_command_format: "Формат команды: "
+
+# 2 Загрузка конфигураций
+family_err_folder_is_empty: "Папка пуста или произошла ошибка при ее чтении."
+family_err_folder_is_notexist: "Папка не существует или это не папка."
+family_err_reloading_configuration: "Ошибка перезагрузки конфигурации."
+family_created_default_configuration: "Создана конфигурация по умолчанию."
+family_configuration_reloaded: "Конфигурация перезагружена."
+family_language_reloaded: "Языковые файлы и конфигурация перезагружены."
+
+# 3 Разное
+family_player: "Игрок "
+family_player_not_found: " не найден или не в сети."
+
+# 4 Работа с полом
+family_gender_male: "Мужской"
+family_gender_female: "Женский"
+family_gender_non-binary: "Небинарное"
+family_gender_undecided: "Не определено"
+family_set_gender: "Ваш пол был установлен как "
+family_gender_already_selected: "Вы уже выбрали пол ранее."
+family_gender_incorrectly_specified: "Неверно указан пол. Используйте MALE, FEMALE или NON_BINARY."
+family_gender_player: "Пол игрока "
+family_gender_player_reset: " сброшен на 'Не определено'."
+family_gender_player_set_to: " установлен на "
+
+# 5 InfoGenerator
+family_player_unknown: "Неизвестный игрок"
+family_info_previous_lastname: "Предыдущая фамилия: "
+family_info_role_father: "Отец: "
+family_info_role_mother: "Мать: "
+family_info_role_guardian: "Опекун: "
+family_info_role_son: "Сын: "
+family_info_role_daughter: "Дочь: "
+family_info_role_child: "Ребенок: "
+family_info_role_relative: "Родственник: "
+family_info_role_husband: "Муж: "
+family_info_role_wife: "Жена: "
+family_info_role_partner: "Партнер: "
+family_info_family_not_found: "Семья не найдена."
+family_info_spouse_not_found: "отсутствует"
+family_info_father_unknown: "неизвестен"
+family_info_mother_unknown: "неизвестна"
+family_info_children: " Дети: "
+family_info_children_none: "нет"
+
+# 6 Family tree
+family_tree_title: "Семейное древо "
+family_tree_ancestors: "Предки "
+family_tree_descendants: "Потомки "
+
+# 7 Family surname
+family_setfamily_player_not_found: "Игрок не найден в БД."
+family_setfamily_family_selected: "Фамилия выбрана: "
+family_setfamily_family_already_exists1: "Фамилия уже есть: "
+family_setfamily_family_already_exists2: ", чтобы её изменить, обратитесь к священнику"
+
+# 8 Family adopt
+family_log_adoption_impossible_between: " не могут быть опекунами для "
+family_log_adoption_successful_between: " стали опекунами для "
+family_log_adoption_impossible_single: " не может быть опекуном для "
+family_log_adoption_successful_single: " теперь опекун для "
+family_adopt_error_already_has_parents: "уже имеет родителей"
+family_adopt_error_unknown: "Неизвестная ошибка, невозможно отправить запрос"
+family_adopt_error_self_adoption: "Невозможно усыновить или удочерить себя"
+family_adopt_error_duplicate_requests: "Два будущих родителя уже подали запросы"
+family_adopt_request_sent_for: "Запрос для "
+family_adopt_waiting_for_second_parent: " отправлен, ожидаем второго родителя"
+family_adopt_parent_offer_received: " хочет стать одним из ваших родителей, если уже есть 2 предложения введите команду /family addparents - для согласия или /family rmparents - для отказа"
+family_adopt_waiting_for_child_decision: " отправлен, ждём решение ребёнка"
+family_adopt_request_already_sent: "Вы уже отправили запрос, ждите решения"
+
+# 9 Family accept
+family_accept_error_no_parents: "Будущие родителями, ещё не заявили о желании принять вас в семью"
+family_accept_error_parent1_missing: "Первый родитель не найден в БД."
+family_accept_error_parent2_missing: "Второй родитель не найден в БД."
+family_accept_error_cannot_adopt: " не могут быть родителями для "
+family_accept_success: " теперь родители для "
+family_accept_success_adoption: "Усыновление/удочерение успешно"
+
+# 10 Family clear
+family_clear_relative_success: "Удаление родственных связей проведено успешно"
+family_clear_relative_missing: "Родственных связей для удаления не обнаружено"
+
+# 11 Family separate
+family_err_no_family_found_for_target: "Семья для цели не найдена."
+family_err_no_parent_child_relationship: "Отношения родитель-ребенок не обнаружены."
+family_success_separation_completed: "Отношения успешно разорваны."
+family_err_separation_failed: "Не удалось разорвать отношения."
+family_separation_child_not_found: "Ребёнок не найден."
+family_separation_parent_not_found: "Щпекун не найден."
+family_separation_spouse_not_found: "Партнёр не найден."
+family_separation_successful: "Родственные связи успешно разорваны."
+family_spouse_not_found: " не имеет партнёра."
+family_separation_spouse_successful: "Вы разведены."
+family_error_generic: "Неизвестная ошибка"
+family_error_command_line: "Неполная или неправильная команда"
+
+# 12 Actions Brides
+family_marry_refuse: "НЕТ! Я отказываюсь от свадьбы!"
+family_marry_failed: "Этой свадьбе между %s и %s, не суждено состояться, БОГИ разгневаны! Покайтесь грешники."
+family_member_missing: "Один или несколько учестников ушли, церемония отменяется!"
+family_marry_waiting_for_consent: "У нас есть согласие от %s! Это прекрасно! Ждём согласия от %s."
+family_marry_vows_man: |
+  ДА!
+  Я, принимаю %s в законные жены, и клянусь любить и оберегать её до конца дней!
+  В мире Средневековья и далеко за его границами!
+  В дискорде, в голосовых и текстовых каналах!
+  В социальных сетях и просторах безграничного интернета!
+  Воздвигнуть для неё дом, стать отцом наших детей, заботиться о семейном благополучии!
+  Предоставлять пищу, одежду и защиту!
+  Пусть мир знает, что мы едины и неразлучны, навеки и во веки!
+family_marry_vows_woman: |
+  ДА!
+  Я, принимаю %s в законные мужья, и клянусь быть ему преданной и любящей супругой!
+  В мире Средневековья и далеко за его границами!
+  В дискорде, в голосовых и текстовых каналах!
+  В социальных сетях и просторах безграничного интернета!
+  Родить и воспитывать детей, заботиться о домашнем уюте, исполнять все его желания!
+  Быть верной, послушной и любящей женой!
+  Пусть мир знает, что мы едины и неразлучны, навеки и во веки!
+family_marry_vows_nonbinary: |
+  ДА!
+  Я, принимаю %s в законных партнёров, и клянусь поддерживать, уважать и заботиться о них до конца дней!
+  В мире Средневековья и далеко за его границами!
+  В дискорде, в голосовых и текстовых каналах!
+  В социальных сетях и просторах безграничного интернета!
+  Забить болт на детей, а за домом кто-то из нас может присмотрит!
+  Строить с ними дом, делясь радостью и горем, и вместе идти по жизни рука об руку!
+  Пусть мир знает, что наше единство крепко и нерушимо, навеки и во веки!
+
+family_marry_success: "Боги услышали молитвы и клятвы %s и %s! Отныне и навеки вы объединены узами брака! Боги благословили ваш союз! Желаем вам счастья, любви, гармонии и процветания!"
+family_marry_payment_failed: "Кто-то из молодожёнов попытался спрятать деньги! Боги отказываются совершать этот обряд сейчас."
+
+# Священники
+family_marry_priest_male: "Священник"
+family_marry_priest_female: "Священница"
+family_marry_priest_nonbinary: "Священное лицо"
+# Молодожёны
+family_marry_groom_male: "Жених"
+family_marry_groom_female: "Невеста"
+family_marry_groom_nonbinary: "Нареченные"
+
+# 13 Family Marry
+family_marry_failed_myself: "Нельзя совершать обряд над самим собой, позовите другого священника."
+family_marry_failed_traditional: "Здесь разрешены только традиционные семьи, мужчина и денщина!"
+family_marry_failed_last_name: "Свадьба сейчас не возможна по причине: не найдена семейная фамилия!"
+family_marry_failed_distance: "Свадьба сейчас не возможна по причине: молодожёны слишком далеко от священника!"
+family_mary_not_have_permission_members: "Свадьба сейчас не возможна по причине: ктото не имеет разрешения на женитьбу: %s%s%s"
+family_marry_payment_failed_check: "Свадьба сейчас не возможна по причине: у молодожёнов недостаточно денег для оплаты обряда."
+family_marry_already_started: "Церемония свадьбы между %s и %s уже началась."
+
+family_marry_start_success: |
+  Боги согласились провести свадебный обряд между %s и %s, 
+  молодожёны, скажите громко (ДА!), чтобы подтвердить своё согласие. После чего будут произнесены слова клятвы.
+  Или скажите (НЕТ!) чтобы отказаться!
+family_marry_start_priest: "Обряд начат, дождитесь согласия молодожёнов или отмените свадьбу"
+

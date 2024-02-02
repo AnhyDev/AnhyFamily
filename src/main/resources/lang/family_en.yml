@@ -1,0 +1,78 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
+# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
+#
+# Internal system messages of the AnhyShop plugin
+#
+# 1 General
+family_err_not_have_permission: "You do not have permission to use this command."
+family_err_not_alloved_config: "The command is not allowed in the configuration settings."
+family_err_command_only_player: "This command can only be executed by a player."
+family_err_command_format: "Command format: "
+#
+# 2 Loading configurations
+family_err_folder_is_empty: "The folder is empty or an error occurred while reading it."
+family_err_folder_is_notexist: "The folder does not exist or it is not a folder."
+family_err_reloading_configuration: "Error reloading configuration."
+family_created_default_configuration: "Default configuration created."
+family_configuration_reloaded: "Configuration reloaded."
+family_language_reloaded: "Language files and configuration reloaded."
+#
+# 3 Miscellaneous
+family_player: "Player "
+family_player_not_found: " not found or not online."
+#
+# 4 Working with gender
+family_gender_male: "Male"
+family_gender_female: "Female"
+family_gender_non-binary: "Non-binary"
+family_gender_undecided: "Undecided"
+family_set_gender: "Your gender has been set as "
+family_gender_already_selected: "You have already chosen a gender before."
+family_gender_incorrectly_specified: "Incorrectly specified gender. Use MALE, FEMALE, or NON_BINARY."
+family_gender_player: "Player's gender "
+family_gender_player_reset: " reset to 'Undecided'."
+family_gender_player_set_to: " set to "
+#
+# 5 InfoGenerator
+family_player_unknown: "Unknown player"
+family_info_previous_lastname: "Previous surname: "
+family_info_role_father: "Father: "
+family_info_role_mother: "Mother: "
+family_info_role_guardian: "Guardian: "
+family_info_role_son: "Son: "
+family_info_role_daughter: "Daughter: "
+family_info_role_child: "Child: "
+family_info_role_relative: "Relative: "
+family_info_role_husband: "Husband: "
+family_info_role_wife: "Wife: "
+family_info_role_partner: "Partner: "
+family_info_family_not_found: "Family not found."
+family_info_spouse_not_found: "absent"
+family_info_father_unknown: "unknown"
+family_info_mother_unknown: "unknown"
+family_info_children: " Children: "
+family_info_children_none: "none"
+#
+# 6 FamilyTree
+family_tree_title: "Family Tree "
+family_tree_ancestors: "Ancestors "
+family_tree_descendants: "Descendants "
+family_tree_level_prefix_0: "└─ "
+family_tree_level_prefix_1: "┌─ "
+family_tree_level_prefix_2: "┌─ "
+family_tree_level_prefix_3: "┌─ "
+family_tree_level_prefix_other: "┌─ "
+#
+# 7 Set Family
+family_setfamily_permission_needed: "You need to be older to choose a surname"
+family_setfamily_command_format: "Parameters: /family setfamily <myfamily>"
+family_setfamily_player_not_found: "Player not found in the database."
+family_setfamily_family_selected: "Surname selected: "
+family_setfamily_family_already_exists1: "Surname already exists: "
+family_setfamily_family_already_exists2: ", to change it, please contact a priest"
+

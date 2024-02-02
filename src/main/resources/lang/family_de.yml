@@ -1,0 +1,78 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
+# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
+#
+# Interne Systemnachrichten des AnhyShop-Plugins
+#
+# 1 Allgemein
+family_err_not_have_permission: "Sie haben keine Berechtigung, diesen Befehl zu verwenden."
+family_err_not_alloved_config: "Der Befehl ist in den Konfigurationseinstellungen nicht erlaubt."
+family_err_command_only_player: "Dieser Befehl kann nur von einem Spieler ausgeführt werden."
+family_err_command_format: "Befehlsformat: "
+#
+# 2 Laden von Konfigurationen
+family_err_folder_is_empty: "Der Ordner ist leer oder ein Fehler ist beim Lesen aufgetreten."
+family_err_folder_is_notexist: "Der Ordner existiert nicht oder ist kein Ordner."
+family_err_reloading_configuration: "Fehler beim Neuladen der Konfiguration."
+family_created_default_configuration: "Standardkonfiguration erstellt."
+family_configuration_reloaded: "Konfiguration neu geladen."
+family_language_reloaded: "Sprachdateien und Konfiguration neu geladen."
+#
+# 3 Verschiedenes
+family_player: "Spieler "
+family_player_not_found: " nicht gefunden oder nicht online."
+#
+# 4 Arbeit mit Geschlecht
+family_gender_male: "Männlich"
+family_gender_female: "Weiblich"
+family_gender_non-binary: "Nicht-binär"
+family_gender_undecided: "Unentschieden"
+family_set_gender: "Dein Geschlecht wurde festgelegt als "
+family_gender_already_selected: "Du hast bereits zuvor ein Geschlecht ausgewählt."
+family_gender_incorrectly_specified: "Geschlecht falsch angegeben. Verwende MÄNNLICH, WEIBLICH oder NICHT_BINÄR."
+family_gender_player: "Geschlecht des Spielers "
+family_gender_player_reset: " zurückgesetzt auf 'Unentschieden'."
+family_gender_player_set_to: " festgelegt auf "
+#
+# 5 InfoGenerator
+family_player_unknown: "Unbekannter Spieler"
+family_info_previous_lastname: "Vorheriger Nachname: "
+family_info_role_father: "Vater: "
+family_info_role_mother: "Mutter: "
+family_info_role_guardian: "Vormund: "
+family_info_role_son: "Sohn: "
+family_info_role_daughter: "Tochter: "
+family_info_role_child: "Kind: "
+family_info_role_relative: "Verwandter: "
+family_info_role_husband: "Ehemann: "
+family_info_role_wife: "Ehefrau: "
+family_info_role_partner: "Partner: "
+family_info_family_not_found: "Familie nicht gefunden."
+family_info_spouse_not_found: "fehlt"
+family_info_father_unknown: "unbekannt"
+family_info_mother_unknown: "unbekannt"
+family_info_children: " Kinder: "
+family_info_children_none: "keine"
+#
+# 6 FamilyTree
+family_tree_title: "Familienbaum "
+family_tree_ancestors: "Vorfahren "
+family_tree_descendants: "Nachkommen "
+family_tree_level_prefix_0: "└─ "
+family_tree_level_prefix_1: "┌─ "
+family_tree_level_prefix_2: "┌─ "
+family_tree_level_prefix_3: "┌─ "
+family_tree_level_prefix_other: "┌─ "
+#
+# 7 Set Family
+family_setfamily_permission_needed: "Sie müssen älter sein, um einen Nachnamen zu wählen"
+family_setfamily_command_format: "Parameter: /family setfamily <myfamily>"
+family_setfamily_player_not_found: "Spieler nicht in der Datenbank gefunden."
+family_setfamily_family_selected: "Nachname ausgewählt: "
+family_setfamily_family_already_exists1: "Der Nachname existiert bereits: "
+family_setfamily_family_already_exists2: ", um ihn zu ändern, kontaktieren Sie einen Priester"
+

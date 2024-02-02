@@ -1,0 +1,76 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
+# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
+#
+# Default language to be used in case a translation is not found in the desired language:
+language: en
+# Name of the plugin for display to users in chat:
+plugin_name: AnhyShop
+marriedSymbol: "⚭"
+
+# Database settings:
+database:
+   # Choice of database type: 'SQLite' or 'MySQL'
+   type: 'SQLite'
+   # Settings to connect to MySQL if this database type is selected
+   mysql:
+     # The MySQL server host 'localhost', or a remote host such as db4free.net
+     host: 'db4free.net'
+     # MySQL server port
+     port: 3306
+     # Database name
+     database: 'anhyfamily'
+     # User name
+     username: 'anhydev'
+     # Password (leave blank if there is no password)
+     password: 'HE5rYZb2hygDf4FW'
+     # Prefix for tables. If multiple servers with this plugin connect to the same database, replace it with unique variants
+     prefix: 'anhy_'
+     # Use SSL to connect
+     useSSL: false
+     # Automatic reconnection when the connection is lost
+     autoReconnect: true
+
+# The maximum distance from the priest to the brides. If 0, then there are no restrictions
+ceremonyRadius: 20
+# The radius in which the message in the chat about marriage will be visible. If 0, then to all players who are online. 
+ceremonyHearingRadius: 200
+
+# You can add your options and additional languages
+answers:
+  yes:
+    - "ТАК!"  # uk
+    - "YES!"  # en
+    - "¡SÍ!"  # es
+    - "JA!"   # de
+    - "SÌ!"   # it
+    - "是的！" # zh
+    - "ДА!"   # ru
+  no:
+    - "НІ!"   # uk
+    - "NO!"   # en
+    - "¡NO!"  # es
+    - "NEIN!" # de
+    - "NO!"   # it
+    - "不！"   # zh
+    - "НЕТ!"  # ru
+
+prices:
+  # VIRTUAL, ITEM, CRYPTO(not yet implemented)
+  currency: VIRTUAL
+  marriage: 0
+  divorce: 0
+  adoption: 0
+
+gender:
+  # Allow non-binary gender choice
+  non_binary: false
+  # Allow adoption with non-binary and undecided genders
+  non_binary_adoption: false
+  # Allow marriages with non-binary and undecided genders
+  non_binary_marriage: false
+

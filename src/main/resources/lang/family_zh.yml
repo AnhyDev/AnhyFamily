@@ -1,0 +1,78 @@
+#
+# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
+# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
+# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
+# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
+# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
+# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
+#
+# AnhyShop 插件的内部系统消息
+#
+# 1 通用
+family_err_not_have_permission: "您没有权限使用此命令。"
+family_err_not_alloved_config: "配置设置中不允许使用此命令。"
+family_err_command_only_player: "此命令只能由玩家执行。"
+family_err_command_format: "命令格式："
+#
+# 2 加载配置
+family_err_folder_is_empty: "文件夹为空或读取时出错。"
+family_err_folder_is_notexist: "文件夹不存在或不是文件夹。"
+family_err_reloading_configuration: "重新加载配置时出错。"
+family_created_default_configuration: "已创建默认配置。"
+family_configuration_reloaded: "配置已重新加载。"
+family_language_reloaded: "语言文件和配置已重新加载。"
+#
+# 3 杂项
+family_player: "玩家 "
+family_player_not_found: " 未找到或不在线。"
+#
+# 4 处理性别
+family_gender_male: "男性"
+family_gender_female: "女性"
+family_gender_non-binary: "非二元"
+family_gender_undecided: "未决定"
+family_set_gender: "您的性别已设置为 "
+family_gender_already_selected: "您之前已选择过性别。"
+family_gender_incorrectly_specified: "性别指定不正确。请使用 MALE（男性），FEMALE（女性）或 NON_BINARY（非二元）。"
+family_gender_player: "玩家的性别 "
+family_gender_player_reset: " 重置为 '未决定'。"
+family_gender_player_set_to: " 设置为 "
+#
+# 5 InfoGenerator
+family_player_unknown: "未知玩家"
+family_info_previous_lastname: "之前的姓氏: "
+family_info_role_father: "父亲: "
+family_info_role_mother: "母亲: "
+family_info_role_guardian: "监护人: "
+family_info_role_son: "儿子: "
+family_info_role_daughter: "女儿: "
+family_info_role_child: "孩子: "
+family_info_role_relative: "亲戚: "
+family_info_role_husband: "丈夫: "
+family_info_role_wife: "妻子: "
+family_info_role_partner: "伴侣: "
+family_info_family_not_found: "未找到家庭。"
+family_info_spouse_not_found: "缺席"
+family_info_father_unknown: "未知"
+family_info_mother_unknown: "未知"
+family_info_children: " 孩子: "
+family_info_children_none: "无"
+#
+# 6 FamilyTree
+family_tree_title: "家族树 "
+family_tree_ancestors: "祖先 "
+family_tree_descendants: "后代 "
+family_tree_level_prefix_0: "└─ "
+family_tree_level_prefix_1: "┌─ "
+family_tree_level_prefix_2: "┌─ "
+family_tree_level_prefix_3: "┌─ "
+family_tree_level_prefix_other: "┌─ "
+#
+# 7 Set Family
+family_setfamily_permission_needed: "需要年长些才能选择姓氏"
+family_setfamily_command_format: "参数: /family setfamily <myfamily>"
+family_setfamily_player_not_found: "数据库中未找到玩家。"
+family_setfamily_family_selected: "已选择姓氏："
+family_setfamily_family_already_exists1: "姓氏已存在："
+family_setfamily_family_already_exists2: "，如需更改，请联系神职人员"
+
