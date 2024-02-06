@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ink.anh.family.db.DatabaseManager;
 import ink.anh.family.db.MySQLDatabaseManager;
 import ink.anh.family.db.SQLiteDatabaseManager;
+import ink.anh.family.listeners.ListenersRegistratar;
 import ink.anh.family.marry.MarriageManager;
 import ink.anh.family.parents.ParentManager;
 import ink.anh.family.util.EconomyHandler;
@@ -54,6 +55,9 @@ public class AnhyFamily extends JavaPlugin {
         }
         marriageManager = MarriageManager.getInstance(this);
         parentManager = ParentManager.getInstance(this);
+        
+        new ListenersRegistratar(this).register();
+        new CommandManager(this).registerCommands();
     }
 
     @Override

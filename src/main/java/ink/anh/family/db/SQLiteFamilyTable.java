@@ -20,17 +20,17 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
     public void initialize() {
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                 "CREATE TABLE IF NOT EXISTS " + dbName + " (" +
-                 "player_uuid TEXT PRIMARY KEY," +
-                 "gender TEXT" +
-                 "displayName TEXT," +
-                 "last_name TEXT," +
-                 "old_last_name TEXT," +
-                 "father TEXT," +
-                 "mother TEXT," +
-                 "spouse TEXT," +
-                 "children TEXT" +
-                 ");")) {
+            		 "CREATE TABLE IF NOT EXISTS " + dbName + " (" +
+            				 "player_uuid TEXT PRIMARY KEY," +
+            				 "gender TEXT," + // Додана кома тут
+            				 "displayName TEXT," +
+            				 "last_name TEXT," +
+            				 "old_last_name TEXT," +
+            				 "father TEXT," +
+            				 "mother TEXT," +
+            				 "spouse TEXT," +
+            				 "children TEXT" +
+            				 ");")) {
             ps.executeUpdate();
         } catch (SQLException e) {
             ErrorLogger.log(dbManager.plugin, e, "Failed to create family table");

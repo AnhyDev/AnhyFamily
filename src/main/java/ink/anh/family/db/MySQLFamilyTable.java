@@ -24,16 +24,17 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
     protected void initialize() {
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                 "CREATE TABLE IF NOT EXISTS " + tablePrefix + dbName + " (" +
-                 "player_uuid VARCHAR(36) PRIMARY KEY," +
-                 "displayName VARCHAR(255)," +
-                 "last_name TEXT," +
-                 "old_last_name TEXT," +
-                 "father VARCHAR(36)," +
-                 "mother VARCHAR(36)," +
-                 "spouse VARCHAR(36)," +
-                 "children TEXT" +
-                 ");")) {
+            		 "CREATE TABLE IF NOT EXISTS " + tablePrefix + dbName + " (" +
+            				 "player_uuid VARCHAR(36) PRIMARY KEY," +
+            				 "gender VARCHAR(255)," +
+            				 "displayName VARCHAR(255)," +
+            				 "last_name TEXT," +
+            				 "old_last_name TEXT," +
+            				 "father VARCHAR(36)," +
+            				 "mother VARCHAR(36)," +
+            				 "spouse VARCHAR(36)," +
+            				 "children TEXT" +
+            				 ");")) {
             ps.executeUpdate();
         } catch (SQLException e) {
             ErrorLogger.log(dbManager.plugin, e, "Failed to create family table");

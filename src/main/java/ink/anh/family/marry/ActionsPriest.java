@@ -71,8 +71,9 @@ public class ActionsPriest extends Sender {
 			return false;
 		}
         
-        ProcessLastName processLastName = processLastNameArgs(args, familyBride1, familyBride2);  
+        ProcessLastName processLastName = processLastNameArgs(args, familyBride1, familyBride2);
         String lastName[] = processLastName.getLastName();
+        int surnameChoice = processLastName.getNumberLastName();
         
     	if (lastName == null) {
             sendMessage(new MessageForFormatting(priestTitle + " family_marry_failed_last_name", null), MessageType.WARNING, false, recipients);
@@ -83,7 +84,7 @@ public class ActionsPriest extends Sender {
 			return false;
 		}
         
-    	if (marriageManager.add(bride1, bride2, priest, lastName[0])) {
+    	if (marriageManager.add(bride1, bride2, priest, surnameChoice, lastName)) {
             sendMessage(new MessageForFormatting("family_marry_already_started", new String[] {bride1Name, bride2Name}), MessageType.WARNING, true, priest);
             return false;
     	}
@@ -201,16 +202,7 @@ public class ActionsPriest extends Sender {
                 }
                 result.setNumberLastName(numberLastName);
             } catch (NumberFormatException e) {
-                result.setNumberLastName(3);
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 2; i < args.length; i++) {
-                    stringBuilder.append(args[i]);
-                    if (i < args.length - 1) {
-                        stringBuilder.append(" ");
-                    }
-                }
-                result.setLastName(new String[] {stringBuilder.toString()});
-                return result;
+                result.setNumberLastName(0);
             }
         }
 

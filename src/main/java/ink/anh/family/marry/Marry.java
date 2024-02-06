@@ -11,15 +11,17 @@ public class Marry {
     private Player priest;   // Player священника
     private boolean consent1; // Згода першого нареченого
     private boolean consent2; // Згода другого нареченого
-    private String surname; // Вибір прізвища
+    private int surnameChoice; // Вибір прізвища
+    private String[] chosenSurname; 
 
-    public Marry(Player bride1, Player bride2, Player priest, String surname) {
+    public Marry(Player bride1, Player bride2, Player priest, int surnameChoice, String[] chosenSurname) {
         this.bride1 = bride1;
         this.bride2 = bride2;
         this.priest = priest;
         this.consent1 = false;
         this.consent2 = false;
-        this.surname = surname;
+        this.surnameChoice = surnameChoice;
+        this.chosenSurname = chosenSurname;
     }
 
 	public Player getBride1() {
@@ -46,16 +48,28 @@ public class Marry {
         return consent1 && consent2;
     }
 
-	public String getSurname() {
-		return surname;
-	}
-
 	public void setConsent1(boolean consent1) {
 		this.consent1 = consent1;
 	}
 
 	public void setConsent2(boolean consent2) {
 		this.consent2 = consent2;
+	}
+
+	public int getSurnameChoice() {
+		return surnameChoice;
+	}
+
+	public void setSurnameChoice(int surnameChoice) {
+		this.surnameChoice = surnameChoice;
+	}
+
+	public String[] getChosenSurname() {
+		return chosenSurname;
+	}
+
+	public void setChosenSurname(String[] chosenSurname) {
+		this.chosenSurname = chosenSurname;
 	}
 
 	@Override

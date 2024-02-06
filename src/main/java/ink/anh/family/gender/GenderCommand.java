@@ -21,6 +21,9 @@ public class GenderCommand extends Sender implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
+            if (sender instanceof Player) {
+                return handleGenderInfo((Player) sender, sender.getName());
+            }
             return false;
         }
 
@@ -93,7 +96,7 @@ public class GenderCommand extends Sender implements CommandExecutor {
             sendMessage(new MessageForFormatting("family_gender_player" + targetPlayer.getName() + "family_gender_player_reset", null),  MessageType.NORMAL, sender);
             return true;
         } else {
-            sendMessage(new MessageForFormatting("family_player" + playerName + "family_player_not_found", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_player " + playerName + "family_player_not_found", null), MessageType.WARNING, sender);
             return true;
         }
     }
@@ -104,7 +107,7 @@ public class GenderCommand extends Sender implements CommandExecutor {
             Gender gender = Gender.fromString(genderStr);
             if (gender != null && gender != Gender.UNDECIDED) {
             	GenderUtils.setGender(targetPlayer, gender);
-                sendMessage(new MessageForFormatting("family_player" + targetPlayer.getName() + "family_gender_player_set_to" + gender.name(), null),  MessageType.NORMAL, sender);
+                sendMessage(new MessageForFormatting("family_player§6" + targetPlayer.getName() + "§rfamily_gender_player_set_to" + gender.name(), null),  MessageType.NORMAL, sender);
                 return true;
             } else {
                 sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", null), MessageType.WARNING, sender);

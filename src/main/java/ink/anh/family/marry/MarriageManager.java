@@ -26,14 +26,14 @@ public class MarriageManager {
         marryList.clear();
     }
 
-    public synchronized boolean add(Player bride1, Player bride2, Player priest, String surname) {
+    public synchronized boolean add(Player bride1, Player bride2, Player priest, int surnameChoice, String[] chosenSurname) {
         // Перевірка, чи один з гравців вже бере участь у шлюбі
         if (contains(bride1) || contains(bride2)) {
             return false;
         }
 
         // Створення нового об'єкту Marry
-        Marry marry = new Marry(bride1, bride2, priest, surname);
+        Marry marry = new Marry(bride1, bride2, priest, surnameChoice, chosenSurname);
 
         // Додавання об'єкту Marry до списку
         return marryList.add(marry);

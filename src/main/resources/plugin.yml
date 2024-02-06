@@ -12,5 +12,5 @@ commands:
         aliases: [identity]
         usage: "[AnhyFamily] The command '/gender (/identity)' execution error, please check the arguments' correctness."
     family:
-        aliases: [anhyfamily]
-        usage: "[AnhyFamily] The command '/family (/anhyfamily)' execution error, please check the arguments' correctness."
+        aliases: [anhyfam, fam]
+        usage: "[AnhyFamily] The command '/family (/anhyfam, /fam)' execution error, please check the arguments' correctness."
