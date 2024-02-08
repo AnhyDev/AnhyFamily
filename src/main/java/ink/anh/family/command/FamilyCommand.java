@@ -11,7 +11,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.command.sub.Clear;
 import ink.anh.family.command.sub.Separation;
-import ink.anh.family.command.sub.SetFamily;
+import ink.anh.family.command.sub.Surname;
 import ink.anh.family.marry.Divorce;
 import ink.anh.family.marry.ActionsPriest;
 import ink.anh.family.parents.Adopt;
@@ -34,14 +34,14 @@ public class FamilyCommand implements CommandExecutor {
             CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
                 switch (args[0].toLowerCase()) {
                 case "surname":
-                    return new SetFamily(plugin).exeSetFamily(sender, args);
+                    return new Surname(plugin).setSurname(sender, args);
                 case "marry":
                     return new ActionsPriest(plugin).marry(sender, args);
                 case "clear":
                     return new Clear(plugin).exeClearFamily(sender, args);
                 /*case "info":
                 	return new CommandInfo(sender).execFamily(args, true);
-                case "infos":
+                /*case "infos":
                 	return new CommandInfo(sender).execFamily(args, false);*/
                 case "divorce":
                     return new Divorce(plugin).separate(sender, args);

@@ -76,7 +76,7 @@ public class ActionsPriest extends Sender {
         int surnameChoice = processLastName.getNumberLastName();
         
     	if (lastName == null) {
-            sendMessage(new MessageForFormatting(priestTitle + " family_marry_failed_last_name", null), MessageType.WARNING, false, recipients);
+            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_last_name", null), MessageType.WARNING, false, recipients);
             return false;
     	}
 		
@@ -92,7 +92,7 @@ public class ActionsPriest extends Sender {
     	sendMessage(new MessageForFormatting("family_marry_start_priest", null), MessageType.WARNING, priest);
     	
 		Bukkit.getServer().getScheduler().runTaskLater(familiPlugin, () -> 
-			sendMessage(new MessageForFormatting(priestTitle + " family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
+			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
 
         return true;
 	}
@@ -129,17 +129,17 @@ public class ActionsPriest extends Sender {
 
         if (!priest.hasPermission(Permissions.FAMILY_PASTOR)) {
             sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, priest);
-            perm = false;
+            return false;
         }
 
         if (!bride1.hasPermission(Permissions.FAMILY_USER)) {
-            sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, bride1);
+            sendMessage(new MessageForFormatting("family_mary_not_have_permission", null), MessageType.WARNING, bride1);
             members.add(bride1.getDisplayName());
             perm = false;
         }
 
         if (!bride2.hasPermission(Permissions.FAMILY_USER)) {
-            sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, bride2);
+            sendMessage(new MessageForFormatting("family_mary_not_have_permission", null), MessageType.WARNING, bride2);
             if (!members.isEmpty()) members.add(", ");
             members.add(bride2.getDisplayName());
             perm = false;

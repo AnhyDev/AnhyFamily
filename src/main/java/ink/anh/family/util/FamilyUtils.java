@@ -41,6 +41,9 @@ public class FamilyUtils {
 
 	    Family family = new Family(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
 	    saveFamily(family);
+	    if (player.isOnline()) {
+	    	new FamilyDataHandler().addFamilyData(playerUUID, family);
+	    }
 	    return family;
 	}
 
@@ -51,6 +54,19 @@ public class FamilyUtils {
 
 	    Family family = new Family(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
 	    saveFamily(family);
+	    return family;
+	}
+
+	public static Family getFamily(Player onlinePlayer) {
+		UUID playerUUID = onlinePlayer.getUniqueId();
+	    Family family = new FamilyDataHandler().getFamilyData(playerUUID);
+	    if (family == null) {
+	        AbstractFamilyTable familyTable = AnhyFamily.getInstance().getDatabaseManager().getFamilyTable();
+	        family = familyTable.getFamily(playerUUID, onlinePlayer.getDisplayName());
+	        if (family == null) {
+                family = createNewFamily(onlinePlayer);
+	        }
+	    }
 	    return family;
 	}
 
@@ -74,8 +90,15 @@ public class FamilyUtils {
 	    UUID playerUUID;
 
 	    if (onlinePlayer != null) {
-	        playerUUID = onlinePlayer.getUniqueId();
+		    return getFamily(onlinePlayer);
 	    } else {
+	        AbstractFamilyTable familyTable = AnhyFamily.getInstance().getDatabaseManager().getFamilyTable();
+	        Family family = familyTable.getFamilyByDisplayName(playerName);
+	        
+	        if (family != null) {
+	        	return family;
+	        }
+	        
 	        @SuppressWarnings("deprecation")
 	        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 	        if (offlinePlayer != null && (offlinePlayer.hasPlayedBefore() || offlinePlayer.isOnline())) {

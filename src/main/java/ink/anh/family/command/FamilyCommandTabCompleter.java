@@ -15,10 +15,14 @@ public class FamilyCommandTabCompleter implements TabCompleter {
         if (args.length == 1) {
             completions.add("marry");
             completions.add("info");
+            completions.add("infos");
             completions.add("divorce");
-            completions.add("addparents");
+            completions.add("surname");
+            completions.add("clear");
+            completions.add("forceadopt");
+            completions.add("accept");
             completions.add("addp");
-            completions.add("rmparents");
+            completions.add("separate");
             completions.add("adopt");
             completions.add("tree");
             completions.add("trees");

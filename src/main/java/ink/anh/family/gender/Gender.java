@@ -76,7 +76,7 @@ public enum Gender {
      * @return The corresponding Gender enum value, or null if the string does not match any Gender values.
      */
     public static Gender fromString(String str) {
-        if (str != null) {
+        if (str != null && str.length() > 0) {
             for (Gender gender : Gender.values()) {
                 if (gender.name().equalsIgnoreCase(str)) {
                     return gender;

@@ -47,7 +47,7 @@ public class Clear extends Sender {
         Family family1 = FamilyUtils.getFamily(name1);
         
         if (family1 == null) {
-            sendMessage(new MessageForFormatting("family_setfamily_player_not_found", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_player_not_found_db", null), MessageType.WARNING, sender);
             return false;
         }
 
