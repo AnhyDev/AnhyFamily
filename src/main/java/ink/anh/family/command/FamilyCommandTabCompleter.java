@@ -19,11 +19,6 @@ public class FamilyCommandTabCompleter implements TabCompleter {
             completions.add("divorce");
             completions.add("surname");
             completions.add("clear");
-            completions.add("forceadopt");
-            completions.add("accept");
-            completions.add("addp");
-            completions.add("separate");
-            completions.add("adopt");
             completions.add("tree");
             completions.add("trees");
         }

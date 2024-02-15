@@ -6,15 +6,20 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+
+import ink.anh.api.LibraryManager;
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.Logger;
 import ink.anh.family.AnhyFamily;
 
 public class ParentManager {
 
     private static ParentManager instance;
+    private AnhyFamily familiPlugin;
     
     private List<UUID[]> parents;
 
-    private ParentManager(AnhyFamily plugin) {
+    private ParentManager(AnhyFamily familiPlugin) {
         parents = new ArrayList<>();
     }
 
@@ -22,12 +27,12 @@ public class ParentManager {
      * Повертає екземпляр FamilyManager. Якщо екземпляр ще не створено,
      * створює новий екземпляр із заданим плагіном.
      *
-     * @param plugin екземпляр плагіна Mystery
+     * @param familiPlugin екземпляр плагіна Mystery
      * @return екземпляр FamilyManager
      */
-    public static synchronized ParentManager getInstance(AnhyFamily plugin) {
+    public static synchronized ParentManager getInstance(AnhyFamily familiPlugin) {
         if (instance == null) {
-            instance = new ParentManager(plugin);
+            instance = new ParentManager(familiPlugin);
         }
         return instance;
     }
@@ -75,20 +80,30 @@ public class ParentManager {
         return false;
     }
 
-    public synchronized UUID[] getParentElement(UUID uuid1) {
-        return findParentElement(uuid1);
+    public synchronized UUID[] getParentElement(UUID uuid) {
+        return findParentElement(uuid);
+    }
+
+    public synchronized UUID[] getParentElementByParent(UUID uuid) {
+        for (UUID[] element : parents) {
+            if (element[1].equals(uuid) || element[2].equals(uuid)) {
+                return element;
+            }
+        }
+        return null;
     }
 
     public synchronized boolean infoParentElement() {
+    	LibraryManager libraryManager = familiPlugin.getGlobalManager();
     	if (!parents.isEmpty()) {
-    		Bukkit.getLogger().info("Заявки на усыновление:");
+    		Logger.info(familiPlugin, Translator.translateKyeWorld(libraryManager, "family_adopt_adoption_applications", new String[] {libraryManager.getDefaultLang()}));
     		int i = 1;
         	for (UUID[] parentPair : parents) {
         	    String parentPairString = Arrays.toString(parentPair);
         	    Bukkit.getLogger().info(i + ". Parents: " + parentPairString);
         	}
     	} else {
-    		Bukkit.getLogger().info("Заявки на усыновление отсутствуют");
+    		Logger.info(familiPlugin, Translator.translateKyeWorld(libraryManager, "family_adopt_no_applications_adoption", new String[] {libraryManager.getDefaultLang()}));
     	}
     	return true;
     }

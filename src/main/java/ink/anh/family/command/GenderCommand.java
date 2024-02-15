@@ -1,61 +1,64 @@
-package ink.anh.family.gender;
+package ink.anh.family.command;
 
+import java.util.concurrent.CompletableFuture;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import ink.anh.api.messages.MessageType;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Sender;
 import ink.anh.family.common.Family;
+import ink.anh.family.gender.Gender;
+import ink.anh.family.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class GenderCommand extends Sender implements CommandExecutor {
 
     public GenderCommand(AnhyFamily familyPlugin) {
-    	super(familyPlugin);
+        super(familyPlugin);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
-            if (sender instanceof Player) {
-                return handleGenderInfo(sender, null);
+        CompletableFuture.runAsync(() -> {
+            if (args.length == 0) {
+                if (sender instanceof Player) {
+                    handleGenderInfo(sender, null);
+                }
+                return; // Early return for async context
             }
-            return false;
-        }
-
-        switch (args[0].toLowerCase()) {
-            case "set":
-                if (sender instanceof Player && args.length >= 2) {
-                    return handleSetGender(sender, args[1]);
-                }
-                break;
-            case "info":
-                if (args.length <= 1) {
-                    if (sender instanceof Player) {
-                        return handleGenderInfo(sender, null);
+            
+            switch (args[0].toLowerCase()) {
+                case "set":
+                    if (sender instanceof Player && args.length >= 2) {
+                        handleSetGender(sender, args[1]);
                     }
-                } else if (args.length >= 2) {
-                    return handleGenderInfo(sender, args[1]);
-                }
-                break;
-            case "reset":
-                if (args.length >= 2) {
-                    return handleResetGender(sender, args[1]);
-                }
-                break;
-            case "forceset":
-                if (args.length >= 3) {
-                    return handleForceSetGender(sender, args[1], args[2]);
-                }
-                break;
-            default:
-                return false;
-        }
-
+                    break;
+                case "info":
+                    if (args.length <= 1) {
+                        if (sender instanceof Player) {
+                            handleGenderInfo(sender, null);
+                        }
+                    } else if (args.length >= 2) {
+                        handleGenderInfo(sender, args[1]);
+                    }
+                    break;
+                case "reset":
+                    if (args.length >= 2) {
+                        handleResetGender(sender, args[1]);
+                    }
+                    break;
+                case "forceset":
+                    if (args.length >= 3) {
+                        handleForceSetGender(sender, args[1], args[2]);
+                    }
+                    break;
+                default:
+                    sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", null), MessageType.WARNING, sender);
+            }
+        });
         return true;
     }
 
@@ -65,8 +68,8 @@ public class GenderCommand extends Sender implements CommandExecutor {
     	genderStr = genderStr.equalsIgnoreCase("MAN") ? "MALE" : genderStr.equalsIgnoreCase("WOMAN") ? "FEMALE" : genderStr.toUpperCase();
         Gender gender = Gender.fromString(genderStr);
         if (gender != null && gender != Gender.UNDECIDED) {
-            if (GenderUtils.getGender(player) == Gender.UNDECIDED) {
-            	GenderUtils.setGender(player, gender);
+            if (GenderManager.getGender(player) == Gender.UNDECIDED) {
+            	GenderManager.setGender(player, gender);
                 sendMessage(new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), null),  MessageType.NORMAL, sender);
                 return true;
             } else {
@@ -80,7 +83,7 @@ public class GenderCommand extends Sender implements CommandExecutor {
     }
 
     private boolean handleGenderInfo(CommandSender sender, String playerName) {
-    	Gender gender = (playerName != null) ? GenderUtils.getGender(playerName) : (sender instanceof Player) ? GenderUtils.getGender((Player) sender) : null;
+    	Gender gender = (playerName != null) ? GenderManager.getGender(playerName) : (sender instanceof Player) ? GenderManager.getGender((Player) sender) : null;
         
         if (gender != null) {
             sendMessage(new MessageForFormatting("family_gender_player_info " + Gender.getKey(gender), new String[] {playerName}),  MessageType.NORMAL, sender);
@@ -98,7 +101,7 @@ public class GenderCommand extends Sender implements CommandExecutor {
 
     	Family family = FamilyUtils.getFamily(playerName);
         if (family != null) {
-        	GenderUtils.setGender(family, Gender.UNDECIDED);
+        	GenderManager.setGender(family, Gender.UNDECIDED);
             sendMessage(new MessageForFormatting("family_gender_player_reset", new String[] {playerName}),  MessageType.NORMAL, sender);
             return true;
         } else {
@@ -117,7 +120,7 @@ public class GenderCommand extends Sender implements CommandExecutor {
         if (family != null) {
             Gender gender = Gender.fromString(genderStr);
             if (gender != null && gender != Gender.UNDECIDED) {
-            	GenderUtils.setGender(family, gender);
+            	GenderManager.setGender(family, gender);
                 sendMessage(new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[] {playerName}),  MessageType.NORMAL, sender);
                 return true;
             } else {

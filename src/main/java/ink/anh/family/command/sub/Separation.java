@@ -18,7 +18,7 @@ public class Separation extends Sender {
 	public boolean separate(CommandSender sender, String[] args) {
         
         if (args.length < 2 || args[1].equalsIgnoreCase("spouse")) {
-            return new Divorce(familiPlugin).separate(sender, args);
+            return new Divorce(familiPlugin).separate(sender);
         } else if (args.length > 2 && args[1].equalsIgnoreCase("child")) {
         	return new ChildSeparation(familiPlugin).separate(sender, args);
         } else if (args.length > 2 && args[1].equalsIgnoreCase("parent")) {

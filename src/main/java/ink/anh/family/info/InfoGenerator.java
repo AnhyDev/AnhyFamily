@@ -8,7 +8,7 @@ import org.bukkit.ChatColor;
 import ink.anh.family.common.Family;
 import ink.anh.family.common.FamilyDataHandler;
 import ink.anh.family.gender.Gender;
-import ink.anh.family.gender.GenderUtils;
+import ink.anh.family.gender.GenderManager;
 
 public class InfoGenerator {
 
@@ -18,7 +18,7 @@ public class InfoGenerator {
 
     private static String generateFamilyMemberInfo(int relationType, Family family) {
     	UUID memberId = family.getRoot();
-        Gender gender = GenderUtils.getGender(memberId);
+        Gender gender = GenderManager.getGender(memberId);
         String genderSymbol = Gender.getSymbol(gender);
         String lastName = "";
         String oldLastName = "";
@@ -45,6 +45,11 @@ public class InfoGenerator {
     public static String generateFamilyInfo(UUID playerUUID) {
         FamilyDataHandler familyDataHandler = new FamilyDataHandler();
         Family family = familyDataHandler.getFamilyData(playerUUID);
+    	return generateFamilyInfo(family);
+    }
+
+    public static String generateFamilyInfo(Family family) {
+        FamilyDataHandler familyDataHandler = new FamilyDataHandler();
         if (family == null) {
             return ChatColor.RED + "family_info_family_not_found";
         }

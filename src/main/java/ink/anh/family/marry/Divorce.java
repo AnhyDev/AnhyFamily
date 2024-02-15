@@ -21,7 +21,7 @@ public class Divorce extends Sender {
         super(familiPlugin);
     }
 
-	public boolean separate(CommandSender sender, String[] args) {
+	public boolean separate(CommandSender sender) {
         String sendername = sender.getName();
         Player player = null;
         
@@ -37,12 +37,11 @@ public class Divorce extends Sender {
         }
 		
         String playerName = player.getName();
-        UUID playerUUID = player.getUniqueId();
         
-        Family family = FamilyUtils.getFamily(playerUUID);
+        Family family = FamilyUtils.getFamily(player);
         
         if (family == null) {
-            sendMessage(new MessageForFormatting("family_player" + playerName + "family_player_not_found", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {playerName}), MessageType.WARNING, sender);
             return false;
         }
 

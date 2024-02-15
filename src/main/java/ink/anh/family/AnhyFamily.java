@@ -2,6 +2,7 @@ package ink.anh.family;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import ink.anh.family.command.CommandManager;
 import ink.anh.family.db.DatabaseManager;
 import ink.anh.family.db.MySQLDatabaseManager;
 import ink.anh.family.db.SQLiteDatabaseManager;

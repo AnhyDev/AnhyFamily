@@ -23,6 +23,15 @@ public class FamilyTree {
         resetRoot();
         buildAncestorsTree(this.root);
     }
+
+    public FamilyTree(Family rootFamily) {
+        this.root = new FamilyRepeated(rootFamily);
+        this.rootParents = new HashMap<>();
+        this.rootOffspring = new HashMap<>();
+        this.rootOffspring = buildDescendantsTree(this.root);
+        resetRoot();
+        buildAncestorsTree(this.root);
+    }
     
     private void resetRoot() {
     	this.root.setRepeated(0);

@@ -1,7 +1,6 @@
-package ink.anh.family;
+package ink.anh.family.command;
 
-import ink.anh.family.command.FamilyCommand;
-import ink.anh.family.gender.GenderCommand;
+import ink.anh.family.AnhyFamily;
 
 public class CommandManager {
 
@@ -14,5 +13,6 @@ public class CommandManager {
     public void registerCommands() {
     	familiPlugin.getCommand("gender").setExecutor(new GenderCommand(familiPlugin));
     	familiPlugin.getCommand("family").setExecutor(new FamilyCommand(familiPlugin));
+    	familiPlugin.getCommand("adoption").setExecutor(new AdoptionCommand(familiPlugin));
     }
 }

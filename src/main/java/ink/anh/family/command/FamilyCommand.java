@@ -5,25 +5,24 @@ import java.util.concurrent.CompletableFuture;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
 import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageType;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.Sender;
 import ink.anh.family.command.sub.Clear;
 import ink.anh.family.command.sub.Separation;
 import ink.anh.family.command.sub.Surname;
+import ink.anh.family.info.FamilyInfoCommandHandler;
+import ink.anh.family.info.FamilyTreeCommandHandler;
 import ink.anh.family.marry.Divorce;
 import ink.anh.family.marry.ActionsPriest;
-import ink.anh.family.parents.Adopt;
-import ink.anh.api.messages.MessageChat;
 import ink.anh.api.messages.MessageForFormatting;
 
-public class FamilyCommand implements CommandExecutor {
+public class FamilyCommand extends Sender implements CommandExecutor {
 
-	AnhyFamily plugin;
 	
-	public FamilyCommand(AnhyFamily plugin) {
-		this.plugin = plugin;
+	public FamilyCommand(AnhyFamily familiPlugin) {
+		super(familiPlugin);
 	}
 	
 	@Override
@@ -34,35 +33,29 @@ public class FamilyCommand implements CommandExecutor {
             CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
                 switch (args[0].toLowerCase()) {
                 case "surname":
-                    return new Surname(plugin).setSurname(sender, args);
+                    return new Surname(familiPlugin).setSurname(sender, args);
                 case "marry":
-                    return new ActionsPriest(plugin).marry(sender, args);
+                    return new ActionsPriest(familiPlugin).marry(sender, args);
                 case "clear":
-                    return new Clear(plugin).exeClearFamily(sender, args);
-                /*case "info":
-                	return new CommandInfo(sender).execFamily(args, true);
-                /*case "infos":
-                	return new CommandInfo(sender).execFamily(args, false);*/
+                    return new Clear(familiPlugin).exeClearFamily(sender, args);
                 case "divorce":
-                    return new Divorce(plugin).separate(sender, args);
-                case "forceadopt":
-                    return new Adopt(plugin).forceAdopt(sender, args);
-                case "accept":
-                    return new Adopt(plugin).exeAddParents(sender);
+                    return new Divorce(familiPlugin).separate(sender);
                 case "separate":
-                    return new Separation(plugin).separate(sender, args);
-                case "adopt":
-                    return new Adopt(plugin).execAdopt(sender, args);
-                /*case "tree":
-                	return new CommandInfo(sender).execTree(args, true);
+                    return new Separation(familiPlugin).separate(sender, args);
+                case "info":
+                    return new FamilyInfoCommandHandler(familiPlugin).handleCommand(sender, args, true);
+                case "infos":
+                    return new FamilyInfoCommandHandler(familiPlugin).handleCommand(sender, args, false);
+                case "tree":
+                	return new FamilyTreeCommandHandler(familiPlugin).handleTreeCommand(sender, args, true);
                 case "trees":
-                	return new CommandInfo(sender).execTree(args, false);*/
-                case "infoparadd":
+                	return new FamilyTreeCommandHandler(familiPlugin).handleTreeCommand(sender, args, false);
+                case "parentelement":
                 	return infoParentElement(sender);
-                case "infomaradd":
+                case "marryelement":
                 	return infoMarryElement(sender);
                 default:
-                	sendMessage(sender, new MessageForFormatting("family_err_command_format /family <param>", null), MessageType.WARNING);
+                	sendMessage(new MessageForFormatting("family_err_command_format /family <param>", null), MessageType.WARNING, sender);
                     return false;
                 }
             });
@@ -72,10 +65,10 @@ public class FamilyCommand implements CommandExecutor {
 
                 if (!result) {
                 	if (!sender.getName().equalsIgnoreCase("CONSOLE"))
-                		Logger.info(plugin, sender.getName() + " failed to execute command: " + "/family " + String.join(" ", args));
+                		Logger.info(familiPlugin, sender.getName() + " failed to execute command: " + "/family " + String.join(" ", args));
                 } else {
                 	if (!sender.getName().equalsIgnoreCase("CONSOLE"))
-                		Logger.info(plugin, sender.getName() + " successfully executed command: " + "/family " + String.join(" ", args));
+                		Logger.info(familiPlugin, sender.getName() + " successfully executed command: " + "/family " + String.join(" ", args));
                 }
             });
 
@@ -84,23 +77,19 @@ public class FamilyCommand implements CommandExecutor {
         }
         return false;
     }
-	
+
 	private boolean infoMarryElement(CommandSender sender) {
 		if (sender.getName().equalsIgnoreCase("CONSOLE")) {
-			return plugin.getMarriageManager().infoMarryElement();
+			return familiPlugin.getMarriageManager().infoMarryElement();
 		}
 		return false;
 	}
 	
 	private boolean infoParentElement(CommandSender sender) {
 		if (sender.getName().equalsIgnoreCase("CONSOLE")) {
-			return plugin.getParentManager().infoParentElement();
+			return familiPlugin.getParentManager().infoParentElement();
 		}
 		return false;
 	}
-
-	private void sendMessage(CommandSender sender, MessageForFormatting textForFormatting, MessageType type) {
-    	MessageChat.sendMessage(plugin.getGlobalManager(), sender, textForFormatting, type, true);
-    }
 
 }
