@@ -5,14 +5,15 @@ package ink.anh.family.gender;
  * Each gender has a unique key, symbol, and color code.
  */
 public enum Gender {
-    MALE("family_gender_male", "♂", "#1E90FF"),
-    FEMALE("family_gender_female", "♀", "#FF69B4"),
-    NON_BINARY("family_gender_non-binary", "⚧", "#8B4513"),
-    UNDECIDED("family_gender_undecided", "?", "#808080");
+    MALE("family_gender_male", "♂", "#1E90FF", "§9"),
+    FEMALE("family_gender_female", "♀", "#FF69B4", "§d"),
+    NON_BINARY("family_gender_non-binary", "⚧", "#8B4513", "§a"),
+    UNDECIDED("family_gender_undecided", "?", "#808080", "§7");
 
     private final String key;     // The key representing the gender (used for localization or references)
     private final String symbol;  // The symbol representing the gender
     private final String color;   // The color code associated with the gender
+    private final String minecraftColor;   // The Minecraft color code associated with the gender
 
     /**
      * Constructor for the Gender enum.
@@ -20,11 +21,13 @@ public enum Gender {
      * @param key    The key representing the gender.
      * @param symbol The symbol representing the gender.
      * @param color  The color code associated with the gender.
+     * @param minecraftColor  The minecraftColor code associated with the gender.
      */
-    Gender(String key, String symbol, String color) {
+    Gender(String key, String symbol, String color, String minecraftColor) {
         this.key = key;
         this.symbol = symbol;
         this.color = color;
+        this.minecraftColor = minecraftColor;
     }
 
     /**
@@ -55,6 +58,17 @@ public enum Gender {
      */
     public static String getColor(Gender gender) {
         return (gender != null) ? gender.color : UNDECIDED.color;
+    }
+
+    /**
+     * Safely gets the Minecraft color code of the specified gender. 
+     * If the gender is null, returns the Minecraft color code of UNDECIDED.
+     *
+     * @param gender The gender to get the Minecraft color code for.
+     * @return The Minecraft color code of the specified gender, or the Minecraft color code of UNDECIDED if gender is null.
+     */
+    public static String getMinecraftColor(Gender gender) {
+        return (gender != null) ? gender.minecraftColor : UNDECIDED.minecraftColor;
     }
 
     /**

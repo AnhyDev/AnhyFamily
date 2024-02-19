@@ -20,6 +20,7 @@ family_err_folder_is_notexist: "Папка не существует или эт
 family_err_reloading_configuration: "Ошибка перезагрузки конфигурации."
 family_created_default_configuration: "Создана конфигурация по умолчанию."
 family_configuration_reloaded: "Конфигурация перезагружена."
+family_plugin_reloaded: "Плагин перезагружен."
 family_language_reloaded: "Языковые файлы и конфигурация перезагружены."
 
 # 3 Разное
@@ -30,7 +31,7 @@ family_player_unknown: "Неизвестный игрок"
 family_player_not_found_db: "Игрок не найден в БД."
 family_error_generic: "Неизвестная ошибка"
 
-# Command /gender ... [class: ink.anh.family.gender.GenderManager]
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
 family_gender_male: "Мужской"
 family_gender_female: "Женский"
 family_gender_non-binary: "Небинарное"
@@ -42,38 +43,39 @@ family_gender_incorrectly_specified: "Неверно указан пол. Исп
 family_gender_player_reset: "Пол игрока %s сброшен на 'Не определено'."
 family_gender_player_set_to: "Пол игрока %s установлен на как:"
 
-# Command /family ... [class: ink.anh.family.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.command.FamilyCommand, ink.anh.family.info.InfoGenerator]
 family_info_previous_lastname: "Предыдущая фамилия: "
-family_info_role_father: "Отец: "
-family_info_role_mother: "Мать: "
-family_info_role_guardian: "Опекун: "
-family_info_role_son: "Сын: "
-family_info_role_daughter: "Дочь: "
-family_info_role_child: "Ребенок: "
-family_info_role_relative: "Родственник: "
-family_info_role_husband: "Муж: "
-family_info_role_wife: "Жена: "
-family_info_role_partner: "Партнер: "
-family_info_family_not_found: "Семья не найдена."
+family_info_role_father: "Отец:"
+family_info_role_mother: "Мать:"
+family_info_role_guardian: "Опекун:"
+family_info_role_son: "Сын:"
+family_info_role_daughter: "Дочь:"
+family_info_role_child: "Ребенок:"
+family_info_role_relative: "Родственник:"
+family_info_role_husband: "Муж:"
+family_info_role_wife: "Жена:"
+family_info_role_partner: "Партнер:"
+family_info_family_not_found: "Семейная информация не найдена."
 family_info_spouse_not_found: "отсутствует"
 family_info_father_unknown: "неизвестен"
 family_info_mother_unknown: "неизвестна"
-family_info_children: " Дети: "
+family_info_children: "Дети:"
 family_info_children_none: "нет"
 family_info_component: "Семейная информация игрока %s, наведите для просмотра или клик для вывода в свой чат"
 
-# Command /tree ... [class: ink.anh.family.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.command.FamilyCommand, ink.anh.family.info.FamilyTree]
 family_tree_title: "Семейное древо "
 family_tree_ancestors: "Предки "
 family_tree_descendants: "Потомки "
 family_tree_component: "Информация о фамильном древе игрока %s, наведите для просмотра или клик для вывода в свой чат"
 
-# 7 Family surname
-family_surname_selected: "Фамилия выбрана: "
+# Command /surname (setsurname) ... [classes: ink.anh.family.command.FamilyCommand, ink.anh.family.info.Surname]
+family_surname_selected: "Ваша фамилия: %s "
 family_surname_already_exists: "Фамилия уже есть: %s, чтобы её изменить, обратитесь к священнику"
 family_surname_forced_change: "Для игрока %s принудительно установлена фамилия: %s "
+family_surname_build_failed: "Не удалось сохранить фамилию, возможно один или оба варианта длиннее 21 символа"
 
-# Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
+# Command /adoption invite (forceadopt) [classes: ink.anh.family.command.AdoptionCommand, ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Игрок %s уже имеет родителей, усыновление невозможно"
 family_adopt_error_self_adoption: "Невозможно усыновить или удочерить себя"
 family_adopt_error_duplicate_requests: "Два будущих родителя уже подали запросы"
@@ -85,12 +87,12 @@ family_adopt_adoption_applications: "Заявки на усыновление: "
 family_adopt_no_applications_adoption: "Заявки на усыновление отсутствуют"
 family_err_adoption_failed: "Игрок %s не может быть родителем для %s"
 
-# Command /adoption cancel [class: ink.anh.family.parents.Adopt]
+# Command /adoption cancel [classes: ink.anh.family.command.AdoptionCommand, ink.anh.family.parents.Adopt]
 family_cancel_adoption_error_no_request: "Ошибка отмены усыновления, нет запроса"
 family_cancel_adoption_partial_success: "%s отменил свою заявку на усыновление %s, заявка другого родителя %s - активна"
 family_cancel_adoption_full_success : "%s отменил свою заявку на усыновление %s, процедура усыновления отменена полностью"
 
-# Command /adoption accept [class: ink.anh.family.parents.Adopt]
+# Command /adoption accept [classes: ink.anh.family.parents.Adopt]
 family_accept_error_no_parents: "Будущие родителями, ещё не заявили о желании принять вас в семью"
 family_accept_error_parent1_missing: "Первый родитель не найден в БД."
 family_accept_error_parent2_missing: "Второй родитель не найден в БД."
@@ -100,10 +102,14 @@ family_accept_success: "Игроки %s и %s теперь родители дл
 family_accept_success_adoption: "Усыновление/удочерение игрроком %s игрока %s успешно"
 family_accept_adoption_close: "Процедура усыновления/удочерение отменена автоматически, по причине отсутствия ответа"
 
-# Command /adoption decline [class: ink.anh.family.parents.Adopt]
+# Command /adoption decline [classes: ink.anh.family.parents.Adopt]
 family_decline_notify_parent: "Ваша заявка на усыновление/удочерение %s была отклонена"
 family_decline_success: "Вы отклонили предложение об усыновлении/удочерении"
 
+
+# Command /adoption decline [classes: ink.anh.family.parents.FamilyAdoption]
+family_log_adoption_impossible_single: "Игрок %s не может усыновить/удочерить игрока %s"
+family_log_adoption_successful_single: "Усыновление/удочерение игроком %s игрока %s, успешно"
 
 # 10 Family clear
 family_clear_relative_success: "Удаление родственных связей проведено успешно"

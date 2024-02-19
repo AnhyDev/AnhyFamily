@@ -16,7 +16,7 @@ import net.md_5.bungee.api.ChatColor;
 public class GlobalManager extends LibraryManager {
 
     private static GlobalManager instance;
-	private AnhyFamily familiPlugin;
+	private AnhyFamily familyPlugin;
 
     private boolean useMySQL;
     private MySQLConfig mySQLConfig;
@@ -28,23 +28,23 @@ public class GlobalManager extends LibraryManager {
     private String defaultLang;
     private boolean debug;
 	
-	private GlobalManager(AnhyFamily familiPlugin) {
-		super(familiPlugin);
-		this.familiPlugin = familiPlugin;
+	private GlobalManager(AnhyFamily familyPlugin) {
+		super(familyPlugin);
+		this.familyPlugin = familyPlugin;
 		this.saveDefaultConfig();
-		this.loadFields(familiPlugin);
+		this.loadFields(familyPlugin);
 	}
 
-    public static synchronized GlobalManager getManager(AnhyFamily familiPlugin) {
+    public static synchronized GlobalManager getManager(AnhyFamily familyPlugin) {
         if (instance == null) {
-            instance = new GlobalManager(familiPlugin);
+            instance = new GlobalManager(familyPlugin);
         }
         return instance;
     }
     
 	@Override
 	public Plugin getPlugin() {
-		return familiPlugin;
+		return familyPlugin;
 	}
 
 	@Override
@@ -80,26 +80,26 @@ public class GlobalManager extends LibraryManager {
 	}
 
 	public boolean reload() {
-		Bukkit.getScheduler().runTaskAsynchronously(familiPlugin, () -> {
+		Bukkit.getScheduler().runTaskAsynchronously(familyPlugin, () -> {
 	        try {
 	        	saveDefaultConfig();
-	            familiPlugin.reloadConfig();
-	            loadFields(familiPlugin);
-	            familyConfig.reloadConfig(familiPlugin);
-	            Logger.info(familiPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded" , new String[] {defaultLang}));
+	            familyPlugin.reloadConfig();
+	            loadFields(familyPlugin);
+	            familyConfig.reloadConfig(familyPlugin);
+	            Logger.info(familyPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded" , new String[] {defaultLang}));
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            Logger.error(familiPlugin, Translator.translateKyeWorld(instance, "family_err_reloading_configuration ", new String[] {defaultLang}));
+	            Logger.error(familyPlugin, Translator.translateKyeWorld(instance, "family_err_reloading_configuration ", new String[] {defaultLang}));
 	        }
 		});
         return true;
     }
     
-    private void loadFields(AnhyFamily familiPlugin) {
-        defaultLang = familiPlugin.getConfig().getString("language", "en");
-        pluginName = ChatColor.translateAlternateColorCodes('&',familiPlugin.getConfig().getString("plugin_name", "AnhyFamily"));
-        debug = familiPlugin.getConfig().getBoolean("debug", false);
-        useMySQL = "MySQL".equalsIgnoreCase(familiPlugin.getConfig().getString("database.type"));
+    private void loadFields(AnhyFamily familyPlugin) {
+        defaultLang = familyPlugin.getConfig().getString("language", "en");
+        pluginName = ChatColor.translateAlternateColorCodes('&',familyPlugin.getConfig().getString("plugin_name", "AnhyFamily"));
+        debug = familyPlugin.getConfig().getBoolean("debug", false);
+        useMySQL = "MySQL".equalsIgnoreCase(familyPlugin.getConfig().getString("database.type"));
         
         setMySQLConfig();
         
@@ -109,36 +109,36 @@ public class GlobalManager extends LibraryManager {
         	this.langManager.reloadLanguages();
         }
         
-        familyConfig = FamilyConfig.getInstance(familiPlugin);
+        familyConfig = FamilyConfig.getInstance(familyPlugin);
     }
 
 	private void setMySQLConfig() {
 		this.mySQLConfig = new MySQLConfig(
-				familiPlugin.getConfig().getString("database.mysql.host"),
-				familiPlugin.getConfig().getInt("database.mysql.port"),
-				familiPlugin.getConfig().getString("database.mysql.database"),
-				familiPlugin.getConfig().getString("database.mysql.username"),
-				familiPlugin.getConfig().getString("database.mysql.password"),
-				familiPlugin.getConfig().getString("database.mysql.prefix"),
-				familiPlugin.getConfig().getBoolean("database.mysql.useSSL"),
-				familiPlugin.getConfig().getBoolean("database.mysql.autoReconnect")
+				familyPlugin.getConfig().getString("database.mysql.host"),
+				familyPlugin.getConfig().getInt("database.mysql.port"),
+				familyPlugin.getConfig().getString("database.mysql.database"),
+				familyPlugin.getConfig().getString("database.mysql.username"),
+				familyPlugin.getConfig().getString("database.mysql.password"),
+				familyPlugin.getConfig().getString("database.mysql.prefix"),
+				familyPlugin.getConfig().getBoolean("database.mysql.useSSL"),
+				familyPlugin.getConfig().getBoolean("database.mysql.autoReconnect")
 	        );
 	}
 
     private void saveDefaultConfig() {
-        File dataFolder = familiPlugin.getDataFolder();
+        File dataFolder = familyPlugin.getDataFolder();
         if (!dataFolder.exists()) {
             boolean created = dataFolder.mkdirs();
             if (!created) {
-                Logger.error(familiPlugin, "Could not create plugin directory: " + dataFolder.getPath());
+                Logger.error(familyPlugin, "Could not create plugin directory: " + dataFolder.getPath());
                 return;
             }
         }
         
     	File configFile = new File(dataFolder, "config.yml");
         if (!configFile.exists()) {
-        	familiPlugin.getConfig().options().copyDefaults(true);
-        	familiPlugin.saveDefaultConfig();
+        	familyPlugin.getConfig().options().copyDefaults(true);
+        	familyPlugin.saveDefaultConfig();
         }
     }
 }

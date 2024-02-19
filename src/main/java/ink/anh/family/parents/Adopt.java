@@ -15,14 +15,14 @@ import ink.anh.api.messages.MessageForFormatting;
 
 public class Adopt extends Sender {
 
-    public Adopt(AnhyFamily familiPlugin) {
-        super(familiPlugin);
+    public Adopt(AnhyFamily familyPlugin) {
+        super(familyPlugin);
     }
 
     public boolean adoption(CommandSender sender, String[] args) {
         String sendername = sender.getName();
         Player player = null;
-        ParentManager manager = familiPlugin.getParentManager();
+        ParentManager manager = familyPlugin.getParentManager();
         
         if (args.length < 2) {
             sendMessage(new MessageForFormatting("family_err_command_format  /family adopt <player1>", null), MessageType.WARNING, sender);
@@ -100,7 +100,7 @@ public class Adopt extends Sender {
 
         Player player = (Player) sender;
         UUID playerUUID = player.getUniqueId();
-        ParentManager manager = familiPlugin.getParentManager();
+        ParentManager manager = familyPlugin.getParentManager();
         UUID[] parentRequest = manager.getParentElementByParent(playerUUID);
 
         // Перевірка, чи існує заявка на усиновлення
@@ -146,7 +146,7 @@ public class Adopt extends Sender {
         UUID uuid = (player).getUniqueId();
 
         // Планування задачі для перевірки статусу усиновлення через 5 хвилин
-        Bukkit.getScheduler().runTaskLater(familiPlugin, () -> {
+        Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
             // Перевірка, чи існує заявка на усиновлення
             if (manager.getParentElement(uuid) != null) {
                 manager.removeParent(uuid);
@@ -159,7 +159,7 @@ public class Adopt extends Sender {
     
     public boolean accept(CommandSender sender) {
         Player player = null;
-        ParentManager manager = familiPlugin.getParentManager();
+        ParentManager manager = familyPlugin.getParentManager();
         
         if (sender instanceof Player) {
             player = (Player) sender;
@@ -221,7 +221,7 @@ public class Adopt extends Sender {
         String adopter1Name = player1.getDisplayName();
         String adopter2Name = player2.getDisplayName();
         
-        FamilyAdoption utilsAdopt = new FamilyAdoption(familiPlugin);
+        FamilyAdoption utilsAdopt = new FamilyAdoption(familyPlugin);
         
         if (!utilsAdopt.adoption(family, family1, family2)) {
             sendMessage(new MessageForFormatting("family_accept_error_cannot_adopt" + adoptedName, new String[] {adopter1Name, adopter2Name, adoptedName}), MessageType.WARNING, sender);
@@ -242,7 +242,7 @@ public class Adopt extends Sender {
 
         Player player = (Player) sender;
         UUID playerUUID = player.getUniqueId();
-        ParentManager manager = familiPlugin.getParentManager();
+        ParentManager manager = familyPlugin.getParentManager();
         UUID[] parents = manager.getParentElement(playerUUID);
 
         // Перевірка, чи існує заявка на усиновлення
@@ -291,7 +291,7 @@ public class Adopt extends Sender {
             return false;
         }
 
-        FamilyAdoption adoption = new FamilyAdoption(familiPlugin);
+        FamilyAdoption adoption = new FamilyAdoption(familyPlugin);
         if (!adoption.adoption(adoptedFamily, adopterFamily)) {
             sendMessage(new MessageForFormatting("family_err_adoption_failed", null), MessageType.WARNING, sender);
             return false;

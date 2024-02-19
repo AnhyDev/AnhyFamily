@@ -2,6 +2,7 @@ package ink.anh.family.parents;
 
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.Logger;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.common.Family;
@@ -26,7 +27,7 @@ public class FamilyAdoption {
 	public boolean adoption(Family adopted, Family adopter1, Family adopter2) {
 		
 	    if (!canAdopt(adopted, adopter1, adopter2)) {
-            Logger.warn(familiPlugin, adopter1.getDisplayName() + ", " + adopter2.getDisplayName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_impossible_between", langs) + adopted.getDisplayName());
+            Logger.warn(familiPlugin, adopter1.getRootrNickName() + ", " + adopter2.getRootrNickName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_impossible_between", langs) + adopted.getLoverCaseName());
             return false;
 	    }
 	    
@@ -63,14 +64,16 @@ public class FamilyAdoption {
         FamilyUtils.saveFamily(adopter2);
         FamilyUtils.saveFamily(adopted);
 
-        Logger.info(familiPlugin, adopter1.getDisplayName() + ", " + adopter2.getDisplayName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_between", langs) + adopted.getDisplayName());
+        Logger.info(familiPlugin, adopter1.getRootrNickName() + ", " + adopter2.getRootrNickName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_between", langs) + adopted.getLoverCaseName());
         return true; 
 	}
 
 	public boolean adoption(Family adopted, Family adopter1) {
 		
 	    if (!canAdopt(adopted, adopter1)) {
-	    	Logger.warn(familiPlugin, adopter1.getDisplayName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_impossible_single", langs) + adopted.getDisplayName());
+	    	String rawMessage = Translator.translateKyeWorld(globalManager, "family_log_adoption_impossible_single", langs);
+	    	String message = StringUtils.formatString(rawMessage, new String[] {adopter1.getLoverCaseName(), adopted.getLoverCaseName()});
+	    	Logger.warn(familiPlugin, message);
             return false;
 	    }
 	    
@@ -96,7 +99,9 @@ public class FamilyAdoption {
         FamilyUtils.saveFamily(adopter1);
         FamilyUtils.saveFamily(adopted);
 
-        Logger.info(familiPlugin, adopter1.getDisplayName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_single", langs) + adopted.getDisplayName());
+    	String rawMessage = Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_single", langs);
+    	String message = StringUtils.formatString(rawMessage, new String[] {adopter1.getLoverCaseName(), adopted.getLoverCaseName()});
+    	Logger.info(familiPlugin, message);
         return true;
     
 	}

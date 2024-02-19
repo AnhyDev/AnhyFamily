@@ -13,11 +13,16 @@ import ink.anh.api.messages.MessageChat;
 public class FamilyTreeCommandHandler extends Sender {
 
 
-    public FamilyTreeCommandHandler(AnhyFamily familiPlugin) {
-		super(familiPlugin);
+    public FamilyTreeCommandHandler(AnhyFamily familyPlugin) {
+		super(familyPlugin);
     }
 
     public boolean handleTreeCommand(CommandSender sender, String[] args, boolean isInteractive) {
+    	
+		if (!(sender instanceof Player)) {
+			isInteractive = false;
+		}
+		
     	Family family;
         if (args.length > 1) {
         	family = FamilyUtils.getFamily(args[1]);
@@ -43,7 +48,7 @@ public class FamilyTreeCommandHandler extends Sender {
         	command = (args.length > 1) ? (command + " " + playerName) : command;
             MessageForFormatting message = new MessageForFormatting("family_tree_component", new String[] {playerName});
             MessageForFormatting hoverText = new MessageForFormatting(treeInfo, null);
-            MessageChat.sendMessage(familiPlugin.getGlobalManager(), sender, message, hoverText, command, MessageType.NORMAL, false);
+            MessageChat.sendMessage(familyPlugin.getGlobalManager(), sender, message, hoverText, command, MessageType.NORMAL, false);
         } else {
             sendMessage(new MessageForFormatting(treeInfo, null), MessageType.NORMAL, sender);
         }

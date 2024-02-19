@@ -255,4 +255,18 @@ public class FamilyUtils {
                 gender == Gender.FEMALE ? "family_marry_groom_female" : "family_marry_groom_nonbinary")
                 + " " + displayName;
     }
+
+	public static String selectSurname(String[] surnames, Gender gender) {
+        if (surnames == null || surnames.length == 0) {
+            return ""; // Якщо масив порожній або null, повертаємо порожній рядок
+        }
+        if (surnames.length == 1 || gender == Gender.MALE || gender == Gender.NON_BINARY) {
+            // Якщо масив містить лише одне прізвище або гендер чоловічий/небінарний, повертаємо перше прізвище
+            return surnames[0] != null ? surnames[0] : "";
+        } else {
+            // Якщо масив містить більше одного прізвища і гендер жіночий, спробуємо використати друге прізвище
+            // Якщо друге прізвище відсутнє або null, повертаємо перше
+            return (surnames[1] != null) ? surnames[1] : surnames[0] != null ? surnames[0] : "";
+        }
+    }
 }

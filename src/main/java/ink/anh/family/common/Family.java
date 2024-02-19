@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-
 import com.google.gson.Gson;
 
 import ink.anh.family.gender.Gender;
@@ -18,9 +17,9 @@ public class Family {
 
 	private UUID root;
     private Gender gender; 
-	private String displayName;
-	private String[] lastName = new String[2];
-	private String[] oldLastName = new String[2];
+	private String loverCaseName;
+	private String[] lastName;
+	private String[] oldLastName;
 	private UUID father;
 	private UUID mother;
 	private UUID spouse;
@@ -29,7 +28,7 @@ public class Family {
 	public Family(UUID root, Gender gender, String displayName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse, Set<UUID> children) {
 		this.root = root;
 		this.gender = gender;
-		this.displayName = displayName != null && displayName.length() > 0 ? displayName : getRootrNickName();
+		this.loverCaseName = displayName != null && displayName.length() > 0 ? displayName : getRootrNickName();
 		this.lastName = lastName;
 		this.oldLastName = oldLastName;
 		this.father = father;
@@ -47,6 +46,16 @@ public class Family {
 		return fam;
 	}
 
+	public String getCurrentSurname() {
+        if (lastName == null || lastName.length == 0) {
+            return "";
+        }
+        if (lastName.length == 1 || gender == Gender.MALE || gender == Gender.NON_BINARY) {
+            return lastName[0] != null ? lastName[0] : "";
+        } else {
+            return (lastName[1] != null) ? lastName[1] : lastName[0] != null ? lastName[0] : "";
+        }
+	}
 
 	public UUID getRoot() {
 		return root;
@@ -72,8 +81,8 @@ public class Family {
 		return mother;
 	}
 
-	public String getDisplayName() {
-		return displayName;
+	public String getLoverCaseName() {
+		return loverCaseName;
 	}
 
 	public String[] getLastName() {
@@ -100,8 +109,8 @@ public class Family {
 		return children;
 	}
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
+	public void setLoverCaseName(String displayName) {
+		this.loverCaseName = displayName;
 	}
 
 	public void setLastName(String []lastName) {
@@ -189,7 +198,8 @@ public class Family {
 	}
 
 	public String getRootrNickName() {
-        OfflinePlayer player = Bukkit.getOfflinePlayer(this.root);
+		OfflinePlayer player = Bukkit.getPlayer(this.root);
+        if (player == null) player = Bukkit.getOfflinePlayer(this.root);
         return (player != null) ? player.getName() : "Unknown";
     }
 }

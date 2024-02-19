@@ -27,10 +27,10 @@ public class ActionsPriest extends Sender {
     private FamilyConfig familyConfig;
     private String priestTitle = "";
     
-    public ActionsPriest(AnhyFamily familiPlugin) {
-        super(familiPlugin);
-        this.manager = familiPlugin.getGlobalManager();
-        this.marriageManager = familiPlugin.getMarriageManager();
+    public ActionsPriest(AnhyFamily familyPlugin) {
+        super(familyPlugin);
+        this.manager = familyPlugin.getGlobalManager();
+        this.marriageManager = familyPlugin.getMarriageManager();
         this.familyConfig = manager.getFamilyConfig();
     }
     
@@ -91,14 +91,14 @@ public class ActionsPriest extends Sender {
 
     	sendMessage(new MessageForFormatting("family_marry_start_priest", null), MessageType.WARNING, priest);
     	
-		Bukkit.getServer().getScheduler().runTaskLater(familiPlugin, () -> 
+		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
 			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
 
         return true;
 	}
 
     private boolean validatePayment(Player bride1, Player bride2, Player[] recipients, String bride1Name, String bride2Name) {
-        PaymentManager pay = new PaymentManager(familiPlugin);
+        PaymentManager pay = new PaymentManager(familyPlugin);
 
         if (pay.canAfford(bride1, FamilyService.MARRIAGE) && pay.canAfford(bride2, FamilyService.MARRIAGE)) {
             return true;

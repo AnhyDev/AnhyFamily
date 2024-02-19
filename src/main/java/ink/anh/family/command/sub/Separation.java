@@ -11,18 +11,18 @@ import ink.anh.api.messages.MessageForFormatting;
 
 public class Separation extends Sender {
 
-    public Separation(AnhyFamily familiPlugin) {
-        super(familiPlugin);
+    public Separation(AnhyFamily familyPlugin) {
+        super(familyPlugin);
     }
 
 	public boolean separate(CommandSender sender, String[] args) {
         
         if (args.length < 2 || args[1].equalsIgnoreCase("spouse")) {
-            return new Divorce(familiPlugin).separate(sender);
+            return new Divorce(familyPlugin).separate(sender);
         } else if (args.length > 2 && args[1].equalsIgnoreCase("child")) {
-        	return new ChildSeparation(familiPlugin).separate(sender, args);
+        	return new ChildSeparation(familyPlugin).separate(sender, args);
         } else if (args.length > 2 && args[1].equalsIgnoreCase("parent")) {
-        	return new ParentSeparation(familiPlugin).separate(sender, args);
+        	return new ParentSeparation(familyPlugin).separate(sender, args);
         }
         
         sendMessage(new MessageForFormatting("family_error_command_line", null), MessageType.WARNING, sender);

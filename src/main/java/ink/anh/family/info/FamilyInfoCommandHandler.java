@@ -13,23 +13,28 @@ import ink.anh.api.messages.MessageChat;
 public class FamilyInfoCommandHandler extends Sender {
 
 
-    public FamilyInfoCommandHandler(AnhyFamily familiPlugin) {
-		super(familiPlugin);
+    public FamilyInfoCommandHandler(AnhyFamily familyPlugin) {
+		super(familyPlugin);
     }
 
     public boolean handleCommand(CommandSender sender, String[] args, boolean isInteractive) {
+    	
+		if (!(sender instanceof Player)) {
+			isInteractive = false;
+		}
+		
     	Family family = getTargetFamily(sender, args);
         if (family == null) return false;
 
-        String familyInfo = InfoGenerator.generateFamilyInfo(family);
+        String familyInfo = translate(sender, InfoGenerator.generateFamilyInfo(family));
 
         if (isInteractive) {
         	String command  = "/family infos";
         	String playerName = (args.length > 1) ? args[1] : sender.getName();
         	command = (args.length > 1) ? (command + " " + playerName) : command;
-            MessageForFormatting message = new MessageForFormatting("family_info_component", new String[] {playerName});
+            MessageForFormatting message = new MessageForFormatting(translate(sender, "family_info_component"), new String[] {playerName});
             MessageForFormatting hoverText = new MessageForFormatting(familyInfo, null);
-            MessageChat.sendMessage(familiPlugin.getGlobalManager(), sender, message, hoverText, command, MessageType.NORMAL, false);
+            MessageChat.sendMessage(familyPlugin.getGlobalManager(), sender, message, hoverText, command, MessageType.NORMAL, false);
         } else {
             sendMessage(new MessageForFormatting(familyInfo, null), MessageType.NORMAL, sender);
         }

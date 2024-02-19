@@ -18,7 +18,7 @@ public class MySQLDatabaseManager extends DatabaseManager {
 
     private Connection connection;
 
-    public MySQLDatabaseManager(AnhyFamily plugin, MySQLConfig config) {
+    protected MySQLDatabaseManager(AnhyFamily plugin, MySQLConfig config) {
     	super(plugin);
         this.host = config.getHost();
         this.database = config.getDatabase();

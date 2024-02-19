@@ -17,8 +17,8 @@ import ink.anh.api.messages.MessageForFormatting;
 
 public class Divorce extends Sender {
 
-    public Divorce(AnhyFamily familiPlugin) {
-        super(familiPlugin);
+    public Divorce(AnhyFamily familyPlugin) {
+        super(familyPlugin);
     }
 
 	public boolean separate(CommandSender sender) {
@@ -51,7 +51,7 @@ public class Divorce extends Sender {
             return false;
         }
         
-        if (new FamilySeparation(familiPlugin).separateSpouses(family)) {
+        if (new FamilySeparation(familyPlugin).separateSpouses(family)) {
         	Player spousePlayer = Bukkit.getPlayer(spouseUUID);
             sendMessage(new MessageForFormatting("family_separation_spouse_successful", null), MessageType.IMPORTANT, player, spousePlayer);
             return true;

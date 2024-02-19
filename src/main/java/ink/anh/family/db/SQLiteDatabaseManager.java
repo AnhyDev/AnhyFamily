@@ -9,7 +9,7 @@ import ink.anh.family.AnhyFamily;
 
 public class SQLiteDatabaseManager extends DatabaseManager {
 
-    public SQLiteDatabaseManager(AnhyFamily plugin) {
+	protected SQLiteDatabaseManager(AnhyFamily plugin) {
     	super(plugin);
     	
         initialize();

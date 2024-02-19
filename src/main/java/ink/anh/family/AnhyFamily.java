@@ -1,13 +1,13 @@
 package ink.anh.family;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ink.anh.family.command.CommandManager;
 import ink.anh.family.db.DatabaseManager;
-import ink.anh.family.db.MySQLDatabaseManager;
-import ink.anh.family.db.SQLiteDatabaseManager;
 import ink.anh.family.listeners.ListenersRegistratar;
 import ink.anh.family.marry.MarriageManager;
+import ink.anh.family.papi.PAPIExpansion;
 import ink.anh.family.parents.ParentManager;
 import ink.anh.family.util.EconomyHandler;
 
@@ -39,14 +39,8 @@ public class AnhyFamily extends JavaPlugin {
         instance = this;
         manager = GlobalManager.getManager(this);
 
-        // Визначення, яку базу даних використовувати
-        if (manager.isUseMySQL()) {
-            // Ініціалізація MySQL
-            dbManager = new MySQLDatabaseManager(this, manager.getMySQLConfig());
-        } else {
-            // Ініціалізація SQLite
-            dbManager = new SQLiteDatabaseManager(this);
-        }
+        dbManager = DatabaseManager.getInstance(this);
+        dbManager.initialize();
 
         // Ініціалізація таблиць бази даних
         dbManager.initialize();
@@ -59,6 +53,10 @@ public class AnhyFamily extends JavaPlugin {
         
         new ListenersRegistratar(this).register();
         new CommandManager(this).registerCommands();
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PAPIExpansion(this).register();
+        }
     }
 
     @Override
@@ -98,6 +96,10 @@ public class AnhyFamily extends JavaPlugin {
 
     public DatabaseManager getDatabaseManager() {
         return dbManager;
+    }
+
+    public void setDatabaseManager(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
     }
 
     public EconomyHandler getEconomyHandler() {

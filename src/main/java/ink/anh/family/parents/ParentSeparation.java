@@ -16,8 +16,8 @@ import java.util.UUID;
 
 public class ParentSeparation extends Sender {
 
-    public ParentSeparation(AnhyFamily familiPlugin) {
-        super(familiPlugin);
+    public ParentSeparation(AnhyFamily familyPlugin) {
+        super(familyPlugin);
     }
 
     public boolean separate(CommandSender sender, String[] args) {
@@ -51,7 +51,7 @@ public class ParentSeparation extends Sender {
         UUID targetUUID = targetFamily.getRoot();
         Player targetPlayer = Bukkit.getPlayer(targetUUID);
 
-        FamilySeparation familySeparation = new FamilySeparation(familiPlugin);
+        FamilySeparation familySeparation = new FamilySeparation(familyPlugin);
 
         boolean success;
         if (playerUUID.equals(targetFamily.getFather()) || playerUUID.equals(targetFamily.getMother())) {

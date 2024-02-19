@@ -53,9 +53,9 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
 
    		    ps.setString(1, family.getRoot().toString());
    		    ps.setString(2, Gender.toStringSafe(family.getGender()));
-   		    ps.setString(3, family.getDisplayName().toLowerCase());
-   		    ps.setString(4, String.join(",", family.getLastName()));
-   		    ps.setString(5, String.join(",", family.getOldLastName()));
+   		    ps.setString(3, family.getLoverCaseName().toLowerCase());
+   		    ps.setString(4, joinOrReturnNull(family.getLastName()));
+   		    ps.setString(5, joinOrReturnNull(family.getOldLastName()));
    		    ps.setString(6, family.getFather() != null ? family.getFather().toString() : null);
    		    ps.setString(7, family.getMother() != null ? family.getMother().toString() : null);
    		    ps.setString(8, family.getSpouse() != null ? family.getSpouse().toString() : null);
@@ -81,8 +81,8 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
                         playerUUID,
                         Gender.fromString(rs.getString("gender")),
                         rs.getString("displayName"),
-                        rs.getString("last_name") != null ? rs.getString("last_name").split(",") : new String[2],
-                        rs.getString("old_last_name") != null ? rs.getString("old_last_name").split(",") : new String[2],
+                        splitStringAndNullify(rs.getString("last_name"), ","),
+                        splitStringAndNullify(rs.getString("old_last_name"), ","),
                         rs.getString("father") != null ? UUID.fromString(rs.getString("father")) : null,
                         rs.getString("mother") != null ? UUID.fromString(rs.getString("mother")) : null,
                         rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,
@@ -111,8 +111,8 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
                     UUID.fromString(rs.getString("player_uuid")),
                     Gender.fromString(rs.getString("gender")),
                     rs.getString("displayName"),
-                    rs.getString("last_name") != null ? rs.getString("last_name").split(",") : new String[0],
-                    rs.getString("old_last_name") != null ? rs.getString("old_last_name").split(",") : new String[0],
+                    splitStringAndNullify(rs.getString("last_name"), ","),
+                    splitStringAndNullify(rs.getString("old_last_name"), ","),
                     rs.getString("father") != null ? UUID.fromString(rs.getString("father")) : null,
                     rs.getString("mother") != null ? UUID.fromString(rs.getString("mother")) : null,
                     rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,

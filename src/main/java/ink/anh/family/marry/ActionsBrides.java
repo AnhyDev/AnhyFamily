@@ -27,10 +27,10 @@ public class ActionsBrides extends Sender {
 	private String priestTitle = "";
 	private String bride1Title = "";
 	
-	public ActionsBrides (AnhyFamily familiPlugin){
-		super(familiPlugin);
-		this.manager = familiPlugin.getGlobalManager();
-		this.marriageManager = familiPlugin.getMarriageManager();
+	public ActionsBrides (AnhyFamily familyPlugin){
+		super(familyPlugin);
+		this.manager = familyPlugin.getGlobalManager();
+		this.marriageManager = familyPlugin.getMarriageManager();
 		this.familyConfig = manager.getFamilyConfig();
 	}
 	
@@ -92,8 +92,8 @@ public class ActionsBrides extends Sender {
 		
 		String stringMarry = "family_marry_success";
 
-		String bride1Name = bride1family.getDisplayName();
-		String bride2Name = bride2family.getDisplayName();
+		String bride1Name = bride1family.getLoverCaseName();
+		String bride2Name = bride2family.getLoverCaseName();
 		
         int gender1Starus = bride2family.getGender() == Gender.MALE ? 1 : bride2family.getGender() == Gender.FEMALE ? 2 : 0;
 
@@ -106,7 +106,7 @@ public class ActionsBrides extends Sender {
 			marriageManager.remove(uuidBride1);
 			
 			sendMessage(new MessageForFormatting(bride1Title + ": family_marry_refuse", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
-			Bukkit.getServer().getScheduler().runTaskLater(familiPlugin, () -> 
+			Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
 				sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
 			
 			return;
@@ -129,7 +129,7 @@ public class ActionsBrides extends Sender {
 			
 			sendMessage(messageForFormatting, MessageType.WARNING, false, recipients);
 
-			Bukkit.getServer().getScheduler().runTaskLater(familiPlugin, () -> 
+			Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
 				sendMessage(new MessageForFormatting(priestTitle + stringMarry, new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
 			
 			marriageManager.remove(uuidBride1);
@@ -175,7 +175,7 @@ public class ActionsBrides extends Sender {
 	}
 
     private boolean paymentFailed(UUID uuidBride1, Player bride1, Player bride2, Player[] recipients, String bride1Name, String bride2Name) {
-        PaymentManager pay = new PaymentManager(familiPlugin);
+        PaymentManager pay = new PaymentManager(familyPlugin);
 
         if (!pay.makePayment(bride1, FamilyService.MARRIAGE) || !pay.makePayment(bride2, FamilyService.MARRIAGE)) {
         	marriageManager.remove(uuidBride1);

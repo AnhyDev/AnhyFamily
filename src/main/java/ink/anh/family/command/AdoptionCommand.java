@@ -14,8 +14,8 @@ import ink.anh.api.messages.MessageForFormatting;
 public class AdoptionCommand extends Sender implements CommandExecutor {
 
 	
-	public AdoptionCommand(AnhyFamily familiPlugin) {
-		super(familiPlugin);
+	public AdoptionCommand(AnhyFamily familyPlugin) {
+		super(familyPlugin);
 	}
 	
 	@Override
@@ -25,19 +25,19 @@ public class AdoptionCommand extends Sender implements CommandExecutor {
         	CompletableFuture.runAsync(() -> {
                 switch (args[0].toLowerCase()) {
                 case "forceadopt":
-                    new Adopt(familiPlugin).forceAdopt(sender, args);
+                    new Adopt(familyPlugin).forceAdopt(sender, args);
                     break;
                 case "accept":
-                    new Adopt(familiPlugin).accept(sender);
+                    new Adopt(familyPlugin).accept(sender);
                     break;
                 case "decline":
-                    new Adopt(familiPlugin).declineAdoption(sender);
+                    new Adopt(familyPlugin).declineAdoption(sender);
                     break;
                 case "invite":
-                    new Adopt(familiPlugin).adoption(sender, args);
+                    new Adopt(familyPlugin).adoption(sender, args);
                     break;
                 case "cancel":
-                    new Adopt(familiPlugin).cancelAdoption(sender);
+                    new Adopt(familyPlugin).cancelAdoption(sender);
                     break;
                 default:
                 	sendMessage(new MessageForFormatting("family_err_command_format /adoption [invite|accept|decline|cancel|forceadopt]", null), MessageType.WARNING, sender);
