@@ -98,10 +98,6 @@ public class AnhyFamily extends JavaPlugin {
         return dbManager;
     }
 
-    public void setDatabaseManager(DatabaseManager dbManager) {
-        this.dbManager = dbManager;
-    }
-
     public EconomyHandler getEconomyHandler() {
         return economyHandler;
     }

@@ -65,8 +65,8 @@ public class GenderCommand extends Sender implements CommandExecutor {
     private boolean handleSetGender(CommandSender sender, String genderStr) {
     	Player player = (Player) sender;
     	
-    	genderStr = (genderStr.equalsIgnoreCase("boy") || genderStr.equalsIgnoreCase("MAN")) ? "MALE" 
-    			: (genderStr.equalsIgnoreCase("girl") || genderStr.equalsIgnoreCase("WOMAN")) ? "FEMALE" : genderStr.toUpperCase();
+    	genderStr = (genderStr.equalsIgnoreCase("boy") || genderStr.equalsIgnoreCase("man")) ? "MALE" 
+    			: (genderStr.equalsIgnoreCase("girl") || genderStr.equalsIgnoreCase("woman")) ? "FEMALE" : genderStr.toUpperCase();
         Gender gender = Gender.fromString(genderStr);
         if (gender != null && gender != Gender.UNDECIDED) {
             if (GenderManager.getGender(player) == Gender.UNDECIDED) {

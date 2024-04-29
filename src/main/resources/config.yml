@@ -9,7 +9,7 @@
 # Default language to be used in case a translation is not found in the desired language:
 language: en
 # Name of the plugin for display to users in chat:
-plugin_name: AnhyShop
+plugin_name: AnhyFamily
 marriedSymbol: "⚭"
 
 # Database settings:

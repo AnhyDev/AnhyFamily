@@ -3,6 +3,7 @@ package ink.anh.family.info;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
@@ -65,8 +66,17 @@ public class FamilyTree {
     }
 
     public String buildFamilyTreeString() {
-        StringBuilder treeString = new StringBuilder(ChatColor.GOLD + "family_tree_title" 
-        		+ ChatColor.BOLD + root.getFamily().getRootrNickName() + ChatColor.RESET + "\n");
+    	String lastName = getLastName(root.getFamily());
+    	
+    	StringBuilder treeString = new StringBuilder()
+    			.append(ChatColor.GOLD)
+    			.append(" family_tree_title ")
+    			.append(ChatColor.BOLD)
+    			.append(root.getFamily().getRootrNickName())
+    			.append(lastName)
+    			.append(ChatColor.RESET)
+    			.append("\n");
+
         buildDescendantsTreeString(root, 0, "", treeString);
 
         resetRoot();
@@ -76,16 +86,13 @@ public class FamilyTree {
     }
 
     private void buildFamilyTreeString(FamilyRepeated memberFam, int level, String prefix, StringBuilder treeString) {
-    	Family member = memberFam.getFamily();
+        Family member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
-        ChatColor color = determineColor(level, memberFam.getRepeated());
+        String title = (level == 0 ? "family_tree_ancestors " : "");
 
-        String repeatedMark = isRepeated ? "*" : "";
-        String title = (level == 0 ? "family_tree_ancestors" : "");
-        StringBuilder line = new StringBuilder(prefix);
-        line.append(color).append("└─ ").append(title).append(member.getRootrNickName()).append(repeatedMark).append('\n');
-
-        treeString.append(line.toString());
+        String branchSymbol = "└─ ";
+        String line = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol);
+        treeString.append(line);
 
         if (!isRepeated) {
             UUID fatherUuid = member.getFather();
@@ -132,16 +139,14 @@ public class FamilyTree {
     }
 
     private void buildDescendantsTreeString(FamilyRepeated memberFam, int level, String prefix, StringBuilder treeString) {
-    	Family member = memberFam.getFamily();
+        Family member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
-        ChatColor color = determineColor(level, memberFam.getRepeated());
 
-        String repeatedMark = isRepeated ? "*" : "";
-        String title = (level == 0 ? "family_tree_descendants" : "");
-        StringBuilder line = new StringBuilder(prefix);
-        line.append(color).append("┌─ ").append(title).append(member.getRootrNickName()).append(repeatedMark).append('\n');
-
-        treeString.insert(0, line.toString());
+        String title = (level == 0 ? "family_tree_descendants " : "");
+        
+        String branchSymbol = "┌─ ";
+        String line = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol);
+        treeString.insert(0, line);
 
         Set<UUID> childrenUuids = member.getChildren();
         if (childrenUuids != null) {
@@ -155,6 +160,30 @@ public class FamilyTree {
             }
         }
         memberFam.increaseRepeated();
+    }
+
+    private String buildMemberLine(Family member, int level, String prefix, boolean isRepeated, String title, String branchSymbol) {
+        StringBuilder line = new StringBuilder(prefix);
+        ChatColor color = determineColor(level, isRepeated ? 1 : 0);
+        String repeatedMark = isRepeated ? "*" : "";
+        String lastName = level > 0 ? getLastName(member) : "";
+
+        line.append(color)
+            .append(branchSymbol)
+            .append(title)
+            .append(member.getRootrNickName())
+            .append(lastName)
+            .append(repeatedMark)
+            .append('\n');
+
+        return line.toString();
+    }
+    
+    private String getLastName(Family member) {
+    	return Optional.ofNullable(member.getCurrentSurname())
+                .filter(surname -> !surname.isEmpty())
+                .map(surname -> " " + surname)
+                .orElse("");
     }
 
     private ChatColor determineColor(int level, int repeatedCount) {

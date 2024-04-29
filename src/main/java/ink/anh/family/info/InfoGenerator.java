@@ -23,7 +23,7 @@ public class InfoGenerator {
         String genderSymbol = Gender.getMinecraftColor(gender) + Gender.getSymbol(gender);
         
         String lastName = family.getCurrentSurname();
-        lastName = lastName != null ? lastName : "";
+        lastName = (lastName != null && !lastName.isEmpty()) ? lastName : "";
         
         String oldLastName = FamilyUtils.selectSurname(family.getOldLastName(), gender);
         oldLastName = (oldLastName != null && !oldLastName.isEmpty()) ? "\n family_info_previous_lastname " + oldLastName : "";

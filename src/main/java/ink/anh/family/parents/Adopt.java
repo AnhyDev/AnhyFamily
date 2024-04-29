@@ -25,7 +25,7 @@ public class Adopt extends Sender {
         ParentManager manager = familyPlugin.getParentManager();
         
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format  /family adopt <player1>", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format  /family invite <player1>", null), MessageType.WARNING, sender);
             return false;
         }
         
