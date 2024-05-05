@@ -170,7 +170,7 @@ family_marry_priest_nonbinary: "Священное лицо"
 # Молодожёны
 family_marry_groom_male: "Жених"
 family_marry_groom_female: "Невеста"
-family_marry_groom_nonbinary: "Нареченные"
+family_marry_groom_nonbinary: "Нареченное"
 
 # 13 Family Marry
 family_marry_failed_myself: "Нельзя совершать обряд над самим собой, позовите другого священника."

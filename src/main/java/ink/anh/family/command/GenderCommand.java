@@ -85,7 +85,8 @@ public class GenderCommand extends Sender implements CommandExecutor {
 
     private boolean handleGenderInfo(CommandSender sender, String playerName) {
     	Gender gender = (playerName != null) ? GenderManager.getGender(playerName) : (sender instanceof Player) ? GenderManager.getGender((Player) sender) : null;
-        
+    	playerName = playerName != null ? playerName : sender.getName();
+    	
         if (gender != null) {
             sendMessage(new MessageForFormatting("family_gender_player_info " + Gender.getKey(gender), new String[] {playerName}),  MessageType.NORMAL, sender);
             return true;

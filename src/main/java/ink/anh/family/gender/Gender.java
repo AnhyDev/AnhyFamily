@@ -23,7 +23,7 @@ public enum Gender {
      * @param color  The color code associated with the gender.
      * @param minecraftColor  The minecraftColor code associated with the gender.
      */
-    Gender(String key, String symbol, String color, String minecraftColor) {
+    private Gender(String key, String symbol, String color, String minecraftColor) {
         this.key = key;
         this.symbol = symbol;
         this.color = color;
@@ -80,6 +80,10 @@ public enum Gender {
      */
     public static String toStringSafe(Gender gender) {
         return (gender != null) ? gender.toString() : UNDECIDED.toString();
+    }
+    
+    public static String getSymbolPrefix(Gender gender) {
+        return getMinecraftColor(gender) + getSymbol(gender);
     }
 
     /**

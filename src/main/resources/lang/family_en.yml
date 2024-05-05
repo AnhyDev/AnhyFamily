@@ -5,74 +5,185 @@
 # ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
 # ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
 # ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
-#
-# Internal system messages of the AnhyShop plugin
-#
+
+# You can use color codes like: &6 or §6
+
 # 1 General
 family_err_not_have_permission: "You do not have permission to use this command."
 family_err_not_alloved_config: "The command is not allowed in the configuration settings."
 family_err_command_only_player: "This command can only be executed by a player."
 family_err_command_format: "Command format: "
-#
+
 # 2 Loading configurations
 family_err_folder_is_empty: "The folder is empty or an error occurred while reading it."
 family_err_folder_is_notexist: "The folder does not exist or it is not a folder."
 family_err_reloading_configuration: "Error reloading configuration."
 family_created_default_configuration: "Default configuration created."
 family_configuration_reloaded: "Configuration reloaded."
+family_plugin_reloaded: "Plugin reloaded."
 family_language_reloaded: "Language files and configuration reloaded."
-#
+
 # 3 Miscellaneous
 family_player: "Player "
 family_player_not_found: " not found or not online."
-#
-# 4 Working with gender
+family_player_not_found_full: "Player %s not found or not online."
+family_player_unknown: "Unknown player"
+family_player_not_found_db: "Player not found in the database."
+family_error_generic: "Unknown error"
+
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
 family_gender_male: "Male"
 family_gender_female: "Female"
 family_gender_non-binary: "Non-binary"
 family_gender_undecided: "Undecided"
-family_set_gender: "Your gender has been set as "
+family_gender_player_info: "Player %s, gender:"
+family_set_gender_force: "Your gender has been set as:"
 family_gender_already_selected: "You have already chosen a gender before."
-family_gender_incorrectly_specified: "Incorrectly specified gender. Use MALE, FEMALE, or NON_BINARY."
-family_gender_player: "Player's gender "
-family_gender_player_reset: " reset to 'Undecided'."
-family_gender_player_set_to: " set to "
-#
-# 5 InfoGenerator
-family_player_unknown: "Unknown player"
+family_gender_incorrectly_specified: "Incorrectly specified gender. Use MALE, FEMALE, or NON_BINARY (if non-binary gender is allowed in the plugin settings)."
+family_gender_player_reset: "Player %s's gender reset to 'Undecided'."
+family_gender_player_set_to: "Player %s's gender set to:"
+
+# Command /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
 family_info_previous_lastname: "Previous surname: "
-family_info_role_father: "Father: "
-family_info_role_mother: "Mother: "
-family_info_role_guardian: "Guardian: "
-family_info_role_son: "Son: "
-family_info_role_daughter: "Daughter: "
-family_info_role_child: "Child: "
-family_info_role_relative: "Relative: "
-family_info_role_husband: "Husband: "
-family_info_role_wife: "Wife: "
-family_info_role_partner: "Partner: "
-family_info_family_not_found: "Family not found."
+family_info_role_father: "Father:"
+family_info_role_mother: "Mother:"
+family_info_role_guardian: "Guardian:"
+family_info_role_son: "Son:"
+family_info_role_daughter: "Daughter:"
+family_info_role_child: "Child:"
+family_info_role_relative: "Relative:"
+family_info_role_husband: "Husband:"
+family_info_role_wife: "Wife:"
+family_info_role_partner: "Partner:"
+family_info_family_not_found: "Family information not found."
 family_info_spouse_not_found: "absent"
 family_info_father_unknown: "unknown"
 family_info_mother_unknown: "unknown"
-family_info_children: " Children: "
+family_info_children: "Children:"
 family_info_children_none: "none"
-#
-# 6 FamilyTree
-family_tree_title: "Family Tree "
-family_tree_ancestors: "Ancestors "
-family_tree_descendants: "Descendants "
-family_tree_level_prefix_0: "└─ "
-family_tree_level_prefix_1: "┌─ "
-family_tree_level_prefix_2: "┌─ "
-family_tree_level_prefix_3: "┌─ "
-family_tree_level_prefix_other: "┌─ "
-#
-# 7 Set Family
-family_setfamily_permission_needed: "You need to be older to choose a surname"
-family_setfamily_command_format: "Parameters: /family setfamily <myfamily>"
-family_setfamily_player_not_found: "Player not found in the database."
-family_setfamily_family_selected: "Surname selected: "
-family_setfamily_family_already_exists1: "Surname already exists: "
-family_setfamily_family_already_exists2: ", to change it, please contact a priest"
+family_info_component: "Family information of player %s, hover to view or click to display in your chat"
 
+# Command /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+family_tree_title: "Family Tree"
+family_tree_ancestors: "Ancestors"
+family_tree_descendants: "Descendants"
+family_tree_component: "Information about player %s's family tree, hover to view or click to display in your chat"
+
+# Command /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+family_surname_selected: "Your surname: %s "
+family_surname_already_exists: "Surname already exists: %s, to change it, contact a priest"
+family_surname_forced_change: "Player %s's surname forcibly set to: %s "
+family_surname_build_failed: "Failed to save surname, possibly one or both options exceed 21 characters"
+
+# Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
+family_adopt_error_already_has_parents: "Player %s already has parents, adoption impossible"
+family_adopt_error_self_adoption: "Cannot adopt or be adopted by yourself"
+family_adopt_error_duplicate_requests: "Both future parents have already made requests"
+family_adopt_waiting_for_second_parent: "Request for %s sent, awaiting second parent"
+family_adopt_parent_offer_received: "Player %s wants to become one of your parents. If you already have 2 offers, use the command /adoption accept - to agree or /adoption decline - to refuse"
+family_adopt_waiting_for_child_decision: "Request for %s sent, awaiting child's decision"
+family_adopt_request_already_sent: "You have already sent a request, wait for the decision"
+family_adopt_adoption_applications: "Adoption applications: "
+family_adopt_no_applications_adoption: "No adoption applications"
+family_err_adoption_failed: "Player %s cannot be a parent for %s"
+
+# Command /adoption cancel [class: ink.anh.family.parents.Adopt]
+family_cancel_adoption_error_no_request: "Adoption cancellation error, no request"
+family_cancel_adoption_partial_success: "%s canceled their adoption application for %s, the other parent's application %s is active"
+family_cancel_adoption_full_success: "%s canceled their adoption application for %s, the adoption procedure was completely canceled"
+
+# Command /adoption accept [class: ink.anh.family.parents.Adopt]
+family_accept_error_no_parents: "Future parents have not yet declared their intention to accept you into the family"
+family_accept_error_parent1_missing: "First parent not found in the database."
+family_accept_error_parent2_missing: "Second parent not found in the database."
+family_accept_error_cannot_adopt: "Players %s and %s cannot be parents for %s"
+family_accept_error_parrent_not_online: "One of the future parents left us and is now not online"
+family_accept_success: "Players %s and %s are now parents for %s"
+family_accept_success_adoption: "Adoption by player %s of player %s successful"
+family_accept_adoption_close: "Adoption procedure automatically canceled due to lack of response"
+
+# Command /adoption forceadopt [classes: ink.anh.family.parents.FamilyAdoption]
+family_log_adoption_impossible_single: "Player %s cannot adopt player %s"
+family_log_adoption_successful_single: "Adoption by player %s of player %s successful"
+
+# Command /adoption decline [classes: ink.anh.family.parents.Adopt]
+family_decline_notify_parent: "Your adoption application for %s was rejected"
+family_decline_success: "You rejected the adoption offer"
+
+# 10 Family clear
+family_clear_relative_success: "Removal of family ties was successful"
+family_clear_relative_missing: "No family ties found for removal"
+
+# 11 Family separate
+family_err_no_family_found_for_target: "No family found for the target."
+family_err_no_parent_child_relationship: "No parent-child relationship found."
+family_success_separation_completed: "Relationship successfully severed."
+family_err_separation_failed: "Failed to sever relationship."
+family_separation_child_not_found: "Child not found."
+family_separation_parent_not_found: "Guardian not found."
+family_separation_spouse_not_found: "Partner not found."
+family_separation_successful: "Family ties successfully severed."
+family_spouse_not_found: "You have no partner, no one to divorce."
+family_separation_spouse_successful: "You are divorced."
+family_error_command_line: "Incomplete or incorrect command"
+
+# 12 Actions Brides
+family_marry_refuse: "NO! I refuse the wedding!"
+family_marry_failed: "This wedding between %s and %s is not destined to happen, the GODS are angry! Repent, sinners."
+family_member_missing: "One or more participants left, the ceremony is canceled!"
+family_marry_waiting_for_consent: "We have consent from %s! This is wonderful! Waiting for consent from %s."
+family_marry_vows_man: |
+  YES!
+  I accept %s as my lawful wife and vow to love and protect her until the end of days!
+  In the world of the Middle Ages and far beyond!
+  In Discord, in voice and text channels!
+  On social networks and the vastness of the limitless Internet!
+  Build a house for her, become the father of our children, take care of the family's well-being!
+  Provide food, clothing, and protection!
+  Let the world know that we are united and inseparable, forever and ever!
+family_marry_vows_woman: |
+  YES!
+  I accept %s as my lawful husband and vow to be a devoted and loving wife!
+  In the world of the Middle Ages and far beyond!
+  In Discord, in voice and text channels!
+  On social networks and the vastness of the limitless Internet!
+  Give birth to and raise children, take care of the home, fulfill all his desires!
+  Be a faithful, obedient, and loving wife!
+  Let the world know that we are united and inseparable, forever and ever!
+family_marry_vows_nonbinary: |
+  YES!
+  I accept %s as my lawful partner and vow to support, respect, and care for them until the end of days!
+  In the world of the Middle Ages and far beyond!
+  In Discord, in voice and text channels!
+  On social networks and the vastness of the limitless Internet!
+  Ignore children, and one of us might look after the house!
+  Build a home with them, sharing joy and sorrow, and walk through life hand in hand together!
+  Let the world know that our unity is strong and unbreakable, forever and ever!
+
+family_marry_success: "The gods have heard the prayers and vows of %s and %s! From now and forever you are united by the bonds of marriage! The gods have blessed your union! We wish you happiness, love, harmony, and prosperity!"
+family_marry_payment_failed: "One of the newlyweds tried to hide the money! The gods refuse to perform this ceremony now."
+
+# Priests
+family_marry_priest_male: "Priest"
+family_marry_priest_female: "Priestess"
+family_marry_priest_nonbinary: "Clergy"
+# Newlyweds
+family_marry_groom_male: "Groom"
+family_marry_groom_female: "Bride"
+family_marry_groom_nonbinary: "Betrothed"
+
+# 13 Family Marry
+family_marry_failed_myself: "Cannot perform the ceremony on yourself, call another priest."
+family_marry_failed_traditional: "Only traditional families are allowed here, man and woman!"
+family_marry_failed_last_name: "Wedding not possible now due to: family surname not found!"
+family_marry_failed_distance: "Wedding not possible now due to: the newlyweds are too far from the priest!"
+family_mary_not_have_permission: "You do not have permission to create a family yet"
+family_mary_not_have_permission_members: "Wedding not possible now due to: %s%s%s do not have permission to marry!"
+family_marry_payment_failed_check: "Wedding not possible now due to: the newlyweds do not have enough money to pay for the ceremony."
+family_marry_already_started: "The wedding ceremony between %s and %s has already started."
+
+family_marry_start_success: |
+  The gods agreed to perform the wedding ceremony between %s and %s,
+  newlyweds, say loudly (YES!) to confirm your consent. Then the words of the vows will be spoken.
+  Or say (NO!) to refuse!
+family_marry_start_priest: "The ceremony has begun, wait for the consent of the newlyweds or cancel the wedding"

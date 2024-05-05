@@ -5,75 +5,184 @@
 # ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
 # ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
 # ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
-#
-# Внутрішні системні повідомлення плагіну AnhyShop
-#
+
+# Можна використовувати кольорові коди типу: &6 або §6
+
 # 1 Загальне
 family_err_not_have_permission: "Ви не маєте дозволу на використання цієї команди."
 family_err_not_alloved_config: "Команда не дозволена в налаштуваннях конфігурації."
 family_err_command_only_player: "Ця команда може виконуватися тільки гравцем."
 family_err_command_format: "Формат команди: "
-#
+
 # 2 Завантаження конфігурацій
 family_err_folder_is_empty: "Папка порожня або сталася помилка при її читанні."
 family_err_folder_is_notexist: "Папка не існує або це не папка."
 family_err_reloading_configuration: "Помилка перезавантаження конфігурації."
-family_created_default_configuration: "Створена конфігурація за замовчуванням."
+family_created_default_configuration: "Створено конфігурацію за замовчуванням."
 family_configuration_reloaded: "Конфігурацію перезавантажено."
+family_plugin_reloaded: "Плагін перезавантажено."
 family_language_reloaded: "Мовні файли та конфігурацію перезавантажено."
-#
+
 # 3 Різне
 family_player: "Гравець "
 family_player_not_found: " не знайдений або не в мережі."
-#
-# 4 Робота з статтю
+family_player_not_found_full: "Гравець %s не знайдений або не в мережі."
+family_player_unknown: "Невідомий гравець"
+family_player_not_found_db: "Гравець не знайдений в БД."
+family_error_generic: "Невідома помилка"
+
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
 family_gender_male: "Чоловіча"
 family_gender_female: "Жіноча"
 family_gender_non-binary: "Небінарне"
 family_gender_undecided: "Не визначено"
-family_set_gender: "Ваша стать була встановлена як "
+family_gender_player_info: "У гравця %s, стать:"
+family_set_gender_force: "Ваша стать була встановлена як:"
 family_gender_already_selected: "Ви вже обрали стать раніше."
-family_gender_incorrectly_specified: "Невірно вказана стать. Використовуйте MALE, FEMALE або NON_BINARY."
-family_gender_player: "Стать гравця "
-family_gender_player_reset: " скинута на 'Не визначено'."
-family_gender_player_set_to: " встановлена на "
-#
-# 5 InfoGenerator
-family_player_unknown: "Невідомий гравець"
+family_gender_incorrectly_specified: "Неправильно вказана стать. Використовуйте MALE, FEMALE або NON_BINARY (якщо небінарна стать дозволена в налаштуваннях плагіна)."
+family_gender_player_reset: "Стать гравця %s скинуто на 'Не визначено'."
+family_gender_player_set_to: "Стать гравця %s встановлено як:"
+
+# Command /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
 family_info_previous_lastname: "Попереднє прізвище: "
-family_info_role_father: "Батько: "
-family_info_role_mother: "Мати: "
-family_info_role_guardian: "Опікун: "
-family_info_role_son: "Син: "
-family_info_role_daughter: "Дочка: "
-family_info_role_child: "Дитина: "
-family_info_role_relative: "Рідня: "
-family_info_role_husband: "Чоловік: "
-family_info_role_wife: "Дружина: "
-family_info_role_partner: "Співмешканець: "
-family_info_family_not_found: "Сім'я не знайдена."
+family_info_role_father: "Батько:"
+family_info_role_mother: "Мати:"
+family_info_role_guardian: "Опікун:"
+family_info_role_son: "Син:"
+family_info_role_daughter: "Дочка:"
+family_info_role_child: "Дитина:"
+family_info_role_relative: "Рідня:"
+family_info_role_husband: "Чоловік:"
+family_info_role_wife: "Дружина:"
+family_info_role_partner: "Партнер:"
+family_info_family_not_found: "Сімейну інформацію не знайдено."
 family_info_spouse_not_found: "відсутній(я)"
 family_info_father_unknown: "невідомий"
 family_info_mother_unknown: "невідома"
-family_info_children: " Діти: "
-family_info_children_none: "відсутні"
-#
-# 6 FamilyTree
-family_tree_title: "Фамільне дерево "
-family_tree_ancestors: "Предки "
-family_tree_descendants: "Нащадки "
-family_tree_level_prefix_0: "└─ "
-family_tree_level_prefix_1: "┌─ "
-family_tree_level_prefix_2: "┌─ "
-family_tree_level_prefix_3: "┌─ "
-family_tree_level_prefix_other: "┌─ "
-#
-# 7 Set Family
-family_setfamily_permission_needed: "Потрібно бути старшим, щоб обрати прізвище"
-family_setfamily_command_format: "Параметри: /family setfamily <myfamily>"
-family_setfamily_player_not_found: "Гравець не знайдений в БД."
-family_setfamily_family_selected: "Прізвище обране: "
-family_setfamily_family_already_exists1: "Прізвище вже існує: "
-family_setfamily_family_already_exists2: ", щоб змінити його, зверніться до священика"
+family_info_children: "Діти:"
+family_info_children_none: "немає"
+family_info_component: "Сімейна інформація гравця %s, наведіть для перегляду або клікніть для виведення у свій чат"
 
+# Command /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+family_tree_title: "Сімейне дерево"
+family_tree_ancestors: "Предки"
+family_tree_descendants: "Нащадки"
+family_tree_component: "Інформація про родове дерево гравця %s, наведіть для перегляду або клікніть для виведення у свій чат"
 
+# Command /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+family_surname_selected: "Ваше прізвище: %s "
+family_surname_already_exists: "Прізвище вже є: %s, щоб змінити його, зверніться до священника"
+family_surname_forced_change: "Для гравця %s примусово встановлено прізвище: %s "
+family_surname_build_failed: "Не вдалося зберегти прізвище, можливо, один або обидва варіанти довші за 21 символ"
+
+# Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
+family_adopt_error_already_has_parents: "Гравець %s вже має батьків, усиновлення неможливе"
+family_adopt_error_self_adoption: "Неможливо усиновити або удочерити себе"
+family_adopt_error_duplicate_requests: "Два майбутніх батьки вже подали запити"
+family_adopt_waiting_for_second_parent: "Запит для %s надіслано, чекаємо на другого з батьків"
+family_adopt_parent_offer_received: "Гравець %s хоче стати одним з ваших батьків. Якщо у вас вже є 2 пропозиції, введіть команду /adoption accept - для згоди або /adoption decline - для відмови"
+family_adopt_waiting_for_child_decision: "Запит для %s надіслано, чекаємо на рішення дитини"
+family_adopt_request_already_sent: "Ви вже надіслали запит, чекайте на рішення"
+family_adopt_adoption_applications: "Заявки на усиновлення: "
+family_adopt_no_applications_adoption: "Заявки на усиновлення відсутні"
+family_err_adoption_failed: "Гравець %s не може бути батьком для %s"
+
+# Command /adoption cancel [class: ink.anh.family.parents.Adopt]
+family_cancel_adoption_error_no_request: "Помилка скасування усиновлення, запиту немає"
+family_cancel_adoption_partial_success: "%s скасував свою заявку на усиновлення %s, заявка іншого батька %s - активна"
+family_cancel_adoption_full_success: "%s скасував свою заявку на усиновлення %s, процедура усиновлення повністю скасована"
+
+# Command /adoption accept [class: ink.anh.family.parents.Adopt]
+family_accept_error_no_parents: "Майбутні батьки ще не заявили про бажання прийняти вас у сім'ю"
+family_accept_error_parent1_missing: "Перший з батьків не знайдений у БД."
+family_accept_error_parent2_missing: "Другий з батьків не знайдений у БД."
+family_accept_error_cannot_adopt: "Гравці %s і %s не можуть бути батьками для %s"
+family_accept_error_parrent_not_online: "Хтось із майбутніх батьків покинув нас і зараз не в мережі"
+family_accept_success: "Гравці %s і %s тепер батьки для %s"
+family_accept_success_adoption: "Усиновлення/удочеріння гравцем %s гравця %s успішне"
+family_accept_adoption_close: "Процедура усиновлення/удочеріння скасована автоматично через відсутність відповіді"
+
+# Command /adoption forceadopt [classes: ink.anh.family.parents.FamilyAdoption]
+family_log_adoption_impossible_single: "Гравець %s не може усиновити/удочерити гравця %s"
+family_log_adoption_successful_single: "Усиновлення/удочеріння гравцем %s гравця %s успішне"
+
+# Command /adoption decline [classes: ink.anh.family.parents.Adopt]
+family_decline_notify_parent: "Ваша заявка на усиновлення/удочеріння %s була відхилена"
+family_decline_success: "Ви відхилили пропозицію про усиновлення/удочеріння"
+
+# 10 Family clear
+family_clear_relative_success: "Видалення родинних зв'язків проведено успішно"
+family_clear_relative_missing: "Родинних зв'язків для видалення не виявлено"
+
+# 11 Family separate
+family_err_no_family_found_for_target: "Сім'я для цілі не знайдена."
+family_err_no_parent_child_relationship: "Відносини батько-дитина не виявлено."
+family_success_separation_completed: "Відносини успішно розірвано."
+family_err_separation_failed: "Не вдалося розірвати відносини."
+family_separation_child_not_found: "Дитина не знайдена."
+family_separation_parent_not_found: "Опікун не знайдений."
+family_separation_spouse_not_found: "Партнер не знайдений."
+family_separation_successful: "Родинні зв'язки успішно розірвано."
+family_spouse_not_found: "У вас немає партнера, ні з ким розлучатися."
+family_separation_spouse_successful: "Ви розлучені."
+family_error_command_line: "Неповна або неправильна команда"
+# 12 Дії Молодят
+family_marry_refuse: "НІ! Я відмовляюся від весілля!"
+family_marry_failed: "Цьому весіллю між %s і %s не судилося відбутися, БОГИ розгнівані! Покайтеся, грішники."
+family_member_missing: "Один або декілька учасників пішли, церемонія скасовується!"
+family_marry_waiting_for_consent: "Маємо згоду від %s! Це чудово! Чекаємо згоди від %s."
+family_marry_vows_man: |
+  ТАК!
+  Я приймаю %s у законні дружини і клянусь любити й оберігати її до кінця днів!
+  У світі Середньовіччя та далеко за його межами!
+  У дискорді, у голосових та текстових каналах!
+  У соціальних мережах та просторах безмежного інтернету!
+  Збудувати для неї дім, стати батьком наших дітей, дбати про сімейне благополуччя!
+  Надавати їжу, одяг та захист!
+  Нехай світ знає, що ми єдині і нерозлучні, навіки і вічно!
+family_marry_vows_woman: |
+  ТАК!
+  Я приймаю %s у законні чоловіки і клянусь бути йому відданою і люблячою дружиною!
+  У світі Середньовіччя та далеко за його межами!
+  У дискорді, у голосових та текстових каналах!
+  У соціальних мережах та просторах безмежного інтернету!
+  Народити та виховувати дітей, дбати про домашній затишок, виконувати всі його бажання!
+  Бути вірною, слухняною і люблячою дружиною!
+  Нехай світ знає, що ми єдині і нерозлучні, навіки і вічно!
+family_marry_vows_nonbinary: |
+  ТАК!
+  Я приймаю %s у законні партнери і клянусь підтримувати, поважати й дбати про них до кінця днів!
+  У світі Середньовіччя та далеко за його межами!
+  У дискорді, у голосових та текстових каналах!
+  У соціальних мережах та просторах безмежного інтернету!
+  Наплювати на дітей, а за домом хтось із нас може наглядати!
+  Будувати з ними дім, ділячись радістю і горем, і разом йти по життю рука об руку!
+  Нехай світ знає, що наша єдність міцна і непорушна, навіки і вічно!
+
+family_marry_success: "Боги почули молитви та обітниці %s і %s! Відтепер і навіки ви пов'язані узами шлюбу! Боги благословили ваш союз! Бажаємо вам щастя, кохання, гармонії та процвітання!"
+family_marry_payment_failed: "Хтось із молодят спробував сховати гроші! Боги відмовляються проводити цей обряд зараз."
+
+# Священники
+family_marry_priest_male: "Священник"
+family_marry_priest_female: "Священниця"
+family_marry_priest_nonbinary: "Священна особа"
+# Молодята
+family_marry_groom_male: "Наречений"
+family_marry_groom_female: "Наречена"
+family_marry_groom_nonbinary: "Наречене"
+
+# 13 Сімейний шлюб
+family_marry_failed_myself: "Не можна здійснювати обряд над самим собою, покличте іншого священника."
+family_marry_failed_traditional: "Тут дозволені лише традиційні сім'ї, чоловік та жінка!"
+family_marry_failed_last_name: "Весілля зараз неможливе з причини: не знайдено сімейне прізвище!"
+family_marry_failed_distance: "Весілля зараз неможливе з причини: молодята занадто далеко від священника!"
+family_mary_not_have_permission: "Ви ще не маєте дозволу на створення сім'ї"
+family_mary_not_have_permission_members: "Весілля зараз неможливе з причини: %s%s%s не має дозволу на одруження!"
+family_marry_payment_failed_check: "Весілля зараз неможливе з причини: у молодят недостатньо грошей для оплати обряду."
+family_marry_already_started: "Церемонія весілля між %s і %s вже розпочалася."
+
+family_marry_start_success: |
+  Боги погодилися провести весільний обряд між %s і %s,
+  молодята, скажіть голосно (ТАК!), щоб підтвердити свою згоду. Після цього будуть вимовлені слова обітниці.
+  Або скажіть (НІ!), щоб відмовитися!
+family_marry_start_priest: "Обряд розпочато, дочекайтеся згоди молодят або скасуйте весілля"

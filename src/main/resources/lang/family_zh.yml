@@ -5,74 +5,184 @@
 # ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
 # ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
 # ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
-#
-# AnhyShop 插件的内部系统消息
-#
+
+# 可以使用颜色代码：&6 或 §6
+
 # 1 通用
-family_err_not_have_permission: "您没有权限使用此命令。"
-family_err_not_alloved_config: "配置设置中不允许使用此命令。"
+family_err_not_have_permission: "你无权使用此命令。"
+family_err_not_alloved_config: "该命令在配置中不被允许。"
 family_err_command_only_player: "此命令只能由玩家执行。"
 family_err_command_format: "命令格式："
-#
+
 # 2 加载配置
 family_err_folder_is_empty: "文件夹为空或读取时出错。"
 family_err_folder_is_notexist: "文件夹不存在或不是文件夹。"
 family_err_reloading_configuration: "重新加载配置时出错。"
-family_created_default_configuration: "已创建默认配置。"
+family_created_default_configuration: "创建了默认配置。"
 family_configuration_reloaded: "配置已重新加载。"
+family_plugin_reloaded: "插件已重新加载。"
 family_language_reloaded: "语言文件和配置已重新加载。"
-#
+
 # 3 杂项
 family_player: "玩家 "
 family_player_not_found: " 未找到或不在线。"
-#
-# 4 处理性别
+family_player_not_found_full: "玩家 %s 未找到或不在线。"
+family_player_unknown: "未知玩家"
+family_player_not_found_db: "在数据库中未找到玩家。"
+family_error_generic: "未知错误"
+
+# 命令 /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
 family_gender_male: "男性"
 family_gender_female: "女性"
 family_gender_non-binary: "非二元"
 family_gender_undecided: "未决定"
-family_set_gender: "您的性别已设置为 "
-family_gender_already_selected: "您之前已选择过性别。"
-family_gender_incorrectly_specified: "性别指定不正确。请使用 MALE（男性），FEMALE（女性）或 NON_BINARY（非二元）。"
-family_gender_player: "玩家的性别 "
-family_gender_player_reset: " 重置为 '未决定'。"
-family_gender_player_set_to: " 设置为 "
-#
-# 5 InfoGenerator
-family_player_unknown: "未知玩家"
-family_info_previous_lastname: "之前的姓氏: "
-family_info_role_father: "父亲: "
-family_info_role_mother: "母亲: "
-family_info_role_guardian: "监护人: "
-family_info_role_son: "儿子: "
-family_info_role_daughter: "女儿: "
-family_info_role_child: "孩子: "
-family_info_role_relative: "亲戚: "
-family_info_role_husband: "丈夫: "
-family_info_role_wife: "妻子: "
-family_info_role_partner: "伴侣: "
-family_info_family_not_found: "未找到家庭。"
-family_info_spouse_not_found: "缺席"
+family_gender_player_info: "玩家 %s 的性别："
+family_set_gender_force: "你的性别已被设定为："
+family_gender_already_selected: "你之前已经选择了性别。"
+family_gender_incorrectly_specified: "性别指定错误。请使用 MALE、FEMALE 或 NON_BINARY（如果插件配置中允许非二元性别）。"
+family_gender_player_reset: "玩家 %s 的性别已被重置为“未决定”。"
+family_gender_player_set_to: "玩家 %s 的性别被设定为："
+
+# 命令 /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
+family_info_previous_lastname: "之前的姓氏："
+family_info_role_father: "父亲："
+family_info_role_mother: "母亲："
+family_info_role_guardian: "监护人："
+family_info_role_son: "儿子："
+family_info_role_daughter: "女儿："
+family_info_role_child: "孩子："
+family_info_role_relative: "亲属："
+family_info_role_husband: "丈夫："
+family_info_role_wife: "妻子："
+family_info_role_partner: "伴侣："
+family_info_family_not_found: "未找到家庭信息。"
+family_info_spouse_not_found: "缺失"
 family_info_father_unknown: "未知"
 family_info_mother_unknown: "未知"
-family_info_children: " 孩子: "
-family_info_children_none: "无"
-#
-# 6 FamilyTree
-family_tree_title: "家族树 "
-family_tree_ancestors: "祖先 "
-family_tree_descendants: "后代 "
-family_tree_level_prefix_0: "└─ "
-family_tree_level_prefix_1: "┌─ "
-family_tree_level_prefix_2: "┌─ "
-family_tree_level_prefix_3: "┌─ "
-family_tree_level_prefix_other: "┌─ "
-#
-# 7 Set Family
-family_setfamily_permission_needed: "需要年长些才能选择姓氏"
-family_setfamily_command_format: "参数: /family setfamily <myfamily>"
-family_setfamily_player_not_found: "数据库中未找到玩家。"
-family_setfamily_family_selected: "已选择姓氏："
-family_setfamily_family_already_exists1: "姓氏已存在："
-family_setfamily_family_already_exists2: "，如需更改，请联系神职人员"
+family_info_children: "孩子："
+family_info_children_none: "没有"
+family_info_component: "玩家 %s 的家庭信息，悬停查看或点击显示在你的聊天框中"
 
+# 命令 /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+family_tree_title: "家谱树"
+family_tree_ancestors: "祖先"
+family_tree_descendants: "后代"
+family_tree_component: "玩家 %s 的家族树信息，悬停查看或点击显示在你的聊天框中"
+
+# 命令 /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+family_surname_selected: "你的姓氏：%s"
+family_surname_already_exists: "姓氏已经存在：%s，如果要更改，请咨询牧师"
+family_surname_forced_change: "玩家 %s 的姓氏已被强制更改为：%s"
+family_surname_build_failed: "无法保存姓氏，可能一个或两个选项超过了 21 个字符"
+
+# 命令 /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
+family_adopt_error_already_has_parents: "玩家 %s 已经有父母，无法被收养"
+family_adopt_error_self_adoption: "无法收养自己"
+family_adopt_error_duplicate_requests: "两个未来的父母已经提交了请求"
+family_adopt_waiting_for_second_parent: "已向 %s 发送请求，等待第二位父母"
+family_adopt_parent_offer_received: "玩家 %s 想成为你的父母之一。如果你已经有 2 个提议，请使用命令 /adoption accept 接受或 /adoption decline 拒绝"
+family_adopt_waiting_for_child_decision: "已向 %s 发送请求，等待孩子的决定"
+family_adopt_request_already_sent: "你已经发送了请求，请等待决定"
+family_adopt_adoption_applications: "收养申请："
+family_adopt_no_applications_adoption: "没有收养申请"
+family_err_adoption_failed: "玩家 %s 不能成为 %s 的父母"
+
+# 命令 /adoption cancel [class: ink.anh.family.parents.Adopt]
+family_cancel_adoption_error_no_request: "取消收养时出错，没有请求"
+family_cancel_adoption_partial_success: "%s 取消了对 %s 的收养申请，另一个父母 %s 的申请仍然有效"
+family_cancel_adoption_full_success: "%s 取消了对 %s 的收养申请，收养程序已完全取消"
+
+# 命令 /adoption accept [class: ink.anh.family.parents.Adopt]
+family_accept_error_no_parents: "未来的父母尚未表达他们的收养意愿"
+family_accept_error_parent1_missing: "未在数据库中找到第一位父母。"
+family_accept_error_parent2_missing: "未在数据库中找到第二位父母。"
+family_accept_error_cannot_adopt: "玩家 %s 和 %s 不能成为 %s 的父母"
+family_accept_error_parrent_not_online: "其中一位未来的父母已经离开我们，现在不在线"
+family_accept_success: "玩家 %s 和 %s 现在是 %s 的父母"
+family_accept_success_adoption: "玩家 %s 成功被玩家 %s 收养"
+family_accept_adoption_close: "由于缺乏回应，收养程序已自动取消"
+
+# 命令 /adoption forceadopt [classes: ink.anh.family.parents.FamilyAdoption]
+family_log_adoption_impossible_single: "玩家 %s 无法收养玩家 %s"
+family_log_adoption_successful_single: "玩家 %s 成功被玩家 %s 收养"
+
+# 命令 /adoption decline [classes: ink.anh.family.parents.Adopt]
+family_decline_notify_parent: "你对 %s 的收养申请被拒绝了"
+family_decline_success: "你拒绝了收养提议"
+
+# 10 清除家庭
+family_clear_relative_success: "成功删除家庭关系"
+family_clear_relative_missing: "未找到要删除的家庭关系"
+
+# 11 分离家庭
+family_err_no_family_found_for_target: "未找到目标的家庭。"
+family_err_no_parent_child_relationship: "未找到父母-子女关系。"
+family_success_separation_completed: "成功结束关系。"
+family_err_separation_failed: "无法结束关系。"
+family_separation_child_not_found: "未找到孩子。"
+family_separation_parent_not_found: "未找到监护人。"
+family_separation_spouse_not_found: "未找到伴侣。"
+family_separation_successful: "成功解除家庭关系。"
+family_spouse_not_found: "你没有伴侣，无法离婚。"
+family_separation_spouse_successful: "你已经离婚了。"
+family_error_command_line: "命令不完整或错误"
+# 12 新婚行动
+family_marry_refuse: "不！我拒绝婚礼！"
+family_marry_failed: "玩家 %s 和 %s 之间的婚礼未能举行，众神愤怒了！忏悔吧，罪人。"
+family_member_missing: "一位或多位参与者已离开，仪式取消！"
+family_marry_waiting_for_consent: "我们已经得到了 %s 的同意！太棒了！等待 %s 的同意。"
+family_marry_vows_man: |
+  是的！
+  我接受 %s 作为我合法的妻子，并发誓要爱她并保护她，直到我生命的尽头！
+  在中世纪世界以及更远的地方！
+  在 Discord 上，在语音和文字频道中！
+  在社交媒体和互联网的广阔空间中！
+  为她建造一个家，成为我们孩子的父亲，照顾家庭的幸福！
+  提供食物、衣物和保护！
+  让全世界都知道我们是一体的，永不分离，直到永远！
+family_marry_vows_woman: |
+  是的！
+  我接受 %s 作为我合法的丈夫，并发誓做一个忠诚而有爱的妻子！
+  在中世纪世界以及更远的地方！
+  在 Discord 上，在语音和文字频道中！
+  在社交媒体和互联网的广阔空间中！
+  生孩子并抚养他们，照顾家庭，满足他的所有愿望！
+  做一个忠诚、听话和有爱的妻子！
+  让全世界都知道我们是一体的，永不分离，直到永远！
+family_marry_vows_nonbinary: |
+  是的！
+  我接受 %s 作为我合法的伴侣，并发誓支持、尊重和照顾他们，直到我生命的尽头！
+  在中世纪世界以及更远的地方！
+  在 Discord 上，在语音和文字频道中！
+  在社交媒体和互联网的广阔空间中！
+  忘掉孩子吧，我们中的一个可以照顾家！
+  一起建造一个家，共享喜悦和悲伤，并携手一起走过人生旅程！
+  让全世界都知道我们的结合坚固且不可动摇，直到永远！
+
+family_marry_success: "众神听到了 %s 和 %s 的祈祷和誓言！从现在开始直到永远，你们已经在婚姻中结合了！众神祝福你们的结合！祝你们幸福、爱情、和谐与繁荣！"
+family_marry_payment_failed: "其中一位新婚夫妇试图藏钱！众神现在拒绝进行仪式。"
+
+# 牧师
+family_marry_priest_male: "牧师"
+family_marry_priest_female: "女牧师"
+family_marry_priest_nonbinary: "圣人"
+# 新婚夫妇
+family_marry_groom_male: "新郎"
+family_marry_groom_female: "新娘"
+family_marry_groom_nonbinary: "新婚者"
+
+# 13 家庭婚姻
+family_marry_failed_myself: "你不能对自己进行仪式，请找另一位牧师。"
+family_marry_failed_traditional: "这里只允许传统家庭，男人和女人！"
+family_marry_failed_last_name: "由于未找到家庭姓氏，目前无法举行婚礼！"
+family_marry_failed_distance: "由于新人距离牧师太远，目前无法举行婚礼！"
+family_mary_not_have_permission: "你还没有创建家庭的权限"
+family_mary_not_have_permission_members: "由于 %s%s%s 无法获得结婚许可，目前无法举行婚礼！"
+family_marry_payment_failed_check: "由于新婚夫妇没有足够的钱支付仪式，目前无法举行婚礼。"
+family_marry_already_started: "%s 和 %s 之间的婚礼仪式已经开始。"
+
+family_marry_start_success: |
+  众神已同意在 %s 和 %s 之间举行婚礼仪式，
+  新婚夫妇，大声说（是的！）以确认你的同意。之后将发表誓言。
+  或者说（不！）来拒绝！
+family_marry_start_priest: "仪式已经开始，等待新婚夫妇的同意或取消婚礼。"

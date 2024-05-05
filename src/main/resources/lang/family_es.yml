@@ -5,74 +5,184 @@
 # ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
 # ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
 # ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
-#
-# Mensajes del sistema interno del plugin AnhyShop
-#
+
+# Se pueden usar códigos de colores como: &6 o §6
+
 # 1 General
 family_err_not_have_permission: "No tienes permiso para usar este comando."
 family_err_not_alloved_config: "El comando no está permitido en la configuración."
 family_err_command_only_player: "Este comando solo puede ser ejecutado por un jugador."
 family_err_command_format: "Formato del comando: "
-#
-# 2 Cargando configuraciones
-family_err_folder_is_empty: "La carpeta está vacía o se produjo un error al leerla."
+
+# 2 Carga de configuraciones
+family_err_folder_is_empty: "La carpeta está vacía o ocurrió un error al leerla."
 family_err_folder_is_notexist: "La carpeta no existe o no es una carpeta."
 family_err_reloading_configuration: "Error al recargar la configuración."
 family_created_default_configuration: "Configuración predeterminada creada."
 family_configuration_reloaded: "Configuración recargada."
+family_plugin_reloaded: "Plugin recargado."
 family_language_reloaded: "Archivos de idioma y configuración recargados."
-#
+
 # 3 Varios
 family_player: "Jugador "
-family_player_not_found: " no encontrado o no en línea."
-#
-# 4 Trabajando con el género
-family_gender_male: "Hombre"
-family_gender_female: "Mujer"
-family_gender_non-binary: "No binario"
-family_gender_undecided: "Indeciso"
-family_set_gender: "Tu género ha sido establecido como "
-family_gender_already_selected: "Ya has elegido un género anteriormente."
-family_gender_incorrectly_specified: "Género especificado incorrectamente. Usa HOMBRE, MUJER o NO_BINARIO."
-family_gender_player: "Género del jugador "
-family_gender_player_reset: " restablecido a 'Indeciso'."
-family_gender_player_set_to: " establecido a "
-#
-# 5 InfoGenerator
+family_player_not_found: " no encontrado o no está en línea."
+family_player_not_found_full: "Jugador %s no encontrado o no está en línea."
 family_player_unknown: "Jugador desconocido"
+family_player_not_found_db: "Jugador no encontrado en la BD."
+family_error_generic: "Error desconocido"
+
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
+family_gender_male: "Masculino"
+family_gender_female: "Femenino"
+family_gender_non-binary: "No binario"
+family_gender_undecided: "No decidido"
+family_gender_player_info: "El jugador %s tiene género:"
+family_set_gender_force: "Tu género ha sido establecido como:"
+family_gender_already_selected: "Ya seleccionaste tu género previamente."
+family_gender_incorrectly_specified: "Género especificado incorrectamente. Usa MALE, FEMALE o NON_BINARY (si el género no binario está permitido en la configuración del plugin)."
+family_gender_player_reset: "El género del jugador %s ha sido restablecido a 'No decidido'."
+family_gender_player_set_to: "El género del jugador %s ha sido establecido como:"
+
+# Command /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
 family_info_previous_lastname: "Apellido anterior: "
-family_info_role_father: "Padre: "
-family_info_role_mother: "Madre: "
-family_info_role_guardian: "Guardián: "
-family_info_role_son: "Hijo: "
-family_info_role_daughter: "Hija: "
-family_info_role_child: "Niño/a: "
-family_info_role_relative: "Pariente: "
-family_info_role_husband: "Esposo: "
-family_info_role_wife: "Esposa: "
-family_info_role_partner: "Pareja: "
-family_info_family_not_found: "Familia no encontrada."
+family_info_role_father: "Padre:"
+family_info_role_mother: "Madre:"
+family_info_role_guardian: "Tutor:"
+family_info_role_son: "Hijo:"
+family_info_role_daughter: "Hija:"
+family_info_role_child: "Niño:"
+family_info_role_relative: "Pariente:"
+family_info_role_husband: "Esposo:"
+family_info_role_wife: "Esposa:"
+family_info_role_partner: "Pareja:"
+family_info_family_not_found: "No se encontró información familiar."
 family_info_spouse_not_found: "ausente"
 family_info_father_unknown: "desconocido"
 family_info_mother_unknown: "desconocida"
-family_info_children: " Hijos: "
+family_info_children: "Niños:"
 family_info_children_none: "ninguno"
-#
-# 6 FamilyTree
-family_tree_title: "Árbol Genealógico "
-family_tree_ancestors: "Antepasados "
-family_tree_descendants: "Descendientes "
-family_tree_level_prefix_0: "└─ "
-family_tree_level_prefix_1: "┌─ "
-family_tree_level_prefix_2: "┌─ "
-family_tree_level_prefix_3: "┌─ "
-family_tree_level_prefix_other: "┌─ "
-#
-# 7 Set Family
-family_setfamily_permission_needed: "Necesitas ser mayor para elegir un apellido"
-family_setfamily_command_format: "Parámetros: /family setfamily <myfamily>"
-family_setfamily_player_not_found: "Jugador no encontrado en la base de datos."
-family_setfamily_family_selected: "Apellido seleccionado: "
-family_setfamily_family_already_exists1: "El apellido ya existe: "
-family_setfamily_family_already_exists2: ", para cambiarlo, contacta con un sacerdote"
+family_info_component: "Información familiar del jugador %s, pasa el ratón para ver o haz clic para mostrar en tu chat"
 
+# Command /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+family_tree_title: "Árbol genealógico"
+family_tree_ancestors: "Ancestros"
+family_tree_descendants: "Descendientes"
+family_tree_component: "Información del árbol familiar del jugador %s, pasa el ratón para ver o haz clic para mostrar en tu chat"
+
+# Command /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+family_surname_selected: "Tu apellido: %s "
+family_surname_already_exists: "El apellido ya existe: %s, para cambiarlo, consulta al sacerdote"
+family_surname_forced_change: "El apellido para el jugador %s ha sido cambiado a la fuerza: %s "
+family_surname_build_failed: "No se pudo guardar el apellido, puede que una o ambas opciones superen los 21 caracteres"
+
+# Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
+family_adopt_error_already_has_parents: "El jugador %s ya tiene padres, no se puede adoptar"
+family_adopt_error_self_adoption: "No puedes adoptarte a ti mismo"
+family_adopt_error_duplicate_requests: "Ambos futuros padres ya han presentado solicitudes"
+family_adopt_waiting_for_second_parent: "Solicitud enviada a %s, esperando al segundo padre"
+family_adopt_parent_offer_received: "El jugador %s quiere ser uno de tus padres. Si ya tienes 2 ofertas, usa el comando /adoption accept para aceptar o /adoption decline para rechazar"
+family_adopt_waiting_for_child_decision: "Solicitud enviada a %s, esperando la decisión del niño"
+family_adopt_request_already_sent: "Ya has enviado una solicitud, espera la decisión"
+family_adopt_adoption_applications: "Solicitudes de adopción: "
+family_adopt_no_applications_adoption: "No hay solicitudes de adopción"
+family_err_adoption_failed: "El jugador %s no puede ser padre de %s"
+
+# Command /adoption cancel [class: ink.anh.family.parents.Adopt]
+family_cancel_adoption_error_no_request: "Error al cancelar la adopción, no hay solicitud"
+family_cancel_adoption_partial_success: "%s canceló su solicitud para adoptar a %s, la solicitud del otro padre %s está activa"
+family_cancel_adoption_full_success: "%s canceló su solicitud para adoptar a %s, el procedimiento de adopción ha sido cancelado por completo"
+
+# Command /adoption accept [class: ink.anh.family.parents.Adopt]
+family_accept_error_no_parents: "Los futuros padres aún no han expresado su deseo de adoptarte"
+family_accept_error_parent1_missing: "No se encontró al primer padre en la BD."
+family_accept_error_parent2_missing: "No se encontró al segundo padre en la BD."
+family_accept_error_cannot_adopt: "Los jugadores %s y %s no pueden ser padres de %s"
+family_accept_error_parrent_not_online: "Uno de los futuros padres nos ha dejado y no está en línea"
+family_accept_success: "Los jugadores %s y %s ahora son padres de %s"
+family_accept_success_adoption: "Adopción exitosa del jugador %s por parte del jugador %s"
+family_accept_adoption_close: "El procedimiento de adopción ha sido cancelado automáticamente debido a la falta de respuesta"
+
+# Command /adoption forceadopt [classes: ink.anh.family.parents.FamilyAdoption]
+family_log_adoption_impossible_single: "El jugador %s no puede adoptar al jugador %s"
+family_log_adoption_successful_single: "Adopción exitosa del jugador %s por parte del jugador %s"
+
+# Command /adoption decline [classes: ink.anh.family.parents.Adopt]
+family_decline_notify_parent: "Tu solicitud para adoptar a %s ha sido rechazada"
+family_decline_success: "Has rechazado la oferta de adopción"
+
+# 10 Family clear
+family_clear_relative_success: "Eliminación de vínculos familiares exitosa"
+family_clear_relative_missing: "No se encontraron vínculos familiares para eliminar"
+
+# 11 Family separate
+family_err_no_family_found_for_target: "No se encontró familia para el objetivo."
+family_err_no_parent_child_relationship: "No se encontró relación padre-hijo."
+family_success_separation_completed: "Relación terminada con éxito."
+family_err_separation_failed: "No se pudo terminar la relación."
+family_separation_child_not_found: "Niño no encontrado."
+family_separation_parent_not_found: "Tutor no encontrado."
+family_separation_spouse_not_found: "Pareja no encontrada."
+family_separation_successful: "Vínculos familiares terminados con éxito."
+family_spouse_not_found: "No tienes pareja, no hay con quién divorciarse."
+family_separation_spouse_successful: "Te has divorciado."
+family_error_command_line: "Comando incompleto o incorrecto"
+# 12 Acciones de los recién casados
+family_marry_refuse: "¡NO! ¡Me niego a la boda!"
+family_marry_failed: "La boda entre %s y %s no pudo realizarse, ¡los dioses están furiosos! Arrepiéntanse, pecadores."
+family_member_missing: "Uno o más participantes se han ido, ¡la ceremonia está cancelada!"
+family_marry_waiting_for_consent: "¡Tenemos el consentimiento de %s! ¡Eso es genial! Esperando el consentimiento de %s."
+family_marry_vows_man: |
+  ¡SÍ!
+  Acepto a %s como mi legítima esposa y juro amarla y protegerla hasta el final de mis días.
+  ¡En el mundo medieval y más allá!
+  ¡En Discord, en canales de voz y texto!
+  ¡En las redes sociales y en las vastas extensiones de Internet!
+  ¡Construirle un hogar, ser el padre de nuestros hijos, cuidar del bienestar familiar!
+  ¡Proporcionar comida, ropa y protección!
+  ¡Que el mundo sepa que somos uno y no nos separaremos, por siempre y para siempre!
+family_marry_vows_woman: |
+  ¡SÍ!
+  Acepto a %s como mi legítimo esposo y juro serle una esposa fiel y amorosa.
+  ¡En el mundo medieval y más allá!
+  ¡En Discord, en canales de voz y texto!
+  ¡En las redes sociales y en las vastas extensiones de Internet!
+  ¡Tener y criar hijos, cuidar del hogar, cumplir con todos sus deseos!
+  ¡Ser una esposa fiel, obediente y amorosa!
+  ¡Que el mundo sepa que somos uno y no nos separaremos, por siempre y para siempre!
+family_marry_vows_nonbinary: |
+  ¡SÍ!
+  Acepto a %s como mi legítima pareja y juro apoyarlos, respetarlos y cuidarlos hasta el final de mis días.
+  ¡En el mundo medieval y más allá!
+  ¡En Discord, en canales de voz y texto!
+  ¡En las redes sociales y en las vastas extensiones de Internet!
+  ¡Olvídate de los niños, y alguno de nosotros puede cuidar de la casa!
+  ¡Construir un hogar juntos, compartiendo alegrías y penas, y caminar juntos de la mano por la vida!
+  ¡Que el mundo sepa que nuestra unión es fuerte e inquebrantable, por siempre y para siempre!
+
+family_marry_success: "Los dioses han escuchado las oraciones y votos de %s y %s. ¡Desde ahora y para siempre están unidos en matrimonio! ¡Los dioses han bendecido su unión! Les deseamos felicidad, amor, armonía y prosperidad."
+family_marry_payment_failed: "¡Uno de los recién casados intentó esconder el dinero! Los dioses se niegan a realizar el ritual ahora."
+
+# Sacerdotes
+family_marry_priest_male: "Sacerdote"
+family_marry_priest_female: "Sacerdotisa"
+family_marry_priest_nonbinary: "Persona sagrada"
+# Recién casados
+family_marry_groom_male: "Novio"
+family_marry_groom_female: "Novia"
+family_marry_groom_nonbinary: "Prometide"
+
+# 13 Matrimonio familiar
+family_marry_failed_myself: "No puedes realizar el ritual sobre ti mismo, llama a otro sacerdote."
+family_marry_failed_traditional: "Aquí solo se permiten familias tradicionales, ¡hombre y mujer!"
+family_marry_failed_last_name: "La boda no es posible ahora porque no se encontró un apellido familiar."
+family_marry_failed_distance: "La boda no es posible ahora porque los recién casados están demasiado lejos del sacerdote."
+family_mary_not_have_permission: "Todavía no tienes permiso para formar una familia"
+family_mary_not_have_permission_members: "La boda no es posible ahora porque %s%s%s no tiene permiso para casarse."
+family_marry_payment_failed_check: "La boda no es posible ahora porque los recién casados no tienen suficiente dinero para pagar el ritual."
+family_marry_already_started: "La ceremonia de boda entre %s y %s ya ha comenzado."
+
+family_marry_start_success: |
+  Los dioses han accedido a realizar el ritual de boda entre %s y %s,
+  recién casados, digan en voz alta (¡SÍ!) para confirmar su consentimiento. Después de eso, se pronunciarán los votos.
+  ¡O di (¡NO!) para rechazarlo!
+family_marry_start_priest: "El ritual ha comenzado, espera el consentimiento de los recién casados o cancela la boda."

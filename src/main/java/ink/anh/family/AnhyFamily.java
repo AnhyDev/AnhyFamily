@@ -1,13 +1,11 @@
 package ink.anh.family;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ink.anh.family.command.CommandManager;
 import ink.anh.family.db.DatabaseManager;
 import ink.anh.family.listeners.ListenersRegistratar;
 import ink.anh.family.marry.MarriageManager;
-import ink.anh.family.papi.PAPIExpansion;
 import ink.anh.family.parents.ParentManager;
 import ink.anh.family.util.EconomyHandler;
 
@@ -53,10 +51,6 @@ public class AnhyFamily extends JavaPlugin {
         
         new ListenersRegistratar(this).register();
         new CommandManager(this).registerCommands();
-
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new PAPIExpansion(this).register();
-        }
     }
 
     @Override

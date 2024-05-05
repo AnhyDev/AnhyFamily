@@ -50,7 +50,7 @@ public class FamilyTreeCommandHandler extends Sender {
             MessageForFormatting hoverText = new MessageForFormatting(treeInfo, null);
             MessageChat.sendMessage(familyPlugin.getGlobalManager(), sender, message, hoverText, command, MessageType.NORMAL, false);
         } else {
-            sendMessage(new MessageForFormatting(treeInfo, null), MessageType.NORMAL, sender);
+            sendMessage(new MessageForFormatting(treeInfo, null), MessageType.NORMAL, false, sender);
         }
 
         return true;

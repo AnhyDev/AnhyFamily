@@ -26,7 +26,7 @@ public class FamilyInfoCommandHandler extends Sender {
     	Family family = getTargetFamily(sender, args);
         if (family == null) return false;
 
-        String familyInfo = translate(sender, InfoGenerator.generateFamilyInfo(family));
+        String familyInfo = translate(sender, new InfoGenerator(familyPlugin).generateFamilyInfo(family));
 
         if (isInteractive) {
         	String command  = "/family infos";
@@ -36,7 +36,7 @@ public class FamilyInfoCommandHandler extends Sender {
             MessageForFormatting hoverText = new MessageForFormatting(familyInfo, null);
             MessageChat.sendMessage(familyPlugin.getGlobalManager(), sender, message, hoverText, command, MessageType.NORMAL, false);
         } else {
-            sendMessage(new MessageForFormatting(familyInfo, null), MessageType.NORMAL, sender);
+            sendMessage(new MessageForFormatting(familyInfo, null), MessageType.NORMAL, false, sender);
         }
 
         return true;
