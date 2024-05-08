@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.Sender;
 import ink.anh.family.command.sub.Clear;
 import ink.anh.family.command.sub.Separation;
 import ink.anh.family.db.DatabaseManager;
@@ -27,9 +27,11 @@ import ink.anh.api.messages.MessageForFormatting;
 
 public class FamilyCommand extends Sender implements CommandExecutor {
 
+	private AnhyFamily familyPlugin;
 	
 	public FamilyCommand(AnhyFamily familyPlugin) {
-		super(familyPlugin);
+		super(familyPlugin.getGlobalManager());
+		this.familyPlugin = familyPlugin;
 	}
 	
 	@Override
@@ -66,7 +68,7 @@ public class FamilyCommand extends Sender implements CommandExecutor {
                 case "reload":
                 	return reload(sender);
                 default:
-                	sendMessage(new MessageForFormatting("family_err_command_format /family <param>", null), MessageType.WARNING, sender);
+                	sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);
                     return false;
                 }
             });

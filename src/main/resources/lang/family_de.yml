@@ -187,3 +187,13 @@ family_marry_start_success: |
   frisch Vermählte, sagt laut (JA!), um Ihre Zustimmung zu bestätigen. Dann werden die Worte der Gelübde gesprochen.
   Oder sagen Sie (NEIN!), um abzulehnen!
 family_marry_start_priest: "Das Ritual hat begonnen, warten Sie auf die Zustimmung der frisch Vermählten oder brechen Sie die Hochzeit ab"
+
+# Private Heiratsanträge [classes: ink.anh.family.marry.ActionsBridesPrivate]
+family_err_no_proposal: "Kein Heiratsantrag."
+family_proposal_sent: "Antrag an %s gesendet."
+family_proposal_received: "Sie haben einen Heiratsantrag von %s erhalten."
+family_proposal_failed: "Der Heiratsantrag an %s konnte nicht gesendet werden."
+family_proposal_accepted: "Sie haben den Heiratsantrag von %s angenommen."
+family_proposal_accepted_sender: "%s hat Ihren Heiratsantrag angenommen."
+family_proposal_refused: "Sie haben den Heiratsantrag von %s abgelehnt."
+family_proposal_refused_sender: "%s hat Ihren Heiratsantrag abgelehnt."

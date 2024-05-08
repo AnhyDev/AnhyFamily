@@ -126,6 +126,7 @@ family_separation_successful: "Legami familiari terminati con successo."
 family_spouse_not_found: "Non hai un partner, non c'è nessuno da cui divorziare."
 family_separation_spouse_successful: "Hai divorziato."
 family_error_command_line: "Comando incompleto o errato"
+
 # 12 Azioni dei neosposi
 family_marry_refuse: "NO! Mi rifiuto di sposarmi!"
 family_marry_failed: "Il matrimonio tra %s e %s non poteva aver luogo, gli DEI sono furiosi! Pentitevi, peccatori."
@@ -186,3 +187,14 @@ family_marry_start_success: |
   novelli sposi, dite ad alta voce (SÌ!) per confermare il vostro consenso. Dopo di che saranno pronunciati i voti.
   O dite (NO!) per rifiutare!
 family_marry_start_priest: "Il rituale è iniziato, aspetta il consenso dei novelli sposi o annulla il matrimonio."
+
+# Proposte di matrimonio private [classes: ink.anh.family.marry.ActionsBridesPrivate]
+family_err_no_proposal: "Nessuna proposta di matrimonio."
+family_proposal_sent: "Proposta inviata a %s."
+family_proposal_received: "Hai ricevuto una proposta di matrimonio da %s."
+family_proposal_failed: "Impossibile inviare la proposta di matrimonio a %s."
+family_proposal_accepted: "Hai accettato la proposta di matrimonio da %s."
+family_proposal_accepted_sender: "%s ha accettato la tua proposta di matrimonio."
+family_proposal_refused: "Hai rifiutato la proposta di matrimonio da %s."
+family_proposal_refused_sender: "%s ha rifiutato la tua proposta di matrimonio."
+

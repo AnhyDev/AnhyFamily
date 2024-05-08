@@ -126,6 +126,7 @@ family_separation_successful: "成功解除家庭关系。"
 family_spouse_not_found: "你没有伴侣，无法离婚。"
 family_separation_spouse_successful: "你已经离婚了。"
 family_error_command_line: "命令不完整或错误"
+
 # 12 新婚行动
 family_marry_refuse: "不！我拒绝婚礼！"
 family_marry_failed: "玩家 %s 和 %s 之间的婚礼未能举行，众神愤怒了！忏悔吧，罪人。"
@@ -186,3 +187,13 @@ family_marry_start_success: |
   新婚夫妇，大声说（是的！）以确认你的同意。之后将发表誓言。
   或者说（不！）来拒绝！
 family_marry_start_priest: "仪式已经开始，等待新婚夫妇的同意或取消婚礼。"
+
+# 私人婚姻提议 [classes: ink.anh.family.marry.ActionsBridesPrivate]
+family_err_no_proposal: "没有婚姻提议。"
+family_proposal_sent: "已向 %s 发送提议。"
+family_proposal_received: "您收到来自 %s 的婚姻提议。"
+family_proposal_failed: "未能向 %s 发送婚姻提议。"
+family_proposal_accepted: "您接受了来自 %s 的婚姻提议。"
+family_proposal_accepted_sender: "%s 接受了您的婚姻提议。"
+family_proposal_refused: "您拒绝了来自 %s 的婚姻提议。"
+family_proposal_refused_sender: "%s 拒绝了您的婚姻提议。"

@@ -17,6 +17,9 @@ commands:
     family:
         aliases: [fam]
         usage: "[AnhyFamily] The command '/family (/fam)' execution error, please check the arguments' correctness.adoption"
+    marry:
+        aliases: [married]
+        usage: "[AnhyFamily] The command '/marry public player1 player2' or '/marry private player'"
     adoption:
         aliases: [adopt]
         usage: "[AnhyFamily] The command '/adoption (/adopt)' execution error, please check the arguments' correctness."

@@ -6,8 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.Sender;
 import ink.anh.family.common.Family;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.gender.GenderManager;
@@ -15,9 +15,10 @@ import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class GenderCommand extends Sender implements CommandExecutor {
+;
 
     public GenderCommand(AnhyFamily familyPlugin) {
-        super(familyPlugin);
+    	super(familyPlugin.getGlobalManager());
     }
 
     @Override
@@ -56,7 +57,7 @@ public class GenderCommand extends Sender implements CommandExecutor {
                     }
                     break;
                 default:
-                    sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", null), MessageType.WARNING, sender);
+                    sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", new String[] {}), MessageType.WARNING, sender);
             }
         });
         return true;
@@ -71,14 +72,14 @@ public class GenderCommand extends Sender implements CommandExecutor {
         if (gender != null && gender != Gender.UNDECIDED) {
             if (GenderManager.getGender(player) == Gender.UNDECIDED) {
             	GenderManager.setGender(player, gender);
-                sendMessage(new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), null),  MessageType.NORMAL, sender);
+                sendMessage(new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), new String[] {}),  MessageType.NORMAL, sender);
                 return true;
             } else {
-                sendMessage(new MessageForFormatting("family_gender_already_selected", null), MessageType.WARNING, player);
+                sendMessage(new MessageForFormatting("family_gender_already_selected", new String[] {}), MessageType.WARNING, player);
                 return true;
             }
         } else {
-            sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", null), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[] {}), MessageType.WARNING, player);
             return true;
         }
     }
@@ -126,7 +127,7 @@ public class GenderCommand extends Sender implements CommandExecutor {
                 sendMessage(new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[] {playerName}),  MessageType.NORMAL, sender);
                 return true;
             } else {
-                sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", null), MessageType.WARNING, sender);
+                sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[] {}), MessageType.WARNING, sender);
                 return true;
             }
         } else {

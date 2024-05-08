@@ -126,6 +126,7 @@ family_separation_successful: "Vínculos familiares terminados con éxito."
 family_spouse_not_found: "No tienes pareja, no hay con quién divorciarse."
 family_separation_spouse_successful: "Te has divorciado."
 family_error_command_line: "Comando incompleto o incorrecto"
+
 # 12 Acciones de los recién casados
 family_marry_refuse: "¡NO! ¡Me niego a la boda!"
 family_marry_failed: "La boda entre %s y %s no pudo realizarse, ¡los dioses están furiosos! Arrepiéntanse, pecadores."
@@ -186,3 +187,13 @@ family_marry_start_success: |
   recién casados, digan en voz alta (¡SÍ!) para confirmar su consentimiento. Después de eso, se pronunciarán los votos.
   ¡O di (¡NO!) para rechazarlo!
 family_marry_start_priest: "El ritual ha comenzado, espera el consentimiento de los recién casados o cancela la boda."
+
+# Propuestas de matrimonio privadas [classes: ink.anh.family.marry.ActionsBridesPrivate]
+family_err_no_proposal: "No hay propuesta de matrimonio."
+family_proposal_sent: "Propuesta enviada a %s."
+family_proposal_received: "Has recibido una propuesta de matrimonio de %s."
+family_proposal_failed: "No se pudo enviar la propuesta de matrimonio a %s."
+family_proposal_accepted: "Has aceptado la propuesta de matrimonio de %s."
+family_proposal_accepted_sender: "%s aceptó tu propuesta de matrimonio."
+family_proposal_refused: "Has rechazado la propuesta de matrimonio de %s."
+family_proposal_refused_sender: "%s rechazó tu propuesta de matrimonio."

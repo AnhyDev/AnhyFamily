@@ -187,3 +187,13 @@ family_marry_start_success: |
   newlyweds, say loudly (YES!) to confirm your consent. Then the words of the vows will be spoken.
   Or say (NO!) to refuse!
 family_marry_start_priest: "The ceremony has begun, wait for the consent of the newlyweds or cancel the wedding"
+
+# Private Marriage Proposals [classes: ink.anh.family.marry.ActionsBridesPrivate]
+family_err_no_proposal: "No marriage proposal."
+family_proposal_sent: "Proposal sent to %s."
+family_proposal_received: "You received a marriage proposal from %s."
+family_proposal_failed: "Failed to send marriage proposal to %s."
+family_proposal_accepted: "You accepted the marriage proposal from %s."
+family_proposal_accepted_sender: "%s accepted your marriage proposal."
+family_proposal_refused: "You declined the marriage proposal from %s."
+family_proposal_refused_sender: "%s declined your marriage proposal."

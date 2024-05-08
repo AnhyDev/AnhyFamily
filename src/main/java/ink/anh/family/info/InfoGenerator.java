@@ -2,6 +2,8 @@ package ink.anh.family.info;
 
 import java.util.UUID;
 import java.util.Set;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import ink.anh.api.lingo.Translator;
@@ -27,7 +29,9 @@ public class InfoGenerator {
     }
 
     public String generateFamilyInfo(UUID playerUUID) {
-        return Translator.translateKyeWorld(libraryManager, generateFamilyInfo(FamilyUtils.getFamily(playerUUID)), getLangs(null));
+    	Player player = Bukkit.getPlayer(playerUUID);
+    	String[] langs = (player != null && player.isOnline()) ? getLangs(player) : getLangs(null);
+        return Translator.translateKyeWorld(libraryManager, generateFamilyInfo(FamilyUtils.getFamily(playerUUID)), langs);
     }
 
     public String generateFamilyInfo(Player player) {

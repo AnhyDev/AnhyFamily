@@ -12,10 +12,8 @@ import ink.anh.family.util.EconomyHandler;
 
 public class AnhyFamily extends JavaPlugin {
 	
-    // Singleton instance of AnhyFamily
     private static AnhyFamily instance;
 
-    // Instance of GlobalManager to manage plugin-wide operations
     private GlobalManager manager;
     private DatabaseManager dbManager;
     

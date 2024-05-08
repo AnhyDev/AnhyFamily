@@ -6,19 +6,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.Sender;
 import ink.anh.family.common.Family;
 import ink.anh.family.common.FamilyDataHandler;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class Surname extends Sender {
-
-	
-	public Surname(AnhyFamily familiPlugin) {
-		super(familiPlugin);
+	public Surname(AnhyFamily familyPlugin) {
+		super(familyPlugin.getGlobalManager());
 	}
 	
 	public boolean setSurname(CommandSender sender, String[] args) {
@@ -28,14 +26,14 @@ public class Surname extends Sender {
 		}
 		
         if (!sender.hasPermission(Permissions.FAMILY_USER)) {
-            sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 		
 		Player player = (Player) sender;
 		
 		if (args.length <= 1) {
-            sendMessage(new MessageForFormatting("family_err_command_format /family surname <Surname male version[/Surname female version]>", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format /family surname <Surname male version[/Surname female version]>", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
         
@@ -52,7 +50,7 @@ public class Surname extends Sender {
 
 		String[] newFamily = buildSurname(input);
 		if (newFamily == null) {
-	        sendMessage(new MessageForFormatting("family_surname_build_failed", null), MessageType.WARNING, sender);
+	        sendMessage(new MessageForFormatting("family_surname_build_failed", new String[] {}), MessageType.WARNING, sender);
 	        return false;
 		}
 
@@ -61,7 +59,7 @@ public class Surname extends Sender {
         Family family = new FamilyDataHandler().getFamilyData(uuid);
         
         if (family == null) {
-            sendMessage(new MessageForFormatting("family_player_not_found_db", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
         
@@ -81,7 +79,7 @@ public class Surname extends Sender {
 	public boolean setSurnameFromConsole(CommandSender sender, String[] args) {
 		
 	    if (args.length < 3) {
-	        sendMessage(new MessageForFormatting("family_err_command_format /family setsurname <PlayerName> <Surname male version[/Surname female version]>", null), MessageType.WARNING, sender);
+	        sendMessage(new MessageForFormatting("family_err_command_format /family setsurname <PlayerName> <Surname male version[/Surname female version]>", new String[] {}), MessageType.WARNING, sender);
 	        return false;
 	    }
 	    
@@ -99,20 +97,20 @@ public class Surname extends Sender {
 		
 	    // Перевірка, чи команда виконується від імені консолі
 	    if (sender instanceof Player) {
-	        sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, sender);
+	        sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, sender);
 	        return false;
 	    }
 
 	    Family family = FamilyUtils.getFamily(playerName);
 	    if (family == null) {
-	        sendMessage(new MessageForFormatting("family_player_not_found_db", null), MessageType.WARNING, sender);
+	        sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
 	        return false;
 	    }
 	    
 
 		String[] newSurname = buildSurname(stringSurname);
 		if (newSurname == null) {
-	        sendMessage(new MessageForFormatting("family_surname_build_failed", null), MessageType.WARNING, sender);
+	        sendMessage(new MessageForFormatting("family_surname_build_failed", new String[] {}), MessageType.WARNING, sender);
 	        return false;
 		}
 

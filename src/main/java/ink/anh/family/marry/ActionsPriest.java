@@ -10,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
-import ink.anh.family.Sender;
 import ink.anh.family.common.Family;
 import ink.anh.family.common.FamilyConfig;
 import ink.anh.family.common.FamilyService;
@@ -19,16 +18,19 @@ import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.PaymentManager;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 
 public class ActionsPriest extends Sender {
-    
+
+	private AnhyFamily familyPlugin;
     private GlobalManager manager;
     private MarriageManager marriageManager;
     private FamilyConfig familyConfig;
     private String priestTitle = "";
     
     public ActionsPriest(AnhyFamily familyPlugin) {
-        super(familyPlugin);
+        super(familyPlugin.getGlobalManager());
+		this.familyPlugin = familyPlugin;
         this.manager = familyPlugin.getGlobalManager();
         this.marriageManager = familyPlugin.getMarriageManager();
         this.familyConfig = manager.getFamilyConfig();
@@ -76,7 +78,7 @@ public class ActionsPriest extends Sender {
         int surnameChoice = processLastName.getNumberLastName();
         
     	if (lastName == null) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_last_name", null), MessageType.WARNING, false, recipients);
+            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_last_name", new String[] {}), MessageType.WARNING, false, recipients);
             return false;
     	}
 		
@@ -89,7 +91,7 @@ public class ActionsPriest extends Sender {
             return false;
     	}
 
-    	sendMessage(new MessageForFormatting("family_marry_start_priest", null), MessageType.WARNING, priest);
+    	sendMessage(new MessageForFormatting("family_marry_start_priest", new String[] {}), MessageType.WARNING, priest);
     	
 		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
 			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
@@ -111,12 +113,12 @@ public class ActionsPriest extends Sender {
     		UUID uuidPriest, UUID uuidBride1, UUID uuidBride2, Player[] recipients) {
 
         if (uuidPriest.equals(uuidBride1) || uuidPriest.equals(uuidBride2)) {
-            sendMessage(new MessageForFormatting("family_marry_failed_myself", null), MessageType.WARNING, new Player[] {priest, bride1, bride2});
+            sendMessage(new MessageForFormatting("family_marry_failed_myself", new String[] {}), MessageType.WARNING, new Player[] {priest, bride1, bride2});
             return false;
         }
         
         if (!FamilyUtils.areGendersCompatibleForTraditional(familyBride1, familyBride2)) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_traditional", null), MessageType.WARNING, false, recipients);
+            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_traditional", new String[] {}), MessageType.WARNING, false, recipients);
             return false;
         }
 
@@ -128,18 +130,18 @@ public class ActionsPriest extends Sender {
         List<String> members = new ArrayList<>();
 
         if (!priest.hasPermission(Permissions.FAMILY_PASTOR)) {
-            sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, priest);
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, priest);
             return false;
         }
 
         if (!bride1.hasPermission(Permissions.FAMILY_USER)) {
-            sendMessage(new MessageForFormatting("family_mary_not_have_permission", null), MessageType.WARNING, bride1);
+            sendMessage(new MessageForFormatting("family_mary_not_have_permission", new String[] {}), MessageType.WARNING, bride1);
             members.add(bride1.getDisplayName());
             perm = false;
         }
 
         if (!bride2.hasPermission(Permissions.FAMILY_USER)) {
-            sendMessage(new MessageForFormatting("family_mary_not_have_permission", null), MessageType.WARNING, bride2);
+            sendMessage(new MessageForFormatting("family_mary_not_have_permission", new String[] {}), MessageType.WARNING, bride2);
             if (!members.isEmpty()) members.add(", ");
             members.add(bride2.getDisplayName());
             perm = false;
@@ -160,7 +162,7 @@ public class ActionsPriest extends Sender {
         
         int radius = familyConfig.getCeremonyRadius();
         if (!OtherUtils.isPlayerWithinRadius(bride1, priest.getLocation(), radius) || !OtherUtils.isPlayerWithinRadius(bride2, priest.getLocation(), radius)) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_distance", null), MessageType.WARNING, false, recipients);
+            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_distance", new String[] {}), MessageType.WARNING, false, recipients);
             return false;
         }
 
@@ -170,7 +172,7 @@ public class ActionsPriest extends Sender {
     private boolean validateMembers(Player[] recipients, Player... members) {
     	for (Player priest : members) {
             if (priest == null || !priest.isOnline()) {
-            	sendMessage(new MessageForFormatting("family_member_missing", null), MessageType.WARNING, false, recipients);
+            	sendMessage(new MessageForFormatting("family_member_missing", new String[] {}), MessageType.WARNING, false, recipients);
                 return false;
             }
     	}
@@ -179,12 +181,12 @@ public class ActionsPriest extends Sender {
 
     private boolean validateCommandInput(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
-            sendMessage(new MessageForFormatting("family_err_command_only_player", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 
         if (args.length <= 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format  /family mary <bride1> <bride2> [number]", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format  /family mary <bride1> <bride2> [number]", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 

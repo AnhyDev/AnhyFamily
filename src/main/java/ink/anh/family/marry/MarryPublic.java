@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-public class Marry {
+public class MarryPublic {
 
     private Player bride1;   // Player першого нареченого
     private Player bride2;   // Player другого нареченого
@@ -14,7 +14,7 @@ public class Marry {
     private int surnameChoice; // Вибір прізвища
     private String[] chosenSurname; 
 
-    public Marry(Player bride1, Player bride2, Player priest, int surnameChoice, String[] chosenSurname) {
+    public MarryPublic(Player bride1, Player bride2, Player priest, int surnameChoice, String[] chosenSurname) {
         this.bride1 = bride1;
         this.bride2 = bride2;
         this.priest = priest;
@@ -93,7 +93,7 @@ public class Marry {
 	        return false;
 	    }
 
-	    Marry other = (Marry) obj;
+	    MarryPublic other = (MarryPublic) obj;
 	    UUID uuid1 = bride1 != null ? bride1.getUniqueId() : null;
 	    UUID uuid2 = bride2 != null ? bride2.getUniqueId() : null;
 	    UUID otherUuid1 = other.getBride1() != null ? other.getBride1().getUniqueId() : null;

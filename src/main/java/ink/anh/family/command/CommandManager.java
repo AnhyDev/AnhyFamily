@@ -13,6 +13,7 @@ public class CommandManager {
     public void registerCommands() {
     	familiPlugin.getCommand("gender").setExecutor(new GenderCommand(familiPlugin));
     	familiPlugin.getCommand("family").setExecutor(new FamilyCommand(familiPlugin));
+    	familiPlugin.getCommand("marry").setExecutor(new MarryCommand(familiPlugin));
     	familiPlugin.getCommand("adoption").setExecutor(new AdoptionCommand(familiPlugin));
     }
 }

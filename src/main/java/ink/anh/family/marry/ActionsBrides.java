@@ -8,9 +8,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.Sender;
 import ink.anh.family.common.Family;
 import ink.anh.family.common.FamilyConfig;
 import ink.anh.family.common.FamilyService;
@@ -20,7 +20,8 @@ import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.PaymentManager;
 
 public class ActionsBrides extends Sender {
-	
+
+	private AnhyFamily familyPlugin;
 	private GlobalManager manager;
 	private MarriageManager marriageManager;
 	private FamilyConfig familyConfig;
@@ -28,7 +29,8 @@ public class ActionsBrides extends Sender {
 	private String bride1Title = "";
 	
 	public ActionsBrides (AnhyFamily familyPlugin){
-		super(familyPlugin);
+		super(familyPlugin.getGlobalManager());
+		this.familyPlugin = familyPlugin;
 		this.manager = familyPlugin.getGlobalManager();
 		this.marriageManager = familyPlugin.getMarriageManager();
 		this.familyConfig = manager.getFamilyConfig();
@@ -59,9 +61,9 @@ public class ActionsBrides extends Sender {
 		
 		Family bride1family = FamilyUtils.getFamily(uuidBride1);
 
-		Marry marry = marriageManager.getMarryElement(uuidBride1);
+		MarryPublic marryPublic = marriageManager.getMarryElement(uuidBride1);
 		
-		if (areAllParticipantsPresent(marry)) {
+		if (areAllParticipantsPresent(marryPublic)) {
 			marriageManager.remove(bride1);
 		    event.setCancelled(false);
 		    return;
@@ -69,15 +71,15 @@ public class ActionsBrides extends Sender {
 
 		int one = 0;
 
-		if (marry.getBride2() != null && marry.getBride2().getUniqueId().equals(uuidBride1)) {
+		if (marryPublic.getBride2() != null && marryPublic.getBride2().getUniqueId().equals(uuidBride1)) {
 		    one = 1;
 		}
 
-		Player bride2 = (one == 0) ? marry.getBride2() : marry.getBride1();
+		Player bride2 = (one == 0) ? marryPublic.getBride2() : marryPublic.getBride1();
 		UUID uuidBride2 = bride2.getUniqueId();
 		Family bride2family = FamilyUtils.getFamily(uuidBride2);
 		
-		Player priest = marry.getPriest();
+		Player priest = marryPublic.getPriest();
 		
 		if (!validateMembers(recipients, new Player[] {bride1, priest, bride2})) {
 			marriageManager.remove(bride1);
@@ -113,9 +115,9 @@ public class ActionsBrides extends Sender {
 			
 		} else if (familyConfig.checkAnswer(message) == 1) {
 			
-			setMarriageConsent(marry, one);
+			setMarriageConsent(marryPublic, one);
 			
-			if (!marry.areBothConsentsGiven()) {
+			if (!marryPublic.areBothConsentsGiven()) {
 				sendMessage(messageForFormatting, MessageType.WARNING, false, recipients);
 				sendMessage(new MessageForFormatting(priestTitle + ": family_marry_waiting_for_consent", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
 				return;
@@ -125,7 +127,7 @@ public class ActionsBrides extends Sender {
 				return;
 			}
 			
-			updateFamilyData(bride1family, bride2family, marry, one);
+			updateFamilyData(bride1family, bride2family, marryPublic, one);
 			
 			sendMessage(messageForFormatting, MessageType.WARNING, false, recipients);
 
@@ -141,9 +143,9 @@ public class ActionsBrides extends Sender {
 		}
 	}
 
-	private void updateFamilyData(Family familyBride1, Family familyBride2, Marry marry, int one) {
-		int surnameChoice = marry.getSurnameChoice();
-		String[] chosenSurname = marry.getChosenSurname();
+	private void updateFamilyData(Family familyBride1, Family familyBride2, MarryPublic marryPublic, int one) {
+		int surnameChoice = marryPublic.getSurnameChoice();
+		String[] chosenSurname = marryPublic.getChosenSurname();
 		
 	    Family familyOfBrideChoosingSurname = (one == 0) ? familyBride1 : familyBride2;
 	    Family familyOfOtherBride = (one == 0) ? familyBride2 : familyBride1;
@@ -185,11 +187,11 @@ public class ActionsBrides extends Sender {
         return false;
     }
 
-    private void setMarriageConsent(Marry marry, int one) {
+    private void setMarriageConsent(MarryPublic marryPublic, int one) {
 		if (one == 0) {
-			marry.setConsent1(true);
+			marryPublic.setConsent1(true);
 		} else {
-			marry.setConsent2(true);
+			marryPublic.setConsent2(true);
 		}
     }
     
@@ -201,17 +203,17 @@ public class ActionsBrides extends Sender {
     private boolean validateMembers(Player[] recipients, Player... members) {
     	for (Player player : members) {
             if (player == null || !player.isOnline()) {
-            	sendMessage(new MessageForFormatting("family_member_missing", null), MessageType.WARNING, false, recipients);
+            	sendMessage(new MessageForFormatting("family_member_missing", new String[] {}), MessageType.WARNING, false, recipients);
                 return false;
             }
     	}
         return true;
     }
 
-    private boolean areAllParticipantsPresent(Marry marry) {
-        return marry != null &&
-        	   marry.getBride1() != null &&
-               marry.getBride2() != null &&
-               marry.getPriest() != null;
+    private boolean areAllParticipantsPresent(MarryPublic marryPublic) {
+        return marryPublic != null &&
+        	   marryPublic.getBride1() != null &&
+               marryPublic.getBride2() != null &&
+               marryPublic.getPriest() != null;
     }
 }

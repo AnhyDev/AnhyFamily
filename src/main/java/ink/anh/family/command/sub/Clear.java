@@ -9,9 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.Sender;
 import ink.anh.family.common.Family;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -19,7 +19,7 @@ import ink.anh.api.messages.MessageForFormatting;
 public class Clear extends Sender {
 	
 	public Clear(AnhyFamily familiPlugin) {
-		super(familiPlugin);
+		super(familiPlugin.getGlobalManager());
 	}
 	
 	public boolean exeClearFamily(CommandSender sender, String[] args) {
@@ -30,16 +30,16 @@ public class Clear extends Sender {
 		if (sender instanceof Player) {
 			player = (Player) sender;
 			if (!player.hasPermission(Permissions.FAMILY_ADMIN)) {
-	            sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, sender);
+	            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, sender);
 	            return false;
 			}
 		} else if(!sendername.equalsIgnoreCase("CONSOLE") && player == null) {
-            sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, sender);
             return false;
 		}
 		
         if (args.length <= 1) {
-            sendMessage(new MessageForFormatting("family_err_command_format  /family clear <player1>", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format  /family clear <player1>", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 
@@ -47,7 +47,7 @@ public class Clear extends Sender {
         Family family1 = FamilyUtils.getFamily(name1);
         
         if (family1 == null) {
-            sendMessage(new MessageForFormatting("family_player_not_found_db", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 
@@ -65,10 +65,10 @@ public class Clear extends Sender {
         Player[] players = playersSet.toArray(new Player[0]);
         
         if (players.length > 0) {
-        	sendMessage(new MessageForFormatting("family_clear_relative_success", null), MessageType.WARNING, players);
+        	sendMessage(new MessageForFormatting("family_clear_relative_success", new String[] {}), MessageType.WARNING, players);
     		return true;
         }
-    	sendMessage(new MessageForFormatting("family_clear_relative_missing", null), MessageType.WARNING, players);
+    	sendMessage(new MessageForFormatting("family_clear_relative_missing", new String[] {}), MessageType.WARNING, players);
 		return false;
 	}
 }

@@ -7,9 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.Sender;
 import ink.anh.family.common.Family;
 import ink.anh.family.common.FamilySeparation;
 import ink.anh.family.util.FamilyUtils;
@@ -17,8 +17,11 @@ import ink.anh.api.messages.MessageForFormatting;
 
 public class Divorce extends Sender {
 
+	private AnhyFamily familyPlugin;
+
     public Divorce(AnhyFamily familyPlugin) {
-        super(familyPlugin);
+    	super(familyPlugin.getGlobalManager());
+		this.familyPlugin = familyPlugin;
     }
 
 	public boolean separate(CommandSender sender) {
@@ -28,11 +31,11 @@ public class Divorce extends Sender {
         if (sender instanceof Player) {
             player = (Player) sender;
             if (!player.hasPermission(Permissions.FAMILY_USER)) {
-                sendMessage(new MessageForFormatting("family_err_not_have_permission", null), MessageType.WARNING, sender);
+                sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, sender);
                 return false;
             }
         } else if (sendername.equalsIgnoreCase("CONSOLE")) {
-            sendMessage(new MessageForFormatting("family_err_command_only_player", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 		
@@ -47,17 +50,17 @@ public class Divorce extends Sender {
 
         UUID spouseUUID = family.getSpouse();
         if (spouseUUID == null) {
-            sendMessage(new MessageForFormatting("family_spouse_not_found", null), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_spouse_not_found", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
         
         if (new FamilySeparation(familyPlugin).separateSpouses(family)) {
         	Player spousePlayer = Bukkit.getPlayer(spouseUUID);
-            sendMessage(new MessageForFormatting("family_separation_spouse_successful", null), MessageType.IMPORTANT, player, spousePlayer);
+            sendMessage(new MessageForFormatting("family_separation_spouse_successful", new String[] {}), MessageType.IMPORTANT, player, spousePlayer);
             return true;
         }
 
-        sendMessage(new MessageForFormatting("family_error_generic", null), MessageType.WARNING, sender);
+        sendMessage(new MessageForFormatting("family_error_generic", new String[] {}), MessageType.WARNING, sender);
         return false;
 	}
 }
