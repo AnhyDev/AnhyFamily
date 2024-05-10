@@ -60,7 +60,6 @@ public class MarryCommand extends Sender implements CommandExecutor {
 
     private void handlePublicMarriage(CommandSender sender, String[] args) {
         new ActionsPriest(familyPlugin).marry(sender, args);
-        sendMessage(new MessageForFormatting("family_success_public_marriage", new String[]{args[1], args[2]}), MessageType.NORMAL, sender);
     }
 
     private void handlePrivateMarriage(CommandSender sender, String[] args) {

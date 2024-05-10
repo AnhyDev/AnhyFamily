@@ -33,10 +33,7 @@ public class ActionsBridesPrivate extends Sender {
             return;
         }
 
-        String[] chosenSurname = {""};
-        if (args.length > 2) {
-            chosenSurname = new String[]{args[2]};
-        }
+        String[] chosenSurname = FamilyUtils.getFamily(proposer).getLastName();
 
         MarryPrivate proposal = new MarryPrivate(proposer, receiver, chosenSurname);
 
