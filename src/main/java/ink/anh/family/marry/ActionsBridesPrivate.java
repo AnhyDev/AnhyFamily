@@ -7,23 +7,35 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.common.Family;
+import ink.anh.family.common.FamilyService;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.OtherUtils;
+import ink.anh.family.util.PaymentManager;
 
 public class ActionsBridesPrivate extends Sender {
 
+	private AnhyFamily familyPlugin;
+    private GlobalManager manager;
     private MarriageManager marriageManager;
+    private MarriageValidator validator;
+    private String priestTitle;
 
     public ActionsBridesPrivate(AnhyFamily familyPlugin) {
         super(familyPlugin.getGlobalManager());
+        this.familyPlugin = familyPlugin;
+        this.manager = familyPlugin.getGlobalManager();
         this.marriageManager = familyPlugin.getMarriageManager();
+        this.validator = new MarriageValidator(familyPlugin, false);
+        this.priestTitle = FamilyUtils.getPriestTitle(null);
     }
 
     public void proposePrivateMarriage(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
-            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
+    	
+		if (!validator.validateCommandInput(sender, args)) {
             return;
-        }
+		}
 
         Player proposer = (Player)sender;
         Player receiver = Bukkit.getPlayerExact(args[1]);
@@ -32,6 +44,16 @@ public class ActionsBridesPrivate extends Sender {
             sendMessage(new MessageForFormatting("family_err_player_not_found", new String[]{args[1]}), MessageType.WARNING, sender);
             return;
         }
+        
+		Player[] recipients = OtherUtils.getPlayersWithinRadius(proposer.getLocation(), manager.getFamilyConfig().getCeremonyRadius());
+		
+		if (!validator.validateCeremonyConditions(proposer, receiver, recipients)) {
+			return;
+		}
+		
+		if (!validator.validatePermissions(proposer, receiver, recipients)) {
+			return;
+		}
 
         String[] chosenSurname = FamilyUtils.getFamily(proposer).getLastName();
 

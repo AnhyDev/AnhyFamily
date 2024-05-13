@@ -241,6 +241,10 @@ public class FamilyUtils {
     }
 
 	public static String getPriestTitle(Player player) {
+		if (player == null) {
+			return "family_marry_private_prefix";
+		}
+		
         Gender gender = FamilyUtils.getFamily(player.getUniqueId()).getGender();
         String displayName = player.getDisplayName();
         return (gender == Gender.MALE ? "family_marry_priest_male" :
