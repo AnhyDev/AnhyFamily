@@ -1,9 +1,13 @@
 package ink.anh.family.common;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.time.Duration;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import com.google.gson.Gson;
@@ -23,8 +27,9 @@ public class FamilyDetails {
     private boolean ancestorsAccessHome;
     private boolean ancestorsAccessChest;
     private Map<UUID, Access> specificAccessMap = new HashMap<>();
+    private LocalDateTime homeSetDate;
 
-    public FamilyDetails(UUID familyId, Location homeLocation, ItemStack[] familyChest, boolean childrenAccessHome, boolean childrenAccessChest, boolean ancestorsAccessHome, boolean ancestorsAccessChest) {
+    public FamilyDetails(UUID familyId, Location homeLocation, ItemStack[] familyChest, boolean childrenAccessHome, boolean childrenAccessChest, boolean ancestorsAccessHome, boolean ancestorsAccessChest, LocalDateTime homeSetDate) {
         this.familyId = familyId;
         this.homeLocation = homeLocation;
         this.familyChest = familyChest;
@@ -32,6 +37,7 @@ public class FamilyDetails {
         this.childrenAccessChest = childrenAccessChest;
         this.ancestorsAccessHome = ancestorsAccessHome;
         this.ancestorsAccessChest = ancestorsAccessChest;
+        this.homeSetDate = homeSetDate;
     }
 
     public FamilyDetails(UUID spouse1, UUID spouse2) {
@@ -42,6 +48,7 @@ public class FamilyDetails {
         this.childrenAccessChest = false;
         this.ancestorsAccessHome = false;
         this.ancestorsAccessChest = false;
+        this.homeSetDate = null;
     }
 
     public UUID getFamilyId() {
@@ -58,6 +65,7 @@ public class FamilyDetails {
 
     public void setHomeLocation(Location homeLocation) {
         this.homeLocation = homeLocation;
+        this.homeSetDate = LocalDateTime.now(); // Оновлення дати при зміні дому
     }
 
     public ItemStack[] getFamilyChest() {
@@ -108,9 +116,23 @@ public class FamilyDetails {
         this.specificAccessMap = specificAccessMap;
     }
 
+    public LocalDateTime getHomeSetDate() {
+        return homeSetDate;
+    }
+
+    public void setHomeSetDate(LocalDateTime homeSetDate) {
+        this.homeSetDate = homeSetDate;
+    }
+
     public static UUID generateFamilyId(UUID spouse1, UUID spouse2) {
         UUID namespace = UUID.nameUUIDFromBytes("FamilyDetails".getBytes());
-        String combined = namespace.toString() + spouse1.toString() + spouse2.toString();
+
+        // Відсортуємо UUID за допомогою compareTo
+        UUID[] uuids = {spouse1, spouse2};
+        Arrays.sort(uuids);
+
+        // Об'єднаємо відсортовані UUID
+        String combined = namespace.toString() + uuids[0].toString() + uuids[1].toString();
         return UUID.nameUUIDFromBytes(combined.getBytes());
     }
 
@@ -124,6 +146,8 @@ public class FamilyDetails {
             chestArray.add(ItemStackSerializer.serializeItemStackToBase64(item));
         }
         jsonObject.add("familyChest", chestArray);
+
+        jsonObject.addProperty("homeSetDate", homeSetDate != null ? homeSetDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : ""); // Додавання дати у JSON
         
         return gson.toJson(jsonObject);
     }
@@ -141,8 +165,23 @@ public class FamilyDetails {
             familyChest[i] = ItemStackSerializer.deserializeItemStackFromBase64(chestArray.get(i).getAsString());
         }
         familyDetails.setFamilyChest(familyChest);
+
+        String homeSetDateString = jsonObject.get("homeSetDate").getAsString();
+        if (homeSetDateString != null && !homeSetDateString.isEmpty()) {
+            familyDetails.setHomeSetDate(LocalDateTime.parse(homeSetDateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // Десеріалізація дати
+        }
         
         return familyDetails;
+    }
+
+    public boolean canChangeHome(int minutes) {
+        if (homeSetDate == null) {
+            return true; // Якщо дата не встановлена, можна змінювати
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(homeSetDate, now);
+        return duration.toMinutes() >= minutes;
     }
 
     // Метод для перевірки доступу до дому
