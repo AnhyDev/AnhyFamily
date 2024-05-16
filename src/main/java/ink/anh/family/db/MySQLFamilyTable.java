@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.gender.Gender;
 
 public class MySQLFamilyTable extends AbstractFamilyTable {
@@ -44,22 +44,22 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
     }
 
     @Override
-    public void insertFamily(Family family) {
+    public void insertFamily(PlayerFamily playerFamily) {
     	try (Connection conn = dbManager.getConnection();
    		     PreparedStatement ps = conn.prepareStatement(
    		         "INSERT INTO " + tablePrefix + dbName + 
    		         " (player_uuid, gender, displayName, last_name, old_last_name, father, mother, spouse, children) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) " +
    		         "ON DUPLICATE KEY UPDATE gender = VALUES(gender), displayName = VALUES(displayName), last_name = VALUES(last_name), old_last_name = VALUES(old_last_name), father = VALUES(father), mother = VALUES(mother), spouse = VALUES(spouse), children = VALUES(children);")) {
 
-   		    ps.setString(1, family.getRoot().toString());
-   		    ps.setString(2, Gender.toStringSafe(family.getGender()));
-   		    ps.setString(3, family.getLoverCaseName().toLowerCase());
-   		    ps.setString(4, joinOrReturnNull(family.getLastName()));
-   		    ps.setString(5, joinOrReturnNull(family.getOldLastName()));
-   		    ps.setString(6, family.getFather() != null ? family.getFather().toString() : null);
-   		    ps.setString(7, family.getMother() != null ? family.getMother().toString() : null);
-   		    ps.setString(8, family.getSpouse() != null ? family.getSpouse().toString() : null);
-   		    ps.setString(9, Family.uuidSetToString(family.getChildren()));
+   		    ps.setString(1, playerFamily.getRoot().toString());
+   		    ps.setString(2, Gender.toStringSafe(playerFamily.getGender()));
+   		    ps.setString(3, playerFamily.getLoverCaseName().toLowerCase());
+   		    ps.setString(4, joinOrReturnNull(playerFamily.getLastName()));
+   		    ps.setString(5, joinOrReturnNull(playerFamily.getOldLastName()));
+   		    ps.setString(6, playerFamily.getFather() != null ? playerFamily.getFather().toString() : null);
+   		    ps.setString(7, playerFamily.getMother() != null ? playerFamily.getMother().toString() : null);
+   		    ps.setString(8, playerFamily.getSpouse() != null ? playerFamily.getSpouse().toString() : null);
+   		    ps.setString(9, PlayerFamily.uuidSetToString(playerFamily.getChildren()));
 
    		    ps.executeUpdate();
    		} catch (SQLException e) {
@@ -68,8 +68,8 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
     }
 
     @Override
-    public Family getFamily(UUID playerUUID) {
-        Family family = null;
+    public PlayerFamily getFamily(UUID playerUUID) {
+        PlayerFamily playerFamily = null;
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tablePrefix + dbName + " WHERE player_uuid = ?;")) {
             
@@ -77,7 +77,7 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-            	family = new Family(
+            	playerFamily = new PlayerFamily(
                         playerUUID,
                         Gender.fromString(rs.getString("gender")),
                         rs.getString("displayName"),
@@ -86,18 +86,18 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
                         rs.getString("father") != null ? UUID.fromString(rs.getString("father")) : null,
                         rs.getString("mother") != null ? UUID.fromString(rs.getString("mother")) : null,
                         rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,
-                        Family.stringToUuidSet(rs.getString("children"))
+                        PlayerFamily.stringToUuidSet(rs.getString("children"))
                     );
             }
         } catch (SQLException e) {
             ErrorLogger.log(dbManager.plugin, e, "Failed to get family data");
         }
-        return family;
+        return playerFamily;
     }
 
     @Override
-    public Family getFamilyByDisplayName(String displayName) {
-        Family family = null;
+    public PlayerFamily getFamilyByDisplayName(String displayName) {
+        PlayerFamily playerFamily = null;
         String sql = "SELECT * FROM " + tablePrefix + dbName + " WHERE displayName = ?;";
 
         try (Connection conn = dbManager.getConnection();
@@ -107,7 +107,7 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                family = new Family(
+                playerFamily = new PlayerFamily(
                     UUID.fromString(rs.getString("player_uuid")),
                     Gender.fromString(rs.getString("gender")),
                     rs.getString("displayName"),
@@ -116,13 +116,13 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
                     rs.getString("father") != null ? UUID.fromString(rs.getString("father")) : null,
                     rs.getString("mother") != null ? UUID.fromString(rs.getString("mother")) : null,
                     rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,
-                    Family.stringToUuidSet(rs.getString("children"))
+                    PlayerFamily.stringToUuidSet(rs.getString("children"))
                 );
             }
         } catch (SQLException e) {
             ErrorLogger.log(dbManager.plugin, e, "Failed to get family data by displayName");
         }
-        return family;
+        return playerFamily;
     }
 
     @Override

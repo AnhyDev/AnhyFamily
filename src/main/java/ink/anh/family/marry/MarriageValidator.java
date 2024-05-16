@@ -14,7 +14,7 @@ import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.common.FamilyService;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
@@ -24,21 +24,21 @@ public class MarriageValidator extends Sender {
 
 	private AnhyFamily familyPlugin;
 	private Player priest = null;
-	private String priestTitle;
+	private String priestTitle = "";
     private boolean isPublic;
 
-    private Family familyBride1;
-    private Family familyBride2;
+    private PlayerFamily familyBride1;
+    private PlayerFamily familyBride2;
 
     public MarriageValidator(AnhyFamily familyPlugin, boolean isPublic) {
 		super(familyPlugin.getGlobalManager());
 		this.familyPlugin = familyPlugin;
-		this.priestTitle = FamilyUtils.getPriestTitle(priest);
 		this.isPublic = isPublic;
 	}
     
     public void setPriest(Player priest) {
 		this.priest = priest;
+		this.priestTitle = FamilyUtils.getPriestTitle(priest);
 	}
 
     public boolean validateCommandInput(CommandSender sender, String[] args) {

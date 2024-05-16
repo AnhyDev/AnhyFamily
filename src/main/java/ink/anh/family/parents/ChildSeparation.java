@@ -3,7 +3,7 @@ package ink.anh.family.parents;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.common.FamilySeparation;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -37,7 +37,7 @@ public class ChildSeparation extends Sender {
 
         Player player = (Player) sender;
         UUID senderUUID = player.getUniqueId();
-        Family senderFamily = FamilyUtils.getFamily(senderUUID);
+        PlayerFamily senderFamily = FamilyUtils.getFamily(senderUUID);
 
         if (senderFamily == null) {
             sendMessage(new MessageForFormatting("family_info_family_not_found", new String[] {}), MessageType.WARNING, sender);
@@ -45,7 +45,7 @@ public class ChildSeparation extends Sender {
         }
 
         String targetPlayerName = args[2];
-        Family targetFamily = FamilyUtils.getFamily(targetPlayerName);
+        PlayerFamily targetFamily = FamilyUtils.getFamily(targetPlayerName);
 
         if (targetFamily == null) {
             sendMessage(new MessageForFormatting("family_err_no_family_found_for_target", new String[] {}), MessageType.WARNING, sender);

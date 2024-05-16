@@ -8,7 +8,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.common.FamilyService;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
@@ -82,8 +82,8 @@ public class ActionsBridesPrivate extends Sender {
         }
 
         Player proposer = proposal.getProposer();
-        Family proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
-        Family receiverFamily = FamilyUtils.getFamily(receiver.getUniqueId());
+        PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
+        PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver.getUniqueId());
 
         // Оновити інформацію про сім'ю
         proposerFamily.setSpouse(receiverFamily.getRoot());

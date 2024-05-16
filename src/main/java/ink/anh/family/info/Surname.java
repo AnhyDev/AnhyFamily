@@ -9,7 +9,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.common.FamilyDataHandler;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -56,22 +56,22 @@ public class Surname extends Sender {
 
         
         UUID uuid = player.getUniqueId();
-        Family family = new FamilyDataHandler().getFamilyData(uuid);
+        PlayerFamily playerFamily = new FamilyDataHandler().getFamilyData(uuid);
         
-        if (family == null) {
+        if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
         
-        if (family.getLastName() == null || family.getLastName()[0] == null) {
-        	family.setLastName(newFamily);
-        	FamilyUtils.saveFamily(family);
+        if (playerFamily.getLastName() == null || playerFamily.getLastName()[0] == null) {
+        	playerFamily.setLastName(newFamily);
+        	FamilyUtils.saveFamily(playerFamily);
 
         	String myfam = String.join(" / ", newFamily);
         	sendMessage(new MessageForFormatting("family_surname_selected", new String[] {myfam}), MessageType.IMPORTANT, sender);
             return true;
         } else {
-            sendMessage(new MessageForFormatting("family_surname_already_exists", new String[] {String.join(" / ", family.getLastName())}), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_surname_already_exists", new String[] {String.join(" / ", playerFamily.getLastName())}), MessageType.WARNING, sender);
             return true;
         }
 	}
@@ -101,8 +101,8 @@ public class Surname extends Sender {
 	        return false;
 	    }
 
-	    Family family = FamilyUtils.getFamily(playerName);
-	    if (family == null) {
+	    PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
+	    if (playerFamily == null) {
 	        sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
 	        return false;
 	    }
@@ -115,9 +115,9 @@ public class Surname extends Sender {
 		}
 
 	    // Зміна прізвища
-	    family.setLastName(newSurname);
-	    family.setOldLastName(null);
-	    FamilyUtils.saveFamily(family);
+	    playerFamily.setLastName(newSurname);
+	    playerFamily.setOldLastName(null);
+	    FamilyUtils.saveFamily(playerFamily);
 	    sendMessage(new MessageForFormatting("family_surname_forced_change", new String[] {playerName, String.join(" / ", newSurname)}), MessageType.IMPORTANT, sender);
 	    return true;
 	}

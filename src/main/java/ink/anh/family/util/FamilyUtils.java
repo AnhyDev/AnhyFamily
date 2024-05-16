@@ -9,7 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.common.FamilyDataHandler;
 import ink.anh.family.db.AbstractFamilyTable;
 import ink.anh.family.gender.Gender;
@@ -17,75 +17,75 @@ import ink.anh.family.info.FamilyTree;
 
 public class FamilyUtils {
 	
-	public static void saveFamily(Family family) {
-		AnhyFamily.getInstance().getDatabaseManager().getFamilyTable().insertFamily(family);
+	public static void saveFamily(PlayerFamily playerFamily) {
+		AnhyFamily.getInstance().getDatabaseManager().getFamilyTable().insertFamily(playerFamily);
 	}
 	
 	// Для UUID
-	public static Family createNewFamily(UUID playerUUID) {
+	public static PlayerFamily createNewFamily(UUID playerUUID) {
 	    String displayName = "Unknown";
 	    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
 	    if (offlinePlayer != null) {
 	        displayName = offlinePlayer.getName();
 	    }
 
-	    Family family = new Family(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
-	    saveFamily(family);
-	    return family;
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
+	    saveFamily(playerFamily);
+	    return playerFamily;
 	}
 
 	// Для Player
-	public static Family createNewFamily(Player player) {
+	public static PlayerFamily createNewFamily(Player player) {
 	    UUID playerUUID = player.getUniqueId();
 	    String displayName = player.getName();
 
-	    Family family = new Family(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
-	    saveFamily(family);
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
+	    saveFamily(playerFamily);
 	    if (player.isOnline()) {
-	    	new FamilyDataHandler().addFamilyData(playerUUID, family);
+	    	new FamilyDataHandler().addFamilyData(playerUUID, playerFamily);
 	    }
-	    return family;
+	    return playerFamily;
 	}
 
 	// Для OfflinePlayer
-	public static Family createNewFamily(OfflinePlayer offlinePlayer) {
+	public static PlayerFamily createNewFamily(OfflinePlayer offlinePlayer) {
 	    UUID playerUUID = offlinePlayer.getUniqueId();
 	    String displayName = offlinePlayer.getName();
 
-	    Family family = new Family(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
-	    saveFamily(family);
-	    return family;
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
+	    saveFamily(playerFamily);
+	    return playerFamily;
 	}
 
-	public static Family getFamily(Player onlinePlayer) {
+	public static PlayerFamily getFamily(Player onlinePlayer) {
 		UUID playerUUID = onlinePlayer.getUniqueId();
-	    Family family = new FamilyDataHandler().getFamilyData(playerUUID);
-	    if (family == null) {
+	    PlayerFamily playerFamily = new FamilyDataHandler().getFamilyData(playerUUID);
+	    if (playerFamily == null) {
 	        AbstractFamilyTable familyTable = AnhyFamily.getInstance().getDatabaseManager().getFamilyTable();
-	        family = familyTable.getFamily(playerUUID, onlinePlayer.getDisplayName());
-	        if (family == null) {
-                family = createNewFamily(onlinePlayer);
+	        playerFamily = familyTable.getFamily(playerUUID, onlinePlayer.getDisplayName());
+	        if (playerFamily == null) {
+                playerFamily = createNewFamily(onlinePlayer);
 	        }
 	    }
-	    return family;
+	    return playerFamily;
 	}
 
-	public static Family getFamily(UUID playerUUID) {
-	    Family family = new FamilyDataHandler().getFamilyData(playerUUID);
-	    if (family == null) {
+	public static PlayerFamily getFamily(UUID playerUUID) {
+	    PlayerFamily playerFamily = new FamilyDataHandler().getFamilyData(playerUUID);
+	    if (playerFamily == null) {
 	        AbstractFamilyTable familyTable = AnhyFamily.getInstance().getDatabaseManager().getFamilyTable();
-	        family = familyTable.getFamily(playerUUID);
-	        if (family == null) {
+	        playerFamily = familyTable.getFamily(playerUUID);
+	        if (playerFamily == null) {
 	            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
 	            if (offlinePlayer.hasPlayedBefore()) {
-	                family = createNewFamily(playerUUID);
+	                playerFamily = createNewFamily(playerUUID);
 	            }
 	        }
 	    }
-	    return family;
+	    return playerFamily;
 	}
 
-	public static Family getFamily(String playerName) {
+	public static PlayerFamily getFamily(String playerName) {
 	    Player onlinePlayer = Bukkit.getPlayerExact(playerName);
 	    UUID playerUUID;
 
@@ -93,10 +93,10 @@ public class FamilyUtils {
 		    return getFamily(onlinePlayer);
 	    } else {
 	        AbstractFamilyTable familyTable = AnhyFamily.getInstance().getDatabaseManager().getFamilyTable();
-	        Family family = familyTable.getFamilyByDisplayName(playerName);
+	        PlayerFamily playerFamily = familyTable.getFamilyByDisplayName(playerName);
 	        
-	        if (family != null) {
-	        	return family;
+	        if (playerFamily != null) {
+	        	return playerFamily;
 	        }
 	        
 	        @SuppressWarnings("deprecation")
@@ -111,37 +111,37 @@ public class FamilyUtils {
 	    return getFamily(playerUUID);
 	}
 
-	public static Set<Family> clearRelatives(Family family) {
-	    Set<Family> modifiedFamilies = new HashSet<>();
+	public static Set<PlayerFamily> clearRelatives(PlayerFamily playerFamily) {
+	    Set<PlayerFamily> modifiedFamilies = new HashSet<>();
 
-	    if (family == null) return modifiedFamilies;
+	    if (playerFamily == null) return modifiedFamilies;
 
-	    modifiedFamilies.addAll(clearAllChildren(family));
-	    modifiedFamilies.addAll(removeParents(family));
-	    modifiedFamilies.addAll(removeSpouseAndRestoreLastName(family));
+	    modifiedFamilies.addAll(clearAllChildren(playerFamily));
+	    modifiedFamilies.addAll(removeParents(playerFamily));
+	    modifiedFamilies.addAll(removeSpouseAndRestoreLastName(playerFamily));
 
 	    return modifiedFamilies;
 	}
 
-	public static Set<Family> clearAllChildren(Family family) {
-	    Set<Family> modifiedFamilies = new HashSet<>();
-	    if (family == null || family.getChildren() == null || family.getChildren().isEmpty()) return modifiedFamilies;
+	public static Set<PlayerFamily> clearAllChildren(PlayerFamily playerFamily) {
+	    Set<PlayerFamily> modifiedFamilies = new HashSet<>();
+	    if (playerFamily == null || playerFamily.getChildren() == null || playerFamily.getChildren().isEmpty()) return modifiedFamilies;
 
-	    for (UUID childId : new HashSet<>(family.getChildren())) {
-	        Family childFamily = getFamily(childId);
+	    for (UUID childId : new HashSet<>(playerFamily.getChildren())) {
+	        PlayerFamily childFamily = getFamily(childId);
 	        if (childFamily != null) {
-	            removeChildFromParents(family, childFamily);
+	            removeChildFromParents(playerFamily, childFamily);
 	            modifiedFamilies.add(childFamily);
 	        }
 	    }
 
-	    family.setChildren(new HashSet<UUID>());
-	    saveFamily(family);
-	    modifiedFamilies.add(family);
+	    playerFamily.setChildren(new HashSet<UUID>());
+	    saveFamily(playerFamily);
+	    modifiedFamilies.add(playerFamily);
 	    return modifiedFamilies;
 	}
 
-	public static void removeChildFromParents(Family parentFamily, Family childFamily) {
+	public static void removeChildFromParents(PlayerFamily parentFamily, PlayerFamily childFamily) {
 	    if (parentFamily == null || childFamily == null) return;
 
 	    // Перевірка та видалення зв'язку з батьком
@@ -157,17 +157,17 @@ public class FamilyUtils {
 	    saveFamily(childFamily); // Збереження оновленої сім'ї дитини
 	}
 
-	public static Set<Family> removeParents(Family family) {
-		Set<Family> modifiedFamilies = new HashSet<>();
-	    if (family == null) return modifiedFamilies;
+	public static Set<PlayerFamily> removeParents(PlayerFamily playerFamily) {
+		Set<PlayerFamily> modifiedFamilies = new HashSet<>();
+	    if (playerFamily == null) return modifiedFamilies;
 
-	    UUID fatherId = family.getFather();
-	    UUID motherId = family.getMother();
-	    UUID childId = family.getRoot();
+	    UUID fatherId = playerFamily.getFather();
+	    UUID motherId = playerFamily.getMother();
+	    UUID childId = playerFamily.getRoot();
 	    boolean isChanged = false;
 
 	    if (fatherId != null) {
-	        Family fatherFamily = getFamily(fatherId);
+	        PlayerFamily fatherFamily = getFamily(fatherId);
 	        if (fatherFamily != null && fatherFamily.getChildren().remove(childId)) {
 	            saveFamily(fatherFamily);
 	            modifiedFamilies.add(fatherFamily);
@@ -176,7 +176,7 @@ public class FamilyUtils {
 	    }
 
 	    if (motherId != null) {
-	        Family motherFamily = getFamily(motherId);
+	        PlayerFamily motherFamily = getFamily(motherId);
 	        if (motherFamily != null && motherFamily.getChildren().remove(childId)) {
 	            saveFamily(motherFamily);
 	            modifiedFamilies.add(motherFamily);
@@ -185,19 +185,19 @@ public class FamilyUtils {
 	    }
 
 	    if (isChanged) {
-	        family.setFather(null);
-	        family.setMother(null);
-	        saveFamily(family);
-	        modifiedFamilies.add(family);
+	        playerFamily.setFather(null);
+	        playerFamily.setMother(null);
+	        saveFamily(playerFamily);
+	        modifiedFamilies.add(playerFamily);
 	    }
 	    return modifiedFamilies;
 	}
 
-	public static Set<Family> removeSpouseAndRestoreLastName(Family family) {
-		Set<Family> modifiedFamilies = new HashSet<>();
-	    if (family == null) return modifiedFamilies;
+	public static Set<PlayerFamily> removeSpouseAndRestoreLastName(PlayerFamily playerFamily) {
+		Set<PlayerFamily> modifiedFamilies = new HashSet<>();
+	    if (playerFamily == null) return modifiedFamilies;
 
-	    Family spouseFamily = getFamily(family.getSpouse());
+	    PlayerFamily spouseFamily = getFamily(playerFamily.getSpouse());
 
 	    if (spouseFamily != null) {
 	        spouseFamily.setSpouse(null);
@@ -209,24 +209,24 @@ public class FamilyUtils {
 	        modifiedFamilies.add(spouseFamily);
 	    }
 
-	    family.setSpouse(null);
-	    if (family.getOldLastName() != null && family.getOldLastName().length > 0) {
-	        family.setLastName(family.getOldLastName());
-	        family.setOldLastName(new String[2]);
+	    playerFamily.setSpouse(null);
+	    if (playerFamily.getOldLastName() != null && playerFamily.getOldLastName().length > 0) {
+	        playerFamily.setLastName(playerFamily.getOldLastName());
+	        playerFamily.setOldLastName(new String[2]);
 	    } else {
-	        family.setLastName(new String[2]);
+	        playerFamily.setLastName(new String[2]);
 	    }
-	    saveFamily(family);
-	    modifiedFamilies.add(family);
+	    saveFamily(playerFamily);
+	    modifiedFamilies.add(playerFamily);
 	    return modifiedFamilies;
 	}
 
-	public static boolean areGendersCompatibleForTraditional(Family family1) {
+	public static boolean areGendersCompatibleForTraditional(PlayerFamily family1) {
     	Gender gender = family1.getGender();
         return gender != null && (gender == Gender.MALE || gender == Gender.FEMALE);
     }
 
-	public static boolean areGendersCompatibleForTraditional(Family family1, Family family2) {
+	public static boolean areGendersCompatibleForTraditional(PlayerFamily family1, PlayerFamily family2) {
 	    // Використання першого методу для перевірки кожної сім'ї окремо
 	    if (!areGendersCompatibleForTraditional(family1) || !areGendersCompatibleForTraditional(family2)) {
 	        return false;

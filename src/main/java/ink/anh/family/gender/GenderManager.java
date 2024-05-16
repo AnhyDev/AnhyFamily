@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 
 public class GenderManager {
@@ -18,10 +18,10 @@ public class GenderManager {
     }
 
     public static Gender getGender(String playerName) {
-    	Family family = FamilyUtils.getFamily(playerName);
+    	PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
     	Gender gender = null;
-        if (family != null) {
-            gender = family.getGender();
+        if (playerFamily != null) {
+            gender = playerFamily.getGender();
         }
         return gender;
     }
@@ -34,10 +34,10 @@ public class GenderManager {
         return gender;
     }
 
-    public static Gender getGender(Family family) {
+    public static Gender getGender(PlayerFamily playerFamily) {
     	Gender gender = null;
-        if (family != null) {
-            gender = family.getGender();
+        if (playerFamily != null) {
+            gender = playerFamily.getGender();
         }
         return gender;
     }
@@ -48,15 +48,15 @@ public class GenderManager {
     }
 
     public static boolean setGender(UUID uuid, Gender gender) {
-    	Family family = FamilyUtils.getFamily(uuid);
-    	family.setGender(gender);
-    	FamilyUtils.saveFamily(family);
+    	PlayerFamily playerFamily = FamilyUtils.getFamily(uuid);
+    	playerFamily.setGender(gender);
+    	FamilyUtils.saveFamily(playerFamily);
         return true;
     }
 
-    public static boolean setGender(Family family, Gender gender) {
-    	family.setGender(gender);
-    	FamilyUtils.saveFamily(family);
+    public static boolean setGender(PlayerFamily playerFamily, Gender gender) {
+    	playerFamily.setGender(gender);
+    	FamilyUtils.saveFamily(playerFamily);
         return true;
     }
 }

@@ -11,7 +11,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.common.FamilyConfig;
 import ink.anh.family.common.FamilyService;
 import ink.anh.family.gender.Gender;
@@ -59,7 +59,7 @@ public class ActionsBrides extends Sender {
 		
 		Player[] recipients = OtherUtils.getPlayersWithinRadius(bride1.getLocation(), familyConfig.getCeremonyHearingRadius());
 		
-		Family bride1family = FamilyUtils.getFamily(uuidBride1);
+		PlayerFamily bride1family = FamilyUtils.getFamily(uuidBride1);
 
 		MarryPublic marryPublic = marriageManager.getMarryElement(uuidBride1);
 		
@@ -77,7 +77,7 @@ public class ActionsBrides extends Sender {
 
 		Player bride2 = (one == 0) ? marryPublic.getBride2() : marryPublic.getBride1();
 		UUID uuidBride2 = bride2.getUniqueId();
-		Family bride2family = FamilyUtils.getFamily(uuidBride2);
+		PlayerFamily bride2family = FamilyUtils.getFamily(uuidBride2);
 		
 		Player priest = marryPublic.getPriest();
 		
@@ -143,12 +143,12 @@ public class ActionsBrides extends Sender {
 		}
 	}
 
-	private void updateFamilyData(Family familyBride1, Family familyBride2, MarryPublic marryPublic, int one) {
+	private void updateFamilyData(PlayerFamily familyBride1, PlayerFamily familyBride2, MarryPublic marryPublic, int one) {
 		int surnameChoice = marryPublic.getSurnameChoice();
 		String[] chosenSurname = marryPublic.getChosenSurname();
 		
-	    Family familyOfBrideChoosingSurname = (one == 0) ? familyBride1 : familyBride2;
-	    Family familyOfOtherBride = (one == 0) ? familyBride2 : familyBride1;
+	    PlayerFamily familyOfBrideChoosingSurname = (one == 0) ? familyBride1 : familyBride2;
+	    PlayerFamily familyOfOtherBride = (one == 0) ? familyBride2 : familyBride1;
 
 	    switch (surnameChoice) {
 	        case 1:

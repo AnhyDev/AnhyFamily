@@ -12,7 +12,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
@@ -44,18 +44,18 @@ public class Clear extends Sender {
         }
 
         String name1 = args[1];
-        Family family1 = FamilyUtils.getFamily(name1);
+        PlayerFamily family1 = FamilyUtils.getFamily(name1);
         
         if (family1 == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 
-        Set<Family> modifiedFamilies = FamilyUtils.clearRelatives(family1);
+        Set<PlayerFamily> modifiedFamilies = FamilyUtils.clearRelatives(family1);
         Set<Player> playersSet = new HashSet<>();
 
-        for (Family family : modifiedFamilies) {
-            UUID playerId = family.getRoot();
+        for (PlayerFamily playerFamily : modifiedFamilies) {
+            UUID playerId = playerFamily.getRoot();
             Player pl = Bukkit.getPlayer(playerId);
             if (pl != null && pl.isOnline()) {
                 playersSet.add(pl);

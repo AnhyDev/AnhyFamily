@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.ChatColor;
 
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 
 public class FamilyTree {
@@ -25,7 +25,7 @@ public class FamilyTree {
         buildAncestorsTree(this.root);
     }
 
-    public FamilyTree(Family rootFamily) {
+    public FamilyTree(PlayerFamily rootFamily) {
         this.root = new FamilyRepeated(rootFamily);
         this.rootParents = new HashMap<>();
         this.rootOffspring = new HashMap<>();
@@ -46,7 +46,7 @@ public class FamilyTree {
 
         memberFam.setProcessed(true);
 
-        Family member = memberFam.getFamily();
+        PlayerFamily member = memberFam.getFamily();
         UUID fatherUuid = member.getFather();
         UUID motherUuid = member.getMother();
 
@@ -86,7 +86,7 @@ public class FamilyTree {
     }
 
     private void buildFamilyTreeString(FamilyRepeated memberFam, int level, String prefix, StringBuilder treeString) {
-        Family member = memberFam.getFamily();
+        PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
         String title = (level == 0 ? "family_tree_ancestors " : "");
 
@@ -99,14 +99,14 @@ public class FamilyTree {
             UUID motherUuid = member.getMother();
 
             if (fatherUuid != null) {
-                Family father = rootParents.get(fatherUuid).getFamily();
+                PlayerFamily father = rootParents.get(fatherUuid).getFamily();
                 if (father != null) {
                     buildFamilyTreeString(new FamilyRepeated(father), level + 1, prefix + "  ", treeString);
                 }
             }
 
             if (motherUuid != null) {
-                Family mother = rootParents.get(motherUuid).getFamily();
+                PlayerFamily mother = rootParents.get(motherUuid).getFamily();
                 if (mother != null) {
                     buildFamilyTreeString(new FamilyRepeated(mother), level + 1, prefix + "  ", treeString);
                 }
@@ -124,7 +124,7 @@ public class FamilyTree {
 
         memberFam.setProcessed(true);
 
-        Family member = memberFam.getFamily();
+        PlayerFamily member = memberFam.getFamily();
         Set<UUID> childrenUuids = member.getChildren();
 
         if (childrenUuids != null) {
@@ -139,7 +139,7 @@ public class FamilyTree {
     }
 
     private void buildDescendantsTreeString(FamilyRepeated memberFam, int level, String prefix, StringBuilder treeString) {
-        Family member = memberFam.getFamily();
+        PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
 
         String title = (level == 0 ? "family_tree_descendants " : "");
@@ -152,7 +152,7 @@ public class FamilyTree {
         if (childrenUuids != null) {
             for (UUID childUuid : childrenUuids) {
             	
-                Family child = rootOffspring.get(childUuid).getFamily();
+                PlayerFamily child = rootOffspring.get(childUuid).getFamily();
                 
                 if (child != null && !isRepeated) {
                     buildDescendantsTreeString(new FamilyRepeated(child), level + 1, prefix + "  ", treeString);
@@ -162,7 +162,7 @@ public class FamilyTree {
         memberFam.increaseRepeated();
     }
 
-    private String buildMemberLine(Family member, int level, String prefix, boolean isRepeated, String title, String branchSymbol) {
+    private String buildMemberLine(PlayerFamily member, int level, String prefix, boolean isRepeated, String title, String branchSymbol) {
         StringBuilder line = new StringBuilder(prefix);
         ChatColor color = determineColor(level, isRepeated ? 1 : 0);
         String repeatedMark = isRepeated ? "*" : "";
@@ -179,7 +179,7 @@ public class FamilyTree {
         return line.toString();
     }
     
-    private String getLastName(Family member) {
+    private String getLastName(PlayerFamily member) {
     	return Optional.ofNullable(member.getCurrentSurname())
                 .filter(surname -> !surname.isEmpty())
                 .map(surname -> " " + surname)
@@ -199,11 +199,11 @@ public class FamilyTree {
         }
     }
 
-    public Family getMember(UUID uuid) {
+    public PlayerFamily getMember(UUID uuid) {
         return rootParents.get(uuid).getFamily();
     }
 
-    public boolean addMember(Family member) {
+    public boolean addMember(PlayerFamily member) {
         if (!rootParents.containsKey(member.getRoot())) {
             rootParents.put(member.getRoot(), new FamilyRepeated(member));
             return true;
@@ -233,17 +233,17 @@ public class FamilyTree {
     
     class FamilyRepeated {
     	
-    	private Family family;
+    	private PlayerFamily playerFamily;
     	private int repeated;
     	private boolean processed;
     	
-		public FamilyRepeated(Family family) {
-			this.family = family;
+		public FamilyRepeated(PlayerFamily playerFamily) {
+			this.playerFamily = playerFamily;
 			this.repeated = 0;
 		}
 
-		public Family getFamily() {
-			return family;
+		public PlayerFamily getFamily() {
+			return playerFamily;
 		}
 
 		public int getRepeated() {

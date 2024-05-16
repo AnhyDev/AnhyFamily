@@ -3,7 +3,7 @@ package ink.anh.family.info;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
@@ -25,10 +25,10 @@ public class FamilyInfoCommandHandler extends Sender {
 			isInteractive = false;
 		}
 		
-    	Family family = getTargetFamily(sender, args);
-        if (family == null) return false;
+    	PlayerFamily playerFamily = getTargetFamily(sender, args);
+        if (playerFamily == null) return false;
 
-        String familyInfo = translate(sender, new InfoGenerator(familyPlugin).generateFamilyInfo(family));
+        String familyInfo = translate(sender, new InfoGenerator(familyPlugin).generateFamilyInfo(playerFamily));
 
         if (isInteractive) {
         	String command  = "/family infos";
@@ -44,14 +44,14 @@ public class FamilyInfoCommandHandler extends Sender {
         return true;
     }
 
-    private Family getTargetFamily(CommandSender sender, String[] args) {
+    private PlayerFamily getTargetFamily(CommandSender sender, String[] args) {
         if (args.length > 1) {
-            Family family = FamilyUtils.getFamily(args[1]);
-            if (family == null) {
+            PlayerFamily playerFamily = FamilyUtils.getFamily(args[1]);
+            if (playerFamily == null) {
                 sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
                 return null;
             }
-            return family;
+            return playerFamily;
         } else if (sender instanceof Player) {
             return FamilyUtils.getFamily((Player) sender);
         } else {

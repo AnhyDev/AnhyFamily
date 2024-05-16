@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
@@ -102,9 +102,9 @@ public class GenderCommand extends Sender implements CommandExecutor {
     		return false;
     	}
 
-    	Family family = FamilyUtils.getFamily(playerName);
-        if (family != null) {
-        	GenderManager.setGender(family, Gender.UNDECIDED);
+    	PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
+        if (playerFamily != null) {
+        	GenderManager.setGender(playerFamily, Gender.UNDECIDED);
             sendMessage(new MessageForFormatting("family_gender_player_reset", new String[] {playerName}),  MessageType.NORMAL, sender);
             return true;
         } else {
@@ -119,11 +119,11 @@ public class GenderCommand extends Sender implements CommandExecutor {
     	}
     	
     	genderStr = genderStr.equalsIgnoreCase("MAN") ? "MALE" : genderStr.equalsIgnoreCase("WOMAN") ? "FEMALE" : genderStr.toUpperCase();
-    	Family family = FamilyUtils.getFamily(playerName);
-        if (family != null) {
+    	PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
+        if (playerFamily != null) {
             Gender gender = Gender.fromString(genderStr);
             if (gender != null && gender != Gender.UNDECIDED) {
-            	GenderManager.setGender(family, gender);
+            	GenderManager.setGender(playerFamily, gender);
                 sendMessage(new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[] {playerName}),  MessageType.NORMAL, sender);
                 return true;
             } else {

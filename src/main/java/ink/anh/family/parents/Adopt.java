@@ -9,7 +9,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
@@ -53,7 +53,7 @@ public class Adopt extends Sender {
         }
         
         UUID uuid1 = player1.getUniqueId();
-        Family family1 = FamilyUtils.getFamily(player1);
+        PlayerFamily family1 = FamilyUtils.getFamily(player1);
         
         if (family1 == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {adoptedName}), MessageType.WARNING, sender);
@@ -177,9 +177,9 @@ public class Adopt extends Sender {
         
         String adoptedName = player.getDisplayName();
         UUID uuid = player.getUniqueId();
-        Family family = FamilyUtils.getFamily(player);
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
         
-        if (family == null) {
+        if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {adoptedName}), MessageType.WARNING, sender);
             return false;
         }
@@ -205,7 +205,7 @@ public class Adopt extends Sender {
         	
         }
 
-        Family family1 = FamilyUtils.getFamily(player1);
+        PlayerFamily family1 = FamilyUtils.getFamily(player1);
         
         if (family1 == null) {
             sendMessage(new MessageForFormatting("family_accept_error_parent1_missing", new String[] {}), MessageType.WARNING, sender);
@@ -213,7 +213,7 @@ public class Adopt extends Sender {
             return false;
         }
         
-        Family family2 = FamilyUtils.getFamily(player2);
+        PlayerFamily family2 = FamilyUtils.getFamily(player2);
         
         if (family2 == null) {
             sendMessage(new MessageForFormatting("family_accept_error_parent2_missing", new String[] {}), MessageType.WARNING, sender);
@@ -226,7 +226,7 @@ public class Adopt extends Sender {
         
         FamilyAdoption utilsAdopt = new FamilyAdoption(familyPlugin);
         
-        if (!utilsAdopt.adoption(family, family1, family2)) {
+        if (!utilsAdopt.adoption(playerFamily, family1, family2)) {
             sendMessage(new MessageForFormatting("family_accept_error_cannot_adopt" + adoptedName, new String[] {adopter1Name, adopter2Name, adoptedName}), MessageType.WARNING, sender);
             manager.removeParent(uuid);
             return false;
@@ -286,8 +286,8 @@ public class Adopt extends Sender {
         String adoptedPlayerName = args[1];
         String adopterPlayerName = args[2];
 
-        Family adoptedFamily = FamilyUtils.getFamily(adoptedPlayerName);
-        Family adopterFamily = FamilyUtils.getFamily(adopterPlayerName);
+        PlayerFamily adoptedFamily = FamilyUtils.getFamily(adoptedPlayerName);
+        PlayerFamily adopterFamily = FamilyUtils.getFamily(adopterPlayerName);
 
         if (adoptedFamily == null || adopterFamily == null) {
             sendMessage(new MessageForFormatting("family_err_family_not_found", new String[] {}), MessageType.WARNING, sender);

@@ -11,22 +11,22 @@ public class FamilyDataHandler extends DataHandler {
      * Saves the family data for a specific player.
      * 
      * @param uuid   The UUID of the player.
-     * @param family The family data to save.
+     * @param playerFamily The family data to save.
      */
-    public void addFamilyData(UUID uuid, Family family) {
-        addData(uuid, FAMILY_DATA_KEY, family);
+    public void addFamilyData(UUID uuid, PlayerFamily playerFamily) {
+        addData(uuid, FAMILY_DATA_KEY, playerFamily);
     }
 
     /**
      * Retrieves the family data for a specific player.
      * 
      * @param uuid The UUID of the player.
-     * @return The Family object, or null if no data is found.
+     * @return The PlayerFamily object, or null if no data is found.
      */
-    public Family getFamilyData(UUID uuid) {
+    public PlayerFamily getFamilyData(UUID uuid) {
         Object data = getData(uuid, FAMILY_DATA_KEY);
-        if (data instanceof Family) {
-            return (Family) data;
+        if (data instanceof PlayerFamily) {
+            return (PlayerFamily) data;
         }
         removeFamilyData(uuid);
         return null;
@@ -48,6 +48,6 @@ public class FamilyDataHandler extends DataHandler {
      * @return true if family data exists, false otherwise.
      */
     public boolean hasFamilyData(UUID uuid) {
-        return getData(uuid, FAMILY_DATA_KEY) instanceof Family;
+        return getData(uuid, FAMILY_DATA_KEY) instanceof PlayerFamily;
     }
 }

@@ -5,7 +5,7 @@ import ink.anh.api.messages.Logger;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.info.FamilyTree;
 import ink.anh.family.util.FamilyUtils;
@@ -24,7 +24,7 @@ public class FamilyAdoption {
 		this.langs = new String[] {globalManager.getDefaultLang()};
     }
 	
-	public boolean adoption(Family adopted, Family adopter1, Family adopter2) {
+	public boolean adoption(PlayerFamily adopted, PlayerFamily adopter1, PlayerFamily adopter2) {
 		
 	    if (!canAdopt(adopted, adopter1, adopter2)) {
             Logger.warn(familiPlugin, adopter1.getRootrNickName() + ", " + adopter2.getRootrNickName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_impossible_between", langs) + adopted.getLoverCaseName());
@@ -68,7 +68,7 @@ public class FamilyAdoption {
         return true; 
 	}
 
-	public boolean adoption(Family adopted, Family adopter1) {
+	public boolean adoption(PlayerFamily adopted, PlayerFamily adopter1) {
 		
 	    if (!canAdopt(adopted, adopter1)) {
 	    	String rawMessage = Translator.translateKyeWorld(globalManager, "family_log_adoption_impossible_single", langs);
@@ -106,7 +106,7 @@ public class FamilyAdoption {
     
 	}
 
-	public boolean canAdopt(Family adopted, Family adopter1, Family adopter2) {
+	public boolean canAdopt(PlayerFamily adopted, PlayerFamily adopter1, PlayerFamily adopter2) {
 	    FamilyTree tree = new FamilyTree(adopted.getRoot());
 	    return !FamilyUtils.hasRelatives(tree, adopter1.getRoot())
 	            && !FamilyUtils.hasRelatives(tree, adopter2.getRoot())
@@ -114,14 +114,14 @@ public class FamilyAdoption {
 	            && isParentSlotAvailable(adopted, false, null);
 	}
 
-	public boolean canAdopt(Family adopted, Family adopter) {
+	public boolean canAdopt(PlayerFamily adopted, PlayerFamily adopter) {
 	    FamilyTree tree = new FamilyTree(adopted.getRoot());
 	    return !FamilyUtils.hasRelatives(tree, adopter.getRoot())
 	            && isGenderCompatibleAdoption(adopter)
 	            && isParentSlotAvailable(adopted, true, adopter);
 	}
 
-	private boolean isGenderCompatibleAdoption(Family adopter) {
+	private boolean isGenderCompatibleAdoption(PlayerFamily adopter) {
         if (isNonTraditionalAdoptionAllowed) {
             return true; // Якщо одностатеві та небінарні усиновлення дозволені
         }
@@ -129,7 +129,7 @@ public class FamilyAdoption {
         return FamilyUtils.areGendersCompatibleForTraditional(adopter);
     }
 
-	private boolean isGenderCompatibleAdoption(Family adopter1, Family adopter2) {
+	private boolean isGenderCompatibleAdoption(PlayerFamily adopter1, PlayerFamily adopter2) {
         if (isNonTraditionalAdoptionAllowed) {
             return true; // Якщо одностатеві та небінарні усиновлення дозволені
         }
@@ -137,7 +137,7 @@ public class FamilyAdoption {
         return FamilyUtils.areGendersCompatibleForTraditional(adopter1, adopter2);
     }
 
-	private boolean isParentSlotAvailable(Family adopted, boolean isSingleAdopter, Family adopter) {
+	private boolean isParentSlotAvailable(PlayerFamily adopted, boolean isSingleAdopter, PlayerFamily adopter) {
         if (!isSingleAdopter) {
             // Усиновлення парою: обидва слоти мають бути вільні
             return adopted.getFather() == null && adopted.getMother() == null;

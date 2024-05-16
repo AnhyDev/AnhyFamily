@@ -21,8 +21,8 @@ public class FamilySeparation {
     }
 
     public boolean separateChildFromParent(UUID childId, UUID parentId) {
-        Family childFamily = FamilyUtils.getFamily(childId);
-        Family parentFamily = FamilyUtils.getFamily(parentId);
+        PlayerFamily childFamily = FamilyUtils.getFamily(childId);
+        PlayerFamily parentFamily = FamilyUtils.getFamily(parentId);
 
         if (childFamily == null || parentFamily == null) {
             Logger.warn(familiPlugin, Translator.translateKyeWorld(globalManager, "family_separation_child_not_found", langs));
@@ -37,8 +37,8 @@ public class FamilySeparation {
     }
 
     public boolean separateParentFromChild(UUID parentId, UUID childId) {
-        Family parentFamily = FamilyUtils.getFamily(parentId);
-        Family childFamily = FamilyUtils.getFamily(childId);
+        PlayerFamily parentFamily = FamilyUtils.getFamily(parentId);
+        PlayerFamily childFamily = FamilyUtils.getFamily(childId);
 
         if (parentFamily == null || childFamily == null) {
             Logger.warn(familiPlugin, Translator.translateKyeWorld(globalManager, "family_separation_parent_not_found", langs));
@@ -52,7 +52,7 @@ public class FamilySeparation {
         return true;
     }
 
-    public boolean separateSpouses(Family spouse1Family) {
+    public boolean separateSpouses(PlayerFamily spouse1Family) {
 
         if (spouse1Family == null) {
             Logger.warn(familiPlugin, Translator.translateKyeWorld(globalManager, "family_separation_spouse_not_found", langs));

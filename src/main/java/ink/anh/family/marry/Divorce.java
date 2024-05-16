@@ -10,7 +10,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.common.FamilySeparation;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -41,20 +41,20 @@ public class Divorce extends Sender {
 		
         String playerName = player.getName();
         
-        Family family = FamilyUtils.getFamily(player);
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
         
-        if (family == null) {
+        if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {playerName}), MessageType.WARNING, sender);
             return false;
         }
 
-        UUID spouseUUID = family.getSpouse();
+        UUID spouseUUID = playerFamily.getSpouse();
         if (spouseUUID == null) {
             sendMessage(new MessageForFormatting("family_spouse_not_found", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
         
-        if (new FamilySeparation(familyPlugin).separateSpouses(family)) {
+        if (new FamilySeparation(familyPlugin).separateSpouses(playerFamily)) {
         	Player spousePlayer = Bukkit.getPlayer(spouseUUID);
             sendMessage(new MessageForFormatting("family_separation_spouse_successful", new String[] {}), MessageType.IMPORTANT, player, spousePlayer);
             return true;

@@ -2,7 +2,7 @@ package ink.anh.family.db;
 
 import java.util.UUID;
 
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 
 public abstract class AbstractFamilyTable {
     
@@ -17,31 +17,31 @@ public abstract class AbstractFamilyTable {
 
     protected abstract void initialize();
 
-    public abstract void insertFamily(Family family);
+    public abstract void insertFamily(PlayerFamily playerFamily);
     
-    public Family getFamily(UUID playerUUID, String displayName) {
+    public PlayerFamily getFamily(UUID playerUUID, String displayName) {
 
-        Family family = null;
+        PlayerFamily playerFamily = null;
         
         if (playerUUID != null) {
-        	family = getFamily(playerUUID);
+        	playerFamily = getFamily(playerUUID);
         }
         
-        if (family == null && displayName != null) {
-        	family = getFamilyByDisplayName(displayName);
+        if (playerFamily == null && displayName != null) {
+        	playerFamily = getFamilyByDisplayName(displayName);
         }
         
-        if (family != null) {
-        	if (!family.getRoot().equals(playerUUID)) {
-        		family.setRoot(playerUUID);
+        if (playerFamily != null) {
+        	if (!playerFamily.getRoot().equals(playerUUID)) {
+        		playerFamily.setRoot(playerUUID);
         	}
         }
         
-        return family;
+        return playerFamily;
     }
     
-    public abstract Family getFamily(UUID playerUUID);
-    public abstract Family getFamilyByDisplayName(String displayName);
+    public abstract PlayerFamily getFamily(UUID playerUUID);
+    public abstract PlayerFamily getFamilyByDisplayName(String displayName);
     public abstract void deleteFamily(UUID playerUUID);
     public abstract void updateFamilyField(UUID playerUUID, String fieldName, String fieldValue);
     

@@ -3,7 +3,7 @@ package ink.anh.family.info;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.Family;
+import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
@@ -25,23 +25,23 @@ public class FamilyTreeCommandHandler extends Sender {
 			isInteractive = false;
 		}
 		
-    	Family family;
+    	PlayerFamily playerFamily;
         if (args.length > 1) {
-        	family = FamilyUtils.getFamily(args[1]);
+        	playerFamily = FamilyUtils.getFamily(args[1]);
         } else {
             if (!(sender instanceof Player)) {
                 sendMessage(new MessageForFormatting("family_err_command_only_player", new String[] {}), MessageType.WARNING, sender);
                 return false;
             }
-            family = FamilyUtils.getFamily((Player) sender);
+            playerFamily = FamilyUtils.getFamily((Player) sender);
         }
         
-        if (family == null) {
+        if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 
-        FamilyTree familyTree = new FamilyTree(family);
+        FamilyTree familyTree = new FamilyTree(playerFamily);
         String treeInfo = familyTree.buildFamilyTreeString();
 
         if (isInteractive) {
