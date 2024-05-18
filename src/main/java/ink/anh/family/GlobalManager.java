@@ -79,20 +79,20 @@ public class GlobalManager extends LibraryManager {
         return familyConfig;
     }
 
-	public boolean reload() {
-		Bukkit.getScheduler().runTaskAsynchronously(familyPlugin, () -> {
-	        try {
-	        	saveDefaultConfig();
-	            familyPlugin.reloadConfig();
-	            loadFields(familyPlugin);
-	            familyConfig.reloadConfig(familyPlugin);
-	            Logger.info(familyPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded" , new String[] {defaultLang}));
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            Logger.error(familyPlugin, Translator.translateKyeWorld(instance, "family_err_reloading_configuration ", new String[] {defaultLang}));
-	        }
-		});
-        return true;
+    public boolean reload() {
+    	Bukkit.getScheduler().runTaskAsynchronously(familyPlugin, () -> {
+    		try {
+    			saveDefaultConfig();
+    			familyPlugin.reloadConfig();
+    			loadFields(familyPlugin);
+    			familyConfig.reloadConfig(familyPlugin);
+    			Logger.info(familyPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded" , new String[] {defaultLang}));
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    			Logger.error(familyPlugin, Translator.translateKyeWorld(instance, "family_err_reloading_configuration ", new String[] {defaultLang}));
+    		}
+    	});
+    	return true;
     }
     
     private void loadFields(AnhyFamily familyPlugin) {
