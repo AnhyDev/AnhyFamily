@@ -112,8 +112,8 @@ public class GlobalManager extends LibraryManager {
         familyConfig = FamilyConfig.getInstance(familyPlugin);
     }
 
-	private void setMySQLConfig() {
-		this.mySQLConfig = new MySQLConfig(
+    private void setMySQLConfig() {
+    	this.mySQLConfig = new MySQLConfig(
 				familyPlugin.getConfig().getString("database.mysql.host"),
 				familyPlugin.getConfig().getInt("database.mysql.port"),
 				familyPlugin.getConfig().getString("database.mysql.database"),
@@ -123,7 +123,7 @@ public class GlobalManager extends LibraryManager {
 				familyPlugin.getConfig().getBoolean("database.mysql.useSSL"),
 				familyPlugin.getConfig().getBoolean("database.mysql.autoReconnect")
 	        );
-	}
+    }
 
     private void saveDefaultConfig() {
         File dataFolder = familyPlugin.getDataFolder();
