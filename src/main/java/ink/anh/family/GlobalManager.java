@@ -16,24 +16,24 @@ import net.md_5.bungee.api.ChatColor;
 public class GlobalManager extends LibraryManager {
 
     private static GlobalManager instance;
-	private AnhyFamily familyPlugin;
+    private AnhyFamily familyPlugin;
 
     private boolean useMySQL;
     private MySQLConfig mySQLConfig;
 	
-	private LanguageManager langManager;
-	private FamilyConfig familyConfig;
+    private LanguageManager langManager;
+    private FamilyConfig familyConfig;
 	
     private String pluginName;
     private String defaultLang;
     private boolean debug;
 	
-	private GlobalManager(AnhyFamily familyPlugin) {
-		super(familyPlugin);
-		this.familyPlugin = familyPlugin;
-		this.saveDefaultConfig();
-		this.loadFields(familyPlugin);
-	}
+    private GlobalManager(AnhyFamily familyPlugin) {
+        super(familyPlugin);
+        this.familyPlugin = familyPlugin;
+        this.saveDefaultConfig();
+        this.loadFields(familyPlugin);
+    }
 
     public static synchronized GlobalManager getManager(AnhyFamily familyPlugin) {
         if (instance == null) {
@@ -42,42 +42,42 @@ public class GlobalManager extends LibraryManager {
         return instance;
     }
     
-	@Override
-	public Plugin getPlugin() {
-		return familyPlugin;
-	}
+    @Override
+    public Plugin getPlugin() {
+        return familyPlugin;
+    }
 
-	@Override
-	public String getPluginName() {
-		return pluginName;
-	}
+    @Override
+    public String getPluginName() {
+        return pluginName;
+    }
 
-	@Override
-	public LanguageManager getLanguageManager() {
-		return this.langManager;
-	}
+    @Override
+    public LanguageManager getLanguageManager() {
+        return this.langManager;
+    }
 
-	@Override
-	public String getDefaultLang() {
-		return defaultLang;
-	}
+    @Override
+    public String getDefaultLang() {
+        return defaultLang;
+    }
 
-	@Override
-	public boolean isDebug() {
-		return debug;
-	}
+    @Override
+    public boolean isDebug() {
+        return debug;
+    }
 
-	public boolean isUseMySQL() {
-		return useMySQL;
-	}
+    public boolean isUseMySQL() {
+        return useMySQL;
+    }
 
-	public MySQLConfig getMySQLConfig() {
-		return mySQLConfig;
-	}
+    public MySQLConfig getMySQLConfig() {
+        return mySQLConfig;
+    }
 
-	public FamilyConfig getFamilyConfig() {
-		return familyConfig;
-	}
+    public FamilyConfig getFamilyConfig() {
+        return familyConfig;
+    }
 
 	public boolean reload() {
 		Bukkit.getScheduler().runTaskAsynchronously(familyPlugin, () -> {
