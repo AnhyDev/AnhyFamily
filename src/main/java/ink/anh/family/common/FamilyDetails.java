@@ -20,14 +20,14 @@ import ink.anh.api.items.ItemStackSerializer;
 public class FamilyDetails {
 
     private UUID familyId;
-    private Location homeLocation;
-    private ItemStack[] familyChest;
-    private boolean childrenAccessHome;
-    private boolean childrenAccessChest;
-    private boolean ancestorsAccessHome;
-    private boolean ancestorsAccessChest;
+    private Location homeLocation = null;
+    private ItemStack[] familyChest = new ItemStack[54];
+    private boolean childrenAccessHome = false;
+    private boolean childrenAccessChest = false;
+    private boolean ancestorsAccessHome = false;
+    private boolean ancestorsAccessChest = false;
     private Map<UUID, Access> specificAccessMap = new HashMap<>();
-    private LocalDateTime homeSetDate;
+    private LocalDateTime homeSetDate = null;
 
     public FamilyDetails(UUID familyId, Location homeLocation, ItemStack[] familyChest, boolean childrenAccessHome, boolean childrenAccessChest, boolean ancestorsAccessHome, boolean ancestorsAccessChest, LocalDateTime homeSetDate) {
         this.familyId = familyId;
@@ -42,13 +42,6 @@ public class FamilyDetails {
 
     public FamilyDetails(UUID spouse1, UUID spouse2) {
         this.familyId = generateFamilyId(spouse1, spouse2);
-        this.homeLocation = null;
-        this.familyChest = new ItemStack[54];
-        this.childrenAccessHome = false;
-        this.childrenAccessChest = false;
-        this.ancestorsAccessHome = false;
-        this.ancestorsAccessChest = false;
-        this.homeSetDate = null;
     }
 
     public UUID getFamilyId() {

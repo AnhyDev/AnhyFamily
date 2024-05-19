@@ -24,10 +24,10 @@ public class PlayerFamily {
     private UUID mother;
     private UUID spouse;
     private Set<UUID> children = new HashSet<>();
-    private UUID familyId;
-    private UUID parentFamilyId;
+    private UUID familyId = null;
+    private UUID parentFamilyId = null;
     private Set<UUID> childFamilyIds = new HashSet<>();
-    private UUID dynastyId;
+    private UUID dynastyId = null;
 
     public PlayerFamily(UUID root, Gender gender, String displayName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse, 
     		Set<UUID> children) {
@@ -41,9 +41,6 @@ public class PlayerFamily {
         this.mother = mother;
         this.spouse = spouse;
         this.children = children;
-        this.familyId = null;
-        this.parentFamilyId = null;
-        this.dynastyId = null;
     }
 
     public PlayerFamily(UUID root, Gender gender, String loverCaseName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
