@@ -2,8 +2,8 @@ package ink.anh.family.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
@@ -13,7 +13,7 @@ public abstract class DatabaseManager {
 
     public final AnhyFamily plugin;
     protected Connection connection;
-    private Map<Class<?>, AbstractTable<?>> tables = new HashMap<>();
+    private Map<Class<?>, AbstractTable<?>> tables = new ConcurrentHashMap<>();
 
     public static DatabaseManager getInstance(AnhyFamily plugin) {
         if (instance == null) {
@@ -63,6 +63,7 @@ public abstract class DatabaseManager {
     }
 
     public void initializeTables() {
+        TableRegistry.registerAllTables(this);
         tables.values().forEach(AbstractTable::initialize);
     }
 }

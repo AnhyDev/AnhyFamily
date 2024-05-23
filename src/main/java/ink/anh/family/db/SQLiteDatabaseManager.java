@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import ink.anh.family.AnhyFamily;
 
 public class SQLiteDatabaseManager extends DatabaseManager {
@@ -23,8 +24,6 @@ public class SQLiteDatabaseManager extends DatabaseManager {
             }
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
-
-            initializeTables();
         } catch (IOException | ClassNotFoundException | SQLException e) {
             ErrorLogger.log(plugin, e, "Failed to initialize database");
         }

@@ -3,6 +3,7 @@ package ink.anh.family.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import ink.anh.family.AnhyFamily;
 
 public class MySQLDatabaseManager extends DatabaseManager {
@@ -41,8 +42,6 @@ public class MySQLDatabaseManager extends DatabaseManager {
                     this.username, 
                     this.password
                 );
-
-            initializeTables();
         } catch (SQLException e) {
             ErrorLogger.log(plugin, e, "Could not initialize MySQL connection");
         }

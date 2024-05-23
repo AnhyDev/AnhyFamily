@@ -42,6 +42,7 @@ public class AnhyFamily extends JavaPlugin {
 
         dbManager = DatabaseManager.getInstance(this);
         dbManager.initialize();
+        dbManager.initializeTables();
         marriageManager = MarriageManager.getInstance(this);
         parentManager = ParentManager.getInstance(this);
         

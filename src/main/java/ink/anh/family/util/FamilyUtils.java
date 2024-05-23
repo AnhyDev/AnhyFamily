@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import ink.anh.api.messages.Logger;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.db.fplayer.AbstractFamilyTable;
@@ -73,40 +72,21 @@ public class FamilyUtils {
 	}
 
 	public static PlayerFamily getFamily(UUID playerUUID) {
-	    Logger.info(AnhyFamily.getInstance(), "Виклик методу getFamily з параметром UUID: " + playerUUID);
 
 	    PlayerFamily playerFamily = null;
 	    try {
-	        Logger.info(AnhyFamily.getInstance(), "Отримання даних FamilyDataHandler для UUID: " + playerUUID);
 	        playerFamily = new FamilyDataHandler().getFamilyData(playerUUID);
 	        if (playerFamily == null) {
-	            Logger.info(AnhyFamily.getInstance(), "FamilyDataHandler не повернув дані, перевірка familyTable для UUID: " + playerUUID);
 	            playerFamily = familyTable.getFamily(playerUUID);
 	            if (playerFamily == null) {
-	                Logger.info(AnhyFamily.getInstance(), "familyTable не повернув дані, перевірка OfflinePlayer для UUID: " + playerUUID);
 	                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
 	                if (offlinePlayer.hasPlayedBefore()) {
-	                    Logger.info(AnhyFamily.getInstance(), "OfflinePlayer має історію гри, створення нової сім'ї для UUID: " + playerUUID);
 	                    playerFamily = createNewFamily(playerUUID);
-	                } else {
-	                    Logger.warn(AnhyFamily.getInstance(), "OfflinePlayer не має історії гри для UUID: " + playerUUID);
 	                }
-	            } else {
-	                Logger.info(AnhyFamily.getInstance(), "Отримані дані з familyTable для UUID: " + playerUUID);
 	            }
-	        } else {
-	            Logger.info(AnhyFamily.getInstance(), "Отримані дані з FamilyDataHandler для UUID: " + playerUUID);
 	        }
 	    } catch (Exception e) {
-	        Logger.error(AnhyFamily.getInstance(), "Виникла помилка під час отримання сім'ї для UUID: " + playerUUID);
-	        Logger.error(AnhyFamily.getInstance(), "Повідомлення про помилку: " + e.getMessage());
 	        e.printStackTrace();
-	    }
-
-	    if (playerFamily == null) {
-	        Logger.warn(AnhyFamily.getInstance(), "Не вдалося знайти або створити сім'ю для UUID: " + playerUUID);
-	    } else {
-	        Logger.info(AnhyFamily.getInstance(), "Успішно знайдена або створена сім'я для UUID: " + playerUUID);
 	    }
 
 	    return playerFamily;
