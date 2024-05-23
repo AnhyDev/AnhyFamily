@@ -2,6 +2,8 @@ package ink.anh.family.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
@@ -9,13 +11,13 @@ import ink.anh.family.GlobalManager;
 public abstract class DatabaseManager {
     private static DatabaseManager instance;
 
-    protected AnhyFamily plugin;
+    public final AnhyFamily plugin;
     protected Connection connection;
-    protected String dbName = "family";
+    private Map<Class<?>, AbstractTable<?>> tables = new HashMap<>();
 
     public static DatabaseManager getInstance(AnhyFamily plugin) {
         if (instance == null) {
-        	GlobalManager manager = plugin.getGlobalManager();
+            GlobalManager manager = plugin.getGlobalManager();
             if (manager.isUseMySQL()) {
                 instance = new MySQLDatabaseManager(plugin, manager.getMySQLConfig());
             } else {
@@ -33,15 +35,21 @@ public abstract class DatabaseManager {
 
     public abstract Connection getConnection();
 
-    public abstract AbstractFamilyTable getFamilyTable();
-    
-    // Метод для перезавантаження конфігурації та бази даних
+    public <T> void registerTable(Class<T> clazz, AbstractTable<T> table) {
+        tables.put(clazz, table);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> AbstractTable<T> getTable(Class<T> clazz) {
+        return (AbstractTable<T>) tables.get(clazz);
+    }
+
     public static void reload(AnhyFamily plugin) {
         if (instance != null) {
-            instance.closeConnection(); // Закриваємо існуюче з'єднання перед переініціалізацією
+            instance.closeConnection();
         }
-        instance = null; // Скидаємо інстанс для створення нового з оновленою конфігурацією
-        getInstance(plugin); // Створюємо новий інстанс з оновленою конфігурацією
+        instance = null;
+        getInstance(plugin);
     }
 
     public void closeConnection() {
@@ -53,8 +61,8 @@ public abstract class DatabaseManager {
             ErrorLogger.log(plugin, e, "Failed to close database connection");
         }
     }
-    
+
     public void initializeTables() {
-    	getFamilyTable().initialize();
+        tables.values().forEach(AbstractTable::initialize);
     }
 }

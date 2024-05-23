@@ -33,17 +33,15 @@ public class AnhyFamily extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        manager = GlobalManager.getManager(this);
-
-        dbManager = DatabaseManager.getInstance(this);
-        dbManager.initialize();
-
-        // Ініціалізація таблиць бази даних
-        dbManager.initialize();
         
         if (checkClass("net.milkbowl.vault.Vault")) {
         	economyHandler = EconomyHandler.getInstance();
         }
+        
+        manager = GlobalManager.getManager(this);
+
+        dbManager = DatabaseManager.getInstance(this);
+        dbManager.initialize();
         marriageManager = MarriageManager.getInstance(this);
         parentManager = ParentManager.getInstance(this);
         

@@ -9,16 +9,15 @@ import ink.anh.family.AnhyFamily;
 
 public class SQLiteDatabaseManager extends DatabaseManager {
 
-	protected SQLiteDatabaseManager(AnhyFamily plugin) {
-    	super(plugin);
-    	
+    protected SQLiteDatabaseManager(AnhyFamily plugin) {
+        super(plugin);
         initialize();
     }
 
     @Override
-	public void initialize() {
+    public void initialize() {
         try {
-            File dataFolder = new File(plugin.getDataFolder(), dbName + ".db");
+            File dataFolder = new File(plugin.getDataFolder(), "database.db");
             if (!dataFolder.exists()) {
                 dataFolder.createNewFile();
             }
@@ -30,17 +29,12 @@ public class SQLiteDatabaseManager extends DatabaseManager {
             ErrorLogger.log(plugin, e, "Failed to initialize database");
         }
     }
-    
-    @Override
-    public AbstractFamilyTable getFamilyTable() {
-        return new SQLiteFamilyTable(this);
-    }
 
     @Override
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
-                return DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() + "/" + dbName + ".db");
+                return DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() + "/database.db");
             }
         } catch (SQLException e) {
             ErrorLogger.log(plugin, e, "Failed to get database connection");

@@ -18,8 +18,8 @@ public class MySQLDatabaseManager extends DatabaseManager {
 
     private Connection connection;
 
-    protected MySQLDatabaseManager(AnhyFamily plugin, MySQLConfig config) {
-    	super(plugin);
+    public MySQLDatabaseManager(AnhyFamily plugin, MySQLConfig config) {
+        super(plugin);
         this.host = config.getHost();
         this.database = config.getDatabase();
         this.username = config.getUsername();
@@ -35,23 +35,17 @@ public class MySQLDatabaseManager extends DatabaseManager {
     @Override
     public void initialize() {
         try {
-        	connection = DriverManager.getConnection(
-        			"jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database +
-        			"?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL,
-        			this.username, 
-        			this.password
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database +
+                    "?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL,
+                    this.username, 
+                    this.password
+                );
 
-        		);
-
-        	initializeTables();
+            initializeTables();
         } catch (SQLException e) {
             ErrorLogger.log(plugin, e, "Could not initialize MySQL connection");
         }
-    }
-    
-    @Override
-    public AbstractFamilyTable getFamilyTable() {
-        return new MySQLFamilyTable(this);
     }
 
     @Override
@@ -59,10 +53,10 @@ public class MySQLDatabaseManager extends DatabaseManager {
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(
-                		"jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database +
-            			"?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL,
-            			this.username, 
-            			this.password);
+                        "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database +
+                        "?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL,
+                        this.username, 
+                        this.password);
             }
         } catch (SQLException e) {
             ErrorLogger.log(plugin, e, "Could not retrieve MySQL connection");
@@ -74,7 +68,7 @@ public class MySQLDatabaseManager extends DatabaseManager {
         return database;
     }
 
-	public String getTablePrefix() {
-		return tablePrefix;
-	}
+    public String getTablePrefix() {
+        return tablePrefix;
+    }
 }
