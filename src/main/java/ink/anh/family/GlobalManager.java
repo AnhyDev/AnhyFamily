@@ -8,7 +8,6 @@ import ink.anh.api.LibraryManager;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.lingo.lang.LanguageManager;
 import ink.anh.api.messages.Logger;
-import ink.anh.family.common.FamilyConfig;
 import ink.anh.family.db.MySQLConfig;
 import ink.anh.family.lang.LangMessage;
 import net.md_5.bungee.api.ChatColor;

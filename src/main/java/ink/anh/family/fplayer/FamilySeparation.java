@@ -1,4 +1,4 @@
-package ink.anh.family.common;
+package ink.anh.family.fplayer;
 
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.Logger;

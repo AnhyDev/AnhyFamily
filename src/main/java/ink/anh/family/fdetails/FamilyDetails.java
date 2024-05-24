@@ -1,4 +1,4 @@
-package ink.anh.family.common;
+package ink.anh.family.fdetails;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +14,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import ink.anh.family.fplayer.FamilyRelationType;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.Access;
 import ink.anh.api.items.ItemStackSerializer;
 

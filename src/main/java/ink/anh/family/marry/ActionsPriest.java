@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
 
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.common.FamilyConfig;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.ChatColor;
 
-import ink.anh.family.common.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 
 public class FamilyTree {

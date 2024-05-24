@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.db.ErrorLogger;
 import ink.anh.family.db.TableField;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 
 public class SQLiteFamilyTable extends AbstractFamilyTable {

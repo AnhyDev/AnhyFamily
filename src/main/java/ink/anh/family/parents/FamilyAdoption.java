@@ -5,7 +5,7 @@ import ink.anh.api.messages.Logger;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.common.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.info.FamilyTree;
 import ink.anh.family.util.FamilyUtils;

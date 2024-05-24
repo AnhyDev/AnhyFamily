@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.Currency;
-import ink.anh.family.common.FamilyService;
-import ink.anh.family.common.Prices;
+import ink.anh.family.fplayer.Currency;
+import ink.anh.family.fplayer.FamilyService;
+import ink.anh.family.fplayer.Prices;
 
 import java.math.BigInteger;
 

@@ -1,4 +1,4 @@
-package ink.anh.family.common;
+package ink.anh.family;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -13,7 +13,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.api.items.ItemStackSerializer;
-import ink.anh.family.AnhyFamily;
+import ink.anh.family.fplayer.Currency;
+import ink.anh.family.fplayer.Prices;
 
 public class FamilyConfig {
 

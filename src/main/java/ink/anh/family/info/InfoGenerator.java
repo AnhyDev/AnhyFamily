@@ -10,7 +10,7 @@ import ink.anh.api.lingo.Translator;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.common.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;

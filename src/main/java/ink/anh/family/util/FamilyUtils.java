@@ -9,9 +9,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.db.fplayer.AbstractFamilyTable;
-import ink.anh.family.common.FamilyDataHandler;
+import ink.anh.family.fplayer.FamilyDataHandler;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.info.FamilyTree;
 

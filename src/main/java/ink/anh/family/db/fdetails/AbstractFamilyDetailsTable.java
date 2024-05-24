@@ -2,8 +2,8 @@ package ink.anh.family.db.fdetails;
 
 import java.util.UUID;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.FamilyDetails;
 import ink.anh.family.db.AbstractTable;
+import ink.anh.family.fdetails.FamilyDetails;
 
 public abstract class AbstractFamilyDetailsTable extends AbstractTable<FamilyDetails> {
 

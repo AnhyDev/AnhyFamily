@@ -1,9 +1,9 @@
 package ink.anh.family.db;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.FamilyDetails;
-import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.db.fplayer.SQLiteFamilyTable;
+import ink.anh.family.fdetails.FamilyDetails;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.db.fplayer.MySQLFamilyTable;
 import ink.anh.family.db.fdetails.SQLiteFamilyDetailsTable;
 import ink.anh.family.db.fdetails.MySQLFamilyDetailsTable;

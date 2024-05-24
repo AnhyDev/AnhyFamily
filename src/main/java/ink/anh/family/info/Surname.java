@@ -9,8 +9,8 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
-import ink.anh.family.common.PlayerFamily;
-import ink.anh.family.common.FamilyDataHandler;
+import ink.anh.family.fplayer.FamilyDataHandler;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 

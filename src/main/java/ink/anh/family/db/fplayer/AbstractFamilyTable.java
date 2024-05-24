@@ -3,8 +3,8 @@ package ink.anh.family.db.fplayer;
 import java.util.UUID;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.PlayerFamily;
 import ink.anh.family.db.AbstractTable;
+import ink.anh.family.fplayer.PlayerFamily;
 
 public abstract class AbstractFamilyTable extends AbstractTable<PlayerFamily> {
 

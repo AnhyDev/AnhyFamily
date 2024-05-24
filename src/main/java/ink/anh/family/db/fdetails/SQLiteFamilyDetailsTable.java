@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import ink.anh.family.common.FamilyDetails;
 import ink.anh.family.db.ErrorLogger;
 import ink.anh.family.db.SQLiteDatabaseManager;
 import ink.anh.family.db.TableField;
-import ink.anh.family.util.FamilyDetailsUtils;
+import ink.anh.family.fdetails.FamilyDetails;
+import ink.anh.family.fdetails.FDetailsSerializator;
 
 public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
 
@@ -66,13 +66,13 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
              PreparedStatement ps = conn.prepareStatement(insertSQL)) {
 
             ps.setString(1, familyDetails.getFamilyId().toString());
-            ps.setString(2, FamilyDetailsUtils.serializeLocation(familyDetails.getHomeLocation()));
-            ps.setString(3, FamilyDetailsUtils.serializeFamilyChest(familyDetails.getFamilyChest()));
+            ps.setString(2, FDetailsSerializator.serializeLocation(familyDetails.getHomeLocation()));
+            ps.setString(3, FDetailsSerializator.serializeFamilyChest(familyDetails.getFamilyChest()));
             ps.setBoolean(4, familyDetails.isChildrenAccessHome());
             ps.setBoolean(5, familyDetails.isChildrenAccessChest());
             ps.setBoolean(6, familyDetails.isAncestorsAccessHome());
             ps.setBoolean(7, familyDetails.isAncestorsAccessChest());
-            ps.setString(8, FamilyDetailsUtils.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap()));
+            ps.setString(8, FDetailsSerializator.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap()));
             ps.setString(9, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
 
             ps.executeUpdate();
@@ -93,8 +93,8 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
                 if (rs.next()) {
                     familyDetails = new FamilyDetails(
                             UUID.fromString(rs.getString("family_id")),
-                            FamilyDetailsUtils.deserializeLocation(rs.getString("home_location")),
-                            FamilyDetailsUtils.deserializeFamilyChest(rs.getString("family_chest")),
+                            FDetailsSerializator.deserializeLocation(rs.getString("home_location")),
+                            FDetailsSerializator.deserializeFamilyChest(rs.getString("family_chest")),
                             rs.getBoolean("children_access_home"),
                             rs.getBoolean("children_access_chest"),
                             rs.getBoolean("ancestors_access_home"),

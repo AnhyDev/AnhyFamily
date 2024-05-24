@@ -3,7 +3,7 @@ package ink.anh.family.info;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.common.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;

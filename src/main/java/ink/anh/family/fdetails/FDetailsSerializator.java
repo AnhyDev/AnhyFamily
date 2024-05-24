@@ -1,4 +1,4 @@
-package ink.anh.family.util;
+package ink.anh.family.fdetails;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,10 +7,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import ink.anh.api.items.ItemStackSerializer;
+import ink.anh.family.util.Access;
+
 import java.util.Map;
 import java.util.UUID;
 
-public class FamilyDetailsUtils {
+public class FDetailsSerializator {
 
     private static final Gson gson = new GsonBuilder().create();
 

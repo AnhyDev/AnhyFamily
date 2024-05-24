@@ -1,4 +1,4 @@
-package ink.anh.family.common;
+package ink.anh.family.fplayer;
 
 import org.bukkit.inventory.ItemStack;
 import java.math.BigInteger;

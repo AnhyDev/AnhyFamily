@@ -1,4 +1,4 @@
-package ink.anh.family.common;
+package ink.anh.family.fplayer;
 
 import ink.anh.api.DataHandler;
 import java.util.UUID;
