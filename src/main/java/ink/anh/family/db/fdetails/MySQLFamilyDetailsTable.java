@@ -10,13 +10,14 @@ import java.util.UUID;
 
 import ink.anh.family.common.FamilyDetails;
 import ink.anh.family.db.ErrorLogger;
-import ink.anh.family.db.SQLiteDatabaseManager;
+import ink.anh.family.db.MySQLDatabaseManager;
 import ink.anh.family.db.TableField;
 import ink.anh.family.util.FamilyDetailsUtils;
 
-public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
+public class MySQLFamilyDetailsTable extends AbstractFamilyDetailsTable {
 
-    private final SQLiteDatabaseManager dbManager;
+    private final MySQLDatabaseManager dbManager;
+    private final String tablePrefix;
     private static final Map<String, String> allowedFields = new HashMap<>();
 
     static {
@@ -30,16 +31,17 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
         allowedFields.put("home_set_date", "home_set_date");
     }
 
-    public SQLiteFamilyDetailsTable(SQLiteDatabaseManager dbManager) {
+    public MySQLFamilyDetailsTable(MySQLDatabaseManager dbManager) {
         super(dbManager.plugin);
         this.dbManager = dbManager;
+        this.tablePrefix = dbManager.getTablePrefix();
     }
 
     @Override
     protected void initialize() {
         String createTableSQL =
-                "CREATE TABLE IF NOT EXISTS " + dbName + " (" +
-                        "family_id TEXT PRIMARY KEY," +
+                "CREATE TABLE IF NOT EXISTS " + tablePrefix + dbName + " (" +
+                        "family_id VARCHAR(36) PRIMARY KEY," +
                         "home_location TEXT," +
                         "family_chest TEXT," +
                         "children_access_home BOOLEAN," +
@@ -60,8 +62,9 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
     @Override
     public void insert(FamilyDetails familyDetails) {
         String insertSQL =
-                "INSERT OR REPLACE INTO " + dbName + " (family_id, home_location, family_chest, children_access_home, children_access_chest, ancestors_access_home, ancestors_access_chest, specific_access_map, home_set_date) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                "INSERT INTO " + tablePrefix + dbName + " (family_id, home_location, family_chest, children_access_home, children_access_chest, ancestors_access_home, ancestors_access_chest, specific_access_map, home_set_date) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE home_location = VALUES(home_location), family_chest = VALUES(family_chest), children_access_home = VALUES(children_access_home), children_access_chest = VALUES(children_access_chest), ancestors_access_home = VALUES(ancestors_access_home), ancestors_access_chest = VALUES(ancestors_access_chest), specific_access_map = VALUES(specific_access_map), home_set_date = VALUES(home_set_date);";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(insertSQL)) {
 
@@ -83,7 +86,7 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
 
     @Override
     public FamilyDetails getFamilyDetails(UUID familyId) {
-        String selectSQL = "SELECT * FROM " + dbName + " WHERE family_id = ?;";
+        String selectSQL = "SELECT * FROM " + tablePrefix + dbName + " WHERE family_id = ?;";
         FamilyDetails familyDetails = null;
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(selectSQL)) {
@@ -111,7 +114,7 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
 
     @Override
     public void deleteFamilyDetails(UUID familyId) {
-        String deleteSQL = "DELETE FROM " + dbName + " WHERE family_id = ?;";
+        String deleteSQL = "DELETE FROM " + tablePrefix + dbName + " WHERE family_id = ?;";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(deleteSQL)) {
             ps.setString(1, familyId.toString());
@@ -127,7 +130,7 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
             throw new IllegalArgumentException("Invalid field name");
         }
 
-        String updateSQL = "UPDATE " + dbName + " SET " + allowedFields.get(tableField.getFieldName()) + " = ? WHERE family_id = ?;";
+        String updateSQL = "UPDATE " + tablePrefix + dbName + " SET " + allowedFields.get(tableField.getFieldName()) + " = ? WHERE family_id = ?;";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(updateSQL)) {
 
