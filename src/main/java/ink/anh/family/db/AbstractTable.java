@@ -1,15 +1,17 @@
 package ink.anh.family.db;
 
 import ink.anh.family.AnhyFamily;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public abstract class AbstractTable<T> {
-
+	
     protected DatabaseManager dbManager;
-    public String dbName;
+    protected String dbName;
 
     public AbstractTable(AnhyFamily familyPlugin, String dbName) {
         this.dbManager = familyPlugin.getDatabaseManager();
-        this.dbName = dbName;
+        this.dbName = dbManager.getTablePrefix() + dbName;
     }
 
     protected abstract void initialize();
@@ -64,5 +66,26 @@ public abstract class AbstractTable<T> {
             }
         }
         return parts;
+    }
+
+    @FunctionalInterface
+    public interface SQLConsumer<T> {
+        void accept(T t) throws SQLException;
+    }
+
+    protected void executeTransaction(SQLConsumer<Connection> sqlConsumer, String errorMessage) {
+        try (Connection conn = dbManager.getConnection()) {
+            conn.setAutoCommit(false); // Початок транзакції
+
+            try {
+                sqlConsumer.accept(conn);
+                conn.commit(); // Завершення транзакції
+            } catch (SQLException e) {
+                conn.rollback(); // Відкат транзакції у випадку помилки
+                ErrorLogger.log(dbManager.plugin, e, errorMessage);
+            }
+        } catch (SQLException e) {
+            ErrorLogger.log(dbManager.plugin, e, "Failed to establish database connection");
+        }
     }
 }

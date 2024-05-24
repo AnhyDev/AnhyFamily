@@ -38,7 +38,8 @@ public class MySQLDatabaseManager extends DatabaseManager {
         try {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database +
-                    "?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL,
+                    "?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL +
+                    "&allowPublicKeyRetrieval=true",
                     this.username, 
                     this.password
                 );
@@ -53,7 +54,8 @@ public class MySQLDatabaseManager extends DatabaseManager {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(
                         "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database +
-                        "?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL,
+                        "?autoReconnect=" + this.autoReconnect + "&useSSL=" + this.useSSL +
+                        "&allowPublicKeyRetrieval=true",
                         this.username, 
                         this.password);
             }
@@ -63,10 +65,7 @@ public class MySQLDatabaseManager extends DatabaseManager {
         return connection;
     }
 
-    public String getDatabase() {
-        return database;
-    }
-
+    @Override
     public String getTablePrefix() {
         return tablePrefix;
     }

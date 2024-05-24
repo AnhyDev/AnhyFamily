@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import ink.anh.family.AnhyFamily;
@@ -16,22 +14,6 @@ import ink.anh.family.gender.Gender;
 
 public class SQLiteFamilyTable extends AbstractFamilyTable {
 
-    private static final Map<String, String> allowedFields = new HashMap<>();
-
-    static {
-        allowedFields.put("displayName", "displayName");
-        allowedFields.put("last_name", "last_name");
-        allowedFields.put("old_last_name", "old_last_name");
-        allowedFields.put("father", "father");
-        allowedFields.put("mother", "mother");
-        allowedFields.put("spouse", "spouse");
-        allowedFields.put("children", "children");
-        allowedFields.put("family_id", "family_id");
-        allowedFields.put("parent_family_id", "parent_family_id");
-        allowedFields.put("child_family_ids", "child_family_ids");
-        allowedFields.put("dynasty_id", "dynasty_id");
-    }
-
     public SQLiteFamilyTable(AnhyFamily familyPlugin) {
         super(familyPlugin);
     }
@@ -39,43 +21,24 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
     @Override
     public void initialize() {
         String createTableSQL =
-                "CREATE TABLE IF NOT EXISTS " + dbName + " (" +
-                        "player_uuid TEXT PRIMARY KEY," +
-                        "gender TEXT," +
-                        "displayName TEXT NOT NULL UNIQUE," +
-                        "last_name TEXT," +
-                        "old_last_name TEXT," +
-                        "father TEXT," +
-                        "mother TEXT," +
-                        "spouse TEXT," +
-                        "children TEXT," +
-                        "family_id TEXT," +
-                        "parent_family_id TEXT," +
-                        "child_family_ids TEXT," +
-                        "dynasty_id TEXT" +
-                        ");" +
+                "CREATE TABLE IF NOT EXISTS " + dbName + tableCreate +
                         "CREATE INDEX IF NOT EXISTS idx_displayName ON " + dbName + " (displayName);";
 
         try (Connection conn = dbManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(createTableSQL)) {
             ps.executeUpdate();
         } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to create family table or index");
+            ErrorLogger.log(dbManager.plugin, e, "Failed to create family tableInsert or index");
         }
     }
 
     @Override
     public void insert(PlayerFamily playerFamily) {
         String insertSQL =
-                "INSERT OR REPLACE INTO " + dbName +
-                        " (player_uuid, gender, displayName, last_name, old_last_name, father, mother, spouse, children, family_id, parent_family_id, child_family_ids, dynasty_id) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                "INSERT OR REPLACE INTO " + dbName + tableInsert + ";";
 
-        try (Connection conn = dbManager.getConnection()) {
-            conn.setAutoCommit(false); // Початок транзакції
-
+        executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
-                // Заповнення параметрів запиту
                 ps.setString(1, playerFamily.getRoot().toString());
                 ps.setString(2, Gender.toStringSafe(playerFamily.getGender()));
                 ps.setString(3, playerFamily.getLoverCaseName().toLowerCase());
@@ -89,25 +52,9 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
                 ps.setString(11, playerFamily.getParentFamilyId() != null ? playerFamily.getParentFamilyId().toString() : null);
                 ps.setString(12, PlayerFamily.uuidSetToString(playerFamily.getChildFamilyIds()));
                 ps.setString(13, playerFamily.getDynastyId() != null ? playerFamily.getDynastyId().toString() : null);
-
                 ps.executeUpdate();
             }
-
-            conn.commit(); // Завершення транзакції
-        } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to insert or replace family data");
-            try (Connection conn = dbManager.getConnection()) {
-                conn.rollback(); // Відкат транзакції у випадку помилки
-            } catch (SQLException rollbackEx) {
-                ErrorLogger.log(dbManager.plugin, rollbackEx, "Failed to rollback transaction");
-            }
-        } finally {
-            try (Connection conn = dbManager.getConnection()) {
-                conn.setAutoCommit(true); // Відновлення автоматичного режиму комітів
-            } catch (SQLException finalEx) {
-                ErrorLogger.log(dbManager.plugin, finalEx, "Failed to reset auto-commit mode");
-            }
-        }
+        }, "Failed to insert or replace family data: " + playerFamily);
     }
 
     @Override
@@ -156,29 +103,12 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
     @Override
     public void deleteFamily(UUID playerUUID) {
         String deleteSQL = "DELETE FROM " + dbName + " WHERE player_uuid = ?;";
-        try (Connection conn = dbManager.getConnection()) {
-            conn.setAutoCommit(false); // Початок транзакції
-
+        executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(deleteSQL)) {
                 ps.setString(1, playerUUID.toString());
                 ps.executeUpdate();
             }
-
-            conn.commit(); // Завершення транзакції
-        } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to delete family data");
-            try (Connection conn = dbManager.getConnection()) {
-                conn.rollback(); // Відкат транзакції у випадку помилки
-            } catch (SQLException rollbackEx) {
-                ErrorLogger.log(dbManager.plugin, rollbackEx, "Failed to rollback transaction");
-            }
-        } finally {
-            try (Connection conn = dbManager.getConnection()) {
-                conn.setAutoCommit(true); // Відновлення автоматичного режиму комітів
-            } catch (SQLException finalEx) {
-                ErrorLogger.log(dbManager.plugin, finalEx, "Failed to reset auto-commit mode");
-            }
-        }
+        }, "Failed to delete family data for UUID: " + playerUUID);
     }
 
     @Override
@@ -188,29 +118,12 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
         }
 
         String updateSQL = "UPDATE " + dbName + " SET " + allowedFields.get(tableField.getFieldName()) + " = ? WHERE player_uuid = ?;";
-        try (Connection conn = dbManager.getConnection()) {
-            conn.setAutoCommit(false); // Початок транзакції
-
+        executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(updateSQL)) {
                 ps.setString(1, tableField.getFieldValue());
                 ps.setString(2, tableField.getKey().toString());
                 ps.executeUpdate();
             }
-
-            conn.commit(); // Завершення транзакції
-        } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to update family field: " + tableField.getFieldValue());
-            try (Connection conn = dbManager.getConnection()) {
-                conn.rollback(); // Відкат транзакції у випадку помилки
-            } catch (SQLException rollbackEx) {
-                ErrorLogger.log(dbManager.plugin, rollbackEx, "Failed to rollback transaction");
-            }
-        } finally {
-            try (Connection conn = dbManager.getConnection()) {
-                conn.setAutoCommit(true); // Відновлення автоматичного режиму комітів
-            } catch (SQLException finalEx) {
-                ErrorLogger.log(dbManager.plugin, finalEx, "Failed to reset auto-commit mode");
-            }
-        }
+        }, "Failed to update family field: " + tableField.getFieldValue());
     }
 }

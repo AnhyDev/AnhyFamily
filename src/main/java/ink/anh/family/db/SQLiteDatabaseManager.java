@@ -40,4 +40,9 @@ public class SQLiteDatabaseManager extends DatabaseManager {
         }
         return connection;
     }
+
+    @Override
+    public String getTablePrefix() {
+        return "";
+    }
 }

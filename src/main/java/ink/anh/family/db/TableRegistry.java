@@ -16,13 +16,13 @@ public class TableRegistry {
         // Реєстрація таблиць для SQLite
         if (dbManager instanceof SQLiteDatabaseManager) {
             dbManager.registerTable(PlayerFamily.class, new SQLiteFamilyTable(plugin));
-            dbManager.registerTable(FamilyDetails.class, new SQLiteFamilyDetailsTable((SQLiteDatabaseManager) dbManager));
+            dbManager.registerTable(FamilyDetails.class, new SQLiteFamilyDetailsTable(plugin));
         }
         
         // Реєстрація таблиць для MySQL
         if (dbManager instanceof MySQLDatabaseManager) {
-            dbManager.registerTable(PlayerFamily.class, new MySQLFamilyTable((MySQLDatabaseManager) dbManager));
-            dbManager.registerTable(FamilyDetails.class, new MySQLFamilyDetailsTable((MySQLDatabaseManager) dbManager));
+            dbManager.registerTable(PlayerFamily.class, new MySQLFamilyTable(plugin));
+            dbManager.registerTable(FamilyDetails.class, new MySQLFamilyDetailsTable(plugin));
         }
     }
 }

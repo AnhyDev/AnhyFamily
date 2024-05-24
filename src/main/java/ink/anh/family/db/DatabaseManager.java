@@ -34,6 +34,8 @@ public abstract class DatabaseManager {
     public abstract void initialize();
 
     public abstract Connection getConnection();
+    
+    public abstract String getTablePrefix();
 
     public <T> void registerTable(Class<T> clazz, AbstractTable<T> table) {
         tables.put(clazz, table);
