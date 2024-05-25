@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 
 import ink.anh.family.fplayer.FamilyRelationType;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.Access;
+import ink.anh.api.enums.Access;
 import ink.anh.api.items.ItemStackSerializer;
 
 public class FamilyDetails {
@@ -61,7 +61,7 @@ public class FamilyDetails {
 
     public void setHomeLocation(Location homeLocation) {
         this.homeLocation = homeLocation;
-        this.homeSetDate = LocalDateTime.now(); // Оновлення дати при зміні дому
+        this.homeSetDate = LocalDateTime.now();
     }
 
     public ItemStack[] getFamilyChest() {

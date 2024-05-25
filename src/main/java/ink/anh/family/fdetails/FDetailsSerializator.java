@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import ink.anh.api.items.ItemStackSerializer;
-import ink.anh.family.util.Access;
+import ink.anh.api.enums.Access;
 
 import java.util.Map;
 import java.util.UUID;
