@@ -31,7 +31,7 @@ public class FamilyUtils {
 	        displayName = offlinePlayer.getName();
 	    }
 
-	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>(), null, null, new HashSet<>(), null);
 	    saveFamily(playerFamily);
 	    return playerFamily;
 	}
@@ -41,7 +41,7 @@ public class FamilyUtils {
 	    UUID playerUUID = player.getUniqueId();
 	    String displayName = player.getName();
 
-	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>(), null, null, new HashSet<>(), null);
 	    saveFamily(playerFamily);
 	    if (player.isOnline()) {
 	    	new FamilyDataHandler().addFamilyData(playerUUID, playerFamily);
@@ -54,7 +54,7 @@ public class FamilyUtils {
 	    UUID playerUUID = offlinePlayer.getUniqueId();
 	    String displayName = offlinePlayer.getName();
 
-	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>());
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>(), null, null, new HashSet<>(), null);
 	    saveFamily(playerFamily);
 	    return playerFamily;
 	}

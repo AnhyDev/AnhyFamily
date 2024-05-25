@@ -29,20 +29,6 @@ public class PlayerFamily {
     private Set<UUID> childFamilyIds = new HashSet<>();
     private UUID dynastyId = null;
 
-    public PlayerFamily(UUID root, Gender gender, String displayName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse, 
-    		Set<UUID> children) {
-    	
-        this.root = root;
-        this.gender = gender;
-        this.loverCaseName = displayName != null && displayName.length() > 0 ? displayName : getRootrNickName();
-        this.lastName = lastName;
-        this.oldLastName = oldLastName;
-        this.father = father;
-        this.mother = mother;
-        this.spouse = spouse;
-        this.children = children;
-    }
-
     public PlayerFamily(UUID root, Gender gender, String loverCaseName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
     		Set<UUID> children, UUID familyId, UUID parentFamilyId, Set<UUID> childFamilyIds, UUID dynastyId) {
     	
@@ -57,8 +43,8 @@ public class PlayerFamily {
         this.children = children;
         this.familyId = familyId;
         this.parentFamilyId = parentFamilyId;
-        this.dynastyId = dynastyId;
         this.childFamilyIds = childFamilyIds;
+        this.dynastyId = dynastyId;
     }
 
     public static PlayerFamily getMyFamily(String str) {

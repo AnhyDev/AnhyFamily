@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class FamilyDataHandler extends DataHandler {
 
-    private static final String FAMILY_DATA_KEY = "family";
+    private static final String FAMILY_DATA_KEY = "fplayer";
 
     /**
      * Saves the family data for a specific player.
