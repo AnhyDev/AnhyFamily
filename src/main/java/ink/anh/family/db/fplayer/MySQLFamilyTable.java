@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+import ink.anh.api.database.ErrorLogger;
+import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.ErrorLogger;
-import ink.anh.family.db.TableField;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 
@@ -27,7 +27,7 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
              PreparedStatement ps = conn.prepareStatement(createTableSQL)) {
             ps.executeUpdate();
         } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to create family tableInsert");
+            ErrorLogger.log(familyPlugin, e, "Failed to create family tableInsert");
         }
 
         String createIndexSQL =
@@ -38,7 +38,7 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
             ps.executeUpdate();
         } catch (SQLException e) {
             if (!e.getMessage().contains("Duplicate key name")) {
-                ErrorLogger.log(dbManager.plugin, e, "Failed to create index on family tableInsert");
+                ErrorLogger.log(familyPlugin, e, "Failed to create index on family tableInsert");
             }
         }
     }
@@ -107,7 +107,7 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
                 }
             }
         } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to get family data");
+            ErrorLogger.log(familyPlugin, e, "Failed to get family data");
         }
         return playerFamily;
     }

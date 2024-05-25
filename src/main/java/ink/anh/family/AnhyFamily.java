@@ -3,7 +3,6 @@ package ink.anh.family;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ink.anh.family.command.CommandManager;
-import ink.anh.family.db.DatabaseManager;
 import ink.anh.family.listeners.ListenersRegistratar;
 import ink.anh.family.marry.MarriageManager;
 import ink.anh.family.parents.ParentManager;
@@ -15,7 +14,6 @@ public class AnhyFamily extends JavaPlugin {
     private static AnhyFamily instance;
 
     private GlobalManager manager;
-    private DatabaseManager dbManager;
     
     private EconomyHandler economyHandler;
     private MarriageManager marriageManager;
@@ -39,10 +37,10 @@ public class AnhyFamily extends JavaPlugin {
         }
         
         manager = GlobalManager.getManager(this);
-
-        dbManager = DatabaseManager.getInstance(this);
-        dbManager.initialize();
-        dbManager.initializeTables();
+        manager.setDatabaseManager();
+        manager.getDatabaseManager().initialize();
+        manager.getDatabaseManager().initializeTables();
+        
         marriageManager = MarriageManager.getInstance(this);
         parentManager = ParentManager.getInstance(this);
         
@@ -52,8 +50,8 @@ public class AnhyFamily extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (dbManager != null) {
-            dbManager.closeConnection();
+        if (manager.getDatabaseManager() != null) {
+        	manager.getDatabaseManager().closeConnection();
         }
     }
     
@@ -83,10 +81,6 @@ public class AnhyFamily extends JavaPlugin {
      */
     public GlobalManager getGlobalManager() {
         return manager;
-    }
-
-    public DatabaseManager getDatabaseManager() {
-        return dbManager;
     }
 
     public EconomyHandler getEconomyHandler() {

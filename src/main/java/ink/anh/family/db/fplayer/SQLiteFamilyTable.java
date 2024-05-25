@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+import ink.anh.api.database.ErrorLogger;
+import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.ErrorLogger;
-import ink.anh.family.db.TableField;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 
@@ -28,7 +28,7 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
              PreparedStatement ps = conn.prepareStatement(createTableSQL)) {
             ps.executeUpdate();
         } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to create family tableInsert or index");
+            ErrorLogger.log(familyPlugin, e, "Failed to create family tableInsert or index");
         }
     }
 
@@ -95,7 +95,7 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
                 }
             }
         } catch (SQLException e) {
-            ErrorLogger.log(dbManager.plugin, e, "Failed to get family data");
+            ErrorLogger.log(familyPlugin, e, "Failed to get family data");
         }
         return playerFamily;
     }

@@ -3,12 +3,14 @@ package ink.anh.family.db.fdetails;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import ink.anh.api.database.AbstractTable;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.AbstractTable;
 import ink.anh.family.fdetails.FamilyDetails;
 
 public abstract class AbstractFamilyDetailsTable extends AbstractTable<FamilyDetails> {
 
+	protected AnhyFamily familyPlugin;
     protected static final Map<String, String> allowedFields = new HashMap<>();
 
     static {
@@ -38,7 +40,8 @@ public abstract class AbstractFamilyDetailsTable extends AbstractTable<FamilyDet
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public AbstractFamilyDetailsTable(AnhyFamily familyPlugin) {
-        super(familyPlugin, "FamilyDetails");
+        super(familyPlugin.getGlobalManager(), "FamilyDetails");
+        this.familyPlugin = familyPlugin;
         initialize();
     }
 

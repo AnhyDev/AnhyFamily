@@ -17,7 +17,7 @@ import ink.anh.family.info.FamilyTree;
 
 public class FamilyUtils {
 	
-	private static AbstractFamilyTable familyTable = (AbstractFamilyTable) AnhyFamily.getInstance().getDatabaseManager().getTable(PlayerFamily.class);
+	private static AbstractFamilyTable familyTable = (AbstractFamilyTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(PlayerFamily.class);
 	
 	public static void saveFamily(PlayerFamily playerFamily) {
 		familyTable.insert(playerFamily);

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import ink.anh.api.database.DatabaseManager;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageType;
@@ -15,7 +16,7 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.command.sub.Clear;
 import ink.anh.family.command.sub.Separation;
-import ink.anh.family.db.DatabaseManager;
+import ink.anh.family.db.TableRegistry;
 import ink.anh.family.info.FamilyInfoCommandHandler;
 import ink.anh.family.info.FamilyTreeCommandHandler;
 import ink.anh.family.info.Surname;
@@ -96,7 +97,7 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 			GlobalManager manager = GlobalManager.getManager(familyPlugin);
 			manager.reload();
 
-		    DatabaseManager.reload(familyPlugin);
+		    DatabaseManager.reload(familyPlugin.getGlobalManager(), new TableRegistry(familyPlugin));
 	        MarriageManager.getInstance(familyPlugin).reload();
 	        ParentManager.getInstance(familyPlugin).reload();
 

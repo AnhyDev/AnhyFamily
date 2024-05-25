@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import ink.anh.api.database.AbstractTable;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.AbstractTable;
 import ink.anh.family.fplayer.PlayerFamily;
 
 public abstract class AbstractFamilyTable extends AbstractTable<PlayerFamily> {
 
+	protected AnhyFamily familyPlugin;
     protected static final Map<String, String> allowedFields = new HashMap<>();
 
     static {
@@ -46,7 +47,8 @@ public abstract class AbstractFamilyTable extends AbstractTable<PlayerFamily> {
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public AbstractFamilyTable(AnhyFamily familyPlugin) {
-        super(familyPlugin, "PlayerFamily");
+        super(familyPlugin.getGlobalManager(), "PlayerFamily");
+        this.familyPlugin = familyPlugin;
         initialize();
     }
 

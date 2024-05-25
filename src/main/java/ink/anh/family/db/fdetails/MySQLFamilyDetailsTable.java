@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.UUID;
 
+import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.TableField;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FDetailsSerializator;
 
