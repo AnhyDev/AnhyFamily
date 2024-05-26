@@ -1,7 +1,7 @@
 package ink.anh.family.fdetails;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.fdetails.AbstractFamilyDetailsTable;
+import ink.anh.family.db.fdetails.FamilyDetailsTable;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class FamilyDetailsDelete {
 
-    private static AbstractFamilyDetailsTable familyDetailsTable = (AbstractFamilyDetailsTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(FamilyDetails.class);
+    private static FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(FamilyDetails.class);
     private static FamilyDetailsDataHandler dataHandler = FamilyDetailsDataHandler.getInstance();
 
     public static void deleteFamilyDetails(UUID familyId) {

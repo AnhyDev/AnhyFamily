@@ -1,7 +1,7 @@
 package ink.anh.family.fdetails;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.fdetails.AbstractFamilyDetailsTable;
+import ink.anh.family.db.fdetails.FamilyDetailsTable;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.api.database.TableField;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class FamilyDetailsSave {
 
-    private static AbstractFamilyDetailsTable familyDetailsTable = (AbstractFamilyDetailsTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(FamilyDetails.class);
+    private static FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(FamilyDetails.class);
     private static FamilyDetailsDataHandler dataHandler = FamilyDetailsDataHandler.getInstance();
 
     public static void saveFamilyDetails(FamilyDetails familyDetails, FamilyDetailsField fieldToUpdate) {
@@ -37,10 +37,10 @@ public class FamilyDetailsSave {
         
         switch (fieldToUpdate) {
             case HOME_LOCATION:
-                familyDetailsTable.updateField(new TableField<>(familyId, "home_location", FDetailsSerializator.serializeLocation(familyDetails.getHomeLocation())));
+                familyDetailsTable.updateField(new TableField<>(familyId, "home_location", FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation())));
                 break;
             case FAMILY_CHEST:
-                familyDetailsTable.updateField(new TableField<>(familyId, "family_chest", FDetailsSerializator.serializeFamilyChest(familyDetails.getFamilyChest())));
+                familyDetailsTable.updateField(new TableField<>(familyId, "family_chest", FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest())));
                 break;
             case CHILDREN_ACCESS_HOME:
                 familyDetailsTable.updateField(new TableField<>(familyId, "children_access_home", Boolean.toString(familyDetails.isChildrenAccessHome())));
@@ -55,7 +55,7 @@ public class FamilyDetailsSave {
                 familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access_chest", Boolean.toString(familyDetails.isAncestorsAccessChest())));
                 break;
             case SPECIFIC_ACCESS_MAP:
-                familyDetailsTable.updateField(new TableField<>(familyId, "specific_access_map", FDetailsSerializator.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap())));
+                familyDetailsTable.updateField(new TableField<>(familyId, "specific_access_map", FamilyDetailsSerializer.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap())));
                 break;
             case HOME_SET_DATE:
                 familyDetailsTable.updateField(new TableField<>(familyId, "home_set_date", familyDetails.getHomeSetDate().toString()));

@@ -12,7 +12,7 @@ import ink.anh.api.enums.Access;
 import java.util.Map;
 import java.util.UUID;
 
-public class FDetailsSerializator {
+public class FamilyDetailsSerializer {
 
     private static final Gson gson = new GsonBuilder().create();
 

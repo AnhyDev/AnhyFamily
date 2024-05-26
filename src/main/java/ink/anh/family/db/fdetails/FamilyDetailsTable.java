@@ -6,14 +6,14 @@ import ink.anh.api.database.AbstractTable;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.FamilyDetails;
 
-public abstract class AbstractFamilyDetailsTable extends AbstractTable<FamilyDetails> {
+public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
 
 	protected AnhyFamily familyPlugin;
 
 	protected static String tableCreate = FamilyDetailsField.getTableCreate();
     protected static String tableInsert = FamilyDetailsField.getTableInsert();
 
-    public AbstractFamilyDetailsTable(AnhyFamily familyPlugin) {
+    public FamilyDetailsTable(AnhyFamily familyPlugin) {
         super(familyPlugin.getGlobalManager(), "FamilyDetails");
         this.familyPlugin = familyPlugin;
         initialize();

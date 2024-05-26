@@ -7,9 +7,9 @@ import java.util.UUID;
 import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.FamilyDetails;
-import ink.anh.family.fdetails.FDetailsSerializator;
+import ink.anh.family.fdetails.FamilyDetailsSerializer;
 
-public class MySQLFamilyDetailsTable extends AbstractFamilyDetailsTable {
+public class MySQLFamilyDetailsTable extends FamilyDetailsTable {
 
     public MySQLFamilyDetailsTable(AnhyFamily familyPlugin) {
         super(familyPlugin);
@@ -35,13 +35,13 @@ public class MySQLFamilyDetailsTable extends AbstractFamilyDetailsTable {
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
                 ps.setString(1, familyDetails.getFamilyId().toString());
-                ps.setString(2, FDetailsSerializator.serializeLocation(familyDetails.getHomeLocation()));
-                ps.setString(3, FDetailsSerializator.serializeFamilyChest(familyDetails.getFamilyChest()));
+                ps.setString(2, FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation()));
+                ps.setString(3, FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest()));
                 ps.setBoolean(4, familyDetails.isChildrenAccessHome());
                 ps.setBoolean(5, familyDetails.isChildrenAccessChest());
                 ps.setBoolean(6, familyDetails.isAncestorsAccessHome());
                 ps.setBoolean(7, familyDetails.isAncestorsAccessChest());
-                ps.setString(8, FDetailsSerializator.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap()));
+                ps.setString(8, FamilyDetailsSerializer.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap()));
                 ps.setString(9, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
                 ps.executeUpdate();
             }
@@ -60,8 +60,8 @@ public class MySQLFamilyDetailsTable extends AbstractFamilyDetailsTable {
                     if (rs.next()) {
                         familyDetails[0] = new FamilyDetails(
                                 UUID.fromString(rs.getString("family_id")),
-                                FDetailsSerializator.deserializeLocation(rs.getString("home_location")),
-                                FDetailsSerializator.deserializeFamilyChest(rs.getString("family_chest")),
+                                FamilyDetailsSerializer.deserializeLocation(rs.getString("home_location")),
+                                FamilyDetailsSerializer.deserializeFamilyChest(rs.getString("family_chest")),
                                 rs.getBoolean("children_access_home"),
                                 rs.getBoolean("children_access_chest"),
                                 rs.getBoolean("ancestors_access_home"),
