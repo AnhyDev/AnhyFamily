@@ -32,7 +32,8 @@ public class FamilyDetailsDataHandler extends DataHandler {
     }
 
     // Метод для додавання FamilyDetails до локальної мапи
-    public void addFamilyDetails(UUID familyId, FamilyDetails familyDetails) {
+    public void addFamilyDetails(FamilyDetails familyDetails) {
+    	UUID familyId = familyDetails.getFamilyId();
         localDataMap.put(familyId, familyDetails);
     }
 
@@ -90,6 +91,11 @@ public class FamilyDetailsDataHandler extends DataHandler {
         return null;
     }
 
+    // Метод для видалення даних батька з глобальної мапи
+    public void removeFatherDetails(UUID playerId) {
+        removeData(playerId, FAMILY_FATHER);
+    }
+
     // Метод для перевірки наявності даних батька в глобальній мапі
     public boolean hasFatherDetails(UUID playerId) {
         Object data = getData(playerId, FAMILY_FATHER);
@@ -108,6 +114,11 @@ public class FamilyDetailsDataHandler extends DataHandler {
             return (FamilyDetails) data;
         }
         return null;
+    }
+
+    // Метод для видалення даних матері з глобальної мапи
+    public void removeMotherDetails(UUID playerId) {
+        removeData(playerId, FAMILY_MOTHER);
     }
 
     // Метод для перевірки наявності даних матері в глобальній мапі
@@ -129,6 +140,11 @@ public class FamilyDetailsDataHandler extends DataHandler {
             return (List<FamilyDetails>) data;
         }
         return null;
+    }
+
+    // Метод для видалення даних дітей з глобальної мапи
+    public void removeChildrenDetails(UUID playerId) {
+        removeData(playerId, FAMILY_CHILDREN);
     }
 
     // Метод для перевірки наявності даних дітей в глобальній мапі

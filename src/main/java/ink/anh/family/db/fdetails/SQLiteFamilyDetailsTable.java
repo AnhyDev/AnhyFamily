@@ -89,11 +89,12 @@ public class SQLiteFamilyDetailsTable extends AbstractFamilyDetailsTable {
 
     @Override
     public <K> void updateField(TableField<K> tableField) {
-        if (!allowedFields.containsKey(tableField.getFieldName())) {
+        String fieldName = tableField.getFieldName();
+        if (!FamilyDetailsField.contains(fieldName)) {
             throw new IllegalArgumentException("Invalid field name");
         }
 
-        String updateSQL = "UPDATE " + dbName + " SET " + allowedFields.get(tableField.getFieldName()) + " = ? WHERE family_id = ?;";
+        String updateSQL = "UPDATE " + dbName + " SET " + fieldName + " = ? WHERE family_id = ?;";
 
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(updateSQL)) {
