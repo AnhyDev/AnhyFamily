@@ -1,53 +1,139 @@
 package ink.anh.family.fdetails;
 
 import ink.anh.api.DataHandler;
+
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FamilyDetailsDataHandler extends DataHandler {
+    
+    private Map<UUID, FamilyDetails> localDataMap = new ConcurrentHashMap<>();
 
-    private static final String FAMILY_DETAILS_DATA_KEY = "fdetails";
+    private static final String FAMILY_ID = "familyId";
+    private static final String FAMILY_FATHER = "familyFather";
+    private static final String FAMILY_MOTHER = "familyMother";
+    private static final String FAMILY_CHILDREN = "familyChildren";
+    
+    private static FamilyDetailsDataHandler instance;
 
-    /**
-     * Saves the family details for a specific family.
-     * 
-     * @param familyId   The UUID of the family.
-     * @param familyDetails The family details to save.
-     */
-    public void addFamilyDetails(UUID familyId, FamilyDetails familyDetails) {
-        addData(familyId, FAMILY_DETAILS_DATA_KEY, familyDetails);
+    // Приватний конструктор для запобігання створенню нових екземплярів
+    private FamilyDetailsDataHandler() {
+        super();
     }
 
-    /**
-     * Retrieves the family details for a specific family.
-     * 
-     * @param familyId The UUID of the family.
-     * @return The FamilyDetails object, or null if no data is found.
-     */
+    // Метод для отримання єдиного екземпляра класу
+    public static synchronized FamilyDetailsDataHandler getInstance() {
+        if (instance == null) {
+            instance = new FamilyDetailsDataHandler();
+        }
+        return instance;
+    }
+
+    // Метод для додавання FamilyDetails до локальної мапи
+    public void addFamilyDetails(UUID familyId, FamilyDetails familyDetails) {
+        localDataMap.put(familyId, familyDetails);
+    }
+
+    // Метод для отримання FamilyDetails з локальної мапи
     public FamilyDetails getFamilyDetails(UUID familyId) {
-        Object data = getData(familyId, FAMILY_DETAILS_DATA_KEY);
-        if (data instanceof FamilyDetails) {
+        return localDataMap.get(familyId);
+    }
+
+    // Метод для видалення FamilyDetails з локальної мапи
+    public void removeFamilyDetails(UUID familyId) {
+        localDataMap.remove(familyId);
+    }
+
+    // Метод для перевірки наявності FamilyDetails в локальній мапі
+    public boolean hasFamilyDetails(UUID familyId) {
+        return getFamilyDetails(familyId) != null;
+    }
+
+    // Метод для додавання кореневих даних до глобальної мапи
+    public void addRootDetails(UUID playerId, FamilyDetails familyDetails) {
+        addData(playerId, FAMILY_ID, familyDetails);
+    }
+
+    // Метод для отримання кореневих даних з глобальної мапи
+    public FamilyDetails getRootDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_ID);
+        if (data != null && data instanceof FamilyDetails) {
             return (FamilyDetails) data;
         }
-        removeFamilyDetails(familyId);
         return null;
     }
 
-    /**
-     * Removes the family details for a specific family.
-     * 
-     * @param familyId The UUID of the family.
-     */
-    public void removeFamilyDetails(UUID familyId) {
-        removeData(familyId, FAMILY_DETAILS_DATA_KEY);
+    // Метод для видалення кореневих даних з глобальної мапи
+    public void removeRootDetails(UUID playerId) {
+        removeData(playerId, FAMILY_ID);
     }
 
-    /**
-     * Checks if the family details exist for a specific family.
-     * 
-     * @param familyId The UUID of the family.
-     * @return true if family details exist, false otherwise.
-     */
-    public boolean hasFamilyDetails(UUID familyId) {
-        return getData(familyId, FAMILY_DETAILS_DATA_KEY) instanceof FamilyDetails;
+    // Метод для перевірки наявності кореневих даних в глобальній мапі
+    public boolean hasRootDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_ID);
+        return data != null && data instanceof FamilyDetails;
+    }
+
+    // Метод для додавання даних батька до глобальної мапи
+    public void addFatherDetails(UUID playerId, FamilyDetails fatherDetails) {
+        addData(playerId, FAMILY_FATHER, fatherDetails);
+    }
+
+    // Метод для отримання даних батька з глобальної мапи
+    public FamilyDetails getFatherDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_FATHER);
+        if (data != null && data instanceof FamilyDetails) {
+            return (FamilyDetails) data;
+        }
+        return null;
+    }
+
+    // Метод для перевірки наявності даних батька в глобальній мапі
+    public boolean hasFatherDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_FATHER);
+        return data != null && data instanceof FamilyDetails;
+    }
+
+    // Метод для додавання даних матері до глобальної мапи
+    public void addMotherDetails(UUID playerId, FamilyDetails motherDetails) {
+        addData(playerId, FAMILY_MOTHER, motherDetails);
+    }
+
+    // Метод для отримання даних матері з глобальної мапи
+    public FamilyDetails getMotherDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_MOTHER);
+        if (data != null && data instanceof FamilyDetails) {
+            return (FamilyDetails) data;
+        }
+        return null;
+    }
+
+    // Метод для перевірки наявності даних матері в глобальній мапі
+    public boolean hasMotherDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_MOTHER);
+        return data != null && data instanceof FamilyDetails;
+    }
+
+    // Метод для додавання даних дітей до глобальної мапи
+    public void addChildrenDetails(UUID playerId, List<FamilyDetails> childrenDetails) {
+        addData(playerId, FAMILY_CHILDREN, childrenDetails);
+    }
+
+    // Метод для отримання даних дітей з глобальної мапи
+    @SuppressWarnings("unchecked")
+    public List<FamilyDetails> getChildrenDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_CHILDREN);
+        if (data instanceof List) {
+            return (List<FamilyDetails>) data;
+        }
+        return null;
+    }
+
+    // Метод для перевірки наявності даних дітей в глобальній мапі
+    public boolean hasChildrenDetails(UUID playerId) {
+        Object data = getData(playerId, FAMILY_CHILDREN);
+        return data != null && data instanceof List;
     }
 }
