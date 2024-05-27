@@ -12,7 +12,7 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 
-public class SQLiteFamilyTable extends AbstractFamilyTable {
+public class SQLiteFamilyTable extends FamilyPlayerTable {
 
     public SQLiteFamilyTable(AnhyFamily familyPlugin) {
         super(familyPlugin);
@@ -113,11 +113,12 @@ public class SQLiteFamilyTable extends AbstractFamilyTable {
 
     @Override
     public <K> void updateField(TableField<K> tableField) {
-        if (!allowedFields.containsKey(tableField.getFieldName())) {
+    	String fieldName = tableField.getFieldName();
+        if (!FamilyPlayerField.contains(fieldName)) {
             throw new IllegalArgumentException("Invalid field name");
         }
 
-        String updateSQL = "UPDATE " + dbName + " SET " + allowedFields.get(tableField.getFieldName()) + " = ? WHERE player_uuid = ?;";
+        String updateSQL = "UPDATE " + dbName + " SET " + fieldName + " = ? WHERE player_uuid = ?;";
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(updateSQL)) {
                 ps.setString(1, tableField.getFieldValue());

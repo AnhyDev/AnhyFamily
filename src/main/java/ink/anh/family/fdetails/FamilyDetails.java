@@ -1,7 +1,6 @@
 package ink.anh.family.fdetails;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -10,15 +9,9 @@ import java.util.HashMap;
 import java.time.Duration;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import ink.anh.family.fplayer.FamilyRelationType;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.api.enums.Access;
-import ink.anh.api.items.ItemStackSerializer;
 
 public class FamilyDetails {
 
@@ -130,44 +123,6 @@ public class FamilyDetails {
         // Об'єднаємо відсортовані UUID
         String combined = namespace.toString() + uuids[0].toString() + uuids[1].toString();
         return UUID.nameUUIDFromBytes(combined.getBytes());
-    }
-
-    // Метод для серіалізації
-    public String serialize() {
-        Gson gson = new GsonBuilder().create();
-        JsonObject jsonObject = gson.toJsonTree(this).getAsJsonObject();
-        
-        JsonArray chestArray = new JsonArray();
-        for (ItemStack item : familyChest) {
-            chestArray.add(ItemStackSerializer.serializeItemStackToBase64(item));
-        }
-        jsonObject.add("familyChest", chestArray);
-
-        jsonObject.addProperty("homeSetDate", homeSetDate != null ? homeSetDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : ""); // Додавання дати у JSON
-        
-        return gson.toJson(jsonObject);
-    }
-
-    // Метод для десеріалізації
-    public static FamilyDetails deserialize(String jsonString) {
-        Gson gson = new GsonBuilder().create();
-        JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
-        
-        FamilyDetails familyDetails = gson.fromJson(jsonObject, FamilyDetails.class);
-        JsonArray chestArray = jsonObject.getAsJsonArray("familyChest");
-        ItemStack[] familyChest = new ItemStack[chestArray.size()];
-        
-        for (int i = 0; i < chestArray.size(); i++) {
-            familyChest[i] = ItemStackSerializer.deserializeItemStackFromBase64(chestArray.get(i).getAsString());
-        }
-        familyDetails.setFamilyChest(familyChest);
-
-        String homeSetDateString = jsonObject.get("homeSetDate").getAsString();
-        if (homeSetDateString != null && !homeSetDateString.isEmpty()) {
-            familyDetails.setHomeSetDate(LocalDateTime.parse(homeSetDateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // Десеріалізація дати
-        }
-        
-        return familyDetails;
     }
 
     public boolean canChangeHome(int minutes) {

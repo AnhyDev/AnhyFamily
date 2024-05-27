@@ -12,7 +12,7 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 
-public class MySQLFamilyTable extends AbstractFamilyTable {
+public class MySQLFamilyTable extends FamilyPlayerTable {
 
     public MySQLFamilyTable(AnhyFamily familyPlugin) {
         super(familyPlugin);
@@ -45,9 +45,10 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
 
     @Override
     public void insert(PlayerFamily playerFamily) {
+    	String tableUpdate = FamilyPlayerField.getUpdateFields();
         String insertSQL =
                 "INSERT INTO " + dbName + tableInsert + " " +
-                "ON DUPLICATE KEY UPDATE gender = VALUES(gender), displayName = VALUES(displayName), last_name = VALUES(last_name), old_last_name = VALUES(old_last_name), father = VALUES(father), mother = VALUES(mother), spouse = VALUES(spouse), children = VALUES(children), family_id = VALUES(family_id), parent_family_id = VALUES(parent_family_id), child_family_ids = VALUES(child_family_ids), dynasty_id = VALUES(dynasty_id);";
+                "ON DUPLICATE KEY UPDATE " + tableUpdate;
 
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
@@ -125,11 +126,12 @@ public class MySQLFamilyTable extends AbstractFamilyTable {
 
     @Override
     public <K> void updateField(TableField<K> tableField) {
-        if (!allowedFields.containsKey(tableField.getFieldName())) {
+    	String fieldName = tableField.getFieldName();
+        if (!FamilyPlayerField.contains(fieldName)) {
             throw new IllegalArgumentException("Invalid field name");
         }
 
-        String updateSQL = "UPDATE " + dbName + " SET " + allowedFields.get(tableField.getFieldName()) + " = ? WHERE player_uuid = ?;";
+        String updateSQL = "UPDATE " + dbName + " SET " + fieldName + " = ? WHERE player_uuid = ?;";
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(updateSQL)) {
                 ps.setString(1, tableField.getFieldValue());

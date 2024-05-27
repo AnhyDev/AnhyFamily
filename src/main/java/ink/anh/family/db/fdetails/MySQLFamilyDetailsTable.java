@@ -28,9 +28,10 @@ public class MySQLFamilyDetailsTable extends FamilyDetailsTable {
 
     @Override
     public void insert(FamilyDetails familyDetails) {
+    	String tableUpdate = FamilyDetailsField.getUpdateFields();
         String insertSQL =
                 "INSERT INTO " + dbName + tableInsert + " " +
-                "ON DUPLICATE KEY UPDATE home_location = VALUES(home_location), family_chest = VALUES(family_chest), children_access_home = VALUES(children_access_home), children_access_chest = VALUES(children_access_chest), ancestors_access_home = VALUES(ancestors_access_home), ancestors_access_chest = VALUES(ancestors_access_chest), specific_access_map = VALUES(specific_access_map), home_set_date = VALUES(home_set_date);";
+                "ON DUPLICATE KEY UPDATE " + tableUpdate;
 
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {

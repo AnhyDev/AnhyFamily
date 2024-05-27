@@ -3,12 +3,14 @@ package ink.anh.family.fdetails;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import org.bukkit.Bukkit;
+import com.google.gson.reflect.TypeToken;
+
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import ink.anh.api.items.ItemStackSerializer;
 import ink.anh.api.enums.Access;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,30 +19,19 @@ public class FamilyDetailsSerializer {
     private static final Gson gson = new GsonBuilder().create();
 
     public static String serializeLocation(Location location) {
-        if (location == null) {
+    	if (location == null) {
             return null;
         }
-        return location.getWorld().getName() + ";" +
-               location.getX() + ";" +
-               location.getY() + ";" +
-               location.getZ() + ";" +
-               location.getYaw() + ";" +
-               location.getPitch();
+        return gson.toJson(location.serialize());
     }
 
     public static Location deserializeLocation(String locationString) {
-        if (locationString == null || locationString.isEmpty()) {
+    	if (locationString == null || locationString.isEmpty()) {
             return null;
         }
-        String[] parts = locationString.split(";");
-        return new Location(
-                Bukkit.getWorld(parts[0]),
-                Double.parseDouble(parts[1]),
-                Double.parseDouble(parts[2]),
-                Double.parseDouble(parts[3]),
-                Float.parseFloat(parts[4]),
-                Float.parseFloat(parts[5])
-        );
+        Type type = new TypeToken<Map<String, Object>>() {}.getType();
+        Map<String, Object> locationMap = gson.fromJson(locationString, type);
+        return Location.deserialize(locationMap);
     }
 
     public static String serializeFamilyChest(ItemStack[] familyChest) {

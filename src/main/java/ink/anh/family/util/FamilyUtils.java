@@ -9,7 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.db.fplayer.AbstractFamilyTable;
+import ink.anh.family.db.fplayer.FamilyPlayerTable;
 import ink.anh.family.fplayer.FamilyDataHandler;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
@@ -17,7 +17,7 @@ import ink.anh.family.info.FamilyTree;
 
 public class FamilyUtils {
 	
-	private static AbstractFamilyTable familyTable = (AbstractFamilyTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(PlayerFamily.class);
+	private static FamilyPlayerTable familyTable = (FamilyPlayerTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(PlayerFamily.class);
 	
 	public static void saveFamily(PlayerFamily playerFamily) {
 		familyTable.insert(playerFamily);
