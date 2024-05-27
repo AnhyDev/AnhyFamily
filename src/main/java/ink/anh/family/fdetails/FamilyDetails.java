@@ -185,20 +185,20 @@ public class FamilyDetails {
         return defaultAccess;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(familyId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(familyId);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        FamilyDetails other = (FamilyDetails) obj;
-        return Objects.equals(familyId, other.familyId);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FamilyDetails other = (FamilyDetails) obj;
+		return Objects.equals(familyId, other.familyId);
+	}
 }
