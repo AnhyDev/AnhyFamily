@@ -40,8 +40,9 @@ public class SQLiteFamilyDetailsTable extends FamilyDetailsTable {
                 ps.setBoolean(5, familyDetails.isChildrenAccessChest());
                 ps.setBoolean(6, familyDetails.isAncestorsAccessHome());
                 ps.setBoolean(7, familyDetails.isAncestorsAccessChest());
-                ps.setString(8, FamilyDetailsSerializer.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap()));
-                ps.setString(9, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
+                ps.setString(8, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap()));
+                ps.setString(9, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap()));
+                ps.setString(10, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
                 ps.executeUpdate();
             }
         }, "Failed to insert family details: " + familyDetails);
@@ -65,6 +66,8 @@ public class SQLiteFamilyDetailsTable extends FamilyDetailsTable {
                                 rs.getBoolean("children_access_chest"),
                                 rs.getBoolean("ancestors_access_home"),
                                 rs.getBoolean("ancestors_access_chest"),
+                                FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("children_access_map")),
+                                FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("ancestors_access_map")),
                                 rs.getTimestamp("home_set_date").toLocalDateTime()
                         );
                     }

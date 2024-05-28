@@ -16,8 +16,8 @@ public class FamilyDetailsSave {
 
     public static void saveFamilyDetails(FamilyDetails familyDetails, FamilyDetailsField fieldToUpdate) {
         dataHandler.addFamilyDetails(familyDetails);
-    	
-    	if (fieldToUpdate == null) {
+        
+        if (fieldToUpdate == null) {
             // Додаємо нові дані
             familyDetailsTable.insert(familyDetails);
         } else {
@@ -27,14 +27,14 @@ public class FamilyDetailsSave {
     }
 
     private static void updateSingleField(FamilyDetails familyDetails, FamilyDetailsField fieldToUpdate) {
-    	UUID familyId = familyDetails.getFamilyId();
+        UUID familyId = familyDetails.getFamilyId();
 
         if (familyDetailsTable.getFamilyDetails(familyId) == null) {
             // Додаємо нові дані
             familyDetailsTable.insert(familyDetails);
             return;
         }
-        
+
         switch (fieldToUpdate) {
             case HOME_LOCATION:
                 familyDetailsTable.updateField(new TableField<>(familyId, "home_location", FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation())));
@@ -54,8 +54,11 @@ public class FamilyDetailsSave {
             case ANCESTORS_ACCESS_CHEST:
                 familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access_chest", Boolean.toString(familyDetails.isAncestorsAccessChest())));
                 break;
-            case SPECIFIC_ACCESS_MAP:
-                familyDetailsTable.updateField(new TableField<>(familyId, "specific_access_map", FamilyDetailsSerializer.serializeSpecificAccessMap(familyDetails.getSpecificAccessMap())));
+            case CHILDREN_ACCESS_MAP:
+                familyDetailsTable.updateField(new TableField<>(familyId, "children_access_map", FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap())));
+                break;
+            case ANCESTORS_ACCESS_MAP:
+                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access_map", FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap())));
                 break;
             case HOME_SET_DATE:
                 familyDetailsTable.updateField(new TableField<>(familyId, "home_set_date", familyDetails.getHomeSetDate().toString()));

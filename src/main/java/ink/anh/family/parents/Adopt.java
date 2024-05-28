@@ -9,6 +9,10 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.Permissions;
+import ink.anh.family.events.ActionInitiator;
+import ink.anh.family.events.AdoptionEvent;
+import ink.anh.family.fdetails.FamilyDetails;
+import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -177,9 +181,9 @@ public class Adopt extends Sender {
         
         String adoptedName = player.getDisplayName();
         UUID uuid = player.getUniqueId();
-        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+        PlayerFamily adoptedFamily = FamilyUtils.getFamily(player);
         
-        if (playerFamily == null) {
+        if (adoptedFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {adoptedName}), MessageType.WARNING, sender);
             return false;
         }
@@ -223,10 +227,21 @@ public class Adopt extends Sender {
 
         String adopter1Name = player1.getDisplayName();
         String adopter2Name = player2.getDisplayName();
+
+        PlayerFamily[] adoptersFamily = new PlayerFamily[] {family1, family2};
+        
+        FamilyDetails adoptedDetails = FamilyDetailsGet.getRootFamilyDetails(adoptedFamily);
+        FamilyDetails[] adoptersDetails = new FamilyDetails[] {FamilyDetailsGet.getRootFamilyDetails(family1), FamilyDetailsGet.getRootFamilyDetails(family2)};
+
+        ActionInitiator initiator = ActionInitiator.PLAYER_SELF;
+        if (!handleAdoption(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator)) {
+            sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[] {}), MessageType.WARNING, sender);
+            return false;
+        }
         
         FamilyAdoption utilsAdopt = new FamilyAdoption(familyPlugin);
         
-        if (!utilsAdopt.adoption(playerFamily, family1, family2)) {
+        if (!utilsAdopt.adoption(adoptedFamily, family1, family2)) {
             sendMessage(new MessageForFormatting("family_accept_error_cannot_adopt" + adoptedName, new String[] {adopter1Name, adopter2Name, adoptedName}), MessageType.WARNING, sender);
             manager.removeParent(uuid);
             return false;
@@ -273,7 +288,9 @@ public class Adopt extends Sender {
     }
 
     public boolean forceAdopt(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player && sender.hasPermission(Permissions.FAMILY_ADMIN)) && !sender.getName().equalsIgnoreCase("CONSOLE")) {
+        boolean isPlayer = sender instanceof Player;
+
+        if (!(isPlayer && sender.hasPermission(Permissions.FAMILY_ADMIN)) && !sender.getName().equalsIgnoreCase("CONSOLE")) {
             sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
@@ -294,17 +311,40 @@ public class Adopt extends Sender {
             return false;
         }
 
+        Player player1 = Bukkit.getPlayer(adoptedFamily.getRoot());
+        Player player2 = Bukkit.getPlayer(adopterFamily.getRoot());
+
+        PlayerFamily[] adoptersFamily = new PlayerFamily[] {adopterFamily};
+
+        FamilyDetails adoptedDetails = FamilyDetailsGet.getRootFamilyDetails(adoptedFamily);
+        FamilyDetails[] adoptersDetails = new FamilyDetails[] {FamilyDetailsGet.getRootFamilyDetails(adopterFamily)};
+
+        ActionInitiator initiator = isPlayer ? ActionInitiator.PLAYER_WITH_PERMISSION : ActionInitiator.CONSOLE;
+        if (!handleAdoption(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator)) {
+            sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[] {}), MessageType.WARNING, sender);
+            return false;
+        }
+
         FamilyAdoption adoption = new FamilyAdoption(familyPlugin);
         if (!adoption.adoption(adoptedFamily, adopterFamily)) {
             sendMessage(new MessageForFormatting("family_err_adoption_failed", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 
-        Player player1 = Bukkit.getPlayer(adoptedFamily.getRoot());
-        Player player2 = Bukkit.getPlayer(adopterFamily.getRoot());
-        
         sendMessage(new MessageForFormatting("family_accept_success_adoption", 
-        		new String[] {player1.getDisplayName(), player2.getDisplayName()}), MessageType.IMPORTANT, sender, player1, player2);
+                new String[] {player1.getDisplayName(), player2.getDisplayName()}), MessageType.IMPORTANT, sender, player1, player2);
         return true;
+    }
+
+    private boolean handleAdoption(PlayerFamily[] adoptersFamily, PlayerFamily adoptedFamily,
+    		FamilyDetails[] adoptersDetails, FamilyDetails adoptedDetails, ActionInitiator initiator) {
+    	
+        AdoptionEvent event = new AdoptionEvent(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator);
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (!event.isCancelled()) {
+        	return true;
+        }
+        return false;
     }
 }

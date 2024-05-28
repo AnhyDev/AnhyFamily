@@ -19,14 +19,14 @@ public class FamilyDetailsSerializer {
     private static final Gson gson = new GsonBuilder().create();
 
     public static String serializeLocation(Location location) {
-    	if (location == null) {
+        if (location == null) {
             return null;
         }
         return gson.toJson(location.serialize());
     }
 
     public static Location deserializeLocation(String locationString) {
-    	if (locationString == null || locationString.isEmpty()) {
+        if (locationString == null || locationString.isEmpty()) {
             return null;
         }
         Type type = new TypeToken<Map<String, Object>>() {}.getType();
@@ -53,5 +53,14 @@ public class FamilyDetailsSerializer {
 
     public static String serializeSpecificAccessMap(Map<UUID, Access> specificAccessMap) {
         return gson.toJson(specificAccessMap);
+    }
+
+    public static String serializeAccessControlMap(Map<UUID, AccessControl> accessControlMap) {
+        return gson.toJson(accessControlMap);
+    }
+
+    public static Map<UUID, AccessControl> deserializeAccessControlMap(String accessControlMapString) {
+        Type type = new TypeToken<Map<UUID, AccessControl>>() {}.getType();
+        return gson.fromJson(accessControlMapString, type);
     }
 }

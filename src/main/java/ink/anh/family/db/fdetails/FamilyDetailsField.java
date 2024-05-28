@@ -7,7 +7,8 @@ public enum FamilyDetailsField {
     CHILDREN_ACCESS_CHEST("children_access_chest", "BOOLEAN"),
     ANCESTORS_ACCESS_HOME("ancestors_access_home", "BOOLEAN"),
     ANCESTORS_ACCESS_CHEST("ancestors_access_chest", "BOOLEAN"),
-    SPECIFIC_ACCESS_MAP("specific_access_map", "TEXT"),
+    CHILDREN_ACCESS_MAP("children_access_map", "TEXT"),
+    ANCESTORS_ACCESS_MAP("ancestors_access_map", "TEXT"),
     HOME_SET_DATE("home_set_date", "TEXT");
 
     private final String fieldName;

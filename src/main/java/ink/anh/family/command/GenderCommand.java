@@ -1,6 +1,8 @@
 package ink.anh.family.command;
 
 import java.util.concurrent.CompletableFuture;
+
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,6 +10,8 @@ import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.events.ActionInitiator;
+import ink.anh.family.events.GenderSelectEvent;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.gender.GenderManager;
@@ -71,8 +75,8 @@ public class GenderCommand extends Sender implements CommandExecutor {
         Gender gender = Gender.fromString(genderStr);
         if (gender != null && gender != Gender.UNDECIDED) {
             if (GenderManager.getGender(player) == Gender.UNDECIDED) {
-            	GenderManager.setGender(player, gender);
-                sendMessage(new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), new String[] {}),  MessageType.NORMAL, sender);
+            	MessageForFormatting message = new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), new String[] {});
+            	setPlayerGender(player, FamilyUtils.getFamily(player), gender, ActionInitiator.CONSOLE, sender, message);
                 return true;
             } else {
                 sendMessage(new MessageForFormatting("family_gender_already_selected", new String[] {}), MessageType.WARNING, player);
@@ -104,8 +108,8 @@ public class GenderCommand extends Sender implements CommandExecutor {
 
     	PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
         if (playerFamily != null) {
-        	GenderManager.setGender(playerFamily, Gender.UNDECIDED);
-            sendMessage(new MessageForFormatting("family_gender_player_reset", new String[] {playerName}),  MessageType.NORMAL, sender);
+        	MessageForFormatting message = new MessageForFormatting("family_gender_player_reset", new String[] {playerName});
+        	setPlayerGender(null, playerFamily, Gender.UNDECIDED, ActionInitiator.CONSOLE, sender, message);
             return true;
         } else {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {playerName}), MessageType.WARNING, sender);
@@ -123,8 +127,8 @@ public class GenderCommand extends Sender implements CommandExecutor {
         if (playerFamily != null) {
             Gender gender = Gender.fromString(genderStr);
             if (gender != null && gender != Gender.UNDECIDED) {
-            	GenderManager.setGender(playerFamily, gender);
-                sendMessage(new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[] {playerName}),  MessageType.NORMAL, sender);
+            	MessageForFormatting message = new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[] {playerName});
+            	setPlayerGender(null, playerFamily, gender, ActionInitiator.CONSOLE, sender, message);
                 return true;
             } else {
                 sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[] {}), MessageType.WARNING, sender);
@@ -134,6 +138,20 @@ public class GenderCommand extends Sender implements CommandExecutor {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {playerName}), MessageType.WARNING, sender);
             return true;
         }
+    }
+
+    private void setPlayerGender(Player player, PlayerFamily playerFamily, Gender gender, ActionInitiator initiator, CommandSender sender, MessageForFormatting message) {
+        GenderSelectEvent event = new GenderSelectEvent(playerFamily, Gender.getKey(gender), initiator);
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (!event.isCancelled()) {
+            if (player != null) {
+            	GenderManager.setGender(player, gender);
+            } else{
+            	GenderManager.setGender(playerFamily.getRoot(), gender);
+            }
+        }
+        sendMessage(message, MessageType.NORMAL, sender);
     }
 }
 

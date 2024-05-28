@@ -1,6 +1,5 @@
 package ink.anh.family.events;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -8,20 +7,14 @@ import ink.anh.family.fplayer.PlayerFamily;
 
 public class GenderSelectEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final Player player;
     private final ActionInitiator initiator;
     private final PlayerFamily playerFamily;
     private boolean isCancelled;
 
-    public GenderSelectEvent(Player player, String gender, PlayerFamily playerFamily, ActionInitiator initiator) {
-        this.player = player;
+    public GenderSelectEvent(PlayerFamily playerFamily, String gender, ActionInitiator initiator) {
         this.initiator = initiator;
         this.playerFamily = playerFamily;
         this.isCancelled = false;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 
     public ActionInitiator getInitiator() {
