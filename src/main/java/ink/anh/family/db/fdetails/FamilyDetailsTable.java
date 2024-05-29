@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.UUID;
 
 import ink.anh.api.database.AbstractTable;
+import ink.anh.api.database.ErrorLogger;
 import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.FamilyDetails;
@@ -23,15 +24,13 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
         initialize();
     }
 
-    @Override
     protected void initialize() {
-        String createTableSQL =
-                "CREATE TABLE IF NOT EXISTS " + dbName + tableCreate;
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS " + dbName + tableCreate;
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(createTableSQL)) {
                 ps.executeUpdate();
             }
-        }, "Failed to create family details tableInsert");
+        }, "Failed to create family details table");
     }
 
     public abstract FamilyDetails getFamilyDetails(UUID familyId);
@@ -57,7 +56,6 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
         }, "Failed to delete family details for family_id: " + familyId);
     }
 
-    @Override
     public <K> void updateField(TableField<K> tableField) {
         String fieldName = tableField.getFieldName();
         if (!FamilyDetailsField.contains(fieldName)) {
@@ -102,5 +100,24 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
                 FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("ancestors_access_map")),
                 rs.getTimestamp("home_set_date") != null ? rs.getTimestamp("home_set_date").toLocalDateTime() : null
         );
+    }
+
+    protected FamilyDetails fetchFamilyDetails(UUID familyId, String selectSQL) {
+        final FamilyDetails[] familyDetails = {null};
+
+        executeTransaction(conn -> {
+            try (PreparedStatement ps = conn.prepareStatement(selectSQL)) {
+                ps.setString(1, familyId.toString());
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        familyDetails[0] = getFamilyDetailsFromResultSet(rs);
+                    }
+                } catch (Exception e) {
+                    ErrorLogger.log(familyPlugin, e, "Failed to establish database connection");
+				}
+            }
+        }, "Failed to get family details for family_id: " + familyId);
+
+        return familyDetails[0];
     }
 }
