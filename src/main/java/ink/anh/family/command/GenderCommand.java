@@ -2,13 +2,13 @@ package ink.anh.family.command;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.GenderSelectEvent;
@@ -16,13 +16,12 @@ import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class GenderCommand extends Sender implements CommandExecutor {
-;
-
     public GenderCommand(AnhyFamily familyPlugin) {
-    	super(familyPlugin.getGlobalManager());
+        super(familyPlugin.getGlobalManager());
     }
 
     @Override
@@ -61,97 +60,98 @@ public class GenderCommand extends Sender implements CommandExecutor {
                     }
                     break;
                 default:
-                    sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", new String[] {}), MessageType.WARNING, sender);
+                    sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", new String[]{}), MessageType.WARNING, sender);
             }
         });
         return true;
     }
 
-    private boolean handleSetGender(CommandSender sender, String genderStr) {
-    	Player player = (Player) sender;
-    	
-    	genderStr = (genderStr.equalsIgnoreCase("boy") || genderStr.equalsIgnoreCase("man")) ? "MALE" 
-    			: (genderStr.equalsIgnoreCase("girl") || genderStr.equalsIgnoreCase("woman")) ? "FEMALE" : genderStr.toUpperCase();
+    private void handleSetGender(CommandSender sender, String genderStr) {
+        Player player = (Player) sender;
+
+        genderStr = genderStr.equalsIgnoreCase("boy") || genderStr.equalsIgnoreCase("man") ? "MALE"
+                : genderStr.equalsIgnoreCase("girl") || genderStr.equalsIgnoreCase("woman") ? "FEMALE" : genderStr.toUpperCase();
         Gender gender = Gender.fromString(genderStr);
         if (gender != null && gender != Gender.UNDECIDED) {
             if (GenderManager.getGender(player) == Gender.UNDECIDED) {
-            	MessageForFormatting message = new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), new String[] {});
-            	setPlayerGender(player, FamilyUtils.getFamily(player), gender, ActionInitiator.CONSOLE, sender, message);
-                return true;
+                MessageForFormatting message = new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), new String[]{});
+                SyncExecutor.runSync(() -> setPlayerGender(player, FamilyUtils.getFamily(player), gender, ActionInitiator.CONSOLE, sender, message));
             } else {
-                sendMessage(new MessageForFormatting("family_gender_already_selected", new String[] {}), MessageType.WARNING, player);
-                return true;
+                sendMessage(new MessageForFormatting("family_gender_already_selected", new String[]{}), MessageType.WARNING, player);
             }
         } else {
-            sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[] {}), MessageType.WARNING, player);
-            return true;
+            sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[]{}), MessageType.WARNING, player);
         }
     }
 
-    private boolean handleGenderInfo(CommandSender sender, String playerName) {
-    	Gender gender = (playerName != null) ? GenderManager.getGender(playerName) : (sender instanceof Player) ? GenderManager.getGender((Player) sender) : null;
-    	playerName = playerName != null ? playerName : sender.getName();
-    	
+    private void handleGenderInfo(CommandSender sender, String playerName) {
+        Gender gender = playerName != null ? GenderManager.getGender(playerName) : sender instanceof Player ? GenderManager.getGender((Player) sender) : null;
+        playerName = playerName != null ? playerName : sender.getName();
+
         if (gender != null) {
-            sendMessage(new MessageForFormatting("family_gender_player_info " + Gender.getKey(gender), new String[] {playerName}),  MessageType.NORMAL, sender);
-            return true;
+            sendMessage(new MessageForFormatting("family_gender_player_info " + Gender.getKey(gender), new String[]{playerName}), MessageType.NORMAL, sender);
         } else {
-            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {playerName}), MessageType.WARNING, sender);
-            return true;
+            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[]{playerName}), MessageType.WARNING, sender);
         }
     }
 
-    private boolean handleResetGender(CommandSender sender, String playerName) {
-    	if (sender instanceof Player) {
-    		return false;
-    	}
+    private void handleResetGender(CommandSender sender, String playerName) {
+        if (sender instanceof Player) {
+            return;
+        }
 
-    	PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
+        PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
         if (playerFamily != null) {
-        	MessageForFormatting message = new MessageForFormatting("family_gender_player_reset", new String[] {playerName});
-        	setPlayerGender(null, playerFamily, Gender.UNDECIDED, ActionInitiator.CONSOLE, sender, message);
-            return true;
+            MessageForFormatting message = new MessageForFormatting("family_gender_player_reset", new String[]{playerName});
+            SyncExecutor.runSync(() -> setPlayerGender(null, playerFamily, Gender.UNDECIDED, ActionInitiator.CONSOLE, sender, message));
         } else {
-            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {playerName}), MessageType.WARNING, sender);
-            return true;
+            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[]{playerName}), MessageType.WARNING, sender);
         }
     }
 
-    private boolean handleForceSetGender(CommandSender sender, String playerName, String genderStr) {
-    	if (sender instanceof Player) {
-    		return false;
-    	}
-    	
-    	genderStr = genderStr.equalsIgnoreCase("MAN") ? "MALE" : genderStr.equalsIgnoreCase("WOMAN") ? "FEMALE" : genderStr.toUpperCase();
-    	PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
+    private void handleForceSetGender(CommandSender sender, String playerName, String genderStr) {
+        if (sender instanceof Player) {
+            return;
+        }
+
+        genderStr = genderStr.equalsIgnoreCase("MAN") ? "MALE" : genderStr.equalsIgnoreCase("WOMAN") ? "FEMALE" : genderStr.toUpperCase();
+        PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
+
         if (playerFamily != null) {
             Gender gender = Gender.fromString(genderStr);
+
             if (gender != null && gender != Gender.UNDECIDED) {
-            	MessageForFormatting message = new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[] {playerName});
-            	setPlayerGender(null, playerFamily, gender, ActionInitiator.CONSOLE, sender, message);
-                return true;
+                MessageForFormatting message = new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[]{playerName});
+                SyncExecutor.runSync(() -> setPlayerGender(null, playerFamily, gender, ActionInitiator.CONSOLE, sender, message));
             } else {
-                sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[] {}), MessageType.WARNING, sender);
-                return true;
+                sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[]{}), MessageType.WARNING, sender);
             }
         } else {
-            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[] {playerName}), MessageType.WARNING, sender);
-            return true;
+            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[]{playerName}), MessageType.WARNING, sender);
         }
     }
 
     private void setPlayerGender(Player player, PlayerFamily playerFamily, Gender gender, ActionInitiator initiator, CommandSender sender, MessageForFormatting message) {
-        GenderSelectEvent event = new GenderSelectEvent(playerFamily, Gender.getKey(gender), initiator);
-        Bukkit.getPluginManager().callEvent(event);
 
-        if (!event.isCancelled()) {
-            if (player != null) {
-            	GenderManager.setGender(player, gender);
-            } else{
-            	GenderManager.setGender(playerFamily.getRoot(), gender);
+        try {
+            GenderSelectEvent event = new GenderSelectEvent(playerFamily, Gender.getKey(gender), initiator);
+
+            if (!event.isCancelled()) {
+            	SyncExecutor.runAsync(() -> {
+                    if (player != null) {
+                        GenderManager.setGender(player, gender);
+                    } else {
+                        GenderManager.setGender(playerFamily.getRoot(), gender);
+                    }
+                    Logger.info(libraryManager.getPlugin(), "Gender set " + gender + " for player: " + playerFamily.getCurrentSurname());
+                    sendMessage(message, MessageType.IMPORTANT, sender);
+            	});
+            } else {
+                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, sender);
             }
+        } catch (Exception e) {
+        	Logger.info(libraryManager.getPlugin(), "Exception in setPlayerGender: " + e.getMessage());
+            e.printStackTrace();
         }
-        sendMessage(message, MessageType.NORMAL, sender);
     }
 }
-

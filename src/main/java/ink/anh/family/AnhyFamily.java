@@ -2,6 +2,7 @@ package ink.anh.family;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.command.CommandManager;
 import ink.anh.family.listeners.ListenersRegistratar;
 import ink.anh.family.marry.MarriageManager;
@@ -43,6 +44,8 @@ public class AnhyFamily extends JavaPlugin {
         
         marriageManager = MarriageManager.getInstance(this);
         parentManager = ParentManager.getInstance(this);
+
+        SyncExecutor.init(this);
         
         new ListenersRegistratar(this).register();
         new CommandManager(this).registerCommands();
