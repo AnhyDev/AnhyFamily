@@ -18,23 +18,19 @@ public class FamilyDetails {
     private UUID familyId;
     private Location homeLocation = null;
     private ItemStack[] familyChest = new ItemStack[54];
-    private boolean childrenAccessHome = false;
-    private boolean childrenAccessChest = false;
-    private boolean ancestorsAccessHome = false;
-    private boolean ancestorsAccessChest = false;
+    private Access childrenAccess = Access.FALSE;
+    private Access ancestorsAccess = Access.FALSE;
     private Map<UUID, AccessControl> childrenAccessMap = new HashMap<>();
     private Map<UUID, AccessControl> ancestorsAccessMap = new HashMap<>();
     private LocalDateTime homeSetDate = null;
 
-    public FamilyDetails(UUID familyId, Location homeLocation, ItemStack[] familyChest, boolean childrenAccessHome, boolean childrenAccessChest, boolean ancestorsAccessHome,
-    		boolean ancestorsAccessChest, Map<UUID, AccessControl> childrenAccessMap, Map<UUID, AccessControl> ancestorsAccessMap, LocalDateTime homeSetDate) {
+    public FamilyDetails(UUID familyId, Location homeLocation, ItemStack[] familyChest, Access childrenAccess, Access ancestorsAccess,
+            Map<UUID, AccessControl> childrenAccessMap, Map<UUID, AccessControl> ancestorsAccessMap, LocalDateTime homeSetDate) {
         this.familyId = familyId;
         this.homeLocation = homeLocation;
         this.familyChest = familyChest;
-        this.childrenAccessHome = childrenAccessHome;
-        this.childrenAccessChest = childrenAccessChest;
-        this.ancestorsAccessHome = ancestorsAccessHome;
-        this.ancestorsAccessChest = ancestorsAccessChest;
+        this.childrenAccess = childrenAccess;
+        this.ancestorsAccess = ancestorsAccess;
         this.childrenAccessMap = childrenAccessMap;
         this.ancestorsAccessMap = ancestorsAccessMap;
         this.homeSetDate = homeSetDate;
@@ -69,36 +65,20 @@ public class FamilyDetails {
         this.familyChest = familyChest;
     }
 
-    public boolean isChildrenAccessHome() {
-        return childrenAccessHome;
+    public Access getChildrenAccess() {
+        return childrenAccess;
     }
 
-    public void setChildrenAccessHome(boolean childrenAccessHome) {
-        this.childrenAccessHome = childrenAccessHome;
+    public void setChildrenAccess(Access childrenAccess) {
+        this.childrenAccess = childrenAccess;
     }
 
-    public boolean isChildrenAccessChest() {
-        return childrenAccessChest;
+    public Access getAncestorsAccess() {
+        return ancestorsAccess;
     }
 
-    public void setChildrenAccessChest(boolean childrenAccessChest) {
-        this.childrenAccessChest = childrenAccessChest;
-    }
-
-    public boolean isAncestorsAccessHome() {
-        return ancestorsAccessHome;
-    }
-
-    public void setAncestorsAccessHome(boolean ancestorsAccessHome) {
-        this.ancestorsAccessHome = ancestorsAccessHome;
-    }
-
-    public boolean isAncestorsAccessChest() {
-        return ancestorsAccessChest;
-    }
-
-    public void setAncestorsAccessChest(boolean ancestorsAccessChest) {
-        this.ancestorsAccessChest = ancestorsAccessChest;
+    public void setAncestorsAccess(Access ancestorsAccess) {
+        this.ancestorsAccess = ancestorsAccess;
     }
 
     public Map<UUID, AccessControl> getChildrenAccessMap() {
@@ -155,9 +135,9 @@ public class FamilyDetails {
             case FAMILY_ID:
                 return true;
             case PARENT_FAMILY_ID:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccessHome, "homeAccess");
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, "homeAccess");
             case CHILD_FAMILY_IDS:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccessHome, "homeAccess");
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, "homeAccess");
             default:
                 return false;
         }
@@ -171,16 +151,16 @@ public class FamilyDetails {
             case FAMILY_ID:
                 return true;
             case PARENT_FAMILY_ID:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccessChest, "chestAccess");
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, "chestAccess");
             case CHILD_FAMILY_IDS:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccessChest, "chestAccess");
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, "chestAccess");
             default:
                 return false;
         }
     }
 
     // Метод для перевірки специфічного або за замовчуванням доступу
-    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, boolean defaultAccess, String accessType) {
+    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, Access defaultAccess, String accessType) {
         AccessControl accessControl = accessMap.get(playerId);
 
         if (accessControl != null) {
@@ -193,7 +173,7 @@ public class FamilyDetails {
                     access = accessControl.getChestAccess();
                     break;
                 default:
-                    return defaultAccess;
+                    return defaultAccess == Access.TRUE;
             }
 
             switch (access) {
@@ -202,11 +182,11 @@ public class FamilyDetails {
                 case FALSE:
                     return false;
                 case DEFAULT:
-                    return defaultAccess;
+                    return defaultAccess == Access.TRUE;
             }
         }
 
-        return defaultAccess;
+        return defaultAccess == Access.TRUE;
     }
 
     @Override

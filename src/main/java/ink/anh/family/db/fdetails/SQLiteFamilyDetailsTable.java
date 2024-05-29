@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.UUID;
 
 import ink.anh.api.database.TableField;
+import ink.anh.api.enums.Access;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsSerializer;
@@ -36,13 +37,11 @@ public class SQLiteFamilyDetailsTable extends FamilyDetailsTable {
                 ps.setString(1, familyDetails.getFamilyId().toString());
                 ps.setString(2, FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation()));
                 ps.setString(3, FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest()));
-                ps.setBoolean(4, familyDetails.isChildrenAccessHome());
-                ps.setBoolean(5, familyDetails.isChildrenAccessChest());
-                ps.setBoolean(6, familyDetails.isAncestorsAccessHome());
-                ps.setBoolean(7, familyDetails.isAncestorsAccessChest());
-                ps.setString(8, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap()));
-                ps.setString(9, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap()));
-                ps.setString(10, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
+                ps.setString(4, familyDetails.getChildrenAccess().name());
+                ps.setString(5, familyDetails.getAncestorsAccess().name());
+                ps.setString(6, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap()));
+                ps.setString(7, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap()));
+                ps.setString(8, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
                 ps.executeUpdate();
             }
         }, "Failed to insert family details: " + familyDetails);
@@ -62,13 +61,11 @@ public class SQLiteFamilyDetailsTable extends FamilyDetailsTable {
                                 UUID.fromString(rs.getString("family_id")),
                                 FamilyDetailsSerializer.deserializeLocation(rs.getString("home_location")),
                                 FamilyDetailsSerializer.deserializeFamilyChest(rs.getString("family_chest")),
-                                rs.getBoolean("children_access_home"),
-                                rs.getBoolean("children_access_chest"),
-                                rs.getBoolean("ancestors_access_home"),
-                                rs.getBoolean("ancestors_access_chest"),
+                                Access.valueOf(rs.getString("children_access")),
+                                Access.valueOf(rs.getString("ancestors_access")),
                                 FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("children_access_map")),
                                 FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("ancestors_access_map")),
-                                rs.getTimestamp("home_set_date").toLocalDateTime()
+                                rs.getTimestamp("home_set_date") != null ? rs.getTimestamp("home_set_date").toLocalDateTime() : null
                         );
                     }
                 }

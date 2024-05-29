@@ -3,10 +3,8 @@ package ink.anh.family.db.fdetails;
 public enum FamilyDetailsField {
     HOME_LOCATION("home_location", "TEXT"),
     FAMILY_CHEST("family_chest", "TEXT"),
-    CHILDREN_ACCESS_HOME("children_access_home", "BOOLEAN"),
-    CHILDREN_ACCESS_CHEST("children_access_chest", "BOOLEAN"),
-    ANCESTORS_ACCESS_HOME("ancestors_access_home", "BOOLEAN"),
-    ANCESTORS_ACCESS_CHEST("ancestors_access_chest", "BOOLEAN"),
+    CHILDREN_ACCESS("children_access", "TEXT"),
+    ANCESTORS_ACCESS("ancestors_access", "TEXT"),
     CHILDREN_ACCESS_MAP("children_access_map", "TEXT"),
     ANCESTORS_ACCESS_MAP("ancestors_access_map", "TEXT"),
     HOME_SET_DATE("home_set_date", "TEXT");

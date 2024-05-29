@@ -42,17 +42,11 @@ public class FamilyDetailsSave {
             case FAMILY_CHEST:
                 familyDetailsTable.updateField(new TableField<>(familyId, "family_chest", FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest())));
                 break;
-            case CHILDREN_ACCESS_HOME:
-                familyDetailsTable.updateField(new TableField<>(familyId, "children_access_home", Boolean.toString(familyDetails.isChildrenAccessHome())));
+            case CHILDREN_ACCESS:
+                familyDetailsTable.updateField(new TableField<>(familyId, "children_access", familyDetails.getChildrenAccess().name()));
                 break;
-            case CHILDREN_ACCESS_CHEST:
-                familyDetailsTable.updateField(new TableField<>(familyId, "children_access_chest", Boolean.toString(familyDetails.isChildrenAccessChest())));
-                break;
-            case ANCESTORS_ACCESS_HOME:
-                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access_home", Boolean.toString(familyDetails.isAncestorsAccessHome())));
-                break;
-            case ANCESTORS_ACCESS_CHEST:
-                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access_chest", Boolean.toString(familyDetails.isAncestorsAccessChest())));
+            case ANCESTORS_ACCESS:
+                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access", familyDetails.getAncestorsAccess().name()));
                 break;
             case CHILDREN_ACCESS_MAP:
                 familyDetailsTable.updateField(new TableField<>(familyId, "children_access_map", FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap())));
