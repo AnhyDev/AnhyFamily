@@ -234,8 +234,7 @@ public class Adopt extends Sender {
         FamilyDetails[] adoptersDetails = new FamilyDetails[] {FamilyDetailsGet.getRootFamilyDetails(family1), FamilyDetailsGet.getRootFamilyDetails(family2)};
 
         ActionInitiator initiator = ActionInitiator.PLAYER_SELF;
-        if (!handleAdoption(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator)) {
-            sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[] {}), MessageType.WARNING, sender);
+        if (!handleAdoption(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator, sender)) {
             return false;
         }
         
@@ -320,8 +319,7 @@ public class Adopt extends Sender {
         FamilyDetails[] adoptersDetails = new FamilyDetails[] {FamilyDetailsGet.getRootFamilyDetails(adopterFamily)};
 
         ActionInitiator initiator = isPlayer ? ActionInitiator.PLAYER_WITH_PERMISSION : ActionInitiator.CONSOLE;
-        if (!handleAdoption(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator)) {
-            sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[] {}), MessageType.WARNING, sender);
+        if (!handleAdoption(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator, sender)) {
             return false;
         }
 
@@ -337,7 +335,7 @@ public class Adopt extends Sender {
     }
 
     private boolean handleAdoption(PlayerFamily[] adoptersFamily, PlayerFamily adoptedFamily,
-    		FamilyDetails[] adoptersDetails, FamilyDetails adoptedDetails, ActionInitiator initiator) {
+    		FamilyDetails[] adoptersDetails, FamilyDetails adoptedDetails, ActionInitiator initiator, CommandSender sender) {
     	
         AdoptionEvent event = new AdoptionEvent(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator);
         Bukkit.getPluginManager().callEvent(event);
@@ -345,6 +343,7 @@ public class Adopt extends Sender {
         if (!event.isCancelled()) {
         	return true;
         }
+        sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[] {}), MessageType.WARNING, sender);
         return false;
     }
 }

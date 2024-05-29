@@ -200,5 +200,6 @@ family_proposal_refused_sender: "%s відмовився(лася) від ваш
 
 family_marry_failed_distance: "Одруження зараз неможливе з причини: молодята занадто далеко один від одного!"
 family_marry_private_prefix: "Святий Валентин"
+family_err_event_is_canceled: "Подію було скасовано зовнішніми силами"
 
 

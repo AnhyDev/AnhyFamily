@@ -43,10 +43,10 @@ public class FamilyDetailsSave {
                 familyDetailsTable.updateField(new TableField<>(familyId, "family_chest", FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest())));
                 break;
             case CHILDREN_ACCESS:
-                familyDetailsTable.updateField(new TableField<>(familyId, "children_access", familyDetails.getChildrenAccess().name()));
+                familyDetailsTable.updateField(new TableField<>(familyId, "children_access", FamilyDetailsSerializer.serializeAccessControl(familyDetails.getChildrenAccess())));
                 break;
             case ANCESTORS_ACCESS:
-                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access", familyDetails.getAncestorsAccess().name()));
+                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access", FamilyDetailsSerializer.serializeAccessControl(familyDetails.getAncestorsAccess())));
                 break;
             case CHILDREN_ACCESS_MAP:
                 familyDetailsTable.updateField(new TableField<>(familyId, "children_access_map", FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap())));

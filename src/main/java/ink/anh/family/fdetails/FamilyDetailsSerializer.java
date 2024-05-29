@@ -8,7 +8,6 @@ import com.google.gson.reflect.TypeToken;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import ink.anh.api.items.ItemStackSerializer;
-import ink.anh.api.enums.Access;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -51,8 +50,12 @@ public class FamilyDetailsSerializer {
         return familyChest;
     }
 
-    public static String serializeSpecificAccessMap(Map<UUID, Access> specificAccessMap) {
-        return gson.toJson(specificAccessMap);
+    public static String serializeAccessControl(AccessControl accessControl) {
+        return gson.toJson(accessControl);
+    }
+
+    public static AccessControl deserializeAccessControl(String accessControlString) {
+        return gson.fromJson(accessControlString, AccessControl.class);
     }
 
     public static String serializeAccessControlMap(Map<UUID, AccessControl> accessControlMap) {
