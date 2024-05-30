@@ -10,9 +10,13 @@ import org.bukkit.entity.Player;
 
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
+import ink.anh.family.events.ActionInitiator;
+import ink.anh.family.events.FamilySeparationEvent;
+import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -52,24 +56,36 @@ public class Clear extends Sender {
             return false;
         }
 
-        Set<PlayerFamily> modifiedFamilies = FamilyUtils.clearRelatives(family1);
-        Set<Player> playersSet = new HashSet<>();
+        ActionInitiator initiator = player != null ? ActionInitiator.PLAYER_WITH_PERMISSION : ActionInitiator.CONSOLE;
+        SyncExecutor.runSync(() -> handleFamilySeparation(family1, initiator, sender));
+		return true;
+	}
 
-        for (PlayerFamily playerFamily : modifiedFamilies) {
-            UUID playerId = playerFamily.getRoot();
-            Player pl = Bukkit.getPlayer(playerId);
-            if (pl != null && pl.isOnline()) {
-                playersSet.add(pl);
-            }
-        }
+	private void handleFamilySeparation(PlayerFamily playerFamily, ActionInitiator initiator, CommandSender sender) {
+	    FamilySeparationEvent event = new FamilySeparationEvent(playerFamily, FamilyDetailsGet.getRootFamilyDetails(playerFamily), initiator);
+	    Bukkit.getPluginManager().callEvent(event);
 
-        Player[] players = playersSet.toArray(new Player[0]);
-        
-        if (players.length > 0) {
-        	sendMessage(new MessageForFormatting("family_clear_relative_success", new String[] {}), MessageType.WARNING, players);
-    		return true;
+        if (!event.isCancelled()) {
+            SyncExecutor.runAsync(() -> {
+                Set<PlayerFamily> modifiedFamilies = FamilyUtils.clearRelatives(playerFamily);
+                Set<Player> playersSet = new HashSet<>();
+
+                for (PlayerFamily modifieFamily : modifiedFamilies) {
+                    UUID playerId = modifieFamily.getRoot();
+                    Player pl = Bukkit.getPlayer(playerId);
+                    if (pl != null && pl.isOnline()) {
+                        playersSet.add(pl);
+                    }
+                }
+
+                Player[] players = playersSet.toArray(new Player[0]);
+                
+                if (players.length > 0) {
+                	sendMessage(new MessageForFormatting("family_clear_relative_success", new String[] {}), MessageType.WARNING, players);
+            		return;
+                }
+            	sendMessage(new MessageForFormatting("family_clear_relative_missing", new String[] {}), MessageType.WARNING, players);
+            });
         }
-    	sendMessage(new MessageForFormatting("family_clear_relative_missing", new String[] {}), MessageType.WARNING, players);
-		return false;
 	}
 }

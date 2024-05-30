@@ -11,27 +11,28 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
+import ink.anh.family.events.ActionInitiator;
+import ink.anh.family.events.MarriageEvent;
+import ink.anh.api.utils.SyncExecutor;
 
 public class ActionsBridesPrivate extends Sender {
 
     private GlobalManager manager;
     private MarriageManager marriageManager;
     private MarriageValidator validator;
-    private String priestTitle;
 
     public ActionsBridesPrivate(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
         this.manager = GlobalManager.getInstance();
-        this.marriageManager = familyPlugin.getMarriageManager();
+        this.marriageManager = GlobalManager.getInstance().getMarriageManager();
         this.validator = new MarriageValidator(familyPlugin, false);
-        this.priestTitle = FamilyUtils.getPriestTitle(null);
     }
 
     public void proposePrivateMarriage(CommandSender sender, String[] args) {
-    	
-		if (!validator.validateCommandInput(sender, args)) {
+
+        if (!validator.validateCommandInput(sender, args)) {
             return;
-		}
+        }
 
         Player proposer = (Player)sender;
         Player receiver = Bukkit.getPlayerExact(args[1]);
@@ -40,16 +41,16 @@ public class ActionsBridesPrivate extends Sender {
             sendMessage(new MessageForFormatting("family_err_player_not_found", new String[]{args[1]}), MessageType.WARNING, sender);
             return;
         }
-        
-		Player[] recipients = OtherUtils.getPlayersWithinRadius(proposer.getLocation(), manager.getFamilyConfig().getCeremonyRadius());
-		
-		if (!validator.validateCeremonyConditions(proposer, receiver, recipients)) {
-			return;
-		}
-		
-		if (!validator.validatePermissions(proposer, receiver, recipients)) {
-			return;
-		}
+
+        Player[] recipients = OtherUtils.getPlayersWithinRadius(proposer.getLocation(), manager.getFamilyConfig().getCeremonyRadius());
+
+        if (!validator.validateCeremonyConditions(proposer, receiver, recipients)) {
+            return;
+        }
+
+        if (!validator.validatePermissions(proposer, receiver, recipients)) {
+            return;
+        }
 
         String[] chosenSurname = FamilyUtils.getFamily(proposer).getLastName();
 
@@ -81,22 +82,11 @@ public class ActionsBridesPrivate extends Sender {
         PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
         PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver.getUniqueId());
 
-        // Оновити інформацію про сім'ю
-        proposerFamily.setSpouse(receiverFamily.getRoot());
-        receiverFamily.setSpouse(proposerFamily.getRoot());
+        MessageForFormatting messageTrue = new MessageForFormatting("family_proposal_accepted", new String[]{proposer.getName()});
+        MessageForFormatting messageFalse = new MessageForFormatting("family_proposal_failed", new String[]{proposer.getName()});
+        CommandSender[] senders = {sender, proposer};
 
-        if (proposal.getChosenSurname().length > 0 && !proposal.getChosenSurname()[0].isEmpty()) {
-            receiverFamily.setOldLastName(receiverFamily.getLastName());
-            receiverFamily.setLastName(proposal.getChosenSurname());
-        }
-
-        FamilyUtils.saveFamily(proposerFamily);
-        FamilyUtils.saveFamily(receiverFamily);
-
-        sendMessage(new MessageForFormatting("family_proposal_accepted", new String[]{proposer.getName()}), MessageType.NORMAL, sender);
-        sendMessage(new MessageForFormatting("family_proposal_accepted_sender", new String[]{receiver.getName()}), MessageType.NORMAL, proposer);
-
-        marriageManager.removeProposal(proposal);
+        SyncExecutor.runSync(() -> handleMarriage(receiver, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF, senders, messageTrue, messageFalse, proposal));
     }
 
     public void refusePrivateMarriage(CommandSender sender) {
@@ -116,6 +106,35 @@ public class ActionsBridesPrivate extends Sender {
         Player proposer = proposal.getProposer();
         sendMessage(new MessageForFormatting("family_proposal_refused", new String[]{proposer.getName()}), MessageType.NORMAL, sender);
         sendMessage(new MessageForFormatting("family_proposal_refused_sender", new String[]{receiver.getName()}), MessageType.NORMAL, proposer);
+    }
+
+    private void handleMarriage(Player priest, PlayerFamily playerFamily1, PlayerFamily playerFamily2, ActionInitiator initiator, CommandSender[] senders, MessageForFormatting messageTrue, MessageForFormatting messageFalse, MarryPrivate proposal) {
+        final MessageType[] messageType = {MessageType.WARNING};
+        try {
+            MarriageEvent event = new MarriageEvent(priest, playerFamily1, playerFamily2, initiator);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                SyncExecutor.runAsync(() -> {
+                    PlayerFamily proposerFamily = FamilyUtils.getFamily(priest.getUniqueId());
+                    PlayerFamily receiverFamily = FamilyUtils.getFamily(playerFamily1.getRoot());
+
+                    proposerFamily.setSpouse(receiverFamily.getRoot());
+                    receiverFamily.setSpouse(proposerFamily.getRoot());
+
+                    FamilyUtils.saveFamily(proposerFamily);
+                    FamilyUtils.saveFamily(receiverFamily);
+
+                    messageType[0] = MessageType.IMPORTANT;
+                    sendMessage(messageTrue, messageType[0], senders);
+                });
+            } else {
+                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, senders);
+            }
+        } catch (Exception e) {
+            Bukkit.getLogger().severe("Exception in handleMarriage: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         marriageManager.removeProposal(proposal);
     }

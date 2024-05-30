@@ -5,8 +5,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.command.CommandManager;
 import ink.anh.family.listeners.ListenersRegistratar;
-import ink.anh.family.marry.MarriageManager;
-import ink.anh.family.parents.ParentManager;
 import ink.anh.family.util.EconomyHandler;
 
 
@@ -15,8 +13,6 @@ public class AnhyFamily extends JavaPlugin {
     private static AnhyFamily instance;
     
     private EconomyHandler economyHandler;
-    private MarriageManager marriageManager;
-    private ParentManager parentManager;
 
     @Override
     public void onLoad() {
@@ -30,21 +26,13 @@ public class AnhyFamily extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        SyncExecutor.init(this);
         
         if (checkClass("net.milkbowl.vault.Vault")) {
         	economyHandler = EconomyHandler.getInstance();
         }
         
-        GlobalManager manager = GlobalManager.getInstance();
-        manager.initialize();
-        manager.setDatabaseManager();
-        manager.getDatabaseManager().initialize();
-        manager.getDatabaseManager().initializeTables();
-        
-        marriageManager = MarriageManager.getInstance(this);
-        parentManager = ParentManager.getInstance(this);
-
-        SyncExecutor.init(this);
+        GlobalManager.getInstance();
         
         new ListenersRegistratar(this).register();
         new CommandManager(this).registerCommands();
@@ -79,12 +67,4 @@ public class AnhyFamily extends JavaPlugin {
     public EconomyHandler getEconomyHandler() {
         return economyHandler;
     }
-
-	public MarriageManager getMarriageManager() {
-		return marriageManager;
-	}
-
-	public ParentManager getParentManager() {
-		return parentManager;
-	}
 }

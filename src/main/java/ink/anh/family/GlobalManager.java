@@ -1,7 +1,6 @@
 package ink.anh.family;
 
 import java.io.File;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import ink.anh.api.LibraryManager;
@@ -10,20 +9,26 @@ import ink.anh.api.database.MySQLConfig;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.lingo.lang.LanguageManager;
 import ink.anh.api.messages.Logger;
+import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.db.TableRegistry;
 import ink.anh.family.lang.LangMessage;
+import ink.anh.family.marry.MarriageManager;
+import ink.anh.family.parents.ParentManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class GlobalManager extends LibraryManager {
 
     private static GlobalManager instance;
+    
     private final AnhyFamily familyPlugin;
 
     private MySQLConfig mySQLConfig;
-    private DatabaseManager dbManager;
-	
-    private LanguageManager langManager;
     private FamilyConfig familyConfig;
+    
+    private DatabaseManager dbManager;
+    private LanguageManager langManager;
+    private MarriageManager marriageManager;
+    private ParentManager parentManager;
 	
     private String pluginName;
     private String defaultLang;
@@ -39,12 +44,10 @@ public class GlobalManager extends LibraryManager {
     public static synchronized GlobalManager getInstance() {
         if (instance == null) {
             instance = new GlobalManager(AnhyFamily.getInstance());
+            instance.initializeDatabase();
+            instance.setOrherManagers();
         }
         return instance;
-    }
-    
-    public void initialize() {
-        // Ініціалізація вже відбулась у конструкторі
     }
 
 	@Override
@@ -81,7 +84,7 @@ public class GlobalManager extends LibraryManager {
     }
 
     public boolean reload() {
-    	Bukkit.getScheduler().runTaskAsynchronously(familyPlugin, () -> {
+    	SyncExecutor.runAsync(() -> {
     		try {
     			saveDefaultConfig();
     			familyPlugin.reloadConfig();
@@ -148,8 +151,27 @@ public class GlobalManager extends LibraryManager {
 		return dbManager;
 	}
 	
-	public void setDatabaseManager() {
+	private void setDatabaseManager() {
 		TableRegistry registry = new TableRegistry(familyPlugin);
 		dbManager = DatabaseManager.getInstance(this, registry);
+	}
+	
+	private void initializeDatabase() {
+		setDatabaseManager();
+		dbManager.initialize();
+		dbManager.initializeTables();
+	}
+	
+	private void setOrherManagers() {
+        marriageManager = MarriageManager.getInstance(familyPlugin);
+        parentManager = ParentManager.getInstance(familyPlugin);
+	}
+
+	public MarriageManager getMarriageManager() {
+		return marriageManager;
+	}
+
+	public ParentManager getParentManager() {
+		return parentManager;
 	}
 }

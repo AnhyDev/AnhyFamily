@@ -1,6 +1,5 @@
 package ink.anh.family.events;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -8,28 +7,22 @@ import org.bukkit.event.HandlerList;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fplayer.PlayerFamily;
 
-public class FamilyBreakEvent extends Event implements Cancellable {
+public class FamilySeparationEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final Player player1;
-    private final PlayerFamily playerFamily1;
+    private final PlayerFamily playerFamily;
     private final FamilyDetails familyDetails;
     private final ActionInitiator initiator;
     private boolean isCancelled;
 
-    public FamilyBreakEvent(Player player1, PlayerFamily playerFamily1, FamilyDetails familyDetails, ActionInitiator initiator) {
-        this.player1 = player1;
-        this.playerFamily1 = playerFamily1;
+    public FamilySeparationEvent(PlayerFamily playerFamily, FamilyDetails familyDetails, ActionInitiator initiator) {
+        this.playerFamily = playerFamily;
         this.familyDetails = familyDetails;
         this.initiator = initiator;
         this.isCancelled = false;
     }
 
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public PlayerFamily getPlayerFamily1() {
-        return playerFamily1;
+    public PlayerFamily getPlayerFamily() {
+        return playerFamily;
     }
 
     public FamilyDetails getFamilyDetails() {

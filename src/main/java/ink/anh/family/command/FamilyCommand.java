@@ -109,14 +109,14 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 
 	private boolean infoMarryElement(CommandSender sender) {
 		if (sender.getName().equalsIgnoreCase("CONSOLE")) {
-			return familyPlugin.getMarriageManager().infoMarryElement();
+			return GlobalManager.getInstance().getMarriageManager().infoMarryElement();
 		}
 		return false;
 	}
 	
 	private boolean infoParentElement(CommandSender sender) {
 		if (sender.getName().equalsIgnoreCase("CONSOLE")) {
-			return familyPlugin.getParentManager().infoParentElement();
+			return GlobalManager.getInstance().getParentManager().infoParentElement();
 		}
 		return false;
 	}

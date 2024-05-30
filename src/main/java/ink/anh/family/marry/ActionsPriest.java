@@ -26,7 +26,7 @@ public class ActionsPriest extends Sender {
         super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
         this.manager = GlobalManager.getInstance();
-        this.marriageManager = familyPlugin.getMarriageManager();
+        this.marriageManager = GlobalManager.getInstance().getMarriageManager();
         this.validator = new MarriageValidator(familyPlugin, true);
         this.familyConfig = manager.getFamilyConfig();
     }

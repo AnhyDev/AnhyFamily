@@ -22,10 +22,12 @@ import ink.anh.api.messages.MessageForFormatting;
 public class Adopt extends Sender {
 
     private AnhyFamily familyPlugin;
+    private GlobalManager globalManager;
 
     public Adopt(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
+        this.globalManager = GlobalManager.getInstance();
     }
 
     public boolean adoption(CommandSender sender, String[] args) {
@@ -67,7 +69,7 @@ public class Adopt extends Sender {
             return false;
         }
 
-        ParentManager manager = familyPlugin.getParentManager();
+        ParentManager manager = globalManager.getParentManager();
         int result = manager.addOrUpdateParent(uuid1, player.getUniqueId());
 
         switch (result) {
@@ -104,7 +106,7 @@ public class Adopt extends Sender {
 
         Player player = (Player) sender;
         UUID playerUUID = player.getUniqueId();
-        ParentManager manager = familyPlugin.getParentManager();
+        ParentManager manager = globalManager.getParentManager();
         UUID[] parentRequest = manager.getParentElementByParent(playerUUID);
 
         if (parentRequest == null || parentRequest[0] == null) {
@@ -172,7 +174,7 @@ public class Adopt extends Sender {
             return false;
         }
 
-        ParentManager manager = familyPlugin.getParentManager();
+        ParentManager manager = globalManager.getParentManager();
         UUID[] parents = manager.getParentElement(uuid);
 
         if (parents == null || parents[1] == null || parents[2] == null) {
@@ -230,7 +232,7 @@ public class Adopt extends Sender {
 
         Player player = (Player) sender;
         UUID playerUUID = player.getUniqueId();
-        ParentManager manager = familyPlugin.getParentManager();
+        ParentManager manager = globalManager.getParentManager();
         UUID[] parents = manager.getParentElement(playerUUID);
 
         if (parents == null || parents[0] == null) {

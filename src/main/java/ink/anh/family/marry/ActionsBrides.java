@@ -9,9 +9,12 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.events.ActionInitiator;
+import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
@@ -32,7 +35,7 @@ public class ActionsBrides extends Sender {
 		super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
 		this.manager = GlobalManager.getInstance();
-		this.marriageManager = familyPlugin.getMarriageManager();
+		this.marriageManager = GlobalManager.getInstance().getMarriageManager();
 		this.familyConfig = manager.getFamilyConfig();
 	}
 	
@@ -126,15 +129,11 @@ public class ActionsBrides extends Sender {
 			if (paymentFailed(uuidBride1, bride1, bride2, recipients, bride1Name, bride2Name)) {
 				return;
 			}
-			
-			updateFamilyData(bride1family, bride2family, marryPublic, one);
-			
-			sendMessage(messageForFormatting, MessageType.WARNING, false, recipients);
 
-			Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
-				sendMessage(new MessageForFormatting(priestTitle + stringMarry, new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
+			SyncExecutor.runSync(() -> {
+				handleMarriage(priest, bride1family, bride2family, recipients, messageForFormatting, marryPublic, gender1Starus, new String[] {bride1Name, bride2Name}, stringMarry);
+			});
 			
-			marriageManager.remove(uuidBride1);
 			return;
 			
 		} else {
@@ -215,5 +214,32 @@ public class ActionsBrides extends Sender {
         	   marryPublic.getBride1() != null &&
                marryPublic.getBride2() != null &&
                marryPublic.getPriest() != null;
+    }
+
+    private void handleMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, Player[] recipients,
+    		MessageForFormatting messageForFormatting, MarryPublic marryPublic, int one, String[] brides, String stringMarry) {
+        final MessageType[] messageType = {MessageType.WARNING, MessageType.ESPECIALLY};
+        try {
+            MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                SyncExecutor.runAsync(() -> {
+                	updateFamilyData(proposerFamily, receiverFamily, marryPublic, one);
+        			
+        			sendMessage(messageForFormatting, messageType[1], false, recipients);
+
+        			Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
+        				sendMessage(new MessageForFormatting(priestTitle + stringMarry, brides), messageType[1], false, recipients), 10L);
+        			
+        			marriageManager.remove(proposerFamily.getRoot());
+                });
+            } else {
+                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), messageType[0], recipients);
+            }
+        } catch (Exception e) {
+            Bukkit.getLogger().severe("Exception in handleMarriage: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
