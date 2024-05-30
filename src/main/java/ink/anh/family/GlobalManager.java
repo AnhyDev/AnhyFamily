@@ -34,9 +34,6 @@ public class GlobalManager extends LibraryManager {
         this.familyPlugin = familyPlugin;
         this.saveDefaultConfig();
         this.loadFields(familyPlugin);
-        this.setDatabaseManager();
-        this.getDatabaseManager().initialize();
-        this.getDatabaseManager().initializeTables();
     }
 
     public static synchronized GlobalManager getInstance() {

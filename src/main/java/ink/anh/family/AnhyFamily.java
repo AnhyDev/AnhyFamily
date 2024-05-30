@@ -35,7 +35,11 @@ public class AnhyFamily extends JavaPlugin {
         	economyHandler = EconomyHandler.getInstance();
         }
         
-        GlobalManager.getInstance().initialize();
+        GlobalManager manager = GlobalManager.getInstance();
+        manager.initialize();
+        manager.setDatabaseManager();
+        manager.getDatabaseManager().initialize();
+        manager.getDatabaseManager().initializeTables();
         
         marriageManager = MarriageManager.getInstance(this);
         parentManager = ParentManager.getInstance(this);
