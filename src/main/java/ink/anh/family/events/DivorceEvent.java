@@ -1,6 +1,5 @@
 package ink.anh.family.events;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -10,46 +9,35 @@ import ink.anh.family.fplayer.PlayerFamily;
 
 public class DivorceEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private final Player player1;
-    private final Player player2;
-    private final PlayerFamily playerFamily1;
-    private final PlayerFamily playerFamily2;
+    private final PlayerFamily initiator;
+    private final PlayerFamily spouse;
     private final FamilyDetails familyDetails;
-    private final ActionInitiator initiator;
+    private final ActionInitiator initiatorAction;
     private boolean isCancelled;
 
-    public DivorceEvent(Player player1, Player player2, PlayerFamily playerFamily1, PlayerFamily playerFamily2, FamilyDetails familyDetails, ActionInitiator initiator) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.playerFamily1 = playerFamily1;
-        this.playerFamily2 = playerFamily2;
-        this.familyDetails = familyDetails;
+    public DivorceEvent(PlayerFamily initiator, PlayerFamily spouse, FamilyDetails familyDetails, ActionInitiator initiatorAction) {
+    	
         this.initiator = initiator;
+        this.spouse = spouse;
+        this.familyDetails = familyDetails;
+        this.initiatorAction = initiatorAction;
         this.isCancelled = false;
     }
 
-    public Player getPlayer1() {
-        return player1;
+    public PlayerFamily getInitiator() {
+        return initiator;
     }
 
-    public Player getPlayer2() {
-        return player2;
-    }
-
-    public PlayerFamily getPlayerFamily1() {
-        return playerFamily1;
-    }
-
-    public PlayerFamily getPlayerFamily2() {
-        return playerFamily2;
+    public PlayerFamily getSpouse() {
+        return spouse;
     }
 
 	public FamilyDetails getFamilyDetails() {
 		return familyDetails;
 	}
 
-    public ActionInitiator getInitiator() {
-        return initiator;
+    public ActionInitiator getInitiatorAction() {
+        return initiatorAction;
     }
 
     @Override

@@ -17,7 +17,7 @@ import net.md_5.bungee.api.ChatColor;
 public class GlobalManager extends LibraryManager {
 
     private static GlobalManager instance;
-    private AnhyFamily familyPlugin;
+    private final AnhyFamily familyPlugin;
 
     private MySQLConfig mySQLConfig;
     private DatabaseManager dbManager;

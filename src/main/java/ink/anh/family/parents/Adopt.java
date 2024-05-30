@@ -35,13 +35,13 @@ public class Adopt extends Sender {
 
         Player player = (sender instanceof Player) ? (Player) sender : null;
 
-        if (player != null && !player.hasPermission(Permissions.FAMILY_USER)) {
-            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, sender);
+        if (player == null) {
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
 
-        if (player == null && !sender.getName().equalsIgnoreCase("CONSOLE")) {
-            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
+        if (!player.hasPermission(Permissions.FAMILY_USER)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
 
