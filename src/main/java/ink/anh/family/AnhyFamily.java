@@ -13,8 +13,6 @@ import ink.anh.family.util.EconomyHandler;
 public class AnhyFamily extends JavaPlugin {
 	
     private static AnhyFamily instance;
-
-    private GlobalManager manager;
     
     private EconomyHandler economyHandler;
     private MarriageManager marriageManager;
@@ -37,10 +35,7 @@ public class AnhyFamily extends JavaPlugin {
         	economyHandler = EconomyHandler.getInstance();
         }
         
-        manager = GlobalManager.getManager(this);
-        manager.setDatabaseManager();
-        manager.getDatabaseManager().initialize();
-        manager.getDatabaseManager().initializeTables();
+        GlobalManager.getInstance().initialize();
         
         marriageManager = MarriageManager.getInstance(this);
         parentManager = ParentManager.getInstance(this);
@@ -53,8 +48,8 @@ public class AnhyFamily extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (manager.getDatabaseManager() != null) {
-        	manager.getDatabaseManager().closeConnection();
+        if (GlobalManager.getInstance().getDatabaseManager() != null) {
+        	GlobalManager.getInstance().getDatabaseManager().closeConnection();
         }
     }
     
@@ -75,15 +70,6 @@ public class AnhyFamily extends JavaPlugin {
      */
     public static AnhyFamily getInstance() {
         return instance;
-    }
-
-    /**
-     * Gets the instance of GlobalManager.
-     * 
-     * @return The instance of GlobalManager used for managing plugin-wide operations.
-     */
-    public GlobalManager getGlobalManager() {
-        return manager;
     }
 
     public EconomyHandler getEconomyHandler() {

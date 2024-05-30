@@ -9,6 +9,7 @@ import ink.anh.api.database.AbstractTable;
 import ink.anh.api.database.ErrorLogger;
 import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 
@@ -19,7 +20,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
     protected static final String tableInsert = FamilyPlayerField.getTableInsert();
 
     public FamilyPlayerTable(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager(), "PlayerFamily");
+        super(GlobalManager.getInstance(), "PlayerFamily");
         this.familyPlugin = familyPlugin;
         initialize();
     }

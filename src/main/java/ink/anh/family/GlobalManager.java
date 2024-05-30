@@ -34,16 +34,23 @@ public class GlobalManager extends LibraryManager {
         this.familyPlugin = familyPlugin;
         this.saveDefaultConfig();
         this.loadFields(familyPlugin);
+        this.setDatabaseManager();
+        this.getDatabaseManager().initialize();
+        this.getDatabaseManager().initializeTables();
     }
 
-    public static synchronized GlobalManager getManager(AnhyFamily familyPlugin) {
+    public static synchronized GlobalManager getInstance() {
         if (instance == null) {
-            instance = new GlobalManager(familyPlugin);
+            instance = new GlobalManager(AnhyFamily.getInstance());
         }
         return instance;
     }
     
-    @Override
+    public void initialize() {
+        // Ініціалізація вже відбулась у конструкторі
+    }
+
+	@Override
     public Plugin getPlugin() {
         return familyPlugin;
     }

@@ -8,6 +8,7 @@ import ink.anh.api.database.AbstractTable;
 import ink.anh.api.database.ErrorLogger;
 import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsSerializer;
 
@@ -19,7 +20,7 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
     protected static String tableInsert = FamilyDetailsField.getTableInsert();
 
     public FamilyDetailsTable(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager(), "FamilyDetails");
+        super(GlobalManager.getInstance(), "FamilyDetails");
         this.familyPlugin = familyPlugin;
         initialize();
     }

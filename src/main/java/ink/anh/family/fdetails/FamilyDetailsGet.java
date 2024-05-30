@@ -1,6 +1,6 @@
 package ink.anh.family.fdetails;
 
-import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.db.fdetails.FamilyDetailsTable;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class FamilyDetailsGet {
 
-    private static FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) AnhyFamily.getInstance().getGlobalManager().getDatabaseManager().getTable(FamilyDetails.class);
+    private static FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) GlobalManager.getInstance().getDatabaseManager().getTable(FamilyDetails.class);
     private static FamilyDetailsDataHandler dataHandler = FamilyDetailsDataHandler.getInstance();
 
     public static void saveFamilyDetails(FamilyDetails familyDetails) {

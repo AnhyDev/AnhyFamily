@@ -2,7 +2,7 @@ package ink.anh.family.info;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -12,11 +12,8 @@ import ink.anh.api.messages.MessageChat;
 
 public class FamilyTreeCommandHandler extends Sender {
 
-	private AnhyFamily familyPlugin;
-
-    public FamilyTreeCommandHandler(AnhyFamily familyPlugin) {
-    	super(familyPlugin.getGlobalManager());
-		this.familyPlugin = familyPlugin;
+    public FamilyTreeCommandHandler() {
+    	super(GlobalManager.getInstance());
     }
 
     public boolean handleTreeCommand(CommandSender sender, String[] args, boolean isInteractive) {
@@ -50,7 +47,7 @@ public class FamilyTreeCommandHandler extends Sender {
         	command = (args.length > 1) ? (command + " " + playerName) : command;
             MessageForFormatting message = new MessageForFormatting("family_tree_component", new String[] {playerName});
             MessageForFormatting hoverText = new MessageForFormatting(treeInfo, new String[] {});
-            MessageChat.sendMessage(familyPlugin.getGlobalManager(), sender, message, hoverText, command, MessageType.NORMAL, false);
+            MessageChat.sendMessage(GlobalManager.getInstance(), sender, message, hoverText, command, MessageType.NORMAL, false);
         } else {
             sendMessage(new MessageForFormatting(treeInfo, new String[] {}), MessageType.NORMAL, false, sender);
         }

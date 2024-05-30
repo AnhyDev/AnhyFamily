@@ -16,7 +16,7 @@ public class FamilySeparation {
     
     public FamilySeparation(AnhyFamily familiPlugin) {
         this.familiPlugin = familiPlugin;
-        this.globalManager = familiPlugin.getGlobalManager();
+        this.globalManager = GlobalManager.getInstance();
         this.langs = new String[] {globalManager.getDefaultLang()};
     }
 

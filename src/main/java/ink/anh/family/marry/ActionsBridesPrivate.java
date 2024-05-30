@@ -8,24 +8,20 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
-import ink.anh.family.util.PaymentManager;
 
 public class ActionsBridesPrivate extends Sender {
 
-	private AnhyFamily familyPlugin;
     private GlobalManager manager;
     private MarriageManager marriageManager;
     private MarriageValidator validator;
     private String priestTitle;
 
     public ActionsBridesPrivate(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager());
-        this.familyPlugin = familyPlugin;
-        this.manager = familyPlugin.getGlobalManager();
+        super(GlobalManager.getInstance());
+        this.manager = GlobalManager.getInstance();
         this.marriageManager = familyPlugin.getMarriageManager();
         this.validator = new MarriageValidator(familyPlugin, false);
         this.priestTitle = FamilyUtils.getPriestTitle(null);

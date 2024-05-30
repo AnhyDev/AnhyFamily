@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
-import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.GenderSelectEvent;
 import ink.anh.family.fplayer.PlayerFamily;
@@ -20,8 +20,8 @@ import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class GenderCommand extends Sender implements CommandExecutor {
-    public GenderCommand(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager());
+    public GenderCommand() {
+        super(GlobalManager.getInstance());
     }
 
     @Override

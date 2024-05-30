@@ -23,9 +23,9 @@ public class ActionsPriest extends Sender {
     private String priestTitle = "";
     
     public ActionsPriest(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager());
+        super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
-        this.manager = familyPlugin.getGlobalManager();
+        this.manager = GlobalManager.getInstance();
         this.marriageManager = familyPlugin.getMarriageManager();
         this.validator = new MarriageValidator(familyPlugin, true);
         this.familyConfig = manager.getFamilyConfig();

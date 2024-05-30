@@ -31,7 +31,7 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 	private AnhyFamily familyPlugin;
 	
 	public FamilyCommand(AnhyFamily familyPlugin) {
-		super(familyPlugin.getGlobalManager());
+		super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
 	}
 	
@@ -43,9 +43,9 @@ public class FamilyCommand extends Sender implements CommandExecutor {
             CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
                 switch (args[0].toLowerCase()) {
                 case "surname":
-                    return new Surname(familyPlugin).setSurname(sender, args);
+                    return new Surname().setSurname(sender, args);
                 case "setsurname":
-                    return new Surname(familyPlugin).setSurnameFromConsole(sender, args);
+                    return new Surname().setSurnameFromConsole(sender, args);
                 case "marry":
                     return new ActionsPriest(familyPlugin).marry(sender, args);
                 case "clear":
@@ -55,13 +55,13 @@ public class FamilyCommand extends Sender implements CommandExecutor {
                 case "separate":
                     return new Separation(familyPlugin).separate(sender, args);
                 case "info":
-                    return new FamilyInfoCommandHandler(familyPlugin).handleCommand(sender, args, true);
+                    return new FamilyInfoCommandHandler().handleCommand(sender, args, true);
                 case "infos":
-                    return new FamilyInfoCommandHandler(familyPlugin).handleCommand(sender, args, false);
+                    return new FamilyInfoCommandHandler().handleCommand(sender, args, false);
                 case "tree":
-                	return new FamilyTreeCommandHandler(familyPlugin).handleTreeCommand(sender, args, true);
+                	return new FamilyTreeCommandHandler().handleTreeCommand(sender, args, true);
                 case "trees":
-                	return new FamilyTreeCommandHandler(familyPlugin).handleTreeCommand(sender, args, false);
+                	return new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
                 case "parentelement":
                 	return infoParentElement(sender);
                 case "marryelement":
@@ -94,14 +94,14 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 
 	private boolean reload(CommandSender sender) {
 		if (!(sender instanceof Player) && sender.getName().equalsIgnoreCase("CONSOLE")) {
-			GlobalManager manager = GlobalManager.getManager(familyPlugin);
+			GlobalManager manager = GlobalManager.getInstance();
 			manager.reload();
 
-		    DatabaseManager.reload(familyPlugin.getGlobalManager(), new TableRegistry(familyPlugin));
+		    DatabaseManager.reload(manager, new TableRegistry(familyPlugin));
 	        MarriageManager.getInstance(familyPlugin).reload();
 	        ParentManager.getInstance(familyPlugin).reload();
 
-	        Logger.info(familyPlugin, Translator.translateKyeWorld(familyPlugin.getGlobalManager(), "family_plugin_reloaded" , null));
+	        Logger.info(familyPlugin, Translator.translateKyeWorld(manager, "family_plugin_reloaded" , null));
 			return true;
 		}
 		return false;

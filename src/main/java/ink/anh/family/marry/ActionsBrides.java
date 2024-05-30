@@ -29,9 +29,9 @@ public class ActionsBrides extends Sender {
 	private String bride1Title = "";
 	
 	public ActionsBrides (AnhyFamily familyPlugin){
-		super(familyPlugin.getGlobalManager());
+		super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
-		this.manager = familyPlugin.getGlobalManager();
+		this.manager = GlobalManager.getInstance();
 		this.marriageManager = familyPlugin.getMarriageManager();
 		this.familyConfig = manager.getFamilyConfig();
 	}

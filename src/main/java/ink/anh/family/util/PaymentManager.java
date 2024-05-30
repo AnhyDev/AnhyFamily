@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.Currency;
 import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.Prices;
@@ -18,7 +19,7 @@ public class PaymentManager {
 
     public PaymentManager(AnhyFamily familiPlugin) {
         this.economyHandler = familiPlugin.getEconomyHandler();
-        this.prices = familiPlugin.getGlobalManager().getFamilyConfig().getPrices();
+        this.prices = GlobalManager.getInstance().getFamilyConfig().getPrices();
     }
 
     public boolean canAfford(Player player, FamilyService action) {

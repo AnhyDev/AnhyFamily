@@ -9,6 +9,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.AdoptionEvent;
@@ -23,7 +24,7 @@ public class Adopt extends Sender {
     private AnhyFamily familyPlugin;
 
     public Adopt(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager());
+        super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
     }
 

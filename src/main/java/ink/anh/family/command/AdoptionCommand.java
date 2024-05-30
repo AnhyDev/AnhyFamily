@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.parents.Adopt;
 import ink.anh.api.messages.MessageForFormatting;
 
@@ -16,7 +17,7 @@ public class AdoptionCommand extends Sender implements CommandExecutor {
 	private AnhyFamily familyPlugin;
 	
 	public AdoptionCommand(AnhyFamily familyPlugin) {
-		super(familyPlugin.getGlobalManager());
+		super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
 	}
 	

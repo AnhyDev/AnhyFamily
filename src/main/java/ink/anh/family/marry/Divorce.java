@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
@@ -20,7 +21,7 @@ public class Divorce extends Sender {
 	private AnhyFamily familyPlugin;
 
     public Divorce(AnhyFamily familyPlugin) {
-    	super(familyPlugin.getGlobalManager());
+    	super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
     }
 

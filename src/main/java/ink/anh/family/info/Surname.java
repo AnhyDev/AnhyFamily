@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
-import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.SurnameSelectEvent;
@@ -20,8 +20,8 @@ import ink.anh.api.messages.MessageForFormatting;
 
 public class Surname extends Sender {
 
-    public Surname(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager());
+    public Surname() {
+        super(GlobalManager.getInstance());
     }
 
     public boolean setSurname(CommandSender sender, String[] args) {

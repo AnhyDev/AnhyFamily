@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.marry.Divorce;
 import ink.anh.family.parents.ChildSeparation;
 import ink.anh.family.parents.ParentSeparation;
@@ -14,7 +15,7 @@ public class Separation extends Sender {
 	private AnhyFamily familyPlugin;
 
     public Separation(AnhyFamily familyPlugin) {
-    	super(familyPlugin.getGlobalManager());
+    	super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
     }
 

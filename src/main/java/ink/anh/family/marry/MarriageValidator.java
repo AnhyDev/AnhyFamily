@@ -31,7 +31,7 @@ public class MarriageValidator extends Sender {
     private PlayerFamily familyBride2;
 
     public MarriageValidator(AnhyFamily familyPlugin, boolean isPublic) {
-		super(familyPlugin.getGlobalManager());
+		super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
 		this.isPublic = isPublic;
 	}

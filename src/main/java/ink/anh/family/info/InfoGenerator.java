@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.utils.LangUtils;
-import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
@@ -24,8 +23,8 @@ public class InfoGenerator {
     
     private GlobalManager libraryManager;
 
-    public InfoGenerator(AnhyFamily familyPlugin) {
-        this.libraryManager = familyPlugin.getGlobalManager();
+    public InfoGenerator() {
+        this.libraryManager = GlobalManager.getInstance();
     }
 
     public String generateFamilyInfo(UUID playerUUID) {

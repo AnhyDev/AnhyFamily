@@ -11,6 +11,7 @@ import ink.anh.api.LibraryManager;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.Logger;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 
 public class ParentManager {
 
@@ -94,7 +95,7 @@ public class ParentManager {
     }
 
     public synchronized boolean infoParentElement() {
-    	LibraryManager libraryManager = familiPlugin.getGlobalManager();
+    	LibraryManager libraryManager = GlobalManager.getInstance();
     	if (!parents.isEmpty()) {
     		Logger.info(familiPlugin, Translator.translateKyeWorld(libraryManager, "family_adopt_adoption_applications", new String[] {libraryManager.getDefaultLang()}));
     		int i = 1;

@@ -19,7 +19,7 @@ public class FamilyAdoption {
 
     public FamilyAdoption(AnhyFamily familiPlugin) {
         this.familiPlugin = familiPlugin;
-        this.globalManager = familiPlugin.getGlobalManager();
+        this.globalManager = GlobalManager.getInstance();
         this.isNonTraditionalAdoptionAllowed = globalManager.getFamilyConfig().isNonBinaryAdopt();
         this.langs = new String[]{globalManager.getDefaultLang()};
     }

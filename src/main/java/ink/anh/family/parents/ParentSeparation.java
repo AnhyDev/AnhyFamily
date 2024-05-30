@@ -3,6 +3,7 @@ package ink.anh.family.parents;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
@@ -19,7 +20,7 @@ public class ParentSeparation extends Sender {
 	private AnhyFamily familyPlugin;
 
     public ParentSeparation(AnhyFamily familyPlugin) {
-    	super(familyPlugin.getGlobalManager());
+    	super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
     }
 

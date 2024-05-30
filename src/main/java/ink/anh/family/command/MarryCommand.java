@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.marry.ActionsPriest;
 import ink.anh.family.marry.ActionsBridesPrivate;
 import ink.anh.api.messages.MessageForFormatting;
@@ -16,7 +17,7 @@ public class MarryCommand extends Sender implements CommandExecutor {
     private AnhyFamily familyPlugin;
 
     public MarryCommand(AnhyFamily familyPlugin) {
-        super(familyPlugin.getGlobalManager());
+        super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
     }
 
