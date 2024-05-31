@@ -1,6 +1,5 @@
 package ink.anh.family.util;
 
-import java.util.HashSet;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -22,41 +21,38 @@ public class FamilyUtils {
 		familyTable.insert(playerFamily);
 	}
 	
-	// Для UUID
-	public static PlayerFamily createNewFamily(UUID playerUUID) {
-	    String displayName = "Unknown";
-	    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
-	    if (offlinePlayer != null) {
-	        displayName = offlinePlayer.getName();
-	    }
+    // Для UUID
+    public static PlayerFamily createNewFamily(UUID playerUUID) {
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
+        String displayName = (offlinePlayer != null) ? offlinePlayer.getName() : "Unknown";
 
-	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>(), null, null, new HashSet<>(), null);
-	    saveFamily(playerFamily);
-	    return playerFamily;
-	}
+        PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
+        saveFamily(playerFamily);
+        return playerFamily;
+    }
 
-	// Для Player
-	public static PlayerFamily createNewFamily(Player player) {
-	    UUID playerUUID = player.getUniqueId();
-	    String displayName = player.getName();
+    // Для Player
+    public static PlayerFamily createNewFamily(Player player) {
+        UUID playerUUID = player.getUniqueId();
+        String displayName = player.getName();
 
-	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>(), null, null, new HashSet<>(), null);
-	    saveFamily(playerFamily);
-	    if (player.isOnline()) {
-	    	new FamilyDataHandler().addFamilyData(playerUUID, playerFamily);
-	    }
-	    return playerFamily;
-	}
+        PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
+        saveFamily(playerFamily);
+        if (player.isOnline()) {
+            new FamilyDataHandler().addFamilyData(playerUUID, playerFamily);
+        }
+        return playerFamily;
+    }
 
-	// Для OfflinePlayer
-	public static PlayerFamily createNewFamily(OfflinePlayer offlinePlayer) {
-	    UUID playerUUID = offlinePlayer.getUniqueId();
-	    String displayName = offlinePlayer.getName();
+    // Для OfflinePlayer
+    public static PlayerFamily createNewFamily(OfflinePlayer offlinePlayer) {
+        UUID playerUUID = offlinePlayer.getUniqueId();
+        String displayName = offlinePlayer.getName();
 
-	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, Gender.UNDECIDED, displayName, new String[2], new String[2], null, null, null, new HashSet<>(), null, null, new HashSet<>(), null);
-	    saveFamily(playerFamily);
-	    return playerFamily;
-	}
+        PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
+        saveFamily(playerFamily);
+        return playerFamily;
+    }
 
 	public static PlayerFamily getFamily(Player onlinePlayer) {
 		UUID playerUUID = onlinePlayer.getUniqueId();

@@ -11,8 +11,6 @@ public enum FamilyPlayerField {
     SPOUSE("spouse", "VARCHAR(36)"),
     CHILDREN("children", "TEXT"),
     FAMILY_ID("family_id", "VARCHAR(36)"),
-    PARENT_FAMILY_ID("parent_family_id", "VARCHAR(36)"),
-    CHILD_FAMILY_IDS("child_family_ids", "TEXT"),
     DYNASTY_ID("dynasty_id", "VARCHAR(36)");
 
     private final String fieldName;

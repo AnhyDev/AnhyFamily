@@ -25,13 +25,11 @@ public class PlayerFamily {
     private UUID spouse;
     private Set<UUID> children = new HashSet<>();
     private UUID familyId = null;
-    private UUID parentFamilyId = null;
-    private Set<UUID> childFamilyIds = new HashSet<>();
     private UUID dynastyId = null;
 
     public PlayerFamily(UUID root, Gender gender, String loverCaseName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
-    		Set<UUID> children, UUID familyId, UUID parentFamilyId, Set<UUID> childFamilyIds, UUID dynastyId) {
-    	
+            Set<UUID> children, UUID familyId, UUID dynastyId) {
+        
         this.root = root;
         this.gender = gender;
         this.loverCaseName = loverCaseName;
@@ -42,9 +40,21 @@ public class PlayerFamily {
         this.spouse = spouse;
         this.children = children;
         this.familyId = familyId;
-        this.parentFamilyId = parentFamilyId;
-        this.childFamilyIds = childFamilyIds;
         this.dynastyId = dynastyId;
+    }
+    
+    public PlayerFamily(UUID root, String loverCaseName) {
+        this.root = root;
+        this.gender = Gender.UNDECIDED;
+        this.loverCaseName = loverCaseName;
+        this.lastName = new String[2];
+        this.oldLastName = new String[2];
+        this.father = null;
+        this.mother = null;
+        this.spouse = null;
+        this.children = new HashSet<>();
+        this.familyId = null;
+        this.dynastyId = null;
     }
 
     public static PlayerFamily getMyFamily(String str) {
@@ -147,28 +157,12 @@ public class PlayerFamily {
         this.familyId = familyId;
     }
 
-    public UUID getParentFamilyId() {
-        return parentFamilyId;
-    }
-
-    public void setParentFamilyId(UUID parentFamilyId) {
-        this.parentFamilyId = parentFamilyId;
-    }
-
     public UUID getDynastyId() {
         return dynastyId;
     }
 
     public void setDynastyId(UUID dynastyId) {
         this.dynastyId = dynastyId;
-    }
-
-    public Set<UUID> getChildFamilyIds() {
-        return childFamilyIds;
-    }
-
-    public void setChildFamilyIds(Set<UUID> childFamilyIds) {
-        this.childFamilyIds = childFamilyIds;
     }
 
     public boolean addChild(UUID childUuid) {
@@ -191,38 +185,12 @@ public class PlayerFamily {
         return true; // Дитина успішно додана
     }
 
-    public boolean addChildFamilyId(UUID childFamilyId) {
-        if (childFamilyId == null) {
-            return false; // Перевірка на null для вхідного параметра
-        }
-
-        // Ініціалізуємо множину, якщо вона ще не була створена
-        if (childFamilyIds == null) {
-            childFamilyIds = new HashSet<>();
-        }
-
-        // Перевіряємо, чи родина дитини вже є у списку
-        if (childFamilyIds.contains(childFamilyId)) {
-            return false; // Родина дитини вже є у списку
-        }
-
-        // Додаємо родину дитини до множини
-        childFamilyIds.add(childFamilyId);
-        return true; // Родина дитини успішно додана
-    }
-
     public FamilyRelationType checkUUIDRelation(UUID uuid) {
         if (uuid == null) {
             return FamilyRelationType.NOT_FOUND;
         }
         if (uuid.equals(familyId)) {
             return FamilyRelationType.FAMILY_ID;
-        }
-        if (uuid.equals(parentFamilyId)) {
-            return FamilyRelationType.PARENT_FAMILY_ID;
-        }
-        if (childFamilyIds.contains(uuid)) {
-            return FamilyRelationType.CHILD_FAMILY_IDS;
         }
         if (uuid.equals(dynastyId)) {
             return FamilyRelationType.DYNASTY_ID;

@@ -37,60 +37,56 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	    CompletableFuture.runAsync(() -> {
+	        if (args.length > 0) {
+	            switch (args[0].toLowerCase()) {
+	                case "surname":
+	                    new Surname().setSurname(sender, args);
+	                    break;
+	                case "setsurname":
+	                    new Surname().setSurnameFromConsole(sender, args);
+	                    break;
+	                case "marry":
+	                    new ActionsPriest(familyPlugin).marry(sender, args);
+	                    break;
+	                case "clear":
+	                    new Clear(familyPlugin).exeClearFamily(sender, args);
+	                    break;
+	                case "divorce":
+	                    new Divorce(familyPlugin).separate(sender);
+	                    break;
+	                case "separate":
+	                    new Separation(familyPlugin).separate(sender, args);
+	                    break;
+	                case "info":
+	                    new FamilyInfoCommandHandler().handleCommand(sender, args, true);
+	                    break;
+	                case "infos":
+	                    new FamilyInfoCommandHandler().handleCommand(sender, args, false);
+	                    break;
+	                case "tree":
+	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, true);
+	                    break;
+	                case "trees":
+	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
+	                    break;
+	                case "parentelement":
+	                    infoParentElement(sender);
+	                    break;
+	                case "marryelement":
+	                    infoMarryElement(sender);
+	                    break;
+	                case "reload":
+	                    reload(sender);
+	                    break;
+	                default:
+	                    sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);
+	            }
+	        }
+	    });
+	    return true;
+	}
 
-        
-        if (args.length > 0) {
-            CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
-                switch (args[0].toLowerCase()) {
-                case "surname":
-                    return new Surname().setSurname(sender, args);
-                case "setsurname":
-                    return new Surname().setSurnameFromConsole(sender, args);
-                case "marry":
-                    return new ActionsPriest(familyPlugin).marry(sender, args);
-                case "clear":
-                    return new Clear(familyPlugin).exeClearFamily(sender, args);
-                case "divorce":
-                    return new Divorce(familyPlugin).separate(sender);
-                case "separate":
-                    return new Separation(familyPlugin).separate(sender, args);
-                case "info":
-                    return new FamilyInfoCommandHandler().handleCommand(sender, args, true);
-                case "infos":
-                    return new FamilyInfoCommandHandler().handleCommand(sender, args, false);
-                case "tree":
-                	return new FamilyTreeCommandHandler().handleTreeCommand(sender, args, true);
-                case "trees":
-                	return new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
-                case "parentelement":
-                	return infoParentElement(sender);
-                case "marryelement":
-                	return infoMarryElement(sender);
-                case "reload":
-                	return reload(sender);
-                default:
-                	sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);
-                    return false;
-                }
-            });
-
-            // Цей блок коду виконається, коли операція завершиться, і не блокує головний потік.
-            future.thenAccept(result -> {
-
-                if (!result) {
-                	if (!sender.getName().equalsIgnoreCase("CONSOLE"))
-                		Logger.info(familyPlugin, sender.getName() + " failed to execute command: " + "/family " + String.join(" ", args));
-                } else {
-                	if (!sender.getName().equalsIgnoreCase("CONSOLE"))
-                		Logger.info(familyPlugin, sender.getName() + " successfully executed command: " + "/family " + String.join(" ", args));
-                }
-            });
-
-            // Завжди повертається true, щоб Bukkit не показував повідомлення про помилку.
-            return true;
-        }
-        return false;
-    }
 
 	private boolean reload(CommandSender sender) {
 		if (!(sender instanceof Player) && sender.getName().equalsIgnoreCase("CONSOLE")) {

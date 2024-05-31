@@ -125,9 +125,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 ps.setString(8, playerFamily.getSpouse() != null ? playerFamily.getSpouse().toString() : null);
                 ps.setString(9, PlayerFamily.uuidSetToString(playerFamily.getChildren()));
                 ps.setString(10, playerFamily.getFamilyId() != null ? playerFamily.getFamilyId().toString() : null);
-                ps.setString(11, playerFamily.getParentFamilyId() != null ? playerFamily.getParentFamilyId().toString() : null);
-                ps.setString(12, PlayerFamily.uuidSetToString(playerFamily.getChildFamilyIds()));
-                ps.setString(13, playerFamily.getDynastyId() != null ? playerFamily.getDynastyId().toString() : null);
+                ps.setString(11, playerFamily.getDynastyId() != null ? playerFamily.getDynastyId().toString() : null);
                 ps.executeUpdate();
             }
         }, "Failed to insert or replace player family data: " + playerFamily);
@@ -145,8 +143,6 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,
                 PlayerFamily.stringToUuidSet(rs.getString("children")),
                 rs.getString("family_id") != null ? UUID.fromString(rs.getString("family_id")) : null,
-                rs.getString("parent_family_id") != null ? UUID.fromString(rs.getString("parent_family_id")) : null,
-                PlayerFamily.stringToUuidSet(rs.getString("child_family_ids")),
                 rs.getString("dynasty_id") != null ? UUID.fromString(rs.getString("dynasty_id")) : null
         );
     }
