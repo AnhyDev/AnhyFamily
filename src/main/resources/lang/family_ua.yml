@@ -202,4 +202,10 @@ family_marry_failed_distance: "Одруження зараз неможливе 
 family_marry_private_prefix: "Святий Валентин"
 family_err_event_is_canceled: "Подію було скасовано зовнішніми силами"
 
+# Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
+family_separation_divorce: "Розлучення"
+family_separation_disown_child: "Відмова від дитини"
+family_separation_disown_parent: "Відмова від батьків"
+family_separation_full_separation: "Повне розірвання всіх сімейних зв'язків"
+
 

@@ -197,3 +197,15 @@ family_proposal_accepted: "Has aceptado la propuesta de matrimonio de %s."
 family_proposal_accepted_sender: "%s aceptó tu propuesta de matrimonio."
 family_proposal_refused: "Has rechazado la propuesta de matrimonio de %s."
 family_proposal_refused_sender: "%s rechazó tu propuesta de matrimonio."
+
+family_marry_failed_distance: "El matrimonio actualmente no es posible porque la pareja está demasiado lejos el uno del otro."
+family_marry_private_prefix: "San Valentín"
+family_err_event_is_canceled: "El evento ha sido cancelado por fuerzas externas"
+
+# Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
+family_separation_divorce: "Divorcio"
+family_separation_disown_child: "Renegar de un hijo"
+family_separation_disown_parent: "Renegar de los padres"
+family_separation_full_separation: "Ruptura completa de todos los lazos familiares"
+
+

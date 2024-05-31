@@ -1,7 +1,6 @@
 package ink.anh.family.util;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -115,116 +114,6 @@ public class FamilyUtils {
 	    }
 
 	    return getFamily(playerUUID);
-	}
-
-	public static Set<PlayerFamily> clearRelatives(PlayerFamily playerFamily) {
-	    Set<PlayerFamily> modifiedFamilies = new HashSet<>();
-
-	    if (playerFamily == null) return modifiedFamilies;
-
-	    modifiedFamilies.addAll(clearAllChildren(playerFamily));
-	    modifiedFamilies.addAll(removeParents(playerFamily));
-	    modifiedFamilies.addAll(removeSpouseAndRestoreLastName(playerFamily));
-
-	    return modifiedFamilies;
-	}
-
-	public static Set<PlayerFamily> clearAllChildren(PlayerFamily playerFamily) {
-	    Set<PlayerFamily> modifiedFamilies = new HashSet<>();
-	    if (playerFamily == null || playerFamily.getChildren() == null || playerFamily.getChildren().isEmpty()) return modifiedFamilies;
-
-	    for (UUID childId : new HashSet<>(playerFamily.getChildren())) {
-	        PlayerFamily childFamily = getFamily(childId);
-	        if (childFamily != null) {
-	            removeChildFromParents(playerFamily, childFamily);
-	            modifiedFamilies.add(childFamily);
-	        }
-	    }
-
-	    playerFamily.setChildren(new HashSet<UUID>());
-	    saveFamily(playerFamily);
-	    modifiedFamilies.add(playerFamily);
-	    return modifiedFamilies;
-	}
-
-	public static void removeChildFromParents(PlayerFamily parentFamily, PlayerFamily childFamily) {
-	    if (parentFamily == null || childFamily == null) return;
-
-	    // Перевірка та видалення зв'язку з батьком
-	    if (childFamily.getFather() != null && childFamily.getFather().equals(parentFamily.getRoot())) {
-	        childFamily.setFather(null);
-	    }
-
-	    // Перевірка та видалення зв'язку з матір'ю
-	    if (childFamily.getMother() != null && childFamily.getMother().equals(parentFamily.getRoot())) {
-	        childFamily.setMother(null);
-	    }
-
-	    saveFamily(childFamily); // Збереження оновленої сім'ї дитини
-	}
-
-	public static Set<PlayerFamily> removeParents(PlayerFamily playerFamily) {
-		Set<PlayerFamily> modifiedFamilies = new HashSet<>();
-	    if (playerFamily == null) return modifiedFamilies;
-
-	    UUID fatherId = playerFamily.getFather();
-	    UUID motherId = playerFamily.getMother();
-	    UUID childId = playerFamily.getRoot();
-	    boolean isChanged = false;
-
-	    if (fatherId != null) {
-	        PlayerFamily fatherFamily = getFamily(fatherId);
-	        if (fatherFamily != null && fatherFamily.getChildren().remove(childId)) {
-	            saveFamily(fatherFamily);
-	            modifiedFamilies.add(fatherFamily);
-	            isChanged = true;
-	        }
-	    }
-
-	    if (motherId != null) {
-	        PlayerFamily motherFamily = getFamily(motherId);
-	        if (motherFamily != null && motherFamily.getChildren().remove(childId)) {
-	            saveFamily(motherFamily);
-	            modifiedFamilies.add(motherFamily);
-	            isChanged = true;
-	        }
-	    }
-
-	    if (isChanged) {
-	        playerFamily.setFather(null);
-	        playerFamily.setMother(null);
-	        saveFamily(playerFamily);
-	        modifiedFamilies.add(playerFamily);
-	    }
-	    return modifiedFamilies;
-	}
-
-	public static Set<PlayerFamily> removeSpouseAndRestoreLastName(PlayerFamily playerFamily) {
-		Set<PlayerFamily> modifiedFamilies = new HashSet<>();
-	    if (playerFamily == null) return modifiedFamilies;
-
-	    PlayerFamily spouseFamily = getFamily(playerFamily.getSpouse());
-
-	    if (spouseFamily != null) {
-	        spouseFamily.setSpouse(null);
-	        if (spouseFamily.getOldLastName() != null && spouseFamily.getOldLastName().length > 0) {
-	            spouseFamily.setLastName(spouseFamily.getOldLastName());
-	            spouseFamily.setOldLastName(new String[2]);
-	        }
-	        saveFamily(spouseFamily);
-	        modifiedFamilies.add(spouseFamily);
-	    }
-
-	    playerFamily.setSpouse(null);
-	    if (playerFamily.getOldLastName() != null && playerFamily.getOldLastName().length > 0) {
-	        playerFamily.setLastName(playerFamily.getOldLastName());
-	        playerFamily.setOldLastName(new String[2]);
-	    } else {
-	        playerFamily.setLastName(new String[2]);
-	    }
-	    saveFamily(playerFamily);
-	    modifiedFamilies.add(playerFamily);
-	    return modifiedFamilies;
 	}
 
 	public static boolean areGendersCompatibleForTraditional(PlayerFamily family1) {

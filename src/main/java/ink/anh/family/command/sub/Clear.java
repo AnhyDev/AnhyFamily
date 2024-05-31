@@ -16,8 +16,10 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.FamilySeparationEvent;
+import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
@@ -57,18 +59,23 @@ public class Clear extends Sender {
         }
 
         ActionInitiator initiator = player != null ? ActionInitiator.PLAYER_WITH_PERMISSION : ActionInitiator.CONSOLE;
-        SyncExecutor.runSync(() -> handleFamilySeparation(family1, initiator, sender));
+        Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.getRelatives(family1, FamilySeparationReason.FULL_SEPARATION);
+
+        SyncExecutor.runSync(() -> {
+    	    FamilySeparationEvent event = new FamilySeparationEvent(family1, FamilyDetailsGet.getRootFamilyDetails(family1), modifiedFamilies, FamilySeparationReason.FULL_SEPARATION, initiator);
+    	    handleFamilySeparation(event, family1, initiator, sender);
+        });
+        
 		return true;
 	}
 
-	private void handleFamilySeparation(PlayerFamily playerFamily, ActionInitiator initiator, CommandSender sender) {
-	    FamilySeparationEvent event = new FamilySeparationEvent(playerFamily, FamilyDetailsGet.getRootFamilyDetails(playerFamily), initiator);
+	private void handleFamilySeparation(FamilySeparationEvent event, PlayerFamily playerFamily, ActionInitiator initiator, CommandSender sender) {
 	    Bukkit.getPluginManager().callEvent(event);
 
         if (!event.isCancelled()) {
             SyncExecutor.runAsync(() -> {
-                Set<PlayerFamily> modifiedFamilies = FamilyUtils.clearRelatives(playerFamily);
                 Set<Player> playersSet = new HashSet<>();
+                Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.clearRelatives(playerFamily, FamilySeparationReason.FULL_SEPARATION);
 
                 for (PlayerFamily modifieFamily : modifiedFamilies) {
                     UUID playerId = modifieFamily.getRoot();
@@ -81,7 +88,7 @@ public class Clear extends Sender {
                 Player[] players = playersSet.toArray(new Player[0]);
                 
                 if (players.length > 0) {
-                	sendMessage(new MessageForFormatting("family_clear_relative_success", new String[] {}), MessageType.WARNING, players);
+                	sendMessage(new MessageForFormatting("family_clear_relative_success", new String[] {}), MessageType.IMPORTANT, players);
             		return;
                 }
             	sendMessage(new MessageForFormatting("family_clear_relative_missing", new String[] {}), MessageType.WARNING, players);

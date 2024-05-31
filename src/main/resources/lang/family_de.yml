@@ -197,3 +197,15 @@ family_proposal_accepted: "Sie haben den Heiratsantrag von %s angenommen."
 family_proposal_accepted_sender: "%s hat Ihren Heiratsantrag angenommen."
 family_proposal_refused: "Sie haben den Heiratsantrag von %s abgelehnt."
 family_proposal_refused_sender: "%s hat Ihren Heiratsantrag abgelehnt."
+
+family_marry_failed_distance: "Heirat ist derzeit nicht möglich, weil das Paar zu weit voneinander entfernt ist!"
+family_marry_private_prefix: "Sankt Valentin"
+family_err_event_is_canceled: "Die Veranstaltung wurde durch äußere Kräfte abgesagt"
+
+# Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
+family_separation_divorce: "Scheidung"
+family_separation_disown_child: "Verzicht auf ein Kind"
+family_separation_disown_parent: "Verzicht auf die Eltern"
+family_separation_full_separation: "Komplette Trennung aller familiären Bindungen"
+
+

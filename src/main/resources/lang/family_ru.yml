@@ -198,3 +198,13 @@ family_proposal_accepted_sender: "%s принял(а) ваше предложе�
 family_proposal_refused: "Вы отказались от предложения о браке от %s."
 family_proposal_refused_sender: "%s отказался(лась) от вашего предложения о браке."
 
+family_marry_failed_distance: "Брак в настоящее время невозможен, потому что пара слишком далеко друг от друга!"
+family_marry_private_prefix: "Святой Валентин"
+family_err_event_is_canceled: "Событие было отменено внешними силами"
+
+# Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
+family_separation_divorce: "Развод"
+family_separation_disown_child: "Отказ от ребенка"
+family_separation_disown_parent: "Отказ от родителей"
+family_separation_full_separation: "Полное разрывание всех семейных связей"
+

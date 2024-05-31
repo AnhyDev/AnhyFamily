@@ -197,3 +197,14 @@ family_proposal_accepted: "您接受了来自 %s 的婚姻提议。"
 family_proposal_accepted_sender: "%s 接受了您的婚姻提议。"
 family_proposal_refused: "您拒绝了来自 %s 的婚姻提议。"
 family_proposal_refused_sender: "%s 拒绝了您的婚姻提议。"
+
+family_marry_failed_distance: "婚姻目前不可能，因为夫妻双方相距太远了！"
+family_marry_private_prefix: "圣瓦伦丁"
+family_err_event_is_canceled: "事件因外部因素被取消"
+
+# Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
+family_separation_divorce: "离婚"
+family_separation_disown_child: "断绝子女关系"
+family_separation_disown_parent: "断绝父母关系"
+family_separation_full_separation: "完全断绝所有家庭关系"
+
