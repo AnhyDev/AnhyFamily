@@ -5,7 +5,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.marry.Divorce;
+import ink.anh.family.marriage.Divorce;
 import ink.anh.family.parents.ChildSeparation;
 import ink.anh.family.parents.ParentSeparation;
 import ink.anh.api.messages.MessageForFormatting;

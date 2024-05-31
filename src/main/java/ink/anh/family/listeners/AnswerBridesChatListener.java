@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.marry.ActionsBrides;
+import ink.anh.family.marriage.ActionsBrides;
 
 public class AnswerBridesChatListener implements Listener {
 

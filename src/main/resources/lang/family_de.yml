@@ -188,7 +188,7 @@ family_marry_start_success: |
   Oder sagen Sie (NEIN!), um abzulehnen!
 family_marry_start_priest: "Das Ritual hat begonnen, warten Sie auf die Zustimmung der frisch Vermählten oder brechen Sie die Hochzeit ab"
 
-# Private Heiratsanträge [classes: ink.anh.family.marry.ActionsBridesPrivate]
+# Private Heiratsanträge [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Kein Heiratsantrag."
 family_proposal_sent: "Antrag an %s gesendet."
 family_proposal_received: "Sie haben einen Heiratsantrag von %s erhalten."

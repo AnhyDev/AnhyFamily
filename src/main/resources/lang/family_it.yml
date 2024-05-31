@@ -188,7 +188,7 @@ family_marry_start_success: |
   O dite (NO!) per rifiutare!
 family_marry_start_priest: "Il rituale è iniziato, aspetta il consenso dei novelli sposi o annulla il matrimonio."
 
-# Proposte di matrimonio private [classes: ink.anh.family.marry.ActionsBridesPrivate]
+# Proposte di matrimonio private [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Nessuna proposta di matrimonio."
 family_proposal_sent: "Proposta inviata a %s."
 family_proposal_received: "Hai ricevuto una proposta di matrimonio da %s."

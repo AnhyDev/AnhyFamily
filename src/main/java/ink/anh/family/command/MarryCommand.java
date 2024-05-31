@@ -8,8 +8,8 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.marry.ActionsPriest;
-import ink.anh.family.marry.ActionsBridesPrivate;
+import ink.anh.family.marriage.ActionsBridesPrivate;
+import ink.anh.family.marriage.ActionsPriest;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class MarryCommand extends Sender implements CommandExecutor {

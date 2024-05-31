@@ -188,7 +188,7 @@ family_marry_start_success: |
   Або скажіть (НІ!), щоб відмовитися!
 family_marry_start_priest: "Обряд розпочато, дочекайтеся згоди молодят або скасуйте весілля"
 
-# Пропозиції приватного шлюбу [classes: ink.anh.family.marry.ActionsBridesPrivate]
+# Пропозиції приватного шлюбу [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Немає пропозиції про шлюб."
 family_proposal_sent: "Пропозицію надіслано %s."
 family_proposal_received: "Ви отримали пропозицію про шлюб від %s."

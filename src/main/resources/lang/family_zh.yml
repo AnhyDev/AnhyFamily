@@ -188,7 +188,7 @@ family_marry_start_success: |
   或者说（不！）来拒绝！
 family_marry_start_priest: "仪式已经开始，等待新婚夫妇的同意或取消婚礼。"
 
-# 私人婚姻提议 [classes: ink.anh.family.marry.ActionsBridesPrivate]
+# 私人婚姻提议 [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "没有婚姻提议。"
 family_proposal_sent: "已向 %s 发送提议。"
 family_proposal_received: "您收到来自 %s 的婚姻提议。"

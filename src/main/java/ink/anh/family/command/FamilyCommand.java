@@ -20,10 +20,10 @@ import ink.anh.family.db.TableRegistry;
 import ink.anh.family.info.FamilyInfoCommandHandler;
 import ink.anh.family.info.FamilyTreeCommandHandler;
 import ink.anh.family.info.Surname;
-import ink.anh.family.marry.Divorce;
-import ink.anh.family.marry.MarriageManager;
+import ink.anh.family.marriage.ActionsPriest;
+import ink.anh.family.marriage.Divorce;
+import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
-import ink.anh.family.marry.ActionsPriest;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class FamilyCommand extends Sender implements CommandExecutor {

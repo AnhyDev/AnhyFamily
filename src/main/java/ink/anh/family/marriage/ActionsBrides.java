@@ -1,4 +1,4 @@
-package ink.anh.family.marry;
+package ink.anh.family.marriage;
 
 import java.util.UUID;
 

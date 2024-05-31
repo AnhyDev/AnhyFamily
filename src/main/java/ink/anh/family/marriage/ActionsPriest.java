@@ -1,4 +1,4 @@
-package ink.anh.family.marry;
+package ink.anh.family.marriage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

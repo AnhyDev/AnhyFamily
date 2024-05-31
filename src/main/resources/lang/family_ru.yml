@@ -188,7 +188,7 @@ family_marry_start_success: |
   Или скажите (НЕТ!) чтобы отказаться!
 family_marry_start_priest: "Обряд начат, дождитесь согласия молодожёнов или отмените свадьбу"
 
-# Предложения частного брака [classes: ink.anh.family.marry.ActionsBridesPrivate]
+# Предложения частного брака [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Нет предложения о браке."
 family_proposal_sent: "Предложение отправлено %s."
 family_proposal_received: "Вы получили предложение о браке от %s."

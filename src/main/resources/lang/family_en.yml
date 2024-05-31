@@ -188,7 +188,7 @@ family_marry_start_success: |
   Or say (NO!) to refuse!
 family_marry_start_priest: "The ceremony has begun, wait for the consent of the newlyweds or cancel the wedding"
 
-# Private Marriage Proposals [classes: ink.anh.family.marry.ActionsBridesPrivate]
+# Private Marriage Proposals [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "No marriage proposal."
 family_proposal_sent: "Proposal sent to %s."
 family_proposal_received: "You received a marriage proposal from %s."

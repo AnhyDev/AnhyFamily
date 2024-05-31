@@ -12,7 +12,7 @@ import ink.anh.api.messages.Logger;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.db.TableRegistry;
 import ink.anh.family.lang.LangMessage;
-import ink.anh.family.marry.MarriageManager;
+import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
 import net.md_5.bungee.api.ChatColor;
 
