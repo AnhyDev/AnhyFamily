@@ -1,5 +1,6 @@
 package ink.anh.family.marry;
 
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -15,9 +16,11 @@ import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
+import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.events.ActionInitiator;
-import ink.anh.family.events.DivorceEvent;
+import ink.anh.family.events.FamilySeparationEvent;
+import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.utils.SyncExecutor;
 
@@ -67,14 +70,20 @@ public class Divorce extends Sender {
         MessageForFormatting messageFalse = new MessageForFormatting("family_error_generic", new String[]{});
         CommandSender[] senders = {sender, Bukkit.getPlayer(spouseUUID)};
 
-        SyncExecutor.runSync(() -> handleDivorce(playerFamily, spouseFamily, familyDetails, initiatorAction, senders, messageTrue, messageFalse));
+        Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.getRelatives(playerFamily, FamilySeparationReason.DIVORCE);
+        
+        SyncExecutor.runSync(() -> {
+    	    FamilySeparationEvent event = new FamilySeparationEvent(playerFamily, FamilyDetailsGet.getRootFamilyDetails(playerFamily), modifiedFamilies,
+    	    		FamilySeparationReason.DIVORCE, initiatorAction);
+        	handleDivorce(event, playerFamily, spouseFamily, familyDetails, initiatorAction, senders, messageTrue, messageFalse);
+        	});
         return true;
     }
 
-    private void handleDivorce(PlayerFamily initiatorFamily, PlayerFamily spouseFamily, FamilyDetails familyDetails, ActionInitiator initiatorAction, CommandSender[] senders, MessageForFormatting messageTrue, MessageForFormatting messageFalse) {
+    private void handleDivorce(FamilySeparationEvent event, PlayerFamily initiatorFamily, PlayerFamily spouseFamily, FamilyDetails familyDetails,
+    		ActionInitiator initiatorAction, CommandSender[] senders, MessageForFormatting messageTrue, MessageForFormatting messageFalse) {
         final MessageType[] messageType = {MessageType.WARNING};
         try {
-            DivorceEvent event = new DivorceEvent(initiatorFamily, spouseFamily, familyDetails, initiatorAction);
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {

@@ -4,6 +4,8 @@ import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.Logger;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.events.FamilySeparationReason;
+import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
 
 import java.util.UUID;
@@ -30,7 +32,7 @@ public class FamilySeparation {
         }
 
         // Використання існуючого методу для видалення батьківських зв'язків
-        FamilyUtils.removeChildFromParents(parentFamily, childFamily);
+        FamilySeparationUtils.removeChildFromParents(parentFamily, childFamily);
 
         Logger.info(familiPlugin, Translator.translateKyeWorld(globalManager, "family_separation_successful", langs));
         return true;
@@ -46,7 +48,7 @@ public class FamilySeparation {
         }
 
         // Використання існуючого методу для видалення батьківських зв'язків
-        FamilyUtils.removeChildFromParents(parentFamily, childFamily);
+        FamilySeparationUtils.removeChildFromParents(parentFamily, childFamily);
 
         Logger.info(familiPlugin, Translator.translateKyeWorld(globalManager, "family_separation_successful", langs));
         return true;
@@ -58,9 +60,9 @@ public class FamilySeparation {
             Logger.warn(familiPlugin, Translator.translateKyeWorld(globalManager, "family_separation_spouse_not_found", langs));
             return false;
         }
-
+        
         // Використання методу для розлучення подружжя лише один раз
-        FamilyUtils.removeSpouseAndRestoreLastName(spouse1Family);
+        FamilySeparationUtils.removeSpouseAndRestoreLastName(spouse1Family, FamilySeparationUtils.getRelatives(spouse1Family, FamilySeparationReason.DIVORCE));
 
         // Логування успішного розлучення
         Logger.info(familiPlugin, Translator.translateKyeWorld(globalManager, "family_separation_successful", langs));
