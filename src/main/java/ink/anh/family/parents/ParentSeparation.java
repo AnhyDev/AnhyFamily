@@ -83,6 +83,9 @@ public class ParentSeparation extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
+                	
+                	ParentHandler.handleParentSeparation(playerFamily, targetFamily);
+                	
                     FamilySeparation familySeparation = new FamilySeparation(familyPlugin);
                     boolean success;
 

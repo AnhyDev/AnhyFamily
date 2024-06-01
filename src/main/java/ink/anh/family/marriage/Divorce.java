@@ -88,6 +88,9 @@ public class Divorce extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
+                	
+                	FamilyHandler.handleDivorce(spouseFamily);
+                	
                     FamilySeparation utilsDivorce = new FamilySeparation(familyPlugin);
 
                     if (utilsDivorce.separateSpouses(initiatorFamily)) {

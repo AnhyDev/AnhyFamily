@@ -302,6 +302,9 @@ public class Adopt extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
+                	
+                	ParentHandler.handleAdoption(adoptersFamily, adoptedFamily);
+                	
                     FamilyAdoption utilsAdopt = new FamilyAdoption(familyPlugin);
 
                     if (utilsAdopt.adoption(adoptedFamily, adoptersFamily)) {

@@ -21,6 +21,7 @@ import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.FullFamilySeparation;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class Clear extends Sender {
@@ -74,6 +75,9 @@ public class Clear extends Sender {
 
         if (!event.isCancelled()) {
             SyncExecutor.runAsync(() -> {
+            	
+            	FullFamilySeparation.separateFamilyCompletely(playerFamily);
+            	
                 Set<Player> playersSet = new HashSet<>();
                 Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.clearRelatives(playerFamily, FamilySeparationReason.FULL_SEPARATION);
 

@@ -19,6 +19,7 @@ public class FamilyHandler {
 
         // Ініціалізація FamilyDetails з подружжям
         FamilyDetails familyDetails = new FamilyDetails(spouse1.getRoot(), spouse2.getRoot());
+        UUID familyId = familyDetails.getFamilyId();
 
         // Створення мап доступу для дітей та батьків
         Map<UUID, AccessControl> childrenAccessMap = new HashMap<>();
@@ -35,9 +36,9 @@ public class FamilyHandler {
         // Збереження FamilyDetails
         FamilyDetailsSave.saveFamilyDetails(familyDetails, null);
 
-        // Оновлення інформації про подружжя у PlayerFamily
-        spouse1.setSpouse(spouse2.getRoot());
-        spouse2.setSpouse(spouse1.getRoot());
+        // Оновлення інформації про familyId у PlayerFamily
+        spouse1.setFamilyId(familyId);
+        spouse2.setFamilyId(familyId);
         FamilyUtils.saveFamily(spouse1);
         FamilyUtils.saveFamily(spouse2);
 
@@ -65,32 +66,27 @@ public class FamilyHandler {
     }
 
     public static void handleDivorce(PlayerFamily spouse1) {
-
-        // Отримання familyId для видалення FamilyDetails
         UUID familyId = spouse1.getFamilyId();
+        
+        if (familyId == null) {
+        	return;
+        }
+        
+        FamilyDetailsDelete.deleteRootFamilyDetails(spouse1);
+
+        spouse1.setFamilyId(null);
+        FamilyUtils.saveFamily(spouse1);
+        
         UUID spouse2Uuid = spouse1.getSpouse();
 
         if (spouse2Uuid == null) {
-            return; // Якщо подружжя не встановлене, виходимо
+            return;
         }
 
         PlayerFamily spouse2 = FamilyUtils.getFamily(spouse2Uuid);
-
-        if (spouse2 == null) {
-            return; // Якщо не вдалося знайти подружжя, виходимо
-        }
-
-        // Видалення подружжя у обох
-        spouse1.setSpouse(null);
-        spouse2.setSpouse(null);
-
-        // Збереження змін у PlayerFamily
-        FamilyUtils.saveFamily(spouse1);
-        FamilyUtils.saveFamily(spouse2);
-
-        if (familyId != null) {
-            // Видалення FamilyDetails з кешу та бази даних
-            FamilyDetailsDelete.deleteFamilyDetails(familyId);
+        if (spouse2 != null) {
+            spouse2.setFamilyId(null);
+            FamilyUtils.saveFamily(spouse2);
         }
     }
 }

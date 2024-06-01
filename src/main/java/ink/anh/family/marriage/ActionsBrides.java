@@ -226,6 +226,8 @@ public class ActionsBrides extends Sender {
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
                 	updateFamilyData(proposerFamily, receiverFamily, marryPublic, one);
+                	
+                	FamilyHandler.createFamilyOnMarriage(proposerFamily, receiverFamily);
         			
         			sendMessage(messageForFormatting, messageType[1], false, recipients);
 

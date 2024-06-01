@@ -84,6 +84,9 @@ public class ChildSeparation extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
+                	
+                	ParentHandler.handleChildSeparation(senderFamily, targetFamily);
+                	
                     FamilySeparation familySeparation = new FamilySeparation(familyPlugin);
                     boolean success;
 

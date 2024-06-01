@@ -24,6 +24,7 @@ public class FamilySeparationEvent extends Event implements Cancellable {
     private final FamilySeparationReason separationReason;
     private final ActionInitiator initiator;
     private boolean isCancelled;
+    private boolean asyncTriggered;
 
     /**
      * Constructs a new FamilySeparationEvent.
@@ -42,6 +43,13 @@ public class FamilySeparationEvent extends Event implements Cancellable {
         this.separationReason = separationReason;
         this.initiator = initiator;
         this.isCancelled = false;
+    }
+
+    // Новий конструктор з прапорцем
+    public FamilySeparationEvent(PlayerFamily playerFamily, FamilyDetails familyDetails, Set<PlayerFamily> modifiedFamilies,
+            FamilySeparationReason separationReason, ActionInitiator initiator, boolean asyncTriggered) {
+        this(playerFamily, familyDetails, modifiedFamilies, separationReason, initiator);
+        this.asyncTriggered = asyncTriggered;
     }
 
     /**
@@ -99,6 +107,14 @@ public class FamilySeparationEvent extends Event implements Cancellable {
     @Override
     public boolean isCancelled() {
         return isCancelled;
+    }
+
+    public boolean isAsyncTriggered() {
+        return asyncTriggered;
+    }
+
+    public void setAsyncTriggered(boolean asyncTriggered) {
+        this.asyncTriggered = asyncTriggered;
     }
 
     /**
