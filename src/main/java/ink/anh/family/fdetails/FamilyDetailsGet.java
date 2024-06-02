@@ -6,7 +6,11 @@ import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import org.bukkit.entity.Player;
 
@@ -96,6 +100,45 @@ public class FamilyDetailsGet {
         } else {
             return rootId;
         }
+    }
+
+    public static Map<UUID, FamilyDetails> getAllFamilyDetails(PlayerFamily playerFamily) {
+        Map<UUID, FamilyDetails> familyDetailsMap = new HashMap<>();
+        Set<UUID> allUUIDs = new HashSet<>();
+
+        // Отримуємо FamilyDetails для PlayerFamily
+        FamilyDetails rootDetails = getRootFamilyDetailsInternal(null, null, playerFamily);
+        
+        if (rootDetails != null) {
+            allUUIDs.add(rootDetails.getFamilyId());
+
+            // Додаємо UUID з childrenAccessMap
+            allUUIDs.addAll(rootDetails.getChildrenAccessMap().keySet());
+
+            // Додаємо UUID з ancestorsAccessMap
+            allUUIDs.addAll(rootDetails.getAncestorsAccessMap().keySet());
+        } 
+        
+        // Додаємо UUID дітей з PlayerFamily, якщо rootDetails == null
+        allUUIDs.addAll(playerFamily.getChildren());
+
+        // Додаємо UUID батьків з PlayerFamily, якщо rootDetails == null
+        if (playerFamily.getFather() != null) {
+            allUUIDs.add(playerFamily.getFather());
+        }
+        if (playerFamily.getMother() != null) {
+            allUUIDs.add(playerFamily.getMother());
+        }
+
+        // Перетворюємо список UUID на Map<UUID, FamilyDetails>
+        for (UUID uuid : allUUIDs) {
+            FamilyDetails details = getRootFamilyDetailsInternal(uuid, null, null);
+            if (details != null) {
+                familyDetailsMap.put(uuid, details);
+            }
+        }
+
+        return familyDetailsMap;
     }
 
     private static PlayerFamily resolvePlayerFamily(UUID rootId, Player player, PlayerFamily playerFamily) {

@@ -26,8 +26,13 @@ public class FamilyChestManager {
     }
 
  // Метод для відкриття FamilyChest інвентаря
-    public void openRepoGroupInventory(Player player) {
+    public void openFamilyChest(Player player) {
         FamilyDetails details = FamilyDetailsGet.getRootFamilyDetails(player);
+        
+        if (details == null) {
+        	return;
+        }
+        
         UUID familyId = details.getFamilyId();
         
         if (hasChest(familyId)) {
