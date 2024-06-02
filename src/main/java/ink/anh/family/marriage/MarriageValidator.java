@@ -59,14 +59,14 @@ public class MarriageValidator extends Sender {
     }
 
     public boolean validateCeremonyConditions(Player bride1, Player bride2, Player[] recipients) {
-    	Player[] players = isPublic ? new Player[] {bride1, bride2, priest} : new Player[] {bride1, bride2};
+        Player[] players = isPublic ? new Player[] {bride1, bride2, priest} : new Player[] {bride1, bride2};
 
         if (!validateMembers(recipients, players)) {
             return false;
         }
-        
+
         int radius = isPublic ? ((GlobalManager) libraryManager).getFamilyConfig().getCeremonyRadius() : 5;
-        Location location = isPublic ? priest.getLocation() : bride1.getLocation();
+        Location location = isPublic && priest != null ? priest.getLocation() : bride1.getLocation();
         if (!OtherUtils.isPlayerWithinRadius(bride1, location, radius) || !OtherUtils.isPlayerWithinRadius(bride2, location, radius)) {
             sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_distance", new String[] {}), MessageType.WARNING, false, recipients);
             return false;
@@ -76,7 +76,7 @@ public class MarriageValidator extends Sender {
     }
 
     public boolean validatePermissions(Player bride1, Player bride2, Player[] recipients) {
-        boolean perm = true;
+        boolean perm = true; // призначено для того щоб вивести всі повідомлення про дозволи
         List<String> members = new ArrayList<>();
 
         if (isPublic && priest != null && !priest.hasPermission(Permissions.FAMILY_PASTOR)) {
@@ -103,7 +103,7 @@ public class MarriageValidator extends Sender {
         }
 
         return perm;
-    }//***
+    }
 
     public boolean validatePayment(Player bride1, Player bride2, Player[] recipients, String bride1Name, String bride2Name) {
         PaymentManager pay = new PaymentManager(familyPlugin);

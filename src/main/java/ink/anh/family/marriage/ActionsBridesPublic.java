@@ -22,7 +22,7 @@ import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.PaymentManager;
 
-public class ActionsBrides extends Sender {
+public class ActionsBridesPublic extends Sender {
 
 	private AnhyFamily familyPlugin;
 	private GlobalManager manager;
@@ -31,7 +31,7 @@ public class ActionsBrides extends Sender {
 	private String priestTitle = "";
 	private String bride1Title = "";
 	
-	public ActionsBrides (AnhyFamily familyPlugin){
+	public ActionsBridesPublic (AnhyFamily familyPlugin){
 		super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
 		this.manager = GlobalManager.getInstance();
@@ -89,7 +89,7 @@ public class ActionsBrides extends Sender {
 			return;
 		}
 
-        setTitles(priest, bride1, bride2);
+        setTitles(priest, bride1);
 		
 		String marry1 = ": family_marry_vows_man";
 		String marry2 = ": family_marry_vows_woman";
@@ -194,7 +194,7 @@ public class ActionsBrides extends Sender {
 		}
     }
     
-    private void setTitles(Player priest, Player bride1, Player bride2) {
+    private void setTitles(Player priest, Player bride1) {
         priestTitle = FamilyUtils.getPriestTitle(priest);
         bride1Title = FamilyUtils.getBrideTitle(bride1);
     }

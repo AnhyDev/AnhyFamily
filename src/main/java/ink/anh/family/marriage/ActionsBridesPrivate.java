@@ -108,40 +108,23 @@ public class ActionsBridesPrivate extends Sender {
         sendMessage(new MessageForFormatting("family_proposal_refused_sender", new String[]{receiver.getName()}), MessageType.NORMAL, proposer);
     }
 
-	private void updateFamilyData(PlayerFamily familyBride1, PlayerFamily familyBride2, MarryPrivate marryPrivate, int one) {
-		int surnameChoice = 1;
+	private void updateFamilyData(PlayerFamily familyOfBrideChoosingSurname, PlayerFamily familyOfOtherBride, MarryPrivate marryPrivate) {
 		String[] chosenSurname = marryPrivate.getChosenSurname();
-		
-	    PlayerFamily familyOfBrideChoosingSurname = (one == 0) ? familyBride1 : familyBride2;
-	    PlayerFamily familyOfOtherBride = (one == 0) ? familyBride2 : familyBride1;
 
-	    switch (surnameChoice) {
-	        case 1:
-	            // Встановити прізвище 1 нареченого
-	            familyOfOtherBride.setOldLastName(familyOfOtherBride.getLastName());
-	            familyOfOtherBride.setLastName(chosenSurname);
-	            break;
-	        case 2:
-	            // Встановити прізвище 2 нареченого
-	            familyOfBrideChoosingSurname.setOldLastName(familyOfBrideChoosingSurname.getLastName());
-	            familyOfBrideChoosingSurname.setLastName(chosenSurname);
-	            break;
-	        case 0:
-	        default:
-	            // Зберегти поточні прізвища (нічого не робити)
-	            break;
-	    }
-
+        familyOfOtherBride.setOldLastName(familyOfOtherBride.getLastName());
+        familyOfOtherBride.setLastName(chosenSurname);
+        
 	    // Оновити статус спільника
-	    familyBride1.setSpouse(familyBride2.getRoot());
-	    familyBride2.setSpouse(familyBride1.getRoot());
+	    familyOfBrideChoosingSurname.setSpouse(familyOfOtherBride.getRoot());
+	    familyOfOtherBride.setSpouse(familyOfBrideChoosingSurname.getRoot());
 
 	    // Зберегти змінені дані сімей
-	    FamilyUtils.saveFamily(familyBride1);
-	    FamilyUtils.saveFamily(familyBride2);
+	    FamilyUtils.saveFamily(familyOfBrideChoosingSurname);
+	    FamilyUtils.saveFamily(familyOfOtherBride);
 	}
 
-    private void handleMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, CommandSender[] senders, MessageForFormatting messageTrue, MessageForFormatting messageFalse, MarryPrivate proposal) {
+    private void handleMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, CommandSender[] senders,
+    		MessageForFormatting messageTrue, MessageForFormatting messageFalse, MarryPrivate proposal) {
         final MessageType[] messageType = {MessageType.WARNING};
         try {
             MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, initiator);
@@ -150,7 +133,7 @@ public class ActionsBridesPrivate extends Sender {
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
 
-                	updateFamilyData(proposerFamily, receiverFamily, null, 0);
+                	updateFamilyData(proposerFamily, receiverFamily, proposal);
                 	
                 	FamilyHandler.createFamilyOnMarriage(proposerFamily, receiverFamily);
 

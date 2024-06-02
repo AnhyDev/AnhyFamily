@@ -136,7 +136,7 @@ public class FamilyUtils {
 			return "family_marry_private_prefix";
 		}
 		
-        Gender gender = FamilyUtils.getFamily(player.getUniqueId()).getGender();
+        Gender gender = getFamily(player.getUniqueId()).getGender();
         String displayName = player.getDisplayName();
         return (gender == Gender.MALE ? "family_marry_priest_male" :
                 gender == Gender.FEMALE ? "family_marry_priest_female" : "family_marry_priest_nonbinary")
@@ -144,7 +144,7 @@ public class FamilyUtils {
     }
 
 	public static String getBrideTitle(Player player) {
-        Gender gender = FamilyUtils.getFamily(player.getUniqueId()).getGender();
+        Gender gender = getFamily(player.getUniqueId()).getGender();
         String displayName = player.getDisplayName();
         return (gender == Gender.MALE ? "family_marry_groom_male" :
                 gender == Gender.FEMALE ? "family_marry_groom_female" : "family_marry_groom_nonbinary")

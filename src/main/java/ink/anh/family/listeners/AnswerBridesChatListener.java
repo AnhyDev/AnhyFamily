@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.marriage.ActionsBrides;
+import ink.anh.family.marriage.ActionsBridesPublic;
 
 public class AnswerBridesChatListener implements Listener {
 
@@ -19,6 +19,6 @@ public class AnswerBridesChatListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-		new ActionsBrides(familiPlugin).accept(event);
+		new ActionsBridesPublic(familiPlugin).accept(event);
 	}
 }
