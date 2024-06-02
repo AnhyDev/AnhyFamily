@@ -15,12 +15,10 @@ import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
-import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.gender.Gender;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
-import ink.anh.family.util.PaymentManager;
 
 public class ActionsBridesPublic extends Sender {
 
@@ -74,11 +72,11 @@ public class ActionsBridesPublic extends Sender {
 
 		int one = 0;
 
-		if (marryPublic.getBride2() != null && marryPublic.getBride2().getUniqueId().equals(uuidBride1)) {
+		if (marryPublic.getProposer() != null && marryPublic.getReceiver().getUniqueId().equals(uuidBride1)) {
 		    one = 1;
 		}
 
-		Player bride2 = (one == 0) ? marryPublic.getBride2() : marryPublic.getBride1();
+		Player bride2 = (one == 0) ? marryPublic.getProposer() : marryPublic.getReceiver();
 		UUID uuidBride2 = bride2.getUniqueId();
 		PlayerFamily bride2family = FamilyUtils.getFamily(uuidBride2);
 		
@@ -125,13 +123,10 @@ public class ActionsBridesPublic extends Sender {
 				sendMessage(new MessageForFormatting(priestTitle + ": family_marry_waiting_for_consent", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
 				return;
 			}
-				
-			if (paymentFailed(uuidBride1, bride1, bride2, recipients, bride1Name, bride2Name)) {
-				return;
-			}
 
 			SyncExecutor.runSync(() -> {
-				handleMarriage(priest, bride1family, bride2family, recipients, messageForFormatting, marryPublic, gender1Starus, new String[] {bride1Name, bride2Name}, stringMarry);
+				handleMarriage(priest, bride1family, bride2family, recipients, messageForFormatting, marryPublic, gender1Starus,
+						new String[] {bride1Name, bride2Name}, stringMarry, marryPublic);
 			});
 			
 			return;
@@ -175,17 +170,6 @@ public class ActionsBridesPublic extends Sender {
 	    FamilyUtils.saveFamily(familyBride2);
 	}
 
-    private boolean paymentFailed(UUID uuidBride1, Player bride1, Player bride2, Player[] recipients, String bride1Name, String bride2Name) {
-        PaymentManager pay = new PaymentManager(familyPlugin);
-
-        if (!pay.makePayment(bride1, FamilyService.MARRIAGE) || !pay.makePayment(bride2, FamilyService.MARRIAGE)) {
-        	marriageManager.remove(uuidBride1);
-			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_payment_failed", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
-            return true;
-        }
-        return false;
-    }
-
     private void setMarriageConsent(MarryPublic marryPublic, int one) {
 		if (one == 0) {
 			marryPublic.setConsent1(true);
@@ -211,17 +195,22 @@ public class ActionsBridesPublic extends Sender {
 
     private boolean areAllParticipantsPresent(MarryPublic marryPublic) {
         return marryPublic != null &&
-        	   marryPublic.getBride1() != null &&
-               marryPublic.getBride2() != null &&
+        	   marryPublic.getProposer() != null &&
+               marryPublic.getReceiver() != null &&
                marryPublic.getPriest() != null;
     }
 
     private void handleMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, Player[] recipients,
-    		MessageForFormatting messageForFormatting, MarryPublic marryPublic, int one, String[] brides, String stringMarry) {
+    		MessageForFormatting messageForFormatting, MarryPublic marryPublic, int one, String[] brides, String stringMarry, MarryBase marryBase) {
         final MessageType[] messageType = {MessageType.WARNING, MessageType.ESPECIALLY};
         try {
             MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF);
             Bukkit.getPluginManager().callEvent(event);
+        	
+        	if (new MarriageValidator(familyPlugin, true).paymentFailed(marryBase, recipients, marriageManager)) {
+        		event.cancellEvent("Error in payment of peace enterprise");
+        		return;
+        	}
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {

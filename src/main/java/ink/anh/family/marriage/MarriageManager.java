@@ -73,7 +73,7 @@ public class MarriageManager {
             Bukkit.getLogger().info("Заявки на свадьбу:");
             int i = 1;
             for (MarryPublic marryPublic : marryList) {
-                String info = i + ". MarryPublic: " + marryPublic.getBride1().getName() + " and " + marryPublic.getBride2().getName();
+                String info = i + ". MarryPublic: " + marryPublic.getProposer().getName() + " and " + marryPublic.getReceiver().getName();
                 Bukkit.getLogger().info(info);
                 i++;
             }

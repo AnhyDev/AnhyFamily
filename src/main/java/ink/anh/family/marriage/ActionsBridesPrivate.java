@@ -86,7 +86,7 @@ public class ActionsBridesPrivate extends Sender {
         MessageForFormatting messageFalse = new MessageForFormatting("family_proposal_failed", new String[]{proposer.getName()});
         CommandSender[] senders = {sender, proposer};
 
-        SyncExecutor.runSync(() -> handleMarriage(receiver, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF, senders, messageTrue, messageFalse, proposal));
+        SyncExecutor.runSync(() -> handleMarriage(proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF, senders, messageTrue, messageFalse, proposal));
     }
 
     public void refusePrivateMarriage(CommandSender sender) {
@@ -108,8 +108,8 @@ public class ActionsBridesPrivate extends Sender {
         sendMessage(new MessageForFormatting("family_proposal_refused_sender", new String[]{receiver.getName()}), MessageType.NORMAL, proposer);
     }
 
-	private void updateFamilyData(PlayerFamily familyOfBrideChoosingSurname, PlayerFamily familyOfOtherBride, MarryPrivate marryPrivate) {
-		String[] chosenSurname = marryPrivate.getChosenSurname();
+	private void updateFamilyData(PlayerFamily familyOfBrideChoosingSurname, PlayerFamily familyOfOtherBride, MarryBase marryBase) {
+		String[] chosenSurname = marryBase.getChosenSurname();
 
         familyOfOtherBride.setOldLastName(familyOfOtherBride.getLastName());
         familyOfOtherBride.setLastName(chosenSurname);
@@ -123,17 +123,22 @@ public class ActionsBridesPrivate extends Sender {
 	    FamilyUtils.saveFamily(familyOfOtherBride);
 	}
 
-    private void handleMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, CommandSender[] senders,
-    		MessageForFormatting messageTrue, MessageForFormatting messageFalse, MarryPrivate proposal) {
+    private void handleMarriage(PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, CommandSender[] senders,
+    		MessageForFormatting messageTrue, MessageForFormatting messageFalse, MarryBase marryBase) {
         final MessageType[] messageType = {MessageType.WARNING};
         try {
-            MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, initiator);
+            MarriageEvent event = new MarriageEvent(null, proposerFamily, receiverFamily, initiator);
             Bukkit.getPluginManager().callEvent(event);
+        	
+        	if (validator.paymentFailed(marryBase, (Player[]) senders, marriageManager)) {
+        		event.cancellEvent("Error in payment of peace enterprise");
+        		return;
+        	}
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
-
-                	updateFamilyData(proposerFamily, receiverFamily, proposal);
+                	
+                	updateFamilyData(proposerFamily, receiverFamily, marryBase);
                 	
                 	FamilyHandler.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
@@ -148,6 +153,6 @@ public class ActionsBridesPrivate extends Sender {
             e.printStackTrace();
         }
 
-        marriageManager.removeProposal(proposal);
+        marriageManager.removeProposal((MarryPrivate) marryBase);
     }
 }

@@ -14,6 +14,7 @@ public class MarriageEvent extends Event implements Cancellable {
     private final PlayerFamily playerFamily2;
     private final ActionInitiator initiator;
     private boolean isCancelled;
+    private String cancellationReason; // Причина переривання події
 
     public MarriageEvent(Player priest, PlayerFamily playerFamily1, PlayerFamily playerFamily2, ActionInitiator initiator) {
         this.priest = priest;
@@ -21,6 +22,7 @@ public class MarriageEvent extends Event implements Cancellable {
         this.playerFamily2 = playerFamily2;
         this.initiator = initiator;
         this.isCancelled = false;
+        this.cancellationReason = "";
     }
 
     public Player getPriest() {
@@ -47,6 +49,20 @@ public class MarriageEvent extends Event implements Cancellable {
     @Override
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
+    }
+
+    public String getCancellationReason() {
+        return cancellationReason;
+    }
+
+    public void cancellEvent(String cancellationReason) {
+        this.isCancelled = true;
+        this.cancellationReason = cancellationReason;
+    }
+
+    public void restoreEvent(String reason) {
+        this.isCancelled = false;
+        this.cancellationReason = reason;
     }
 
     @Override

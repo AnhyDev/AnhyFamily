@@ -115,6 +115,21 @@ public class MarriageValidator extends Sender {
         return false;
     }
 
+    public boolean paymentFailed(MarryBase marryBase, Player[] recipients, MarriageManager marriageManager) {
+    	Player bride1 = marryBase.getProposer();
+    	Player bride2 = marryBase.getReceiver();
+    	
+        PaymentManager pay = new PaymentManager(familyPlugin);
+
+        if (!pay.makePayment(bride1, FamilyService.MARRIAGE) || !pay.makePayment(bride2, FamilyService.MARRIAGE)) {
+        	marriageManager.remove(bride1.getUniqueId());
+			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_payment_failed", new String[] {bride1.getDisplayName(), bride2.getDisplayName()}),
+					MessageType.WARNING, false, recipients);
+            return true;
+        }
+        return false;
+    }
+
     public boolean validateCeremonyParticipants(Player bride1, Player bride2, Player[] recipients) {
 
     	if (isPublic && priest != null) {
