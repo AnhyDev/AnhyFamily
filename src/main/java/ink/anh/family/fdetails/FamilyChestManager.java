@@ -42,7 +42,7 @@ public class FamilyChestManager {
         }
 
         String guiName = Translator.translateKyeWorld(GlobalManager.getInstance(), "repo_group_holder", LangUtils.getPlayerLanguage(player));
-        FamilyChest holder = new FamilyChest(guiName);
+        FamilyChest holder = new FamilyChest(guiName, familyId);
         ItemStack[] familyChest = details.getFamilyChest();
         
         addChest(familyId, player.getName());
