@@ -35,33 +35,39 @@ public class FamilyDetailsSave {
             return;
         }
 
+        String fieldValue;
         switch (fieldToUpdate) {
+            case FAMILY_SYMBOL:
+                fieldValue = familyDetails.getFamilySymbol();
+                break;
             case HOME_LOCATION:
-                familyDetailsTable.updateField(new TableField<>(familyId, "home_location", FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation())));
+                fieldValue = FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation());
                 break;
             case FAMILY_CHEST:
-                familyDetailsTable.updateField(new TableField<>(familyId, "family_chest", FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest())));
+                fieldValue = FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest());
                 break;
             case CHILDREN_ACCESS:
-                familyDetailsTable.updateField(new TableField<>(familyId, "children_access", FamilyDetailsSerializer.serializeAccessControl(familyDetails.getChildrenAccess())));
+                fieldValue = FamilyDetailsSerializer.serializeAccessControl(familyDetails.getChildrenAccess());
                 break;
             case ANCESTORS_ACCESS:
-                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access", FamilyDetailsSerializer.serializeAccessControl(familyDetails.getAncestorsAccess())));
+                fieldValue = FamilyDetailsSerializer.serializeAccessControl(familyDetails.getAncestorsAccess());
                 break;
             case CHILDREN_ACCESS_MAP:
-                familyDetailsTable.updateField(new TableField<>(familyId, "children_access_map", FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap())));
+                fieldValue = FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap());
                 break;
             case ANCESTORS_ACCESS_MAP:
-                familyDetailsTable.updateField(new TableField<>(familyId, "ancestors_access_map", FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap())));
+                fieldValue = FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap());
                 break;
             case HOME_SET_DATE:
-                familyDetailsTable.updateField(new TableField<>(familyId, "home_set_date", familyDetails.getHomeSetDate().toString()));
+                fieldValue = familyDetails.getHomeSetDate().toString();
                 break;
             default:
                 // Якщо поле не існує в `enum`, оновлюємо весь об'єкт
                 familyDetailsTable.update(familyDetails);
-                break;
+                return;
         }
+
+        familyDetailsTable.updateField(new TableField<>(familyId, fieldToUpdate.getFieldName(), fieldValue));
     }
 
     public static void addRootFamilyDetails(UUID rootId, FamilyDetails familyDetails, FamilyDetailsField fieldToUpdate) {

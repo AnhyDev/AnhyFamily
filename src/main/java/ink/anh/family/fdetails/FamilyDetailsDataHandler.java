@@ -154,21 +154,10 @@ public class FamilyDetailsDataHandler extends DataHandler {
     }
     
     // Метод для перевірки та видалення невикористовуваних FamilyDetails
-    private void checkAndRemoveUnusedFamilyDetails(UUID playerId) {
-        boolean isUsed = false;
-    	if (!hasRootDetails(playerId) && !hasFatherDetails(playerId) && !hasMotherDetails(playerId)) {
-            if (hasChildrenDetails(playerId)) {
-                List<FamilyDetails> children = getChildrenDetails(playerId);
-                for (FamilyDetails child : children) {
-                    if (child.getFamilyId().equals(playerId)) {
-                        isUsed = true;
-                        break;
-                    }
-                }
-            }
-    	}
-    	if (isUsed) {
-            removeFamilyDetails(familyId);
-        }
+    public void removeUnusedFamilyDetails(UUID playerId) {
+        removeRootDetails(playerId);
+        removeFatherDetails(playerId);
+        removeMotherDetails(playerId);
+        removeChildrenDetails(playerId);
     }
 }

@@ -78,13 +78,14 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
         executeTransaction(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
                 ps.setString(1, familyDetails.getFamilyId().toString());
-                ps.setString(2, FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation()));
-                ps.setString(3, FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest()));
-                ps.setString(4, FamilyDetailsSerializer.serializeAccessControl(familyDetails.getChildrenAccess()));
-                ps.setString(5, FamilyDetailsSerializer.serializeAccessControl(familyDetails.getAncestorsAccess()));
-                ps.setString(6, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap()));
-                ps.setString(7, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap()));
-                ps.setString(8, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
+                ps.setString(2, familyDetails.getFamilySymbol());
+                ps.setString(3, FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation()));
+                ps.setString(4, FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest()));
+                ps.setString(5, FamilyDetailsSerializer.serializeAccessControl(familyDetails.getChildrenAccess()));
+                ps.setString(6, FamilyDetailsSerializer.serializeAccessControl(familyDetails.getAncestorsAccess()));
+                ps.setString(7, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap()));
+                ps.setString(8, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getAncestorsAccessMap()));
+                ps.setString(9, familyDetails.getHomeSetDate() != null ? familyDetails.getHomeSetDate().toString() : null);
                 ps.executeUpdate();
             }
         }, "Failed to insert family details: " + familyDetails);
@@ -93,6 +94,7 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
     protected FamilyDetails getFamilyDetailsFromResultSet(ResultSet rs) throws Exception {
         return new FamilyDetails(
                 UUID.fromString(rs.getString("family_id")),
+                rs.getString("family_symbol"),
                 FamilyDetailsSerializer.deserializeLocation(rs.getString("home_location")),
                 FamilyDetailsSerializer.deserializeFamilyChest(rs.getString("family_chest")),
                 FamilyDetailsSerializer.deserializeAccessControl(rs.getString("children_access")),

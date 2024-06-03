@@ -16,6 +16,7 @@ import ink.anh.api.enums.Access;
 public class FamilyDetails {
 
     private UUID familyId;
+    private String familySymbol;
     private Location homeLocation = null;
     private ItemStack[] familyChest = new ItemStack[54];
     private AccessControl childrenAccess = new AccessControl(Access.FALSE, Access.FALSE, Access.FALSE);
@@ -24,9 +25,10 @@ public class FamilyDetails {
     private Map<UUID, AccessControl> ancestorsAccessMap = new HashMap<>();
     private LocalDateTime homeSetDate = null;
 
-    public FamilyDetails(UUID familyId, Location homeLocation, ItemStack[] familyChest, AccessControl childrenAccess, AccessControl ancestorsAccess,
-            Map<UUID, AccessControl> childrenAccessMap, Map<UUID, AccessControl> ancestorsAccessMap, LocalDateTime homeSetDate) {
+    public FamilyDetails(UUID familyId, String familySymbol, Location homeLocation, ItemStack[] familyChest, AccessControl childrenAccess, AccessControl ancestorsAccess,
+                         Map<UUID, AccessControl> childrenAccessMap, Map<UUID, AccessControl> ancestorsAccessMap, LocalDateTime homeSetDate) {
         this.familyId = familyId;
+        this.familySymbol = familySymbol;
         this.homeLocation = homeLocation;
         this.familyChest = familyChest;
         this.childrenAccess = childrenAccess;
@@ -46,6 +48,14 @@ public class FamilyDetails {
 
     public void setFamilyId(UUID familyId) {
         this.familyId = familyId;
+    }
+
+    public String getFamilySymbol() {
+        return familySymbol;
+    }
+
+    public void setFamilySymbol(String familySymbol) {
+        this.familySymbol = familySymbol;
     }
 
     public Location getHomeLocation() {

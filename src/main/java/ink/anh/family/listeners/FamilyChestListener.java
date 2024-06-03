@@ -9,7 +9,6 @@ import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
-
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,8 +17,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryPickupItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 
 public class FamilyChestListener implements Listener {
@@ -39,9 +39,20 @@ public class FamilyChestListener implements Listener {
     }
 
     @EventHandler
-    public void onInventoryPickupItem(InventoryPickupItemEvent event) {
-        if (event.getInventory().getHolder() instanceof FamilyChest) {
-            updateFamilyChest(event.getInventory());
+	public void onPlayerDropItem(PlayerDropItemEvent event){
+        if (event.getPlayer().getOpenInventory().getTopInventory().getHolder() instanceof FamilyChest) {
+            updateFamilyChest(event.getPlayer().getOpenInventory().getTopInventory());
+        }
+	}
+
+    @EventHandler
+    public void onInventoryMoveItem(InventoryMoveItemEvent event) {
+        if (event.getSource().getHolder() instanceof FamilyChest) {
+            updateFamilyChest(event.getSource());
+        }
+        
+        if (event.getDestination().getHolder() instanceof FamilyChest) {
+            updateFamilyChest(event.getDestination());
         }
     }
 

@@ -1,6 +1,7 @@
 package ink.anh.family.db.fdetails;
 
 public enum FamilyDetailsField {
+    FAMILY_SYMBOL("family_symbol", "TEXT"),
     HOME_LOCATION("home_location", "TEXT"),
     FAMILY_CHEST("family_chest", "TEXT"),
     CHILDREN_ACCESS("children_access", "TEXT"),
