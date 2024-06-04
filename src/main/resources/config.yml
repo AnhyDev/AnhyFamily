@@ -75,3 +75,6 @@ answers:
 
 marriedSymbol: "⚭"
 
+# Timeout before changing the family home point, specify in minutes
+homeChangeTimeoutMinutes: 1440
+

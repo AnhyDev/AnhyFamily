@@ -28,10 +28,12 @@ public class FamilyConfig {
     
     private boolean nonBinary;
     private boolean nonBinaryAdopt;
-	private boolean nonBinaryMarry;
-	
-	private int ceremonyRadius;
-	private int ceremonyHearingRadius;
+    private boolean nonBinaryMarry;
+    
+    private int ceremonyRadius;
+    private int ceremonyHearingRadius;
+    
+    private int homeChangeTimeoutMinutes;
 
     private static FamilyConfig instance;
 
@@ -66,16 +68,18 @@ public class FamilyConfig {
         
         this.ceremonyRadius = config.getInt("ceremonyRadius", 20);
         this.ceremonyHearingRadius = config.getInt("ceremonyHearingRadius", 100);
+        
+        this.homeChangeTimeoutMinutes = config.getInt("homeChangeTimeoutMinutes", 1440);
 
         ItemStack[] items = loadItems(plugin);
         
         Currency currency = Currency.valueOf(config.getString("prices.currency", "ITEM"));
         if (plugin.getEconomyHandler() == null && currency == Currency.VIRTUAL) {
-        	currency = Currency.ITEM;
+            currency = Currency.ITEM;
         }
         
         this.prices = new Prices(
-        	currency,
+            currency,
             BigInteger.valueOf(config.getLong("prices.marriage", 0)),
             items[0],
             BigInteger.valueOf(config.getLong("prices.divorce", 0)),
@@ -111,27 +115,30 @@ public class FamilyConfig {
     }
 
     public boolean isNonBinary() {
-		return nonBinary;
-	}
+        return nonBinary;
+    }
 
-	public boolean isNonBinaryAdopt() {
-		return nonBinaryAdopt;
-	}
+    public boolean isNonBinaryAdopt() {
+        return nonBinaryAdopt;
+    }
 
-	public boolean isNonBinaryMarry() {
-		return nonBinaryMarry;
-	}
+    public boolean isNonBinaryMarry() {
+        return nonBinaryMarry;
+    }
 
-	
     public int getCeremonyRadius() {
-		return ceremonyRadius;
-	}
+        return ceremonyRadius;
+    }
 
-	public int getCeremonyHearingRadius() {
-		return ceremonyHearingRadius;
-	}
+    public int getCeremonyHearingRadius() {
+        return ceremonyHearingRadius;
+    }
 
-	// Method to check the answer
+    public int getHomeChangeTimeoutMinutes() {
+        return homeChangeTimeoutMinutes;
+    }
+
+    // Method to check the answer
     public int checkAnswer(String word) {
         if (answers.containsKey(word)) {
             return answers.get(word) ? 1 : 2;

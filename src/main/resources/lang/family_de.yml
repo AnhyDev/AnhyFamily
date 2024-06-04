@@ -208,4 +208,16 @@ family_separation_disown_child: "Verzicht auf ein Kind"
 family_separation_disown_parent: "Verzicht auf die Eltern"
 family_separation_full_separation: "Komplette Trennung aller familiären Bindungen"
 
+# Befehle für Familienheime [ink.anh.family.home.FamilyHomeManager]
+family_err_details_not_found: "Familiendetails nicht gefunden."
+family_err_home_already_set: "Der Timeout zum Ändern des Heimpunkts ist noch nicht abgelaufen."
+family_err_home_not_set: "Heimpunkt nicht gesetzt."
+family_err_no_spouse: "Du hast keinen Ehepartner, um ein Zuhause zu setzen."
+family_home_request_sent: "Anfrage zur Festlegung des Heims gesendet. Dein Partner muss die Anfrage innerhalb von 60 Sekunden bestätigen."
+family_err_request_not_confirmed: "Deine Anfrage zur Festlegung des Heims wurde innerhalb von 60 Sekunden nicht bestätigt."
+family_home_set: "Heimpunkt erfolgreich gesetzt."
+family_err_no_pending_request: "Keine ausstehende Anfrage zur Festlegung des Heims zu bestätigen."
+family_err_nickname_not_found: "Spieler mit dem Namen %s konnte nicht gefunden werden."
+family_err_home_other_not_set: "Familienheimpunkt für %s nicht gesetzt."
+family_err_no_access_home: "Du hast keinen Zugang zum Familienheim von %s."
 

@@ -208,3 +208,16 @@ family_separation_disown_child: "Ripudio di un figlio"
 family_separation_disown_parent: "Ripudio dei genitori"
 family_separation_full_separation: "Interruzione completa di tutti i legami familiari"
 
+# Comandi per case familiari [ink.anh.family.home.FamilyHomeManager]
+family_err_details_not_found: "Dettagli familiari non trovati."
+family_err_home_already_set: "Il timeout per cambiare il punto di casa non è ancora scaduto."
+family_err_home_not_set: "Punto di casa non impostato."
+family_err_no_spouse: "Non hai un coniuge con cui impostare una casa."
+family_home_request_sent: "Richiesta di impostazione della casa inviata. Il tuo partner deve confermare la richiesta entro 60 secondi."
+family_err_request_not_confirmed: "La tua richiesta di impostazione della casa non è stata confermata entro 60 secondi."
+family_home_set: "Punto di casa impostato con successo."
+family_err_no_pending_request: "Nessuna richiesta di impostazione della casa in sospeso da confermare."
+family_err_nickname_not_found: "Impossibile trovare il giocatore con il nome %s."
+family_err_home_other_not_set: "Punto di casa familiare per %s non impostato."
+family_err_no_access_home: "Non hai accesso alla casa familiare di %s."
+

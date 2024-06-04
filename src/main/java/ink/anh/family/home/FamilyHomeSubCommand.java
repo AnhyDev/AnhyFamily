@@ -40,8 +40,14 @@ public class FamilyHomeSubCommand extends Sender {
                 case "parent":
                     homeManager.parentHome();
                     break;
+                case "access":
+                	homeManager.setHomeAccess();
+                    break;
+                case "default":
+                    homeManager.setDefaultHomeAccess();
+                    break;
                 default:
-                    sendMessage(new MessageForFormatting("family_err_command_format /fhome [set|tp|child|parent]", new String[] {}), MessageType.WARNING, player);
+                    sendMessage(new MessageForFormatting("family_err_command_format /fhome [set|tp|child|parent|access|default]", new String[] {}), MessageType.WARNING, player);
                 }
             } else {
                 homeManager.tpHome();

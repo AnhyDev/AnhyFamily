@@ -208,3 +208,16 @@ family_separation_disown_child: "Отказ от ребенка"
 family_separation_disown_parent: "Отказ от родителей"
 family_separation_full_separation: "Полное разрывание всех семейных связей"
 
+# Команды для семейных домов [ink.anh.family.home.FamilyHomeManager]
+family_err_details_not_found: "Семейные детали не найдены."
+family_err_home_already_set: "Тайм-аут для изменения точки дома еще не истек."
+family_err_home_not_set: "Точка дома не установлена."
+family_err_no_spouse: "У тебя нет супруга для установки дома."
+family_home_request_sent: "Запрос на установку дома отправлен. Твой партнер должен подтвердить запрос в течение 60 секунд."
+family_err_request_not_confirmed: "Твой запрос на установку дома не был подтвержден в течение 60 секунд."
+family_home_set: "Точка дома успешно установлена."
+family_err_no_pending_request: "Нет запроса на установку дома для подтверждения."
+family_err_nickname_not_found: "Не удалось найти игрока с именем %s."
+family_err_home_other_not_set: "Точка семейного дома у %s не установлена."
+family_err_no_access_home: "У тебя нет доступа к семейному дому %s."
+
