@@ -191,7 +191,7 @@ public class FamilyHomeManager extends Sender {
 
     public void setDefaultHomeAccess() {
         if (args.length < 3) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome default <children|ancestors> <allow|deny>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome default <children|parents> <allow|deny>"}), MessageType.WARNING, player);
             return;
         }
 
@@ -217,12 +217,12 @@ public class FamilyHomeManager extends Sender {
                 details.setChildrenAccess(childrenAccess);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.CHILDREN_ACCESS);
                 sendMessage(new MessageForFormatting("family_default_home_access_set", new String[] {"children", accessArg}), MessageType.NORMAL, player);
-            } else if ("ancestors".equals(targetGroup)) {
+            } else if ("parents".equals(targetGroup)) {
                 AccessControl ancestorsAccess = details.getAncestorsAccess();
                 ancestorsAccess.setHomeAccess(access);
                 details.setAncestorsAccess(ancestorsAccess);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.ANCESTORS_ACCESS);
-                sendMessage(new MessageForFormatting("family_default_home_access_set", new String[] {"ancestors", accessArg}), MessageType.NORMAL, player);
+                sendMessage(new MessageForFormatting("family_default_home_access_set", new String[] {"parents", accessArg}), MessageType.NORMAL, player);
             } else {
                 sendMessage(new MessageForFormatting("family_err_invalid_group", new String[] {targetGroup}), MessageType.WARNING, player);
             }
