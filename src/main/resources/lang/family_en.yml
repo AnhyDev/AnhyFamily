@@ -12,7 +12,7 @@
 family_err_not_have_permission: "You do not have permission to use this command."
 family_err_not_alloved_config: "The command is not allowed in the configuration settings."
 family_err_command_only_player: "This command can only be executed by a player."
-family_err_command_format: "Command format: "
+family_err_command_format: "Command format: %s"
 
 # 2 Loading configurations
 family_err_folder_is_empty: "The folder is empty or an error occurred while reading it."

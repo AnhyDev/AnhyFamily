@@ -19,10 +19,6 @@ public class FamilyDetailsGet {
     private static FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) GlobalManager.getInstance().getDatabaseManager().getTable(FamilyDetails.class);
     private static FamilyDetailsDataHandler dataHandler = FamilyDetailsDataHandler.getInstance();
 
-    public static void saveFamilyDetails(FamilyDetails familyDetails) {
-        familyDetailsTable.insert(familyDetails);
-    }
-
     public static FamilyDetails getFamilyDetails(UUID familyId) {
         if (familyId == null) {
             return null;

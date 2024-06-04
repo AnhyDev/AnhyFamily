@@ -12,7 +12,7 @@
 family_err_not_have_permission: "Ви не маєте дозволу на використання цієї команди."
 family_err_not_alloved_config: "Команда не дозволена в налаштуваннях конфігурації."
 family_err_command_only_player: "Ця команда може виконуватися тільки гравцем."
-family_err_command_format: "Формат команди: "
+family_err_command_format: "Формат команди: %s"
 
 # 2 Завантаження конфігурацій
 family_err_folder_is_empty: "Папка порожня або сталася помилка при її читанні."
@@ -208,4 +208,12 @@ family_separation_disown_child: "Відмова від дитини"
 family_separation_disown_parent: "Відмова від батьків"
 family_separation_full_separation: "Повне розірвання всіх сімейних зв'язків"
 
+
+
+# Команди для сімейних хомів [ink.anh.family.home.FamilyHomeManager]
+family_err_nickname_not_found: "Не вдалося знайти гравця з ім'ям %s."
+family_err_home_not_set: "Точка сімейного дому у %s не встановлена."
+family_err_no_access_home: "У тебе немає доступу до сімейного дому %s."
+family_err_details_not_found: "Сімейні деталі не знайдені."
+family_err_home_already_set: "Точка дому вже встановлена."
 

@@ -137,44 +137,58 @@ public class FamilyDetails {
         return duration.toMinutes() >= minutes;
     }
 
-    // Метод для перевірки доступу до дому
-    public boolean hasAccessHome(PlayerFamily playerFamily) {
-        FamilyRelationType relationType = playerFamily.checkUUIDRelation(this.familyId);
+ // Загальний метод для перевірки доступу
+    private boolean hasAccess(PlayerFamily playerFamily, String accessType) {
+        FamilyRelationType relationType = getRelationType(playerFamily);
 
         switch (relationType) {
             case FAMILY_ID:
                 return true;
             case PARENT_FAMILY_ID:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess.getHomeAccess(), "homeAccess");
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessType);
             case CHILD_FAMILY_IDS:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess.getHomeAccess(), "homeAccess");
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessType);
             default:
                 return false;
         }
+    }
+
+    public FamilyRelationType getRelationType(PlayerFamily playerFamily) {
+        UUID playerId = playerFamily.getRoot();
+
+        if (playerFamily.getFamilyId().equals(familyId)) {
+            return FamilyRelationType.FAMILY_ID;
+        }
+        if (ancestorsAccessMap.containsKey(playerId)) {
+            return FamilyRelationType.PARENT_FAMILY_ID;
+        }
+        if (childrenAccessMap.containsKey(playerId)) {
+            return FamilyRelationType.CHILD_FAMILY_IDS;
+        }
+        return FamilyRelationType.NOT_FOUND;
+    }
+
+    // Метод для перевірки доступу до дому
+    public boolean hasAccessHome(PlayerFamily playerFamily) {
+        return hasAccess(playerFamily, "homeAccess");
     }
 
     // Метод для перевірки доступу до скрині
     public boolean hasAccessChest(PlayerFamily playerFamily) {
-        FamilyRelationType relationType = playerFamily.checkUUIDRelation(this.familyId);
-
-        switch (relationType) {
-            case FAMILY_ID:
-                return true;
-            case PARENT_FAMILY_ID:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess.getChestAccess(), "chestAccess");
-            case CHILD_FAMILY_IDS:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess.getChestAccess(), "chestAccess");
-            default:
-                return false;
-        }
+        return hasAccess(playerFamily, "chestAccess");
     }
 
-    // Метод для перевірки специфічного або за замовчуванням доступу
-    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, Access defaultAccess, String accessType) {
+    // Метод для перевірки доступу до чату
+    public boolean hasAccessChat(PlayerFamily playerFamily) {
+        return hasAccess(playerFamily, "chatAccess");
+    }
+
+    // Оновлений метод для перевірки специфічного або за замовчуванням доступу
+    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, String accessType) {
         AccessControl accessControl = accessMap.get(playerId);
 
+        Access access;
         if (accessControl != null) {
-            Access access;
             switch (accessType) {
                 case "homeAccess":
                     access = accessControl.getHomeAccess();
@@ -182,21 +196,38 @@ public class FamilyDetails {
                 case "chestAccess":
                     access = accessControl.getChestAccess();
                     break;
+                case "chatAccess":
+                    access = accessControl.getChatAccess();
+                    break;
                 default:
-                    return defaultAccess == Access.TRUE;
-            }
-
-            switch (access) {
-                case TRUE:
-                    return true;
-                case FALSE:
                     return false;
-                case DEFAULT:
-                    return defaultAccess == Access.TRUE;
+            }
+        } else {
+            switch (accessType) {
+                case "homeAccess":
+                    access = defaultAccessControl.getHomeAccess();
+                    break;
+                case "chestAccess":
+                    access = defaultAccessControl.getChestAccess();
+                    break;
+                case "chatAccess":
+                    access = defaultAccessControl.getChatAccess();
+                    break;
+                default:
+                    return false;
             }
         }
 
-        return defaultAccess == Access.TRUE;
+        switch (access) {
+            case TRUE:
+                return true;
+            case FALSE:
+                return false;
+            case DEFAULT:
+                return defaultAccessControl.getHomeAccess() == Access.TRUE;
+            default:
+                return false;
+        }
     }
 
     @Override

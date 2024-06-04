@@ -23,3 +23,6 @@ commands:
     adoption:
         aliases: [adopt]
         usage: "[AnhyFamily] The command '/adoption (/adopt)' execution error, please check the arguments' correctness."
+    fhome:
+        aliases: [familyhome]
+        usage: "[AnhyFamily] The command '/fhome (/familyhome)' execution error, please check the arguments' correctness."

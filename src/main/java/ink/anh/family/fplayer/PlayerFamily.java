@@ -189,11 +189,23 @@ public class PlayerFamily {
         if (uuid == null) {
             return FamilyRelationType.NOT_FOUND;
         }
+        if (uuid.equals(root)) {
+            return FamilyRelationType.ROOT_ID;
+        }
         if (uuid.equals(familyId)) {
             return FamilyRelationType.FAMILY_ID;
         }
         if (uuid.equals(dynastyId)) {
             return FamilyRelationType.DYNASTY_ID;
+        }
+        if (uuid.equals(father)) {
+            return FamilyRelationType.PARENT_FAMILY_ID;
+        }
+        if (uuid.equals(mother)) {
+            return FamilyRelationType.PARENT_FAMILY_ID;
+        }
+        if (children.contains(uuid)) {
+            return FamilyRelationType.CHILD_FAMILY_IDS;
         }
         return FamilyRelationType.NOT_FOUND;
     }
