@@ -220,4 +220,10 @@ family_err_no_pending_request: "Nessuna richiesta di impostazione della casa in 
 family_err_nickname_not_found: "Impossibile trovare il giocatore con il nome %s."
 family_err_home_other_not_set: "Punto di casa familiare per %s non impostato."
 family_err_no_access_home: "Non hai accesso alla casa familiare di %s."
+family_err_invalid_access: "Valore di accesso non valido: %s."
+family_home_access_set: "Accesso alla casa per %s impostato su %s."
+family_err_nickname_not_found_in_access_maps: "Nickname %s non trovato nelle mappe di accesso."
+family_default_home_access_set: "Accesso alla casa predefinito impostato per %s: %s."
+family_err_invalid_group: "Gruppo non valido: %s. Usa children o parents."
+
 

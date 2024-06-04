@@ -220,4 +220,10 @@ family_err_no_pending_request: "Нет запроса на установку д
 family_err_nickname_not_found: "Не удалось найти игрока с именем %s."
 family_err_home_other_not_set: "Точка семейного дома у %s не установлена."
 family_err_no_access_home: "У тебя нет доступа к семейному дому %s."
+family_err_invalid_access: "Недействительное значение доступа: %s."
+family_home_access_set: "Доступ к дому для %s установлен на %s."
+family_err_nickname_not_found_in_access_maps: "Никнейм %s не найден в картах доступа."
+family_default_home_access_set: "Доступ к дому по умолчанию установлен для %s: %s."
+family_err_invalid_group: "Недействительная группа: %s. Используйте children или parents."
+
 

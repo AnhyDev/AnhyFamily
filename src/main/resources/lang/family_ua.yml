@@ -220,8 +220,6 @@ family_err_no_pending_request: "Немає жодного запиту на вс
 family_err_nickname_not_found: "Не вдалося знайти гравця з ім'ям %s."
 family_err_home_other_not_set: "Точка сімейного дому у %s не встановлена."
 family_err_no_access_home: "У тебе немає доступу до сімейного дому %s."
-
-#
 family_err_invalid_access: "Недійсне значення доступу: %s."
 family_home_access_set: "Доступ до дому для %s встановлено на %s."
 family_err_nickname_not_found_in_access_maps: "Нікнейм %s не знайдено в мапах доступу."

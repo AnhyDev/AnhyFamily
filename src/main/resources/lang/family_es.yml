@@ -220,4 +220,10 @@ family_err_no_pending_request: "No hay solicitud de establecimiento de hogar pen
 family_err_nickname_not_found: "No se pudo encontrar al jugador con el nombre %s."
 family_err_home_other_not_set: "Punto de hogar familiar para %s no establecido."
 family_err_no_access_home: "No tienes acceso al hogar familiar de %s."
+family_err_invalid_access: "Valor de acceso inválido: %s."
+family_home_access_set: "Acceso al hogar para %s establecido en %s."
+family_err_nickname_not_found_in_access_maps: "El apodo %s no se encontró en los mapas de acceso."
+family_default_home_access_set: "Acceso al hogar por defecto establecido para %s: %s."
+family_err_invalid_group: "Grupo inválido: %s. Usa children o parents."
+
 

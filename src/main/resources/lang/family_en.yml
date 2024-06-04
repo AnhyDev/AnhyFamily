@@ -220,5 +220,10 @@ family_err_no_pending_request: "No pending home set request to confirm."
 family_err_nickname_not_found: "Could not find player with the name %s."
 family_err_home_other_not_set: "Family home point for %s not set."
 family_err_no_access_home: "You do not have access to the family home of %s."
+family_err_invalid_access: "Invalid access value: %s."
+family_home_access_set: "Home access for %s set to %s."
+family_err_nickname_not_found_in_access_maps: "Nickname %s not found in access maps."
+family_default_home_access_set: "Default home access set for %s: %s."
+family_err_invalid_group: "Invalid group: %s. Use children or parents."
 
 

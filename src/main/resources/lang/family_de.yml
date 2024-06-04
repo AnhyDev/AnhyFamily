@@ -220,4 +220,10 @@ family_err_no_pending_request: "Keine ausstehende Anfrage zur Festlegung des Hei
 family_err_nickname_not_found: "Spieler mit dem Namen %s konnte nicht gefunden werden."
 family_err_home_other_not_set: "Familienheimpunkt für %s nicht gesetzt."
 family_err_no_access_home: "Du hast keinen Zugang zum Familienheim von %s."
+family_err_invalid_access: "Ungültiger Zugriffswert: %s."
+family_home_access_set: "Heimzugriff für %s auf %s gesetzt."
+family_err_nickname_not_found_in_access_maps: "Spitzname %s in den Zugriffskarten nicht gefunden."
+family_default_home_access_set: "Standardzugriff für %s auf %s gesetzt."
+family_err_invalid_group: "Ungültige Gruppe: %s. Verwenden Sie children oder parents."
+
 
