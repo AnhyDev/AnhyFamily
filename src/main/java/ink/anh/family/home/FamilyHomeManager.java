@@ -59,7 +59,7 @@ public class FamilyHomeManager extends Sender {
                         homeRequests.remove(details.getFamilyId());
                         sendMessage(new MessageForFormatting("family_err_request_not_confirmed", new String[] {}), MessageType.WARNING, player);
                     }
-                }, 1200L); // 1200 тік дорівнює 60 секунд
+                }, 1200L); 
             } else {
                 sendMessage(new MessageForFormatting("family_err_home_already_set", new String[] {}), MessageType.WARNING, player);
             }
