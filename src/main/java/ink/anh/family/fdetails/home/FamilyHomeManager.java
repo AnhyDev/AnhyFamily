@@ -137,14 +137,14 @@ public class FamilyHomeManager extends Sender {
 
         String symbol = args[0].toUpperCase();
         if (symbol.length() < 3 || symbol.length() > 6 || !symbol.matches("[A-Z]+")) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome [set|tp|child|parent|access|default|<symbol>]"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome [set|tp|child|parent|access|default|<prefix>]"}), MessageType.WARNING, player);
             return;
         }
 
         UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(symbol);
         if (familyId == null) {
             sendMessage(new MessageForFormatting("family_err_symbol_not_found", new String[] {symbol}), MessageType.WARNING, player);
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome [set|tp|child|parent|access|default|<symbol>]"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome [set|tp|child|parent|access|default|<prefix>]"}), MessageType.WARNING, player);
             return;
         }
 

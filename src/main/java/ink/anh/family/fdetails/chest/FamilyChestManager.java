@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.enums.Access;
@@ -42,7 +41,14 @@ public class FamilyChestManager extends Sender {
 
     // Метод для відкриття сімейної скрині
     public void openChest() {
-        // Порожній метод
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
+            PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+            if (details.hasAccessChest(playerFamily)) {
+                FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
+            } else {
+                sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {}), MessageType.WARNING, player);
+            }
+        });
     }
 
     // Метод для встановлення дозволів доступу до сімейної скрині
@@ -63,6 +69,35 @@ public class FamilyChestManager extends Sender {
     // Метод для обробки запитів доступу до сімейної скрині
     public void handleChestRequest() {
         // Порожній метод
+    }
+
+    // Метод для відкриття скрині іншої сім'ї
+    public void openChestForOtherFamily() {
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchest other <prefix>"}), MessageType.WARNING, player);
+            return;
+        }
+
+        String symbol = args[1].toUpperCase();
+        if (symbol.length() < 3 || symbol.length() > 6 || !symbol.matches("[A-Z]+")) {
+            sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[] {}), MessageType.WARNING, player);
+            return;
+        }
+
+        UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(symbol);
+        if (familyId == null) {
+            sendMessage(new MessageForFormatting("family_err_symbol_not_found", new String[] {symbol}), MessageType.WARNING, player);
+            return;
+        }
+
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
+            PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+            if (details.hasAccessChest(playerFamily)) {
+                FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
+            } else {
+                sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {symbol}), MessageType.WARNING, player);
+            }
+        });
     }
 
     // Внутрішній клас для запитів доступу до скрині
@@ -86,5 +121,4 @@ public class FamilyChestManager extends Sender {
             sendMessage(new MessageForFormatting("family_err_details_not_found", new String[] {}), MessageType.WARNING, player);
         }
     }
-    
 }

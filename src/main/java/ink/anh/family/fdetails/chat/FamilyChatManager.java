@@ -63,13 +63,13 @@ public class FamilyChatManager extends Sender {
 
     public void sendMessageToOtherFamily() {
         if (args.length < 3) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat other <symbol> <message>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat other <prefix> <message>"}), MessageType.WARNING, player);
             return;
         }
 
         String symbol = args[1].toUpperCase();
         if (symbol.length() < 3 || symbol.length() > 6 || !symbol.matches("[A-Z]+")) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat other <symbol> <message>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat other <prefix> <message>"}), MessageType.WARNING, player);
             return;
         }
 

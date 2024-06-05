@@ -12,7 +12,6 @@ import ink.anh.api.lingo.Translator;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fdetails.FamilyDetails;
-import ink.anh.family.fdetails.FamilyDetailsGet;
 
 public class FamilyChestOpenManager {
 
@@ -28,9 +27,7 @@ public class FamilyChestOpenManager {
     }
 
  // Метод для відкриття FamilyChest інвентаря
-    public void openFamilyChest(Player player) {
-        FamilyDetails details = FamilyDetailsGet.getRootFamilyDetails(player);
-        
+    public void openFamilyChest(Player player, FamilyDetails details) {
         if (details == null) {
         	return;
         }
@@ -45,7 +42,7 @@ public class FamilyChestOpenManager {
 
         String guiName = Translator.translateKyeWorld(GlobalManager.getInstance(), "repo_group_holder", LangUtils.getPlayerLanguage(player));
         FamilyChest holder = new FamilyChest(guiName, familyId);
-        ItemStack[] familyChest = details.getFamilyChest();
+        ItemStack[] familyChest = details.getFamilyChest().getFamilyChest();
         
         addChest(familyId, player.getName());
 

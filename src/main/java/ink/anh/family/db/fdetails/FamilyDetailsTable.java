@@ -80,7 +80,7 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
                 ps.setString(1, familyDetails.getFamilyId().toString());
                 ps.setString(2, familyDetails.getFamilySymbol());
                 ps.setString(3, FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation()));
-                ps.setString(4, FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest()));
+                ps.setString(4, FamilyDetailsSerializer.serializeChest(familyDetails.getFamilyChest()));
                 ps.setString(5, FamilyDetailsSerializer.serializeAccessControl(familyDetails.getChildrenAccess()));
                 ps.setString(6, FamilyDetailsSerializer.serializeAccessControl(familyDetails.getAncestorsAccess()));
                 ps.setString(7, FamilyDetailsSerializer.serializeAccessControlMap(familyDetails.getChildrenAccessMap()));
@@ -96,7 +96,7 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
                 UUID.fromString(rs.getString("family_id")),
                 rs.getString("family_symbol"),
                 FamilyDetailsSerializer.deserializeLocation(rs.getString("home_location")),
-                FamilyDetailsSerializer.deserializeFamilyChest(rs.getString("family_chest")),
+                FamilyDetailsSerializer.deserializeChest(rs.getString("family_chest")),
                 FamilyDetailsSerializer.deserializeAccessControl(rs.getString("children_access")),
                 FamilyDetailsSerializer.deserializeAccessControl(rs.getString("ancestors_access")),
                 FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("children_access_map")),
@@ -117,7 +117,7 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
                     }
                 } catch (Exception e) {
                     ErrorLogger.log(familyPlugin, e, "Failed to establish database connection");
-				}
+                }
             }
         }, "Failed to get family details for family_id: " + familyId);
 

@@ -44,7 +44,7 @@ public class FamilyDetailsSave {
                 fieldValue = FamilyDetailsSerializer.serializeLocation(familyDetails.getHomeLocation());
                 break;
             case FAMILY_CHEST:
-                fieldValue = FamilyDetailsSerializer.serializeFamilyChest(familyDetails.getFamilyChest());
+                fieldValue = FamilyDetailsSerializer.serializeChest(familyDetails.getFamilyChest());
                 break;
             case CHILDREN_ACCESS:
                 fieldValue = FamilyDetailsSerializer.serializeAccessControl(familyDetails.getChildrenAccess());

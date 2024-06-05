@@ -3,11 +3,13 @@ package ink.anh.family.fdetails;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
+import ink.anh.api.items.ItemStackSerializer;
+import ink.anh.family.fdetails.chest.Chest;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import ink.anh.api.items.ItemStackSerializer;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -65,5 +67,21 @@ public class FamilyDetailsSerializer {
     public static Map<UUID, AccessControl> deserializeAccessControlMap(String accessControlMapString) {
         Type type = new TypeToken<Map<UUID, AccessControl>>() {}.getType();
         return gson.fromJson(accessControlMapString, type);
+    }
+
+    public static String serializeChest(Chest chest) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("chestLocation", serializeLocation(chest.getChestLocation()));
+        jsonObject.addProperty("openDistance", chest.getOpenDistance());
+        jsonObject.addProperty("familyChest", serializeFamilyChest(chest.getFamilyChest()));
+        return gson.toJson(jsonObject);
+    }
+
+    public static Chest deserializeChest(String chestString) {
+        JsonObject jsonObject = JsonParser.parseString(chestString).getAsJsonObject();
+        Location chestLocation = deserializeLocation(jsonObject.get("chestLocation").getAsString());
+        int openDistance = jsonObject.get("openDistance").getAsInt();
+        ItemStack[] familyChest = deserializeFamilyChest(jsonObject.get("familyChest").getAsString());
+        return new Chest(familyChest, chestLocation, openDistance);
     }
 }

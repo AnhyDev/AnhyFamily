@@ -54,7 +54,7 @@ public class FamilySymbolManager extends Sender {
         }
 
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/family symbolset <symbol>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/family prefset <prefix>"}), MessageType.WARNING, player);
             return;
         }
 
