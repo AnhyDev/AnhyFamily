@@ -81,7 +81,7 @@ public class FamilyChestListener implements Listener {
                         FamilyDetails familyDetails = detailsAll.get(familyId);
                         chestManager.removeChest(familyId);
                         if (familyDetails != null) {
-                            familyDetails.setFamilyChest(event.getInventory().getContents());
+                            familyDetails.getFamilyChest().setFamilyChest(event.getInventory().getContents());
                             FamilyDetailsSave.saveFamilyDetails(familyDetails, FamilyDetailsField.FAMILY_CHEST);
                         }
                         return;
@@ -108,7 +108,7 @@ public class FamilyChestListener implements Listener {
                 return;
             }
 
-            familyDetails.setFamilyChest(inventory.getContents());
+            familyDetails.getFamilyChest().setFamilyChest(inventory.getContents());
     	});
     }
 }
