@@ -6,7 +6,7 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.chest.FamilyChest;
-import ink.anh.family.fdetails.chest.FamilyChestManager;
+import ink.anh.family.fdetails.chest.FamilyChestOpenManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import java.util.Map;
@@ -74,7 +74,7 @@ public class FamilyChestListener implements Listener {
                     return;
                 }
 
-                FamilyChestManager chestManager = FamilyChestManager.getInstance();
+                FamilyChestOpenManager chestManager = FamilyChestOpenManager.getInstance();
 
                 for (UUID familyId : detailsAll.keySet()) {
                     if (chestManager.hasChest(familyId) && player.getName().equals(chestManager.getViewer(familyId))) {

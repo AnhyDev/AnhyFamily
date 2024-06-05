@@ -14,16 +14,16 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 
-public class FamilyChestManager {
+public class FamilyChestOpenManager {
 
-    private static final FamilyChestManager instance = new FamilyChestManager();
+    private static final FamilyChestOpenManager instance = new FamilyChestOpenManager();
     private final Map<UUID, String> chestMap;
 
-    private FamilyChestManager() {
+    private FamilyChestOpenManager() {
         chestMap = new ConcurrentHashMap<>();
     }
 
-    public static FamilyChestManager getInstance() {
+    public static FamilyChestOpenManager getInstance() {
         return instance;
     }
 
