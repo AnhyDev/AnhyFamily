@@ -1,4 +1,4 @@
-package ink.anh.family.gender;
+package ink.anh.family.fplayer.gender;
 
 /**
  * Enum representing different genders with associated metadata.

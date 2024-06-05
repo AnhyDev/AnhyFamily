@@ -11,7 +11,7 @@ import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.gender.Gender;
+import ink.anh.family.fplayer.gender.Gender;
 
 public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
 

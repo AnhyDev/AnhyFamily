@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import com.google.gson.Gson;
 
-import ink.anh.family.gender.Gender;
+import ink.anh.family.fplayer.gender.Gender;
 
 public class PlayerFamily {
 

@@ -31,7 +31,7 @@ family_player_unknown: "Неизвестный игрок"
 family_player_not_found_db: "Игрок не найден в БД."
 family_error_generic: "Неизвестная ошибка"
 
-# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Мужской"
 family_gender_female: "Женский"
 family_gender_non-binary: "Небинарное"
@@ -43,7 +43,7 @@ family_gender_incorrectly_specified: "Неверно указан пол. Исп
 family_gender_player_reset: "Пол игрока %s сброшен на 'Не определено'."
 family_gender_player_set_to: "Пол игрока %s установлен на как:"
 
-# Command /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Предыдущая фамилия: "
 family_info_role_father: "Отец:"
 family_info_role_mother: "Мать:"
@@ -63,13 +63,13 @@ family_info_children: "Дети:"
 family_info_children_none: "нет"
 family_info_component: "Семейная информация игрока %s, наведите для просмотра или клик для вывода в свой чат"
 
-# Command /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
 family_tree_title: "Семейное древо"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Потомки"
 family_tree_component: "Информация о фамильном древе игрока %s, наведите для просмотра или клик для вывода в свой чат"
 
-# Command /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+# Command /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Ваша фамилия: %s "
 family_surname_already_exists: "Фамилия уже есть: %s, чтобы её изменить, обратитесь к священнику"
 family_surname_forced_change: "Для игрока %s принудительно установлена фамилия: %s "
@@ -208,7 +208,7 @@ family_separation_disown_child: "Отказ от ребенка"
 family_separation_disown_parent: "Отказ от родителей"
 family_separation_full_separation: "Полное разрывание всех семейных связей"
 
-# Команды для семейных домов [ink.anh.family.home.FamilyHomeManager]
+# Команды для семейных домов [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "Семейные детали не найдены."
 family_err_home_already_set: "Тайм-аут для изменения точки дома еще не истек."
 family_err_home_not_set: "Точка дома не установлена."

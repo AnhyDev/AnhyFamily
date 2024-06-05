@@ -1,4 +1,4 @@
-package ink.anh.family.fdetails;
+package ink.anh.family.fdetails.chest;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;

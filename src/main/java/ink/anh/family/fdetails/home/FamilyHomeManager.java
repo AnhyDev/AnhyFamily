@@ -1,4 +1,4 @@
-package ink.anh.family.home;
+package ink.anh.family.fdetails.home;
 
 import java.util.HashMap;
 import java.util.Map;

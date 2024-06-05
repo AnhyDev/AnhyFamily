@@ -16,7 +16,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.gender.Gender;
+import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
 

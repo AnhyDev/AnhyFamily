@@ -1,4 +1,4 @@
-package ink.anh.family.info;
+package ink.anh.family.fplayer.info;
 
 import java.util.Set;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package ink.anh.family.info;
+package ink.anh.family.fplayer.info;
 
 import java.util.UUID;
 import java.util.Set;
@@ -10,8 +10,8 @@ import ink.anh.api.lingo.Translator;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.gender.Gender;
-import ink.anh.family.gender.GenderManager;
+import ink.anh.family.fplayer.gender.Gender;
+import ink.anh.family.fplayer.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
 
 public class InfoGenerator {

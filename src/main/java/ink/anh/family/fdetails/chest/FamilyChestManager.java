@@ -1,4 +1,4 @@
-package ink.anh.family.fdetails;
+package ink.anh.family.fdetails.chest;
 
 import java.util.Map;
 import java.util.UUID;
@@ -11,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.fdetails.FamilyDetails;
+import ink.anh.family.fdetails.FamilyDetailsGet;
 
 public class FamilyChestManager {
 

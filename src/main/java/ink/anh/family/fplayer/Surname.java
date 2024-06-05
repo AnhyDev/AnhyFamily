@@ -1,4 +1,4 @@
-package ink.anh.family.info;
+package ink.anh.family.fplayer;
 
 import java.util.UUID;
 
@@ -13,8 +13,6 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.SurnameSelectEvent;
-import ink.anh.family.fplayer.FamilyDataHandler;
-import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 

@@ -1,4 +1,4 @@
-package ink.anh.family.info;
+package ink.anh.family.fplayer.info;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -31,7 +31,7 @@ family_player_unknown: "Giocatore sconosciuto"
 family_player_not_found_db: "Giocatore non trovato nel database."
 family_error_generic: "Errore sconosciuto"
 
-# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Maschile"
 family_gender_female: "Femminile"
 family_gender_non-binary: "Non binario"
@@ -43,7 +43,7 @@ family_gender_incorrectly_specified: "Genere specificato in modo errato. Usa MAL
 family_gender_player_reset: "Il genere del giocatore %s è stato ripristinato a 'Non deciso'."
 family_gender_player_set_to: "Il genere del giocatore %s è stato impostato come:"
 
-# Command /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Cognome precedente: "
 family_info_role_father: "Padre:"
 family_info_role_mother: "Madre:"
@@ -63,13 +63,13 @@ family_info_children: "Bambini:"
 family_info_children_none: "nessuno"
 family_info_component: "Informazioni sulla famiglia del giocatore %s, passa il mouse per visualizzare o fai clic per mostrare nella tua chat"
 
-# Command /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
 family_tree_title: "Albero genealogico"
 family_tree_ancestors: "Antenati"
 family_tree_descendants: "Discendenti"
 family_tree_component: "Informazioni sull'albero genealogico del giocatore %s, passa il mouse per visualizzare o fai clic per mostrare nella tua chat"
 
-# Command /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+# Command /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Il tuo cognome: %s "
 family_surname_already_exists: "Il cognome esiste già: %s, per cambiarlo, consulta il sacerdote"
 family_surname_forced_change: "Il cognome per il giocatore %s è stato cambiato forzatamente: %s "
@@ -208,7 +208,7 @@ family_separation_disown_child: "Ripudio di un figlio"
 family_separation_disown_parent: "Ripudio dei genitori"
 family_separation_full_separation: "Interruzione completa di tutti i legami familiari"
 
-# Comandi per case familiari [ink.anh.family.home.FamilyHomeManager]
+# Comandi per case familiari [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "Dettagli familiari non trovati."
 family_err_home_already_set: "Il timeout per cambiare il punto di casa non è ancora scaduto."
 family_err_home_not_set: "Punto di casa non impostato."

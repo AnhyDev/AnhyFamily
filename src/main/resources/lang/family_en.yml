@@ -31,7 +31,7 @@ family_player_unknown: "Unknown player"
 family_player_not_found_db: "Player not found in the database."
 family_error_generic: "Unknown error"
 
-# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Male"
 family_gender_female: "Female"
 family_gender_non-binary: "Non-binary"
@@ -43,7 +43,7 @@ family_gender_incorrectly_specified: "Incorrectly specified gender. Use MALE, FE
 family_gender_player_reset: "Player %s's gender reset to 'Undecided'."
 family_gender_player_set_to: "Player %s's gender set to:"
 
-# Command /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Previous surname: "
 family_info_role_father: "Father:"
 family_info_role_mother: "Mother:"
@@ -63,13 +63,13 @@ family_info_children: "Children:"
 family_info_children_none: "none"
 family_info_component: "Family information of player %s, hover to view or click to display in your chat"
 
-# Command /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
 family_tree_title: "Family Tree"
 family_tree_ancestors: "Ancestors"
 family_tree_descendants: "Descendants"
 family_tree_component: "Information about player %s's family tree, hover to view or click to display in your chat"
 
-# Command /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+# Command /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Your surname: %s "
 family_surname_already_exists: "Surname already exists: %s, to change it, contact a priest"
 family_surname_forced_change: "Player %s's surname forcibly set to: %s "
@@ -208,7 +208,7 @@ family_separation_disown_child: "Disowning a child"
 family_separation_disown_parent: "Disowning parents"
 family_separation_full_separation: "Complete severance of all family ties"
 
-# Commands for family homes [ink.anh.family.home.FamilyHomeManager]
+# Commands for family homes [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "Family details not found."
 family_err_home_already_set: "Timeout for changing the home point has not yet expired."
 family_err_home_not_set: "Home point not set."

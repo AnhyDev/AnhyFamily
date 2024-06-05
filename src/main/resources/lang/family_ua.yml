@@ -31,7 +31,7 @@ family_player_unknown: "Невідомий гравець"
 family_player_not_found_db: "Гравець не знайдений в БД."
 family_error_generic: "Невідома помилка"
 
-# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.gender.GenderManager]
+# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Чоловіча"
 family_gender_female: "Жіноча"
 family_gender_non-binary: "Небінарне"
@@ -43,7 +43,7 @@ family_gender_incorrectly_specified: "Неправильно вказана ст
 family_gender_player_reset: "Стать гравця %s скинуто на 'Не визначено'."
 family_gender_player_set_to: "Стать гравця %s встановлено як:"
 
-# Command /family info [classes: ink.anh.family.info.FamilyInfoCommandHandler, ink.anh.family.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Попереднє прізвище: "
 family_info_role_father: "Батько:"
 family_info_role_mother: "Мати:"
@@ -63,13 +63,13 @@ family_info_children: "Діти:"
 family_info_children_none: "немає"
 family_info_component: "Сімейна інформація гравця %s, наведіть для перегляду або клікніть для виведення у свій чат"
 
-# Command /family tree  [classes: ink.anh.family.info.FamilyTreeCommandHandler, ink.anh.family.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
 family_tree_title: "Сімейне дерево"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Нащадки"
 family_tree_component: "Інформація про родове дерево гравця %s, наведіть для перегляду або клікніть для виведення у свій чат"
 
-# Command /surname (setsurname) ... [class: ink.anh.family.info.Surname]
+# Command /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Ваше прізвище: %s "
 family_surname_already_exists: "Прізвище вже є: %s, щоб змінити його, зверніться до священника"
 family_surname_forced_change: "Для гравця %s примусово встановлено прізвище: %s "
@@ -208,7 +208,7 @@ family_separation_disown_child: "Відмова від дитини"
 family_separation_disown_parent: "Відмова від батьків"
 family_separation_full_separation: "Повне розірвання всіх сімейних зв'язків"
 
-# Команди для сімейних хомів [ink.anh.family.home.FamilyHomeManager]
+# Команди для сімейних хомів [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "Сімейні деталі не знайдені."
 family_err_home_already_set: "Таймаут для зміни точки дому ще не вийшов"
 family_err_home_not_set: "Точка дому не встановлена."

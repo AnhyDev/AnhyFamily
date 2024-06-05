@@ -10,7 +10,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.home.FamilyHomeSubCommand;
+import ink.anh.family.fdetails.home.FamilyHomeSubCommand;
 
 public class FamilyHomeCommand extends Sender implements CommandExecutor {
 	
