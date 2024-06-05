@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.messages.MessageForFormatting;
@@ -24,19 +25,31 @@ public class FamilySymbolManager extends Sender {
     private static Map<UUID, SymbolRequest> symbolRequests = new HashMap<>();
 
     private AnhyFamily familyPlugin;
-    private Player player;
+    private Player player = null;
     private String[] args;
 
-    public FamilySymbolManager(AnhyFamily familyPlugin, Player player, String[] args) {
+    public FamilySymbolManager(AnhyFamily familyPlugin, CommandSender sender, String[] args) {
         super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
-        this.player = player;
+        this.setPlayer(sender);
         this.args = args;
     }
 
+    private void setPlayer(CommandSender sender) {
+    	if (sender instanceof Player ) {
+    		this.player = (Player) sender;
+    	} else {
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
+    	}
+    }
+    
     public void setSymbol() {
+    	if (player == null) {
+    		return;
+    	}
+    	
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fsymbol set <symbol>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/family symbolset <symbol>"}), MessageType.WARNING, player);
             return;
         }
 
@@ -71,6 +84,10 @@ public class FamilySymbolManager extends Sender {
     }
 
     public void acceptSymbol() {
+    	if (player == null) {
+    		return;
+    	}
+    	
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             SymbolRequest request = symbolRequests.get(familyId);

@@ -17,6 +17,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.command.sub.Clear;
 import ink.anh.family.command.sub.Separation;
 import ink.anh.family.db.TableRegistry;
+import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.fplayer.info.FamilyInfoCommandHandler;
 import ink.anh.family.fplayer.info.FamilyTreeCommandHandler;
@@ -69,6 +70,12 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 	                    break;
 	                case "trees":
 	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
+	                    break;
+	                case "symbolset":
+	                    new FamilySymbolManager(familyPlugin, sender, args).setSymbol();
+	                    break;
+	                case "symbolaccept":
+	                    new FamilySymbolManager(familyPlugin, sender, args).acceptSymbol();
 	                    break;
 	                case "parentelement":
 	                    infoParentElement(sender);
