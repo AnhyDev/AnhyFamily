@@ -214,9 +214,9 @@ family_err_home_already_set: "Il timeout per cambiare il punto di casa non è an
 family_err_home_not_set: "Punto di casa non impostato."
 family_err_no_spouse: "Non hai un coniuge con cui impostare una casa."
 family_home_request_sent: "Richiesta di impostazione della casa inviata. Il tuo partner deve confermare la richiesta entro 60 secondi."
-family_err_request_not_confirmed: "La tua richiesta di impostazione della casa non è stata confermata entro 60 secondi."
+family_err_request_home_not_confirmed: "La tua richiesta di impostazione della casa non è stata confermata entro 60 secondi."
 family_home_set: "Punto di casa impostato con successo."
-family_err_no_pending_request: "Nessuna richiesta di impostazione della casa in sospeso da confermare."
+family_err_no_pending_request: "Nessuna richiesta pendente da confermare."
 family_err_nickname_not_found: "Impossibile trovare il giocatore con il nome %s."
 family_err_home_other_not_set: "Punto di casa familiare per %s non impostato."
 family_err_no_access_home: "Non hai accesso alla casa familiare di %s."
@@ -226,4 +226,17 @@ family_err_nickname_not_found_in_access_maps: "Nickname %s non trovato nelle map
 family_default_home_access_set: "Accesso alla casa predefinito impostato per %s: %s."
 family_err_invalid_group: "Gruppo non valido: %s. Usa children o parents."
 
+# Comandi per il prefisso familiare [ink.anh.family.fdetails.symbol.FamilySymbolManager]
+family_err_invalid_prefix: "Prefisso non valido. Deve essere composto da 3 a 5 lettere latine."
+family_prefix_request_sent: "Richiesta di modifica del prefisso della famiglia inviata. Il tuo partner deve confermare la richiesta entro 60 secondi usando il comando: %s."
+family_err_request_prefix_not_confirmed: "La richiesta di modifica del prefisso non è stata confermata entro 60 secondi."
+family_err_prefix_already_set: "Prefisso familiare già impostato, impossibile modificarlo da solo."
+family_prefix_set: "Prefisso familiare cambiato con successo."
+family_err_prefix_taken: "Il prefisso %s è già occupato. Scegli un altro prefisso."
+family_err_prefix_not_found: "Prefisso %s non trovato."
+
+# Comandi per le chat familiari [ink.anh.family.fdetails.chat.FamilyChatManager]
+family_err_command_only_player: "Questo comando può essere eseguito solo da un giocatore."
+family_chat_access_set: "Accesso alla chat per %s impostato su %s."
+family_default_chat_access_set: "Accesso alla chat predefinito impostato per %s: %s."
 

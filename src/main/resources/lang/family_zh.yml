@@ -214,9 +214,9 @@ family_err_home_already_set: "更改家庭点的超时时间尚未到期。"
 family_err_home_not_set: "家庭点未设定。"
 family_err_no_spouse: "你没有配偶来设定家。"
 family_home_request_sent: "已发送设定家庭的请求。你的伴侣必须在60秒内确认请求。"
-family_err_request_not_confirmed: "你的设定家庭请求在60秒内未被确认。"
+family_err_request_home_not_confirmed: "你的设定家庭请求在60秒内未被确认。"
 family_home_set: "家庭点设定成功。"
-family_err_no_pending_request: "没有待确认的设定家庭请求。"
+family_err_no_pending_request: "没有待确认的请求。"
 family_err_nickname_not_found: "找不到名为 %s 的玩家。"
 family_err_home_other_not_set: "%s 的家庭点未设定。"
 family_err_no_access_home: "你没有访问 %s 家庭的权限。"
@@ -226,4 +226,17 @@ family_err_nickname_not_found_in_access_maps: "在访问映射中找不到昵称
 family_default_home_access_set: "默认家庭访问设置为 %s：%s。"
 family_err_invalid_group: "无效的组：%s。请使用 children 或 parents。"
 
+# 家庭前缀的命令 [ink.anh.family.fdetails.symbol.FamilySymbolManager]
+family_err_invalid_prefix: "无效的前缀。它应该是 3 到 5 个拉丁字母。"
+family_prefix_request_sent: "已发送家庭前缀更改请求。你的伴侣必须在60秒内使用命令确认请求：%s。"
+family_err_request_prefix_not_confirmed: "前缀更改请求在60秒内未被确认。"
+family_err_prefix_already_set: "家庭前缀已设置，无法自行更改。"
+family_prefix_set: "家庭前缀成功更改。"
+family_err_prefix_taken: "前缀 %s 已被占用。选择另一个前缀。"
+family_err_prefix_not_found: "未找到前缀 %s。"
+
+# 家庭聊天的命令 [ink.anh.family.fdetails.chat.FamilyChatManager]
+family_err_command_only_player: "此命令只能由玩家执行。"
+family_chat_access_set: "对 %s 的聊天访问设置为 %s。"
+family_default_chat_access_set: "默认聊天访问设置为 %s：%s。"
 

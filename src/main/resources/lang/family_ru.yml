@@ -214,9 +214,9 @@ family_err_home_already_set: "Тайм-аут для изменения точк
 family_err_home_not_set: "Точка дома не установлена."
 family_err_no_spouse: "У тебя нет супруга для установки дома."
 family_home_request_sent: "Запрос на установку дома отправлен. Твой партнер должен подтвердить запрос в течение 60 секунд."
-family_err_request_not_confirmed: "Твой запрос на установку дома не был подтвержден в течение 60 секунд."
+family_err_request_home_not_confirmed: "Твой запрос на установку дома не был подтвержден в течение 60 секунд."
 family_home_set: "Точка дома успешно установлена."
-family_err_no_pending_request: "Нет запроса на установку дома для подтверждения."
+family_err_no_pending_request: "Нет запроса на подтверждение."
 family_err_nickname_not_found: "Не удалось найти игрока с именем %s."
 family_err_home_other_not_set: "Точка семейного дома у %s не установлена."
 family_err_no_access_home: "У тебя нет доступа к семейному дому %s."
@@ -225,5 +225,19 @@ family_home_access_set: "Доступ к дому для %s установлен
 family_err_nickname_not_found_in_access_maps: "Никнейм %s не найден в картах доступа."
 family_default_home_access_set: "Доступ к дому по умолчанию установлен для %s: %s."
 family_err_invalid_group: "Недействительная группа: %s. Используйте children или parents."
+
+# Команды для семейного префикса [ink.anh.family.fdetails.symbol.FamilySymbolManager]
+family_err_invalid_prefix: "Неправильный префикс. Он должен быть от 3 до 5 латинских букв."
+family_prefix_request_sent: "Запрос на изменение префикса семьи отправлен. Ваш партнер должен подтвердить запрос в течение 60 секунд командой: %s."
+family_err_request_prefix_not_confirmed: "Запрос на изменение префикса не подтвержден в течение 60 секунд."
+family_err_prefix_already_set: "Префикс семьи уже установлен, изменить самостоятельно невозможно."
+family_prefix_set: "Префикс семьи успешно изменен."
+family_err_prefix_taken: "Префикс %s уже занят. Выберите другой префикс."
+family_err_prefix_not_found: "Префикс %s не найден."
+
+# Команды для семейных чатов [ink.anh.family.fdetails.chat.FamilyChatManager]
+family_err_command_only_player: "Эта команда может быть выполнена только игроком."
+family_chat_access_set: "Доступ к чату для %s установлен на %s."
+family_default_chat_access_set: "Доступ к чату по умолчанию установлен для %s: %s."
 
 

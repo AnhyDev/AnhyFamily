@@ -214,7 +214,7 @@ family_err_home_already_set: "Der Timeout zum Ändern des Heimpunkts ist noch ni
 family_err_home_not_set: "Heimpunkt nicht gesetzt."
 family_err_no_spouse: "Du hast keinen Ehepartner, um ein Zuhause zu setzen."
 family_home_request_sent: "Anfrage zur Festlegung des Heims gesendet. Dein Partner muss die Anfrage innerhalb von 60 Sekunden bestätigen."
-family_err_request_not_confirmed: "Deine Anfrage zur Festlegung des Heims wurde innerhalb von 60 Sekunden nicht bestätigt."
+family_err_request_home_not_confirmed: "Deine Anfrage zur Festlegung des Heims wurde innerhalb von 60 Sekunden nicht bestätigt."
 family_home_set: "Heimpunkt erfolgreich gesetzt."
 family_err_no_pending_request: "Keine ausstehende Anfrage zur Festlegung des Heims zu bestätigen."
 family_err_nickname_not_found: "Spieler mit dem Namen %s konnte nicht gefunden werden."
@@ -225,5 +225,19 @@ family_home_access_set: "Heimzugriff für %s auf %s gesetzt."
 family_err_nickname_not_found_in_access_maps: "Spitzname %s in den Zugriffskarten nicht gefunden."
 family_default_home_access_set: "Standardzugriff für %s auf %s gesetzt."
 family_err_invalid_group: "Ungültige Gruppe: %s. Verwenden Sie children oder parents."
+
+# Befehle für das Familienpräfix [ink.anh.family.fdetails.symbol.FamilySymbolManager]
+family_err_invalid_prefix: "Ungültiges Präfix. Es sollte aus 3 bis 5 lateinischen Buchstaben bestehen."
+family_prefix_request_sent: "Anfrage zur Änderung des Familienpräfixes gesendet. Dein Partner muss die Anfrage innerhalb von 60 Sekunden mit dem Befehl bestätigen: %s."
+family_err_request_prefix_not_confirmed: "Präfixänderungsanfrage innerhalb von 60 Sekunden nicht bestätigt."
+family_err_prefix_already_set: "Familienpräfix bereits gesetzt, kann nicht selbst geändert werden."
+family_prefix_set: "Familienpräfix erfolgreich geändert."
+family_err_prefix_taken: "Präfix %s ist bereits vergeben. Wähle ein anderes Präfix."
+family_err_prefix_not_found: "Präfix %s nicht gefunden."
+
+# Befehle für Familienchats [ink.anh.family.fdetails.chat.FamilyChatManager]
+family_err_command_only_player: "Dieser Befehl kann nur von einem Spieler ausgeführt werden."
+family_chat_access_set: "Chat-Zugriff für %s auf %s gesetzt."
+family_default_chat_access_set: "Standard-Chat-Zugriff für %s auf %s gesetzt."
 
 

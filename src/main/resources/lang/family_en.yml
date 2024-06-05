@@ -214,9 +214,9 @@ family_err_home_already_set: "Timeout for changing the home point has not yet ex
 family_err_home_not_set: "Home point not set."
 family_err_no_spouse: "You don't have a spouse to set a home with."
 family_home_request_sent: "Home set request sent. Your partner must confirm the request within 60 seconds."
-family_err_request_not_confirmed: "Your home set request was not confirmed within 60 seconds."
+family_err_request_home_not_confirmed: "Your home set request was not confirmed within 60 seconds."
 family_home_set: "Home point successfully set."
-family_err_no_pending_request: "No pending home set request to confirm."
+family_err_no_pending_request: "No pending request to confirm."
 family_err_nickname_not_found: "Could not find player with the name %s."
 family_err_home_other_not_set: "Family home point for %s not set."
 family_err_no_access_home: "You do not have access to the family home of %s."
@@ -225,5 +225,20 @@ family_home_access_set: "Home access for %s set to %s."
 family_err_nickname_not_found_in_access_maps: "Nickname %s not found in access maps."
 family_default_home_access_set: "Default home access set for %s: %s."
 family_err_invalid_group: "Invalid group: %s. Use children or parents."
+
+# Commands for family prefix [ink.anh.family.fdetails.symbol.FamilySymbolManager]
+family_err_invalid_prefix: "Invalid prefix. It should be 3 to 5 Latin letters."
+family_prefix_request_sent: "Family prefix change request sent. Your partner must confirm the request within 60 seconds using the command: %s."
+family_err_request_prefix_not_confirmed: "Prefix change request not confirmed within 60 seconds."
+family_err_prefix_already_set: "Family prefix already set, cannot change by yourself."
+family_prefix_set: "Family prefix successfully changed."
+family_err_prefix_taken: "Prefix %s is already taken. Choose another prefix."
+family_err_prefix_not_found: "Prefix %s not found."
+
+# Commands for family chats [ink.anh.family.fdetails.chat.FamilyChatManager]
+family_err_command_only_player: "This command can only be executed by a player."
+family_chat_access_set: "Chat access for %s set to %s."
+family_default_chat_access_set: "Default chat access set for %s: %s."
+
 
 

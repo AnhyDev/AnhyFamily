@@ -23,6 +23,7 @@ import ink.anh.family.util.FamilyUtils;
 public class FamilySymbolManager extends Sender {
 
     private static Map<UUID, SymbolRequest> symbolRequests = new HashMap<>();
+    private static Map<String, UUID> symbolMap = new HashMap<>();
 
     private AnhyFamily familyPlugin;
     private Player player = null;
@@ -36,18 +37,22 @@ public class FamilySymbolManager extends Sender {
     }
 
     private void setPlayer(CommandSender sender) {
-    	if (sender instanceof Player ) {
-    		this.player = (Player) sender;
-    	} else {
+        if (sender instanceof Player) {
+            this.player = (Player) sender;
+        } else {
             sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
-    	}
+        }
     }
-    
+
+    public static UUID getFamilyIdBySymbol(String symbol) {
+        return symbolMap.get(symbol.toUpperCase());
+    }
+
     public void setSymbol() {
-    	if (player == null) {
-    		return;
-    	}
-    	
+        if (player == null) {
+            return;
+        }
+
         if (args.length < 2) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/family symbolset <symbol>"}), MessageType.WARNING, player);
             return;
@@ -56,6 +61,12 @@ public class FamilySymbolManager extends Sender {
         String newSymbol = args[1].toUpperCase();
         if (newSymbol.length() < 3 || newSymbol.length() > 5 || !newSymbol.matches("[A-Z]+")) {
             sendMessage(new MessageForFormatting("family_err_invalid_symbol", new String[] {}), MessageType.WARNING, player);
+            return;
+        }
+
+        // Перевірка, чи символ вже зайнятий
+        if (symbolMap.containsKey(newSymbol)) {
+            sendMessage(new MessageForFormatting("family_err_symbol_taken", new String[] {newSymbol}), MessageType.WARNING, player);
             return;
         }
 
@@ -69,12 +80,12 @@ public class FamilySymbolManager extends Sender {
                 }
                 symbolRequests.put(details.getFamilyId(), new SymbolRequest(newSymbol, player.getUniqueId()));
                 sendMessage(new MessageForFormatting("family_symbol_request_sent", new String[] {}), MessageType.NORMAL, player);
-                
+
                 // Запуск таймера на 60 секунд
                 familyPlugin.getServer().getScheduler().runTaskLater(familyPlugin, () -> {
                     if (symbolRequests.containsKey(details.getFamilyId())) {
                         symbolRequests.remove(details.getFamilyId());
-                        sendMessage(new MessageForFormatting("family_err_request_not_confirmed", new String[] {}), MessageType.WARNING, player);
+                        sendMessage(new MessageForFormatting("family_err_request_symbol_not_confirmed", new String[] {}), MessageType.WARNING, player);
                     }
                 }, 1200L); // 1200 тік дорівнює 60 секунд
             } else {
@@ -84,16 +95,29 @@ public class FamilySymbolManager extends Sender {
     }
 
     public void acceptSymbol() {
-    	if (player == null) {
-    		return;
-    	}
-    	
+        if (player == null) {
+            return;
+        }
+
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             SymbolRequest request = symbolRequests.get(familyId);
             if (request != null && !request.getRequesterUUID().equals(player.getUniqueId())) {
-                details.setFamilySymbol(request.getSymbol());
+                String oldSymbol = details.getFamilySymbol();
+                String newSymbol = request.getSymbol();
+
+                // Видаляємо старий символ з мапи, якщо він існує
+                if (oldSymbol != null) {
+                    symbolMap.remove(oldSymbol);
+                }
+
+                // Оновлюємо символ у FamilyDetails
+                details.setFamilySymbol(newSymbol);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.FAMILY_SYMBOL);
+
+                // Додаємо новий символ у мапу
+                symbolMap.put(newSymbol, familyId);
+
                 symbolRequests.remove(familyId);
                 Player[] players = new Player[] {player, familyPlugin.getServer().getPlayer(request.getRequesterUUID())};
                 sendMessage(new MessageForFormatting("family_symbol_set", new String[] {}), MessageType.NORMAL, players);

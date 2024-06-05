@@ -4,11 +4,9 @@ import java.util.concurrent.CompletableFuture;
 
 import org.bukkit.entity.Player;
 
-import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.api.messages.MessageForFormatting;
 
 public class FamilyHomeSubCommand extends Sender {
 	
@@ -47,7 +45,7 @@ public class FamilyHomeSubCommand extends Sender {
                     homeManager.setDefaultHomeAccess();
                     break;
                 default:
-                    sendMessage(new MessageForFormatting("family_err_command_format /fhome [set|tp|child|parent|access|default]", new String[] {}), MessageType.WARNING, player);
+                    homeManager.tpHomeBySymbol();
                 }
             } else {
                 homeManager.tpHome();

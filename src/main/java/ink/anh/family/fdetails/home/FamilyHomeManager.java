@@ -21,6 +21,7 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsActionInterface;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
+import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 
@@ -57,7 +58,7 @@ public class FamilyHomeManager extends Sender {
                 Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
                     if (homeRequests.containsKey(details.getFamilyId())) {
                         homeRequests.remove(details.getFamilyId());
-                        sendMessage(new MessageForFormatting("family_err_request_not_confirmed", new String[] {}), MessageType.WARNING, player);
+                        sendMessage(new MessageForFormatting("family_err_request_home_not_confirmed", new String[] {}), MessageType.WARNING, player);
                     }
                 }, 1200L); 
             } else {
@@ -130,6 +131,41 @@ public class FamilyHomeManager extends Sender {
                 sendMessage(new MessageForFormatting("family_err_no_access_home", new String[] {args[1]}), MessageType.WARNING, player);
             }
         });
+    }
+
+    public void tpHomeBySymbol() {
+
+        String symbol = args[0].toUpperCase();
+        if (symbol.length() < 3 || symbol.length() > 6 || !symbol.matches("[A-Z]+")) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome [set|tp|child|parent|access|default|<symbol>]"}), MessageType.WARNING, player);
+            return;
+        }
+
+        UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(symbol);
+        if (familyId == null) {
+            sendMessage(new MessageForFormatting("family_err_symbol_not_found", new String[] {symbol}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome [set|tp|child|parent|access|default|<symbol>]"}), MessageType.WARNING, player);
+            return;
+        }
+
+        FamilyDetails details = FamilyDetailsGet.getRootFamilyDetails(familyId);
+        if (details == null) {
+            sendMessage(new MessageForFormatting("family_err_details_not_found", new String[] {}), MessageType.WARNING, player);
+            return;
+        }
+
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+        if (!details.hasAccessHome(playerFamily)) {
+            sendMessage(new MessageForFormatting("family_err_no_access_home", new String[] {symbol}), MessageType.WARNING, player);
+            return;
+        }
+
+        Location homeLocation = details.getHomeLocation();
+        if (homeLocation != null) {
+            SyncExecutor.runSync(() -> player.teleport(homeLocation));
+        } else {
+            sendMessage(new MessageForFormatting("family_err_home_not_set", new String[] {}), MessageType.WARNING, player);
+        }
     }
 
     public void setHomeAccess() {

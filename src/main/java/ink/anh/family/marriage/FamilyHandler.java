@@ -3,6 +3,7 @@ package ink.anh.family.marriage;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsSave;
+import ink.anh.family.fdetails.symbol.UUIDToUniqueString;
 import ink.anh.family.fdetails.FamilyDetailsDelete;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
@@ -33,6 +34,9 @@ public class FamilyHandler {
         familyDetails.setChildrenAccessMap(childrenAccessMap);
         familyDetails.setAncestorsAccessMap(ancestorsAccessMap);
 
+        String symbol = UUIDToUniqueString.getUniqueStringFromUUID(familyId);
+        familyDetails.setFamilySymbol(symbol);
+        
         // Збереження FamilyDetails
         FamilyDetailsSave.saveFamilyDetails(familyDetails, null);
 
