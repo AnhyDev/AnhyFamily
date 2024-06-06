@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.command.CommandManager;
+import ink.anh.family.fdetails.FamilyDataLoader;
 import ink.anh.family.listeners.ListenersRegistry;
 import ink.anh.family.util.EconomyHandler;
 
@@ -33,6 +34,8 @@ public class AnhyFamily extends JavaPlugin {
         }
         
         GlobalManager.getInstance();
+
+        SyncExecutor.runAsync(() -> FamilyDataLoader.loadData());
         
         new ListenersRegistry(instance).register();
         new CommandManager(instance).registerCommands();

@@ -2,6 +2,8 @@ package ink.anh.family.db.fdetails;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import ink.anh.api.database.AbstractTable;
@@ -103,6 +105,26 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
                 FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("ancestors_access_map")),
                 rs.getTimestamp("home_set_date") != null ? rs.getTimestamp("home_set_date").toLocalDateTime() : null
         );
+    }
+
+    public Map<UUID, FamilyDetails> getAllFamilyDetails() {
+        String selectSQL = "SELECT * FROM " + dbName + ";";
+        Map<UUID, FamilyDetails> familyDetailsMap = new HashMap<>();
+
+        executeTransaction(conn -> {
+            try (PreparedStatement ps = conn.prepareStatement(selectSQL)) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        FamilyDetails familyDetails = getFamilyDetailsFromResultSet(rs);
+                        familyDetailsMap.put(familyDetails.getFamilyId(), familyDetails);
+                    }
+                } catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        }, "Failed to get all family details");
+
+        return familyDetailsMap;
     }
 
     protected FamilyDetails fetchFamilyDetails(UUID familyId, String selectSQL) {
