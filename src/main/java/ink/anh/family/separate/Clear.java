@@ -1,4 +1,4 @@
-package ink.anh.family.command.sub;
+package ink.anh.family.separate;
 
 import java.util.HashSet;
 import java.util.Set;

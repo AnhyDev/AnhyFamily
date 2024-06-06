@@ -14,8 +14,6 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.command.sub.Clear;
-import ink.anh.family.command.sub.Separation;
 import ink.anh.family.db.TableRegistry;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.Surname;
@@ -25,6 +23,8 @@ import ink.anh.family.marriage.ActionsPriest;
 import ink.anh.family.marriage.Divorce;
 import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
+import ink.anh.family.separate.Clear;
+import ink.anh.family.separate.Separation;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class FamilyCommand extends Sender implements CommandExecutor {
