@@ -44,6 +44,8 @@ public class FamilyChestListener implements Listener {
             
             // Перевірка чи є блок у мапі
             if (clickedBlock != null && FamilyChestManager.isFamilyChest(clickedBlock.getLocation())) {
+            	event.setCancelled(true);
+            	
                 FamilyChestManager familyChestManager = new FamilyChestManager(familyPlugin, player, new String[]{});
                 familyChestManager.attemptOpenFamilyChest(clickedBlock.getLocation());
             }

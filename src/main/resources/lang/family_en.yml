@@ -240,5 +240,20 @@ family_err_command_only_player: "This command can only be executed by a player."
 family_chat_access_set: "Chat access for %s set to %s."
 family_default_chat_access_set: "Default chat access set for %s: %s."
 
+# Commands for family chests [ink.anh.family.fdetails.chest.FamilyChestManager]
+family_err_invalid_chest_location: "The chest can only be placed on a solid block within a radius of 5 blocks."
+family_err_chest_too_far_from_home: "The chest must be within a radius of 20 blocks from the home point."
+family_chest_request_sent: "Chest coordinates set request sent. Your partner must confirm the request within 60 seconds."
+family_err_request_chest_not_confirmed: "Your chest coordinates set request was not confirmed within 60 seconds."
+family_err_chest_already_set: "Timeout for changing chest coordinates has not yet expired."
+family_chest_set: "Chest coordinates successfully set."
+family_err_no_access_chest: "You do not have access to the family chest."
+family_err_symbol_not_found: "Symbol %s not found."
+family_chest_access_set: "Chest access for %s set to %s."
+family_default_chest_access_set: "Default chest access set for %s: %s."
+family_err_chest_distance_restriction: "You are too far from the chest."
+family_err_chest_world_restriction: "You are not in the world where the chest is located."
+family_err_chest_click_disabled: "Opening the chest by clicking is disabled."
+family_err_chest_not_set: "Chest location not set."
 
 

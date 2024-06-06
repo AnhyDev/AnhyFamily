@@ -20,7 +20,7 @@ public class FamilyDetails {
     private UUID familyId;
     private String familySymbol;
     private Location homeLocation = null;
-    private Chest familyChest = new Chest();
+    private Chest familyChest = null;
     private AccessControl childrenAccess = new AccessControl(Access.FALSE, Access.FALSE, Access.FALSE);
     private AccessControl ancestorsAccess = new AccessControl(Access.FALSE, Access.FALSE, Access.FALSE);
     private Map<UUID, AccessControl> childrenAccessMap = new HashMap<>();
@@ -32,7 +32,7 @@ public class FamilyDetails {
         this.familyId = familyId;
         this.familySymbol = familySymbol;
         this.homeLocation = homeLocation;
-        this.familyChest = familyChest != null ? familyChest : new Chest();
+        this.familyChest = familyChest;
         this.childrenAccess = childrenAccess;
         this.ancestorsAccess = ancestorsAccess;
         this.childrenAccessMap = childrenAccessMap;

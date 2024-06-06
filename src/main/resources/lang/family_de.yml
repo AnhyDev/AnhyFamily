@@ -240,4 +240,19 @@ family_err_command_only_player: "Dieser Befehl kann nur von einem Spieler ausgef
 family_chat_access_set: "Chat-Zugriff für %s auf %s gesetzt."
 family_default_chat_access_set: "Standard-Chat-Zugriff für %s auf %s gesetzt."
 
+# Befehle für Familientruhen [ink.anh.family.fdetails.chest.FamilyChestManager]
+family_err_invalid_chest_location: "Die Truhe kann nur auf einem festen Block im Umkreis von 5 Blöcken platziert werden."
+family_err_chest_too_far_from_home: "Die Truhe muss sich im Umkreis von 20 Blöcken vom Heimpunkt befinden."
+family_chest_request_sent: "Anfrage zum Setzen der Truhenkoordinaten gesendet. Dein Partner muss die Anfrage innerhalb von 60 Sekunden bestätigen."
+family_err_request_chest_not_confirmed: "Deine Anfrage zum Setzen der Truhenkoordinaten wurde innerhalb von 60 Sekunden nicht bestätigt."
+family_err_chest_already_set: "Der Timeout für das Ändern der Truhenkoordinaten ist noch nicht abgelaufen."
+family_chest_set: "Truhenkoordinaten erfolgreich gesetzt."
+family_err_no_access_chest: "Du hast keinen Zugang zur Familientruhe."
+family_err_symbol_not_found: "Symbol %s nicht gefunden."
+family_chest_access_set: "Truhenzugriff für %s auf %s gesetzt."
+family_default_chest_access_set: "Standardzugriff auf die Truhe für %s auf %s gesetzt."
+family_err_chest_distance_restriction: "Du bist zu weit von der Truhe entfernt."
+family_err_chest_world_restriction: "Du bist nicht in der Welt, in der sich die Truhe befindet."
+family_err_chest_click_disabled: "Das Öffnen der Truhe durch Klicken ist deaktiviert."
+family_err_chest_not_set: "Truhenstandort nicht festgelegt."
 

@@ -17,7 +17,9 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.Permissions;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
@@ -133,14 +135,16 @@ public class FamilyChestManager extends Sender {
         });
     }
 
-    // Метод для відкриття сімейної скрині
+ // Метод для відкриття сімейної скрині
     public void openChest() {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
-            PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-            if (details.hasAccessChest(playerFamily)) {
-                FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
-            } else {
-                sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {}), MessageType.WARNING, player);
+            if (canOpenChest(details)) {
+                PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+                if (details.hasAccessChest(playerFamily)) {
+                    FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
+                } else {
+                    sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {}), MessageType.WARNING, player);
+                }
             }
         });
     }
@@ -165,15 +169,17 @@ public class FamilyChestManager extends Sender {
         }
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
-            PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-            if (details.hasAccessChest(playerFamily)) {
-                FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
-            } else {
-                sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {symbol}), MessageType.WARNING, player);
+            if (canOpenChest(details)) {
+                PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+                if (details.hasAccessChest(playerFamily)) {
+                    FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
+                } else {
+                    sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {symbol}), MessageType.WARNING, player);
+                }
             }
         });
     }
-    
+
     public void attemptOpenFamilyChest(Location location) {
         UUID familyId = getUUIDFromLocation(location);
         if (familyId == null) {
@@ -181,13 +187,46 @@ public class FamilyChestManager extends Sender {
         }
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
-            PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-            if (details.hasAccessChest(playerFamily)) {
-                FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
-            } else {
-                sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {}), MessageType.WARNING, player);
+            if (canOpenChest(details)) {
+                PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+                if (details.hasAccessChest(playerFamily) || player.hasPermission(Permissions.FAMILY_CHEST_CLICK)) {
+                    FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
+                } else {
+                    sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {}), MessageType.WARNING, player);
+                }
             }
         });
+    }
+
+    private boolean canOpenChest(FamilyDetails details) {
+        FamilyConfig config = GlobalManager.getInstance().getFamilyConfig();
+        Chest familyChest = details.getFamilyChest();
+        
+        // Перевірка наявності сімейної скрині та її локації
+        if (familyChest == null || familyChest.getChestLocation() == null) {
+            sendMessage(new MessageForFormatting("family_err_chest_not_set", new String[] {}), MessageType.WARNING, player);
+            return false;
+        }
+
+        Location chestLocation = familyChest.getChestLocation();
+        
+        // Перевірка дистанції до скрині
+        if (!player.hasPermission(Permissions.FAMILY_CHEST_IGNORE_DISTANCE) && config.getChestDistance() > 0) {
+            if (player.getLocation().distance(chestLocation) > config.getChestDistance()) {
+                sendMessage(new MessageForFormatting("family_err_chest_distance_restriction", new String[] {}), MessageType.WARNING, player);
+                return false;
+            }
+        }
+
+        // Перевірка світу, де знаходиться скриня
+        if (!player.hasPermission(Permissions.FAMILY_CHEST_IGNORE_WORLD) && config.isChestWorld()) {
+            if (!player.getWorld().equals(chestLocation.getWorld())) {
+                sendMessage(new MessageForFormatting("family_err_chest_world_restriction", new String[] {}), MessageType.WARNING, player);
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     public void setChestAccess() {
@@ -322,6 +361,9 @@ public class FamilyChestManager extends Sender {
     }
 
     public static UUID getUUIDFromLocation(Location location) {
+        if (location == null) {
+            return null;
+        }
         int locationHash = getLocationHash(location);
         return locationToUUIDMap.get(locationHash);
     }

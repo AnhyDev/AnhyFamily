@@ -47,7 +47,7 @@ public class FamilyChatManager extends Sender {
         // Отримання сімейних даних та виконання дії
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             // Формування префіксу для повідомлення
-            String prefix = StringUtils.colorize("#0bdebb\"[" + details.getFamilySymbol() + "] #FFFF00" + player.getDisplayName() + "#0bdebb\": #f54900");
+            String prefix = StringUtils.colorize("#0bdebb\"[" + details.getFamilySymbol() + "] #228B22" + "♣ #FFFF00" + player.getDisplayName() + "#0bdebb\": #f54900");
             
             // Перевірка всіх онлайн гравців на доступ до сімейного чату
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -81,7 +81,7 @@ public class FamilyChatManager extends Sender {
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
             String message = StringUtils.colorize(String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
-            String prefix = StringUtils.colorize("#0bdebb\"[" + details.getFamilySymbol() + "] #FFFF00" + player.getDisplayName() + "#0bdebb\": #f54900");
+            String prefix = StringUtils.colorize("#0bdebb\"[" + details.getFamilySymbol() + "] #228B22" + "♣ #FFFF00" + player.getDisplayName() + "#0bdebb\": #f54900");
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);

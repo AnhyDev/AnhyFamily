@@ -75,6 +75,21 @@ answers:
 
 marriedSymbol: "⚭"
 
-# Timeout before changing the family home point, specify in minutes
-homeChangeTimeoutMinutes: 1440
+# Using the /fhome (/familyhome) commnd
+home:
+  # Timeout before changing the family home point, specify in minutes
+  timeout: 1440
+  # It is allowed to teleport to the family home only in the world where it is installed
+  world: false
 
+# Using the family chest
+chest:
+  # Allow the command (/fchest) to open the chest
+  command: true
+  # Distance for the team (0 - no limits)
+  distance: 0
+  # If without limitations, then only in this world
+  world: false
+  # Allow chests to be opened by clicking
+  click: true
+  

@@ -15,6 +15,7 @@ import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.Permissions;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
@@ -86,7 +87,9 @@ public class FamilyHomeManager extends Sender {
     public void tpHome() {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             if (details.getHomeLocation() != null) {
-                SyncExecutor.runSync(() -> player.teleport(details.getHomeLocation()));
+                if (canTeleportToHome(details.getHomeLocation())) {
+                    SyncExecutor.runSync(() -> player.teleport(details.getHomeLocation()));
+                }
             } else {
                 sendMessage(new MessageForFormatting("family_err_home_not_set", new String[] {}), MessageType.WARNING, player);
             }
@@ -95,7 +98,7 @@ public class FamilyHomeManager extends Sender {
 
     public void childHome() {
         PlayerFamily childFamily = getPlayerFamily(new MessageForFormatting("family_err_command_format", new String[] {"/fhome child <NickName>"}),
-        		new MessageForFormatting("family_err_nickname_not_found", new String[] {args[1]}));
+                new MessageForFormatting("family_err_nickname_not_found", new String[] {args[1]}));
         if (childFamily == null) {
             return;
         }
@@ -103,7 +106,9 @@ public class FamilyHomeManager extends Sender {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(childFamily), details -> {
             if (details.hasAccessHome(childFamily)) {
                 if (details.getHomeLocation() != null) {
-                    SyncExecutor.runSync(() -> player.teleport(details.getHomeLocation()));
+                    if (canTeleportToHome(details.getHomeLocation())) {
+                        SyncExecutor.runSync(() -> player.teleport(details.getHomeLocation()));
+                    }
                 } else {
                     sendMessage(new MessageForFormatting("family_err_home_other_not_set", new String[] {args[1]}), MessageType.WARNING, player);
                 }
@@ -115,7 +120,7 @@ public class FamilyHomeManager extends Sender {
 
     public void parentHome() {
         PlayerFamily parentFamily = getPlayerFamily(new MessageForFormatting("family_err_command_format", new String[] {"/fhome parent <NickName>"}),
-        		new MessageForFormatting("family_err_nickname_not_found", new String[] {args[1]}));
+                new MessageForFormatting("family_err_nickname_not_found", new String[] {args[1]}));
         if (parentFamily == null) {
             return;
         }
@@ -123,7 +128,9 @@ public class FamilyHomeManager extends Sender {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(parentFamily), details -> {
             if (details.hasAccessHome(parentFamily)) {
                 if (details.getHomeLocation() != null) {
-                    SyncExecutor.runSync(() -> player.teleport(details.getHomeLocation()));
+                    if (canTeleportToHome(details.getHomeLocation())) {
+                        SyncExecutor.runSync(() -> player.teleport(details.getHomeLocation()));
+                    }
                 } else {
                     sendMessage(new MessageForFormatting("family_err_home_other_not_set", new String[] {args[1]}), MessageType.WARNING, player);
                 }
@@ -134,7 +141,6 @@ public class FamilyHomeManager extends Sender {
     }
 
     public void tpHomeBySymbol() {
-
         String symbol = args[0].toUpperCase();
         if (symbol.length() < 3 || symbol.length() > 6 || !symbol.matches("[A-Z]+")) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome [set|tp|child|parent|access|default|<prefix>]"}), MessageType.WARNING, player);
@@ -162,10 +168,21 @@ public class FamilyHomeManager extends Sender {
 
         Location homeLocation = details.getHomeLocation();
         if (homeLocation != null) {
-            SyncExecutor.runSync(() -> player.teleport(homeLocation));
+            if (canTeleportToHome(details.getHomeLocation())) {
+                SyncExecutor.runSync(() -> player.teleport(homeLocation));
+            }
         } else {
             sendMessage(new MessageForFormatting("family_err_home_not_set", new String[] {}), MessageType.WARNING, player);
         }
+    }
+
+    private boolean canTeleportToHome(Location homeLocation) {
+        if (!player.hasPermission(Permissions.FAMILY_TPHOME) && GlobalManager.getInstance().getFamilyConfig().isHomeWorld() && 
+            !player.getWorld().equals(homeLocation.getWorld())) {
+            sendMessage(new MessageForFormatting("family_err_home_world_restriction", new String[] {}), MessageType.WARNING, player);
+            return false;
+        }
+        return true;
     }
 
     public void setHomeAccess() {

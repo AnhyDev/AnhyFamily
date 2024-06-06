@@ -32,8 +32,20 @@ public class FamilyConfig {
     
     private int ceremonyRadius;
     private int ceremonyHearingRadius;
-    
+
+    // Timeout before changing the family home point, specify in minutes
     private int homeChangeTimeoutMinutes;
+    // It is allowed to teleport to the family home only in the world where it is installed
+    private boolean homeWorld;
+    
+    // Allow the command (/fchest) to open the chest
+    private boolean chestCommand;
+    // Distance for the team (0 - no limits)
+    private int chestDistance;
+    // If without limitations, then only in this world
+    private boolean chestWorld;
+    // Allow chests to be opened by clicking
+    private boolean chestClick;
 
     private static FamilyConfig instance;
 
@@ -69,7 +81,13 @@ public class FamilyConfig {
         this.ceremonyRadius = config.getInt("ceremonyRadius", 20);
         this.ceremonyHearingRadius = config.getInt("ceremonyHearingRadius", 100);
         
-        this.homeChangeTimeoutMinutes = config.getInt("homeChangeTimeoutMinutes", 1440);
+        this.homeChangeTimeoutMinutes = config.getInt("home.timeout", 1440);
+        this.homeWorld = config.getBoolean("home.world", false);
+
+        this.chestCommand = config.getBoolean("chest.command", true);
+        this.chestDistance = config.getInt("chest.distance", 0);
+        this.chestWorld = config.getBoolean("chest.world", false);
+        this.chestClick = config.getBoolean("chest.click", true);
 
         ItemStack[] items = loadItems(plugin);
         
@@ -137,6 +155,31 @@ public class FamilyConfig {
     public int getHomeChangeTimeoutMinutes() {
         return homeChangeTimeoutMinutes;
     }
+
+    // New getters for chest parameters
+    public boolean isChestCommand() {
+        return chestCommand;
+    }
+
+    public int getChestDistance() {
+        return chestDistance;
+    }
+
+    public boolean isChestWorld() {
+        return chestWorld;
+    }
+
+    public boolean isChestClick() {
+        return chestClick;
+    }
+
+	public boolean isHomeWorld() {
+		return homeWorld;
+	}
+
+	public void setHomeWorld(boolean homeWorld) {
+		this.homeWorld = homeWorld;
+	}
 
     // Method to check the answer
     public int checkAnswer(String word) {
