@@ -1,8 +1,8 @@
 package ink.anh.family.fdetails.home;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,7 +27,7 @@ import ink.anh.family.util.FamilyUtils;
 
 public class FamilyHomeManager extends Sender {
 
-    private static Map<UUID, HomeRequest> homeRequests = new HashMap<>();
+    private static Map<UUID, HomeRequest> homeRequests = new ConcurrentHashMap<>();
 
     private AnhyFamily familyPlugin;
     private Player player;

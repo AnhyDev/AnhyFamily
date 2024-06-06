@@ -1,8 +1,8 @@
 package ink.anh.family.fdetails.symbol;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,8 +22,8 @@ import ink.anh.family.util.FamilyUtils;
 
 public class FamilySymbolManager extends Sender {
 
-    private static Map<UUID, SymbolRequest> symbolRequests = new HashMap<>();
-    private static Map<String, UUID> symbolMap = new HashMap<>();
+    private static Map<UUID, SymbolRequest> symbolRequests = new ConcurrentHashMap<>();
+    private static Map<String, UUID> symbolMap = new ConcurrentHashMap<>();
 
     private AnhyFamily familyPlugin;
     private Player player = null;

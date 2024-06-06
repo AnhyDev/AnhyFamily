@@ -16,7 +16,7 @@ public class ListenersRegistry {
     
     public void register() {
     	bridesChatListener = new AnswerBridesChatListener(familyPlugin);
-        familyChestListener = new FamilyChestListener();
+        familyChestListener = new FamilyChestListener(familyPlugin);
     	
         Listener[] listeners = new Listener[] {bridesChatListener, familyChestListener};
         registerListeners(listeners);

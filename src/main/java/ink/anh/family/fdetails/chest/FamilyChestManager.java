@@ -1,9 +1,9 @@
 package ink.anh.family.fdetails.chest;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -30,8 +30,8 @@ import ink.anh.family.util.FamilyUtils;
 
 public class FamilyChestManager extends Sender {
 
-    private static Map<UUID, ChestRequest> chestRequests = new HashMap<>();
-    private static final Map<Integer, UUID> locationToUUIDMap = new HashMap<>();
+    private static Map<UUID, ChestRequest> chestRequests = new ConcurrentHashMap<>();
+    private static final Map<Integer, UUID> locationToUUIDMap = new ConcurrentHashMap<>();
 
     private AnhyFamily familyPlugin;
     private Player player;
@@ -173,6 +173,23 @@ public class FamilyChestManager extends Sender {
             }
         });
     }
+    
+    public void attemptOpenFamilyChest(Location location) {
+        UUID familyId = getUUIDFromLocation(location);
+        if (familyId == null) {
+            return;
+        }
+
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
+            PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+            if (details.hasAccessChest(playerFamily)) {
+                FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
+            } else {
+                sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[] {}), MessageType.WARNING, player);
+            }
+        });
+    }
+
     public void setChestAccess() {
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchest access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
@@ -298,6 +315,10 @@ public class FamilyChestManager extends Sender {
         int z = location.getBlockZ();
         int worldHash = location.getWorld().hashCode();
         return Objects.hash(worldHash, x, y, z);
+    }
+
+    public static boolean isFamilyChest(Location location) {
+        return locationToUUIDMap.containsKey(getLocationHash(location));
     }
 
     public static UUID getUUIDFromLocation(Location location) {
