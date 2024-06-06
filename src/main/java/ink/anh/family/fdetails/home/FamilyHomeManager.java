@@ -248,15 +248,11 @@ public class FamilyHomeManager extends Sender {
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             if ("children".equals(targetGroup)) {
-                AccessControl childrenAccess = details.getChildrenAccess();
-                childrenAccess.setHomeAccess(access);
-                details.setChildrenAccess(childrenAccess);
+                details.getChildrenAccess().setHomeAccess(access);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.CHILDREN_ACCESS);
                 sendMessage(new MessageForFormatting("family_default_home_access_set", new String[] {"children", accessArg}), MessageType.NORMAL, player);
             } else if ("parents".equals(targetGroup)) {
-                AccessControl ancestorsAccess = details.getAncestorsAccess();
-                ancestorsAccess.setHomeAccess(access);
-                details.setAncestorsAccess(ancestorsAccess);
+            	details.getAncestorsAccess().setHomeAccess(access);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.ANCESTORS_ACCESS);
                 sendMessage(new MessageForFormatting("family_default_home_access_set", new String[] {"parents", accessArg}), MessageType.NORMAL, player);
             } else {

@@ -44,10 +44,6 @@ public class FamilySymbolManager extends Sender {
         }
     }
 
-    public static UUID getFamilyIdBySymbol(String symbol) {
-        return symbolMap.get(symbol.toUpperCase());
-    }
-
     public void setSymbol() {
         if (player == null) {
             return;
@@ -151,5 +147,14 @@ public class FamilySymbolManager extends Sender {
         public UUID getRequesterUUID() {
             return requesterUUID;
         }
+    }
+
+    public static UUID getFamilyIdBySymbol(String symbol) {
+        return symbolMap.get(symbol.toUpperCase());
+    }
+
+    public static void setFamilyIdBySymbolMap(Map<String, UUID> newMap) {
+    	symbolMap.clear();
+    	symbolMap.putAll(newMap);
     }
 }

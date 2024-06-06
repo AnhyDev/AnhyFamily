@@ -241,3 +241,16 @@ family_chat_access_set: "Доступ до чату для %s встановле
 family_default_chat_access_set: "Доступ до чату за замовчуванням встановлено для %s: %s."
 
 
+# Команди для сімейних скринь [ink.anh.family.fdetails.chest.FamilyChestManager]
+family_err_invalid_chest_location: "Скриню можна встановити тільки на твердий блок в радіусі 5 блоків."
+family_err_chest_too_far_from_home: "Скриня має бути не далі ніж в радіусі 20 блоків від точки дому."
+family_chest_request_sent: "Запит на встановлення координат скрині надіслано. Твій партнер повинен підтвердити запит протягом 60 секунд."
+family_err_request_chest_not_confirmed: "Твій запит на встановлення координат скрині не був підтверджений протягом 60 секунд."
+family_err_chest_already_set: "Таймаут для зміни координат скрині ще не вийшов."
+family_chest_set: "Координати скрині успішно встановлені."
+family_err_no_access_chest: "У тебе немає доступу до сімейної скрині."
+family_err_symbol_not_found: "Символ %s не знайдено."
+family_chest_access_set: "Доступ до скрині для %s встановлено на %s."
+family_default_chest_access_set: "Доступ до скрині за замовчуванням встановлено для %s: %s."
+
+
