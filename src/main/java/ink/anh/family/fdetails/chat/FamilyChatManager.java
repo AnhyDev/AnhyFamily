@@ -206,10 +206,10 @@ public class FamilyChatManager extends Sender {
         
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
         
-        // Мовні ключі для повідомлень
+        String familyTree = new FamilyTree(FamilyUtils.getFamily(player)).buildFamilyTreeString();
         String hoverCopyMessageKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_copy_message", langs), new String[] {symbol});
         String hoverReplyChatKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_reply_chat", langs), new String[] {});
-        String hoverFamilyTree = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, new FamilyTree(FamilyUtils.getFamily(player)).buildFamilyTreeString(), langs), new String[] {});
+        String hoverFamilyTree = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, familyTree, langs), new String[] {});
         String hoverPlayerNameKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_player_reply", langs), new String[] {});
 
         return MessageComponents.builder()
@@ -221,7 +221,7 @@ public class FamilyChatManager extends Sender {
                 .content("➤")
                 .hexColor(arrowColor)
                 .hoverMessage(hoverReplyChatKey)
-                .clickActionRunCommand(commandBase + message)
+                .clickActionRunCommand(commandBase)
                 .build())
             .append(MessageComponents.builder()
                 .content("♣")
@@ -232,7 +232,7 @@ public class FamilyChatManager extends Sender {
                 .content(playerName)
                 .hexColor(playerNameColor)
                 .hoverMessage(hoverPlayerNameKey)
-                .clickActionRunCommand(commandBase + " @" + player.getName() + " " + message)
+                .clickActionRunCommand(commandBase + "@" + player.getName())
                 .build())
             .append(MessageComponents.builder()
                 .content(": " + StringUtils.colorize(message))
