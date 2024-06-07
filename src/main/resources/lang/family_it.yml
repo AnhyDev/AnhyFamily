@@ -239,6 +239,10 @@ family_err_prefix_not_found: "Prefisso %s non trovato."
 family_err_command_only_player: "Questo comando può essere eseguito solo da un giocatore."
 family_chat_access_set: "Accesso alla chat per %s impostato su %s."
 family_default_chat_access_set: "Accesso alla chat predefinito impostato per %s: %s."
+family_hover_copy_message: "Clicca per copiare il prefisso '%s' negli appunti"
+family_hover_reply_chat: "Rispondi a questa chat"
+family_hover_player_reply: "Rispondi a '%s' in questa chat"
+family_hover_player_offline: "Il giocatore '%s' è offline"
 
 # Comandi per forzieri familiari [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "Il forziere può essere posizionato solo su un blocco solido entro un raggio di 5 blocchi."

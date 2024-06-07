@@ -239,6 +239,10 @@ family_err_prefix_not_found: "Präfix %s nicht gefunden."
 family_err_command_only_player: "Dieser Befehl kann nur von einem Spieler ausgeführt werden."
 family_chat_access_set: "Chat-Zugriff für %s auf %s gesetzt."
 family_default_chat_access_set: "Standard-Chat-Zugriff für %s auf %s gesetzt."
+family_hover_copy_message: "Klicken, um das Präfix '%s' in die Zwischenablage zu kopieren"
+family_hover_reply_chat: "Auf diesen Chat antworten"
+family_hover_player_reply: "Auf '%s' in diesem Chat antworten"
+family_hover_player_offline: "Spieler '%s' ist offline"
 
 # Befehle für Familientruhen [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "Die Truhe kann nur auf einem festen Block im Umkreis von 5 Blöcken platziert werden."

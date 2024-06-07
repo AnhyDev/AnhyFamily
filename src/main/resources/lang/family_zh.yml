@@ -239,6 +239,10 @@ family_err_prefix_not_found: "未找到前缀 %s。"
 family_err_command_only_player: "此命令只能由玩家执行。"
 family_chat_access_set: "对 %s 的聊天访问设置为 %s。"
 family_default_chat_access_set: "默认聊天访问设置为 %s：%s。"
+family_hover_copy_message: "点击复制前缀 '%s' 到剪贴板"
+family_hover_reply_chat: "回复此聊天"
+family_hover_player_reply: "回复此聊天中的 '%s'"
+family_hover_player_offline: "玩家 '%s' 不在线"
 
 # 家庭箱子的命令 [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "箱子只能放置在半径为5格的坚固方块上。"

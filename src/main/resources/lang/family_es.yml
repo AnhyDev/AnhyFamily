@@ -239,6 +239,10 @@ family_err_prefix_not_found: "Prefijo %s no encontrado."
 family_err_command_only_player: "Este comando solo puede ser ejecutado por un jugador."
 family_chat_access_set: "Acceso al chat para %s establecido en %s."
 family_default_chat_access_set: "Acceso al chat por defecto establecido para %s: %s."
+family_hover_copy_message: "Haz clic para copiar el prefijo '%s' al portapapeles"
+family_hover_reply_chat: "Responder a este chat"
+family_hover_player_reply: "Responder a '%s' en este chat"
+family_hover_player_offline: "El jugador '%s' está desconectado"
 
 # Comandos para cofres familiares [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "El cofre solo se puede colocar en un bloque sólido dentro de un radio de 5 bloques."

@@ -239,6 +239,10 @@ family_err_prefix_not_found: "Префикс %s не найден."
 family_err_command_only_player: "Эта команда может быть выполнена только игроком."
 family_chat_access_set: "Доступ к чату для %s установлен на %s."
 family_default_chat_access_set: "Доступ к чату по умолчанию установлен для %s: %s."
+family_hover_copy_message: "Нажмите, чтобы скопировать префикс '%s' в буфер обмена"
+family_hover_reply_chat: "Ответить в этот чат"
+family_hover_player_reply: "Ответить '%s' в этом чате"
+family_hover_player_offline: "Игрок '%s' не в сети"
 
 # Команды для семейных сундуков [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "Сундук можно установить только на твёрдый блок в радиусе 5 блоков."

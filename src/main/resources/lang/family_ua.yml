@@ -239,13 +239,10 @@ family_err_prefix_not_found: "Префікс %s не знайдений."
 family_err_command_only_player: "Ця команда може бути виконана тільки гравцем."
 family_chat_access_set: "Доступ до чату для %s встановлено на %s."
 family_default_chat_access_set: "Доступ до чату за замовчуванням встановлено для %s: %s."
-
-#
 family_hover_copy_message: "Клікніть для копіювання префіксу '%s' в буфер обміну"
 family_hover_reply_chat: "Відповісти в цей чат"
 family_hover_player_reply: "Відповісти для '%s' в цьому чаті"
 family_hover_player_offline: "Гравець '%s' не в мережі"
-#
 
 # Команди для сімейних скринь [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "Скриню можна встановити тільки на твердий блок в радіусі 5 блоків."

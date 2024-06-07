@@ -239,6 +239,10 @@ family_err_prefix_not_found: "Prefix %s not found."
 family_err_command_only_player: "This command can only be executed by a player."
 family_chat_access_set: "Chat access for %s set to %s."
 family_default_chat_access_set: "Default chat access set for %s: %s."
+family_hover_copy_message: "Click to copy the prefix '%s' to the clipboard"
+family_hover_reply_chat: "Reply to this chat"
+family_hover_player_reply: "Reply to '%s' in this chat"
+family_hover_player_offline: "Player '%s' is offline"
 
 # Commands for family chests [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "The chest can only be placed on a solid block within a radius of 5 blocks."
