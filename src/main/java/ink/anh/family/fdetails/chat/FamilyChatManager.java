@@ -194,7 +194,8 @@ public class FamilyChatManager extends Sender {
     
     public MessageComponents buildInteractiveMessage(FamilyDetails details, String message, Player recepient) {
         String symbol = details.getFamilySymbol();
-        String playerName = player.getDisplayName();
+        String playerDisplayName = player.getDisplayName();
+        String playerName = player.getName();
         String commandBase = "/fc " + symbol + " ";
         
         // Врахування кольорових кодів з рядка
@@ -206,7 +207,7 @@ public class FamilyChatManager extends Sender {
         
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
         
-        String familyTree = new FamilyTree(FamilyUtils.getFamily(player)).buildFamilyTreeString();
+        String familyTree = player.isOnline() ? new FamilyTree(FamilyUtils.getFamily(player)).buildFamilyTreeString() : "family_hover_player_offline";
         String hoverCopyMessageKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_copy_message", langs), new String[] {symbol});
         String hoverReplyChatKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_reply_chat", langs), new String[] {});
         String hoverFamilyTree = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, familyTree, langs), new String[] {});
@@ -218,21 +219,21 @@ public class FamilyChatManager extends Sender {
             .hoverMessage(hoverCopyMessageKey)
             .clickActionCopy(symbol)
             .append(MessageComponents.builder()
-                .content("➤")
+                .content(" ➤")
                 .hexColor(arrowColor)
                 .hoverMessage(hoverReplyChatKey)
                 .clickActionRunCommand(commandBase)
                 .build())
             .append(MessageComponents.builder()
-                .content("♣")
+                .content(" ♣")
                 .hexColor(treeColor)
                 .hoverMessage(hoverFamilyTree)
                 .build())
             .append(MessageComponents.builder()
-                .content(playerName)
+                .content(playerDisplayName)
                 .hexColor(playerNameColor)
                 .hoverMessage(hoverPlayerNameKey)
-                .clickActionRunCommand(commandBase + "@" + player.getName())
+                .clickActionRunCommand(commandBase + "@" + playerName)
                 .build())
             .append(MessageComponents.builder()
                 .content(": " + StringUtils.colorize(message))
