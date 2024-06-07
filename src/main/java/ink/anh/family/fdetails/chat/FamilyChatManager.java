@@ -196,7 +196,7 @@ public class FamilyChatManager extends Sender {
         String symbol = details.getFamilySymbol();
         String playerDisplayName = player.getDisplayName();
         String playerName = player.getName();
-        String commandBase = "/fc " + symbol + " ";
+        String commandBase = "/fchat " + symbol + " ";
         
         // Врахування кольорових кодів з рядка
         String symbolColor = "#0bdebb";
