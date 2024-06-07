@@ -26,6 +26,7 @@ import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.info.FamilyTree;
 import ink.anh.family.util.FamilyUtils;
 
 public class FamilyChatManager extends Sender {
@@ -208,7 +209,7 @@ public class FamilyChatManager extends Sender {
         // Мовні ключі для повідомлень
         String hoverCopyMessageKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_copy_message", langs), new String[] {symbol});
         String hoverReplyChatKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_reply_chat", langs), new String[] {});
-        String hoverFamilyTree = "hoverFamilyTree";
+        String hoverFamilyTree = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, new FamilyTree(FamilyUtils.getFamily(player)).buildFamilyTreeString(), langs), new String[] {});
         String hoverPlayerNameKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_player_reply", langs), new String[] {});
 
         return MessageComponents.builder()

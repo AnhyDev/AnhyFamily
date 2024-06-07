@@ -243,7 +243,7 @@ family_default_chat_access_set: "Доступ до чату за замовчу�
 #
 family_hover_copy_message: "Клікніть для копіювання префіксу '%s' в буфер обміну"
 family_hover_reply_chat: "Відповісти в цей чат"
-family_hover_player_reply: "Відповісти в цей чат"
+family_hover_player_reply: "Відповісти для '%s' в цьому чаті"
 #
 
 # Команди для сімейних скринь [ink.anh.family.fdetails.chest.FamilyChestManager]
