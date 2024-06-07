@@ -8,11 +8,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.enums.Access;
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
-import ink.anh.api.utils.SyncExecutor;
+import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fdetails.AccessControl;
@@ -46,16 +50,12 @@ public class FamilyChatManager extends Sender {
 
         // Отримання сімейних даних та виконання дії
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
-            // Формування префіксу для повідомлення
-            String prefix = StringUtils.colorize("#0bdebb\"[" + details.getFamilySymbol() + "] #228B22" + "♣ #FFFF00" + player.getDisplayName() + "#0bdebb\": #f54900");
-            
             // Перевірка всіх онлайн гравців на доступ до сімейного чату
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);
                 
                 if (onlinePlayerFamily != null && details.hasAccessChat(onlinePlayerFamily)) {
-                    // Відправка повідомлення у головному потоці
-                    SyncExecutor.runSync(() -> onlinePlayer.sendMessage(prefix + message));
+                	sendInteractiveMessageToPlayer(onlinePlayer, details, message);
                 }
             }
         });
@@ -81,13 +81,12 @@ public class FamilyChatManager extends Sender {
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
             String message = StringUtils.colorize(String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
-            String prefix = StringUtils.colorize("#0bdebb\"[" + details.getFamilySymbol() + "] #228B22" + "♣ #FFFF00" + player.getDisplayName() + "#0bdebb\": #f54900");
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);
 
                 if (onlinePlayerFamily != null && details.hasAccessChat(onlinePlayerFamily)) {
-                    SyncExecutor.runSync(() -> onlinePlayer.sendMessage(prefix + message));
+                	sendInteractiveMessageToPlayer(onlinePlayer, details, message);
                 }
             }
         });
@@ -184,11 +183,66 @@ public class FamilyChatManager extends Sender {
         });
     }
 
-    public void executeWithFamilyDetails(FamilyDetails details, FamilyDetailsActionInterface action) {
+    private void executeWithFamilyDetails(FamilyDetails details, FamilyDetailsActionInterface action) {
         if (details != null) {
             action.execute(details);
         } else {
             sendMessage(new MessageForFormatting("family_err_details_not_found", new String[] {}), MessageType.WARNING, player);
         }
+    }
+    
+    public MessageComponents buildInteractiveMessage(FamilyDetails details, String message, Player recepient) {
+        String symbol = details.getFamilySymbol();
+        String playerName = player.getDisplayName();
+        String commandBase = "/fc " + symbol + " ";
+        
+        // Врахування кольорових кодів з рядка
+        String symbolColor = "#0bdebb";
+        String arrowColor = "#8a690f";
+        String treeColor = "#228B22";
+        String playerNameColor = "#FFFF00";
+        String messageColor = "#f54900";
+        
+        String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
+        
+        // Мовні ключі для повідомлень
+        String hoverCopyMessageKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_copy_message", langs), new String[] {symbol});
+        String hoverReplyChatKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_reply_chat", langs), new String[] {});
+        String hoverFamilyTree = "hoverFamilyTree";
+        String hoverPlayerNameKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_player_reply", langs), new String[] {});
+
+        return MessageComponents.builder()
+            .content("[" + symbol + "]")
+            .hexColor(symbolColor)
+            .hoverMessage(hoverCopyMessageKey)
+            .clickActionCopy(symbol)
+            .append(MessageComponents.builder()
+                .content("➤")
+                .hexColor(arrowColor)
+                .hoverMessage(hoverReplyChatKey)
+                .clickActionRunCommand(commandBase + message)
+                .build())
+            .append(MessageComponents.builder()
+                .content("♣")
+                .hexColor(treeColor)
+                .hoverMessage(hoverFamilyTree)
+                .build())
+            .append(MessageComponents.builder()
+                .content(playerName)
+                .hexColor(playerNameColor)
+                .hoverMessage(hoverPlayerNameKey)
+                .clickActionRunCommand(commandBase + " @" + player.getName() + " " + message)
+                .build())
+            .append(MessageComponents.builder()
+                .content(": " + StringUtils.colorize(message))
+                .hexColor(messageColor)
+                .build())
+            .build();
+    }
+
+    private void sendInteractiveMessageToPlayer(Player recipient, FamilyDetails details, String message) {
+    	MessageComponents messageComponents = buildInteractiveMessage(details, message, recipient);
+    	
+    	Messenger.sendMessage(AnhyFamily.getInstance(), recipient, messageComponents, message);
     }
 }
