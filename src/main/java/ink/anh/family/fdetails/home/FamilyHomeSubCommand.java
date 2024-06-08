@@ -9,7 +9,7 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 
 public class FamilyHomeSubCommand extends Sender {
-	
+
     private AnhyFamily familyPlugin;
 
     public FamilyHomeSubCommand(AnhyFamily familyPlugin) {
@@ -23,33 +23,20 @@ public class FamilyHomeSubCommand extends Sender {
             FamilyHomeManager homeManager = new FamilyHomeManager(familyPlugin, player, args);
             if (args.length > 0) {
                 switch (args[0].toLowerCase()) {
-                case "set":
-                    homeManager.setHome();
-                    break;
-                case "accept":
-                    homeManager.setAccept();
-                    break;
-                case "tp":
-                    homeManager.tpHome();
-                    break;
-                case "child":
-                    homeManager.childHome();
-                    break;
-                case "parent":
-                    homeManager.parentHome();
-                    break;
-                case "other":
-                case "o":
-                    homeManager.tpHomeBySymbol();
-                    break;
-                case "access":
-                	homeManager.setHomeAccess();
-                    break;
-                case "default":
-                    homeManager.setDefaultHomeAccess();
-                    break;
-                default:
-                    homeManager.tpHomeBySymbol();
+                    case "set":
+                        homeManager.setHome();
+                        break;
+                    case "accept":
+                        homeManager.setAccept();
+                        break;
+                    case "access":
+                        homeManager.setHomeAccess();
+                        break;
+                    case "default":
+                        homeManager.setDefaultHomeAccess();
+                        break;
+                    default:
+                        homeManager.tpHomeWithConditions();
                 }
             } else {
                 homeManager.tpHome();
