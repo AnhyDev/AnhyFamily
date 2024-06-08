@@ -19,7 +19,6 @@ import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.fplayer.info.FamilyInfoCommandHandler;
 import ink.anh.family.fplayer.info.FamilyTreeCommandHandler;
-import ink.anh.family.marriage.ActionsPriest;
 import ink.anh.family.marriage.Divorce;
 import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
@@ -46,9 +45,6 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 	                    break;
 	                case "setsurname":
 	                    new Surname().setSurnameFromConsole(sender, args);
-	                    break;
-	                case "marry":
-	                    new ActionsPriest(familyPlugin).marry(sender, args);
 	                    break;
 	                case "clear":
 	                    new Clear(familyPlugin).exeClearFamily(sender, args);

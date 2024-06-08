@@ -67,6 +67,12 @@ public class Surname extends Sender {
     }
 
     public boolean setSurnameFromConsole(CommandSender sender, String[] args) {
+
+        if (sender instanceof Player) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, sender);
+            return false;
+        }
+        
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format /family setsurname <PlayerName> <Surname male version[/Surname female version]>", new String[]{}), MessageType.WARNING, sender);
             return false;
@@ -83,11 +89,6 @@ public class Surname extends Sender {
         }
 
         String stringSurname = surnameBuilder.toString();
-
-        if (sender instanceof Player) {
-            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, sender);
-            return false;
-        }
 
         PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
         if (playerFamily == null) {
