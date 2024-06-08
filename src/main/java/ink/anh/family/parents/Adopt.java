@@ -32,7 +32,7 @@ public class Adopt extends Sender {
 
     public boolean adoption(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format /family invite <player1>", new String[]{}), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format /adopt invite <player1>", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
 

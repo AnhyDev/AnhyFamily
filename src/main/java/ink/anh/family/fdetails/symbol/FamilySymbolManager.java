@@ -4,9 +4,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import ink.anh.api.messages.MessageChat;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
@@ -50,7 +52,7 @@ public class FamilySymbolManager extends Sender {
         }
 
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/family prefset <prefix>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/family setpref <prefix>"}), MessageType.WARNING, player);
             return;
         }
 
@@ -119,6 +121,39 @@ public class FamilySymbolManager extends Sender {
                 sendMessage(new MessageForFormatting("family_symbol_set", new String[] {}), MessageType.NORMAL, players);
             } else {
                 sendMessage(new MessageForFormatting("family_err_no_pending_request", new String[] {}), MessageType.WARNING, player);
+            }
+        });
+    }
+
+    public void getPrefix() {
+        if (player == null) {
+            return;
+        }
+
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/family prefix <player>"}), MessageType.WARNING, player);
+            return;
+        }
+
+        String targetPlayerName = args[1];
+        Player targetPlayer = Bukkit.getPlayerExact(targetPlayerName);
+        
+        PlayerFamily playerFamily = targetPlayer!= null ? FamilyUtils.getFamily(targetPlayer) : FamilyUtils.getFamily(targetPlayerName);
+        
+        if (playerFamily == null) {
+            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[] {targetPlayerName}), MessageType.WARNING, player);
+            return;
+        }
+
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(playerFamily), details -> {
+            String familySymbol = details.getFamilySymbol();
+            if (familySymbol != null) {
+            	MessageForFormatting textForFormatting = new MessageForFormatting("family_prefix_info", new String[] {targetPlayerName, familySymbol});
+            	MessageForFormatting hoverText = new MessageForFormatting("family_prefix_info_hover", new String[] {familySymbol, targetPlayerName});
+            	
+            	MessageChat.sendMessageWithCopy(libraryManager, targetPlayer, textForFormatting, hoverText, familySymbol, MessageType.ESPECIALLY, true);
+            } else {
+                sendMessage(new MessageForFormatting("family_err_no_family_prefix", new String[] {targetPlayerName}), MessageType.WARNING, player);
             }
         });
     }

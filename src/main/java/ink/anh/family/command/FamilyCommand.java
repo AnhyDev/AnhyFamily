@@ -71,14 +71,18 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 	                case "trees":
 	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
 	                    break;
-	                case "prefixset":
-	                case "prefset":
-	                case "ps":
+	                case "pref":
+	                case "prefix":
+	                    new FamilySymbolManager(familyPlugin, sender, args).getPrefix();
+	                    break;
+	                case "setprefix":
+	                case "setpref":
+	                case "sp":
 	                    new FamilySymbolManager(familyPlugin, sender, args).setSymbol();
 	                    break;
-	                case "prefixaccept":
-	                case "prefccept":
-	                case "pa":
+	                case "acceptprefix":
+	                case "acceptpref":
+	                case "ap":
 	                    new FamilySymbolManager(familyPlugin, sender, args).acceptSymbol();
 	                    break;
 	                case "parentelement":

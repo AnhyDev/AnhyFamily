@@ -234,6 +234,9 @@ family_err_prefix_already_set: "Prefijo familiar ya establecido, no se puede cam
 family_prefix_set: "Prefijo familiar cambiado con éxito."
 family_err_prefix_taken: "El prefijo %s ya está ocupado. Elige otro prefijo."
 family_err_prefix_not_found: "Prefijo %s no encontrado."
+family_prefix_info: "El jugador %s pertenece a la familia %s, haz clic para copiar"
+family_prefix_info_hover: "Copiar el prefijo familiar %s del jugador %s al portapapeles"
+family_err_no_family_prefix: "El jugador %s no tiene un prefijo familiar"
 
 # Comandos para chats familiares [ink.anh.family.fdetails.chat.FamilyChatManager]
 family_err_command_only_player: "Este comando solo puede ser ejecutado por un jugador."

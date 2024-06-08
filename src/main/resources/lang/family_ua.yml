@@ -234,6 +234,9 @@ family_err_prefix_already_set: "Префікс сім'ї вже встановл
 family_prefix_set: "Префікс сім'ї успішно змінено."
 family_err_prefix_taken: "Префікс %s вже зайнятий. Виберіть інший префікс."
 family_err_prefix_not_found: "Префікс %s не знайдений."
+family_prefix_info: "Гравець %s входить до сім'ї %s, клікніть для копіювання"
+family_prefix_info_hover: "Скопіювати сімейний префікс %s гравця %s до буферу обміну"
+family_err_no_family_prefix: "Сімейний префікс у гравця %s відсутній"
 
 # Команди для сімейних чатів [ink.anh.family.fdetails.chat.FamilyChatManager]
 family_err_command_only_player: "Ця команда може бути виконана тільки гравцем."

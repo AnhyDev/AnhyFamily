@@ -234,6 +234,9 @@ family_err_prefix_already_set: "Family prefix already set, cannot change by your
 family_prefix_set: "Family prefix successfully changed."
 family_err_prefix_taken: "Prefix %s is already taken. Choose another prefix."
 family_err_prefix_not_found: "Prefix %s not found."
+family_prefix_info: "Player %s belongs to family %s, click to copy"
+family_prefix_info_hover: "Copy family prefix %s of player %s to clipboard"
+family_err_no_family_prefix: "Player %s does not have a family prefix"
 
 # Commands for family chats [ink.anh.family.fdetails.chat.FamilyChatManager]
 family_err_command_only_player: "This command can only be executed by a player."

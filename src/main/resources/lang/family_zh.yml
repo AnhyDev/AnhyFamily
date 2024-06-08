@@ -234,6 +234,9 @@ family_err_prefix_already_set: "家庭前缀已设置，无法自行更改。"
 family_prefix_set: "家庭前缀成功更改。"
 family_err_prefix_taken: "前缀 %s 已被占用。选择另一个前缀。"
 family_err_prefix_not_found: "未找到前缀 %s。"
+family_prefix_info: "玩家 %s 属于家庭 %s，点击复制"
+family_prefix_info_hover: "复制玩家 %s 的家庭前缀 %s 到剪贴板"
+family_err_no_family_prefix: "玩家 %s 没有家庭前缀"
 
 # 家庭聊天的命令 [ink.anh.family.fdetails.chat.FamilyChatManager]
 family_err_command_only_player: "此命令只能由玩家执行。"

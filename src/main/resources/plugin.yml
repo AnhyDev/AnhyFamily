@@ -27,5 +27,8 @@ commands:
         aliases: [familyhome]
         usage: "[AnhyFamily] The command '/fhome (/familyhome)' execution error, please check the arguments' correctness."
     fchat:
-        aliases: [familychat, fc]
-        usage: "[AnhyFamily] The command '/fhome (/fc)' execution error, please check the arguments' correctness."
+        aliases: [familychat]
+        usage: "[AnhyFamily] The command '/fchat (/familychat)' execution error, please check the arguments' correctness."
+    fchest:
+        aliases: [familychest]
+        usage: "[AnhyFamily] The command '/fchest (/familychest)' execution error, please check the arguments' correctness."
