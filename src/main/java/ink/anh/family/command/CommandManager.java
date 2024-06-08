@@ -15,6 +15,7 @@ public class CommandManager {
 
     public void registerCommands() {
     	familiPlugin.getCommand("gender").setExecutor(new GenderCommand());
+    	familiPlugin.getCommand("gender").setTabCompleter(new GenderTabCompleter());
     	
     	familiPlugin.getCommand("family").setExecutor(new FamilyCommand(familiPlugin));
     	
