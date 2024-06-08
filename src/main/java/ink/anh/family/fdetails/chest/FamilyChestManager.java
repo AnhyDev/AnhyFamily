@@ -46,6 +46,7 @@ public class FamilyChestManager extends Sender {
         this.args = args;
     }
 
+    // Встановлення локації скрині
     public void setChestLocation() {
         Block targetBlock = getTargetBlock(player, 5);
         
@@ -110,6 +111,7 @@ public class FamilyChestManager extends Sender {
         return type.isSolid() && type != Material.WATER && type != Material.LAVA;
     }
 
+    // Підтвердження встановлення локації скрині
     public void setAcceptChestLocation() {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
@@ -180,6 +182,7 @@ public class FamilyChestManager extends Sender {
         });
     }
 
+    // Метод для відкриття скрині кліком
     public void attemptOpenFamilyChest(Location location) {
         UUID familyId = getUUIDFromLocation(location);
         if (familyId == null) {
@@ -229,6 +232,7 @@ public class FamilyChestManager extends Sender {
         return true;
     }
 
+    // Встановлення доступу до сімейної скрині іншого гравця (родича)
     public void setChestAccess() {
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchest access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
@@ -286,6 +290,7 @@ public class FamilyChestManager extends Sender {
         });
     }
 
+    // Метод для встановлення доступів за змовчуванням до скрині групам родичів, батькам та дітям
     public void setChestAccessDefault() {
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchest default <children|parents> <allow|deny>"}), MessageType.WARNING, player);
@@ -348,6 +353,7 @@ public class FamilyChestManager extends Sender {
         }
     }
 
+    // Отримати хеш для мапи з локації
     public static int getLocationHash(Location location) {
         int x = location.getBlockX();
         int y = location.getBlockY();
@@ -356,10 +362,12 @@ public class FamilyChestManager extends Sender {
         return Objects.hash(worldHash, x, y, z);
     }
 
+    // перевірити наявність локації у мапі
     public static boolean isFamilyChest(Location location) {
         return locationToUUIDMap.containsKey(getLocationHash(location));
     }
 
+    // отримати сымейний UUID за локацыэю
     public static UUID getUUIDFromLocation(Location location) {
         if (location == null) {
             return null;
@@ -368,6 +376,7 @@ public class FamilyChestManager extends Sender {
         return locationToUUIDMap.get(locationHash);
     }
 
+    // заповнення мапи при старты сервера
     public static void setLocationToUUIDMap(Map<Integer, UUID> newMap) {
         locationToUUIDMap.clear();
         locationToUUIDMap.putAll(newMap);

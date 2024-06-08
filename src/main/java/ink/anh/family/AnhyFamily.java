@@ -27,7 +27,7 @@ public class AnhyFamily extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        SyncExecutor.init(instance);
+        SyncExecutor.init(this);
         
         if (checkClass("net.milkbowl.vault.Vault")) {
         	economyHandler = EconomyHandler.getInstance();
@@ -37,8 +37,8 @@ public class AnhyFamily extends JavaPlugin {
 
         SyncExecutor.runAsync(() -> FamilyDataLoader.loadData());
         
-        new ListenersRegistry(instance).register();
-        new CommandManager(instance).registerCommands();
+        new ListenersRegistry(this).register();
+        new CommandManager(this).registerCommands();
     }
 
     @Override

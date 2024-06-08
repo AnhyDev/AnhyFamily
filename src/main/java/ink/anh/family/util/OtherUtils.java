@@ -6,12 +6,28 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import ink.anh.family.AnhyFamily;
 
 public class OtherUtils {
+
+	public static void notifyPlayerOnMention(Player player, String[] args) {
+        for (String arg : args) {
+            if (arg.charAt(0) == '@') {
+                String playerName = arg.substring(1);
+                if (player.getName().equalsIgnoreCase(playerName) || 
+                    (player.getDisplayName() != null && player.getDisplayName().equalsIgnoreCase(playerName))) {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f);
+                    player.spawnParticle(Particle.VILLAGER_HAPPY, player.getLocation(), 10);
+                    break;
+                }
+            }
+        }
+    }
 
 	public static boolean isPlayerWithinRadius(Player player, Location center, double radius) {
 		

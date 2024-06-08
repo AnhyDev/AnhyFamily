@@ -16,6 +16,7 @@ import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
+import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
@@ -28,14 +29,18 @@ import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.info.FamilyTree;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.OtherUtils;
 
 public class FamilyChatManager extends Sender {
+	
+    private AnhyFamily familiPlugin;
 
     private Player player;
     private String[] args;
 
-    public FamilyChatManager(Player player, String[] args) {
+    public FamilyChatManager(AnhyFamily familiPlugin, Player player, String[] args) {
         super(GlobalManager.getInstance());
+        this.familiPlugin = familiPlugin;
         this.player = player;
         this.args = args;
     }
@@ -243,8 +248,9 @@ public class FamilyChatManager extends Sender {
     }
 
     private void sendInteractiveMessageToPlayer(Player recipient, FamilyDetails details, String message) {
+    	SyncExecutor.runSync(() -> OtherUtils.notifyPlayerOnMention(recipient, args));
     	MessageComponents messageComponents = buildInteractiveMessage(details, message, recipient);
     	
-    	Messenger.sendMessage(AnhyFamily.getInstance(), recipient, messageComponents, message);
+    	Messenger.sendMessage(familiPlugin, recipient, messageComponents, message);
     }
 }

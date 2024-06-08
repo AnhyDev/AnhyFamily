@@ -4,19 +4,20 @@ import java.util.concurrent.CompletableFuture;
 
 import org.bukkit.entity.Player;
 
-import ink.anh.api.messages.Sender;
-import ink.anh.family.GlobalManager;
+import ink.anh.family.AnhyFamily;
 
-public class FamilyChatSubCommand extends Sender {
+public class FamilyChatSubCommand {
+	
+    private AnhyFamily familiPlugin;
 
-    public FamilyChatSubCommand() {
-        super(GlobalManager.getInstance());
+    public FamilyChatSubCommand(AnhyFamily familiPlugin) {
+        this.familiPlugin = familiPlugin;
     }
 
     public boolean onCommand(Player player, String[] args) {
 
         CompletableFuture.runAsync(() -> {
-            FamilyChatManager chatManager = new FamilyChatManager(player, args);
+            FamilyChatManager chatManager = new FamilyChatManager(familiPlugin, player, args);
             if (args.length > 0) {
                 switch (args[0].toLowerCase()) {
                 case "other":

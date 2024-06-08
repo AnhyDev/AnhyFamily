@@ -1,4 +1,4 @@
-package ink.anh.family.fdetails.home;
+package ink.anh.family.fdetails.chest;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -8,11 +8,11 @@ import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 
-public class FamilyHomeSubCommand extends Sender {
-	
+public class FamilyChestSubCommand extends Sender {
+
     private AnhyFamily familyPlugin;
 
-    public FamilyHomeSubCommand(AnhyFamily familyPlugin) {
+    public FamilyChestSubCommand(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
     }
@@ -20,39 +20,33 @@ public class FamilyHomeSubCommand extends Sender {
     public boolean onCommand(Player player, String[] args) {
 
         CompletableFuture.runAsync(() -> {
-            FamilyHomeManager homeManager = new FamilyHomeManager(familyPlugin, player, args);
+        	FamilyChestManager chestManager = new FamilyChestManager(familyPlugin, player, args);
             if (args.length > 0) {
                 switch (args[0].toLowerCase()) {
                 case "set":
-                    homeManager.setHome();
+                	chestManager.setChestLocation();
                     break;
                 case "accept":
-                    homeManager.setAccept();
+                	chestManager.setAcceptChestLocation();
                     break;
-                case "tp":
-                    homeManager.tpHome();
-                    break;
-                case "child":
-                    homeManager.childHome();
-                    break;
-                case "parent":
-                    homeManager.parentHome();
+                case "open":
+                	chestManager.openChest();
                     break;
                 case "other":
                 case "o":
-                    homeManager.tpHomeBySymbol();
+                	chestManager.openChestForOtherFamily();
                     break;
                 case "access":
-                	homeManager.setHomeAccess();
+                	chestManager.setChestAccess();
                     break;
                 case "default":
-                    homeManager.setDefaultHomeAccess();
+                	chestManager.setChestAccessDefault();
                     break;
                 default:
-                    homeManager.tpHomeBySymbol();
+                	chestManager.openChest();
                 }
             } else {
-                homeManager.tpHome();
+                ;
             }
         });
 
