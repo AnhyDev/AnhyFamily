@@ -45,57 +45,65 @@ public class FamilyChatManager extends Sender {
         this.args = args;
     }
 
-    public void sendMessage() {
-        if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat <message>"}), MessageType.WARNING, player);
-            return;
-        }
+    public void sendMessageWithConditions() {
 
-        // Об'єднання аргументів у повідомлення та фарбування тексту
+        String firstArg = args[0];
         String message = StringUtils.colorize(String.join(" ", Arrays.copyOfRange(args, 1, args.length)));
 
-        // Отримання сімейних даних та виконання дії
-        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
-            // Перевірка всіх онлайн гравців на доступ до сімейного чату
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);
-                
-                if (onlinePlayerFamily != null && details.hasAccessChat(onlinePlayerFamily)) {
-                	sendInteractiveMessageToPlayer(onlinePlayer, details, message);
-                }
-            }
-        });
+        if (firstArg.startsWith("#")) {
+            handleSymbolMessage(firstArg.substring(1).toUpperCase(), message);
+        } else if (firstArg.startsWith("@")) {
+            handleNicknameMessage(firstArg.substring(1), message);
+        } else {
+            handleDefaultMessage(message);
+        }
     }
 
-    public void sendMessageToOtherFamily() {
-        if (args.length < 3) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat other <prefix> <message>"}), MessageType.WARNING, player);
-            return;
+    private void handleSymbolMessage(String symbol, String message) {
+        if (symbol.length() >= 3 && symbol.length() <= 6 && symbol.matches("[A-Z]+")) {
+            UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(symbol);
+            if (familyId != null) {
+                sendMessageToFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), message);
+                return;
+            }
         }
+        sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[] {symbol}), MessageType.WARNING, player);
+    }
 
-        String symbol = args[1].toUpperCase();
-        if (symbol.length() < 3 || symbol.length() > 6 || !symbol.matches("[A-Z]+")) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat other <prefix> <message>"}), MessageType.WARNING, player);
-            return;
-        }
+    private void handleNicknameMessage(String nickname, String message) {
+        Player targetPlayer = Bukkit.getOnlinePlayers().stream()
+            .filter(p -> p.getName().equalsIgnoreCase(nickname))
+            .findFirst()
+            .orElse(null);
 
-        UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(symbol);
-        if (familyId == null) {
-            sendMessage(new MessageForFormatting("family_err_symbol_not_found", new String[] {symbol}), MessageType.WARNING, player);
-            return;
-        }
-
-        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
-            String message = StringUtils.colorize(String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
-
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);
-
-                if (onlinePlayerFamily != null && details.hasAccessChat(onlinePlayerFamily)) {
-                	sendInteractiveMessageToPlayer(onlinePlayer, details, message);
+        if (targetPlayer != null) {
+            PlayerFamily targetFamily = FamilyUtils.getFamily(targetPlayer);
+            if (targetFamily != null) {
+                UUID familyId = targetFamily.getFamilyId();
+                if (familyId != null) {
+                    sendMessageToFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), message);
                 }
             }
-        });
+        } else {
+            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[] {nickname}), MessageType.WARNING, player);
+        }
+    }
+
+    private void handleDefaultMessage(String message) {
+        sendMessageToFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), message);
+    }
+
+    private void sendMessageToFamilyDetails(FamilyDetails details, String message) {
+        if (details != null) {
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);
+                if (onlinePlayerFamily != null && details.hasAccessChat(onlinePlayerFamily)) {
+                    sendInteractiveMessageToPlayer(onlinePlayer, details, message);
+                }
+            }
+        } else {
+            sendMessage(new MessageForFormatting("family_err_details_not_found", new String[] {}), MessageType.WARNING, player);
+        }
     }
 
     public void setChatAccess() {

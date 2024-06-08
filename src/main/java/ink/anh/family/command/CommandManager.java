@@ -1,6 +1,8 @@
 package ink.anh.family.command;
 
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.fdetails.chat.FamilyChatTabCompleter;
+import ink.anh.family.fdetails.chest.FamilyChestTabCompleter;
 
 public class CommandManager {
 
@@ -12,11 +14,19 @@ public class CommandManager {
 
     public void registerCommands() {
     	familiPlugin.getCommand("gender").setExecutor(new GenderCommand());
+    	
     	familiPlugin.getCommand("family").setExecutor(new FamilyCommand(familiPlugin));
+    	
     	familiPlugin.getCommand("marry").setExecutor(new MarryCommand(familiPlugin));
+    	
     	familiPlugin.getCommand("adoption").setExecutor(new AdoptionCommand(familiPlugin));
+    	
     	familiPlugin.getCommand("fhome").setExecutor(new FamilyHomeCommand(familiPlugin));
+    	
     	familiPlugin.getCommand("fchat").setExecutor(new FamilyChatCommand(familiPlugin));
+    	familiPlugin.getCommand("fchat").setTabCompleter(new FamilyChatTabCompleter());
+    	
     	familiPlugin.getCommand("fchest").setExecutor(new FamilyChestCommand(familiPlugin));
+    	familiPlugin.getCommand("fchest").setTabCompleter(new FamilyChestTabCompleter());
     }
 }

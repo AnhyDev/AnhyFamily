@@ -1,5 +1,7 @@
 package ink.anh.family.fdetails.symbol;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -191,5 +193,9 @@ public class FamilySymbolManager extends Sender {
     public static void setFamilyIdBySymbolMap(Map<String, UUID> newMap) {
     	symbolMap.clear();
     	symbolMap.putAll(newMap);
+    }
+
+    public static List<String> getAllFamilySymbols() {
+        return new ArrayList<>(symbolMap.keySet());
     }
 }

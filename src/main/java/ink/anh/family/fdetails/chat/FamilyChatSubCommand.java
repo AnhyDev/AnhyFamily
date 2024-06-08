@@ -4,13 +4,18 @@ import java.util.concurrent.CompletableFuture;
 
 import org.bukkit.entity.Player;
 
+import ink.anh.api.messages.MessageForFormatting;
+import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 
-public class FamilyChatSubCommand {
+public class FamilyChatSubCommand extends Sender {
 	
     private AnhyFamily familiPlugin;
 
     public FamilyChatSubCommand(AnhyFamily familiPlugin) {
+        super(GlobalManager.getInstance());
         this.familiPlugin = familiPlugin;
     }
 
@@ -20,10 +25,6 @@ public class FamilyChatSubCommand {
             FamilyChatManager chatManager = new FamilyChatManager(familiPlugin, player, args);
             if (args.length > 0) {
                 switch (args[0].toLowerCase()) {
-                case "other":
-                case "o":
-                    chatManager.sendMessageToOtherFamily();
-                    break;
                 case "access":
                     chatManager.setChatAccess();
                     break;
@@ -31,10 +32,11 @@ public class FamilyChatSubCommand {
                     chatManager.setDefaultChatAccess();
                     break;
                 default:
-                    chatManager.sendMessage();
+                    chatManager.sendMessageWithConditions();
                 }
             } else {
-                chatManager.sendMessage();
+                sendMessage(new MessageForFormatting("family_err_command_format", 
+                		new String[] {"/fchat access <args> | /fchat default <args> | /fchat <message> | /fchat #<RPEFIX> <message> | /fchat @<player> <message>"}), MessageType.WARNING, player);
             }
         });
 
