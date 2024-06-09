@@ -35,6 +35,9 @@ public class FamilyHomeSubCommand extends Sender {
                     case "default":
                         homeManager.setDefaultHomeAccess();
                         break;
+                    case "check":
+                    	homeManager.checkAccess();
+                        break;
                     default:
                         homeManager.tpHomeWithConditions();
                 }

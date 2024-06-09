@@ -31,12 +31,15 @@ public class FamilyChatSubCommand extends Sender {
                 case "default":
                     chatManager.setDefaultChatAccess();
                     break;
+                case "check":
+                	chatManager.checkAccess();
+                    break;
                 default:
                     chatManager.sendMessageWithConditions();
                 }
             } else {
                 sendMessage(new MessageForFormatting("family_err_command_format", 
-                		new String[] {"/fchat access <args> | /fchat default <args> | /fchat <message> | /fchat #<RPEFIX> <message> | /fchat @<player> <message>"}), MessageType.WARNING, player);
+                		new String[] {"/fchat access <args> | /fchat default <args> | /fchat <message> | /fchat #<RPEFIX> <message> | /fchat @<NickName> <message> | /fchat check <NickName>"}), MessageType.WARNING, player);
             }
         });
 

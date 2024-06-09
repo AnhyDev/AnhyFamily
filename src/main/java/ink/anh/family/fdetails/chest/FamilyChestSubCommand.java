@@ -32,6 +32,9 @@ public class FamilyChestSubCommand {
                 case "default":
                     chestManager.setChestAccessDefault();
                     break;
+                case "check":
+                	chestManager.checkAccess();
+                    break;
                 default:
                     chestManager.openChestWithConditions();
                 }

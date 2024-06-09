@@ -27,6 +27,7 @@ public class FamilyHomeTabCompleter implements TabCompleter {
             completions.add("set");
             completions.add("accept");
             completions.add("access");
+            completions.add("check");
             completions.add("default");
             completions.add("#");
             completions.add("@");
@@ -48,7 +49,7 @@ public class FamilyHomeTabCompleter implements TabCompleter {
                         .filter(name -> name.toLowerCase().startsWith("@" + inputName))
                         .collect(Collectors.toList()));
             }
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("access")) {
+        } else if (args.length == 2 && (args[0].equalsIgnoreCase("access") || args[0].equalsIgnoreCase("check"))) {
             // Додавання імен гравців для команди "access"
             String inputName = args[1].toLowerCase();
             completions.addAll(Bukkit.getOnlinePlayers().stream()

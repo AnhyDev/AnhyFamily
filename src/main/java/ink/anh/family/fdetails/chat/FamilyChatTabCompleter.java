@@ -23,8 +23,9 @@ public class FamilyChatTabCompleter implements TabCompleter {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
-            // Додавання можливих варіантів для першого аргументу
+            // Додавання можливих варіантів для першого аргументу 
             completions.add("access");
+            completions.add("check");
             completions.add("default");
             completions.add("#");
             completions.add("@");
@@ -46,7 +47,7 @@ public class FamilyChatTabCompleter implements TabCompleter {
                         .filter(name -> name.toLowerCase().startsWith("@" + inputName))
                         .collect(Collectors.toList()));
             }
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("access")) {
+        } else if (args.length == 2 && (args[0].equalsIgnoreCase("access") || args[0].equalsIgnoreCase("check"))) {
             // Додавання імен гравців для команди "access"
             String inputName = args[1].toLowerCase();
             completions.addAll(Bukkit.getOnlinePlayers().stream()

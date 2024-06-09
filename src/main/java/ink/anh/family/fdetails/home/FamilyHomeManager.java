@@ -218,6 +218,11 @@ public class FamilyHomeManager extends Sender {
         }
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
+        	if (targetFamily.getFamilyId() != null && targetFamily.getFamilyId().equals(details.getFamilyId())) {
+                sendMessage(new MessageForFormatting("family_access_root", new String[] {nickname, details.getFamilySymbol()}), MessageType.NORMAL, player);
+                return;
+        	}
+        	
             UUID targetUUID = targetFamily.getRoot();
             Map<UUID, AccessControl> childrenAccessMap = details.getChildrenAccessMap();
             Map<UUID, AccessControl> ancestorsAccessMap = details.getAncestorsAccessMap();
@@ -281,7 +286,31 @@ public class FamilyHomeManager extends Sender {
         });
     }
 
-    public void executeWithFamilyDetails(FamilyDetails details, FamilyDetailsActionInterface action) {
+    public void checkAccess() {
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome check <NickName>"}), MessageType.WARNING, player);
+            return;
+        }
+        String nickname = args[1];
+
+        PlayerFamily targetFamily = FamilyUtils.getFamily(nickname);
+        if (targetFamily == null) {
+            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[] {nickname}), MessageType.WARNING, player);
+            return;
+        }
+
+
+        PlayerFamily senderFamily = FamilyUtils.getFamily(player);
+        if (senderFamily != null) {
+        	
+        	executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
+        		boolean accessControl = details.hasAccessHome(targetFamily);
+                sendMessage(new MessageForFormatting("family_access_get", new String[] {nickname, String.valueOf(accessControl)}), MessageType.WARNING, player);
+        	});
+        }
+    }
+
+    private void executeWithFamilyDetails(FamilyDetails details, FamilyDetailsActionInterface action) {
         if (details != null) {
             action.execute(details);
         } else {
