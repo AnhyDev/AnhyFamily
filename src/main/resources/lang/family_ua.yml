@@ -242,7 +242,6 @@ family_prefix_info_hover: "Скопіювати сімейний префікс 
 family_err_no_family_prefix: "Сімейний префікс у гравця %s відсутній"
 
 # Команди для сімейних чатів [ink.anh.family.fdetails.chat.FamilyChatManager]
-family_err_command_only_player: "Ця команда може бути виконана тільки гравцем."
 family_chat_access_set: "Доступ до чату для %s встановлено на %s."
 family_default_chat_access_set: "Доступ до чату за замовчуванням встановлено для %s: %s."
 family_hover_copy_message: "Клікніть для копіювання префіксу '%s' в буфер обміну"

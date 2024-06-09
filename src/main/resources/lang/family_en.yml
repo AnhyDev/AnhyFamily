@@ -242,7 +242,6 @@ family_prefix_info_hover: "Copy family prefix %s of player %s to clipboard"
 family_err_no_family_prefix: "Player %s does not have a family prefix"
 
 # Commands for family chats [ink.anh.family.fdetails.chat.FamilyChatManager]
-family_err_command_only_player: "This command can only be executed by a player."
 family_chat_access_set: "Chat access for %s set to %s."
 family_default_chat_access_set: "Default chat access set for %s: %s."
 family_hover_copy_message: "Click to copy the prefix '%s' to the clipboard"

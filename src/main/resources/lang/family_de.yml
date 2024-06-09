@@ -242,7 +242,6 @@ family_prefix_info_hover: "Familienpräfix %s von Spieler %s in die Zwischenabla
 family_err_no_family_prefix: "Spieler %s hat kein Familienpräfix"
 
 # Befehle für Familienchats [ink.anh.family.fdetails.chat.FamilyChatManager]
-family_err_command_only_player: "Dieser Befehl kann nur von einem Spieler ausgeführt werden."
 family_chat_access_set: "Chat-Zugriff für %s auf %s gesetzt."
 family_default_chat_access_set: "Standard-Chat-Zugriff für %s auf %s gesetzt."
 family_hover_copy_message: "Klicken, um das Präfix '%s' in die Zwischenablage zu kopieren"

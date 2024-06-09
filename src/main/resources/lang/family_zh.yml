@@ -242,7 +242,6 @@ family_prefix_info_hover: "复制玩家 %s 的家庭前缀 %s 到剪贴板"
 family_err_no_family_prefix: "玩家 %s 没有家庭前缀"
 
 # 家庭聊天的命令 [ink.anh.family.fdetails.chat.FamilyChatManager]
-family_err_command_only_player: "此命令只能由玩家执行。"
 family_chat_access_set: "对 %s 的聊天访问设置为 %s。"
 family_default_chat_access_set: "默认聊天访问设置为 %s：%s。"
 family_hover_copy_message: "点击复制前缀 '%s' 到剪贴板"
