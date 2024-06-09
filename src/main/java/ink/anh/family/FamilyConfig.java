@@ -2,6 +2,7 @@ package ink.anh.family;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,8 @@ public class FamilyConfig {
     private boolean chestWorld;
     // Allow chests to be opened by clicking
     private boolean chestClick;
+    // List of blocks that can be used as a chest
+    private List<Material> chestBlocks;
 
     private static FamilyConfig instance;
 
@@ -94,6 +97,8 @@ public class FamilyConfig {
         this.chestDistance = config.getInt("chest.distance", 0);
         this.chestWorld = config.getBoolean("chest.world", false);
         this.chestClick = config.getBoolean("chest.click", true);
+        // Завантаження дозволених блоків для скринь
+        loadChestBlocks(config);
 
         ItemStack[] items = loadItems(plugin);
         
@@ -162,7 +167,6 @@ public class FamilyConfig {
         return homeChangeTimeoutMinutes;
     }
 
-    // New getters for chest parameters
     public boolean isChestCommand() {
         return chestCommand;
     }
@@ -189,6 +193,10 @@ public class FamilyConfig {
 
 	public Location getPrivateCeremonyLocation() {
 		return privateCeremonyLocation;
+	}
+
+	public List<Material> getChestBlocks() {
+	    return chestBlocks;
 	}
 
 	public void setPrivateCeremonyLocationFromConfig(FileConfiguration config) {
@@ -255,5 +263,17 @@ public class FamilyConfig {
         }
 
         return items;
+    }
+    
+    private void loadChestBlocks(FileConfiguration config) {
+        List<String> materialNames = config.getStringList("chest.material");
+        this.chestBlocks = new ArrayList<>();
+        
+        for (String name : materialNames) {
+            Material material = Material.matchMaterial(name);
+            if (material != null) {
+                this.chestBlocks.add(material);
+            }
+        }
     }
 }

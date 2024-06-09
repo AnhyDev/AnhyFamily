@@ -11,6 +11,7 @@ import ink.anh.api.lingo.lang.LanguageManager;
 import ink.anh.api.messages.Logger;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.db.TableRegistry;
+import ink.anh.family.fdetails.FamilyDataLoader;
 import ink.anh.family.lang.LangMessage;
 import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
@@ -84,35 +85,39 @@ public class GlobalManager extends LibraryManager {
     }
 
     public boolean reload() {
-    	SyncExecutor.runAsync(() -> {
-    		try {
-    			saveDefaultConfig();
-    			familyPlugin.reloadConfig();
-    			loadFields(familyPlugin);
-    			familyConfig.reloadConfig(familyPlugin);
-    			Logger.info(familyPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded" , new String[] {defaultLang}));
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    			Logger.error(familyPlugin, Translator.translateKyeWorld(instance, "family_err_reloading_configuration ", new String[] {defaultLang}));
-    		}
-    	});
-    	return true;
+        SyncExecutor.runAsync(() -> {
+            try {
+                saveDefaultConfig();
+                familyPlugin.reloadConfig();
+                loadFields(familyPlugin);
+                Logger.info(familyPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded", new String[]{defaultLang}));
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.error(familyPlugin, Translator.translateKyeWorld(instance, "family_err_reloading_configuration", new String[]{defaultLang}));
+            }
+        });
+        return true;
     }
-    
+
     private void loadFields(AnhyFamily familyPlugin) {
         defaultLang = familyPlugin.getConfig().getString("language", "en");
-        pluginName = ChatColor.translateAlternateColorCodes('&',familyPlugin.getConfig().getString("plugin_name", "AnhyFamily"));
+        pluginName = ChatColor.translateAlternateColorCodes('&', familyPlugin.getConfig().getString("plugin_name", "AnhyFamily"));
         debug = familyPlugin.getConfig().getBoolean("debug", false);
-        
+
         setMySQLConfig();
-        
+
         if (this.langManager == null) {
-            this.langManager = LangMessage.getInstance(this);;
+            this.langManager = LangMessage.getInstance(this);
         } else {
-        	this.langManager.reloadLanguages();
+            this.langManager.reloadLanguages();
         }
-        
+
+        // Ініціалізуємо конфіг
         familyConfig = FamilyConfig.getInstance(familyPlugin);
+        // Перезавантажуємо конфіг
+        familyConfig.reloadConfig(familyPlugin);
+
+        SyncExecutor.runAsync(() -> FamilyDataLoader.loadData());
     }
 
     private void setMySQLConfig() {

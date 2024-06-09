@@ -66,8 +66,9 @@ public class MarriageValidator extends Sender {
             return false;
         }
 
-        int radius = isPublic ? ((GlobalManager) libraryManager).getFamilyConfig().getCeremonyRadius() : 5;
-        Location location = isPublic && priest != null ? priest.getLocation() : bride1.getLocation();
+        FamilyConfig config = ((GlobalManager) libraryManager).getFamilyConfig();
+        int radius = isPublic ? config.getCeremonyRadius() : 5;
+        Location location = isPublic && priest != null ? priest.getLocation() : config.getPrivateCeremonyLocation();
         if (!OtherUtils.isPlayerWithinRadius(bride1, location, radius) || !OtherUtils.isPlayerWithinRadius(bride2, location, radius)) {
             sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_distance", new String[] {}), MessageType.WARNING, false, recipients);
             return false;

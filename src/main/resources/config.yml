@@ -98,4 +98,8 @@ chest:
   world: false
   # Allow chests to be opened by clicking
   click: true
+  # List of blocks in "Material" format that can be used as a chest
+  material:
+    - CHEST
+    - BARREL
   

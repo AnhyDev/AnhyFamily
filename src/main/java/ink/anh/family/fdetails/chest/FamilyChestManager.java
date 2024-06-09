@@ -50,7 +50,7 @@ public class FamilyChestManager extends Sender {
     public void setChestLocation() {
         Block targetBlock = getTargetBlock(player, 5);
 
-        if (targetBlock == null || !isSolidBlock(targetBlock)) {
+        if (targetBlock == null || !isAllowedChestBlock(targetBlock)) {
             sendMessage(new MessageForFormatting("family_err_invalid_chest_location", new String[] {}), MessageType.WARNING, player);
             return;
         }
@@ -106,9 +106,10 @@ public class FamilyChestManager extends Sender {
         return lastBlock;
     }
 
-    private boolean isSolidBlock(Block block) {
+    private boolean isAllowedChestBlock(Block block) {
+        FamilyConfig config = GlobalManager.getInstance().getFamilyConfig();
         Material type = block.getType();
-        return type.isSolid() && type != Material.WATER && type != Material.LAVA;
+        return config.getChestBlocks().contains(type);
     }
 
     // Підтвердження встановлення локації скрині
