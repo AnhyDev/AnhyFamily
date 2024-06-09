@@ -270,7 +270,7 @@ public class FamilyConfig {
         this.chestBlocks = new ArrayList<>();
         
         for (String name : materialNames) {
-            Material material = Material.matchMaterial(name);
+            Material material = Material.matchMaterial(name.toUpperCase());
             if (material != null) {
                 this.chestBlocks.add(material);
             }
