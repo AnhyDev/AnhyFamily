@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -32,6 +35,7 @@ public class FamilyConfig {
     
     private int ceremonyRadius;
     private int ceremonyHearingRadius;
+    private Location privateCeremonyLocation;
 
     // Timeout before changing the family home point, specify in minutes
     private int homeChangeTimeoutMinutes;
@@ -80,6 +84,8 @@ public class FamilyConfig {
         
         this.ceremonyRadius = config.getInt("ceremonyRadius", 20);
         this.ceremonyHearingRadius = config.getInt("ceremonyHearingRadius", 100);
+        setPrivateCeremonyLocationFromConfig(config);
+        
         
         this.homeChangeTimeoutMinutes = config.getInt("home.timeout", 1440);
         this.homeWorld = config.getBoolean("home.world", false);
@@ -179,6 +185,26 @@ public class FamilyConfig {
 
 	public void setHomeWorld(boolean homeWorld) {
 		this.homeWorld = homeWorld;
+	}
+
+	public Location getPrivateCeremonyLocation() {
+		return privateCeremonyLocation;
+	}
+
+	public void setPrivateCeremonyLocationFromConfig(FileConfiguration config) {
+	    // Зчитування параметрів локації для приватного одруження
+	    String worldName = config.getString("privateCeremony.world");
+	    int x = config.getInt("privateCeremony.x");
+	    int y = config.getInt("privateCeremony.y");
+	    int z = config.getInt("privateCeremony.z");
+
+	    World world = (worldName != null) ? Bukkit.getWorld(worldName) : null;
+	    
+	    if (world == null) {
+	        world = Bukkit.getWorlds().get(0); // Головний світ сервера
+	    }
+	    
+	    this.privateCeremonyLocation = new Location(world, x, y, z);
 	}
 
     // Method to check the answer

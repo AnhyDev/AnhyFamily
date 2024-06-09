@@ -48,10 +48,10 @@ public class MarriageValidator extends Sender {
             return false;
         }
 
-        if (args.length <= 2 && isPublic) {
+        if (args.length < 3 && isPublic) {
             sendMessage(new MessageForFormatting("family_err_command_format  /mary public <bride1> <bride2> [number]", new String[] {}), MessageType.WARNING, sender);
             return false;
-        } else if (args.length <= 1 && !isPublic) {
+        } else if (args.length < 2 && !isPublic) {
             sendMessage(new MessageForFormatting("family_err_command_format  /mary private <bride>", new String[] {}), MessageType.WARNING, sender);
             return false;
         }

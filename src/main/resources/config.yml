@@ -75,6 +75,12 @@ answers:
 
 marriedSymbol: "⚭"
 
+privateCeremony:
+  world: "world"
+  x: 100
+  y: 64
+  z: -200
+
 # Using the /fhome (/familyhome) commnd
 home:
   # Timeout before changing the family home point, specify in minutes

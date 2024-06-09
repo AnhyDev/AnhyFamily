@@ -48,6 +48,10 @@ public class ActionsBridesPrivate extends Sender {
             return;
         }
 
+        if (!validator.validateCeremonyParticipants(proposer, receiver, recipients)) {
+            return;
+        }
+
         if (!validator.validatePermissions(proposer, receiver, recipients)) {
             return;
         }

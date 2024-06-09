@@ -9,6 +9,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.events.ActionInitiator;
@@ -96,6 +97,17 @@ public class Adopt extends Sender {
         }
         sendMessage(new MessageForFormatting("family_error_generic", new String[]{}), MessageType.WARNING, sender);
         return false;
+    }
+
+    private boolean validateAdoptionConfig(PlayerFamily family1, PlayerFamily family2, CommandSender... sender) {
+        FamilyConfig familyConfig = globalManager.getFamilyConfig();
+        boolean nonTraditionalAllowed = familyConfig.isNonBinaryAdopt();
+        
+        if (!nonTraditionalAllowed && !FamilyUtils.areGendersCompatibleForTraditional(family1, family2)) {
+            sendMessage(new MessageForFormatting("family_adopt_failed_traditional", new String[]{}), MessageType.WARNING, sender);
+            return false;
+        }
+        return true;
     }
 
     public boolean cancelAdoption(CommandSender sender) {
@@ -206,6 +218,7 @@ public class Adopt extends Sender {
             manager.removeParent(uuid);
             return false;
         }
+        validateAdoptionConfig(family1, family2, sender, player1, player2);
 
         String adopter1Name = player1.getDisplayName();
         String adopter2Name = player2.getDisplayName();
