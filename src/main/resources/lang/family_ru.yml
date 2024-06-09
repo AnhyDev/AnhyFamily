@@ -30,6 +30,8 @@ family_player_not_found_full: "Игрок %s не найден или не в с
 family_player_unknown: "Неизвестный игрок"
 family_player_not_found_db: "Игрок не найден в БД."
 family_error_generic: "Неизвестная ошибка"
+family_access_get: "У %s доступ: %s."
+family_access_root: "Игрок %s является одним из лидеров семьи %s, изменить его доступ невозможно"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Мужской"
@@ -42,6 +44,7 @@ family_gender_already_selected: "Вы уже выбрали пол ранее."
 family_gender_incorrectly_specified: "Неверно указан пол. Используйте MALE, FEMALE или NON_BINARY(если небинарный пол разрешён в настройках плагина)."
 family_gender_player_reset: "Пол игрока %s сброшен на 'Не определено'."
 family_gender_player_set_to: "Пол игрока %s установлен на как:"
+family_non_binary_not_allowed: "Выбор небинарного пола запрещён в настройках конфигурации"
 
 # Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Предыдущая фамилия: "

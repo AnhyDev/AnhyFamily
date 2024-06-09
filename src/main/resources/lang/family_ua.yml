@@ -30,6 +30,8 @@ family_player_not_found_full: "Гравець %s не знайдений або 
 family_player_unknown: "Невідомий гравець"
 family_player_not_found_db: "Гравець не знайдений в БД."
 family_error_generic: "Невідома помилка"
+family_access_get: "У %s доступ: %s."
+family_access_root: "Гравець %s один із лідерів сім'ї %s, змінити його доступ неможливо"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Чоловіча"
@@ -42,6 +44,7 @@ family_gender_already_selected: "Ви вже обрали стать раніш�
 family_gender_incorrectly_specified: "Неправильно вказана стать. Використовуйте MALE, FEMALE або NON_BINARY (якщо небінарна стать дозволена в налаштуваннях плагіна)."
 family_gender_player_reset: "Стать гравця %s скинуто на 'Не визначено'."
 family_gender_player_set_to: "Стать гравця %s встановлено як:"
+family_non_binary_not_allowed: "Вибір небінарної статі заборонено в налаштуваннях конфігурації"
 
 # Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Попереднє прізвище: "
@@ -264,7 +267,4 @@ family_err_chest_click_disabled: "Відкриття скрині кліком �
 family_err_chest_not_set: "Місце для скрині не встановлено."
 
 
-family_non_binary_not_allowed: "Вибір небінарної статі заборонено в налаштуваннях конфігурації"
-family_access_get: "У %s доступ: %s."
-family_access_root: "Гравець %s один із лідерів сім'ї %s, змінити його доступ неможливо"
 

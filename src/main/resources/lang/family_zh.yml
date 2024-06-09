@@ -30,6 +30,8 @@ family_player_not_found_full: "玩家 %s 未找到或不在线。"
 family_player_unknown: "未知玩家"
 family_player_not_found_db: "在数据库中未找到玩家。"
 family_error_generic: "未知错误"
+family_access_get: "%s 有访问权限：%s。"
+family_access_root: "玩家 %s 是家庭 %s 的领导者之一，无法更改其访问权限"
 
 # 命令 /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "男性"
@@ -42,6 +44,7 @@ family_gender_already_selected: "你之前已经选择了性别。"
 family_gender_incorrectly_specified: "性别指定错误。请使用 MALE、FEMALE 或 NON_BINARY（如果插件配置中允许非二元性别）。"
 family_gender_player_reset: "玩家 %s 的性别已被重置为“未决定”。"
 family_gender_player_set_to: "玩家 %s 的性别被设定为："
+family_non_binary_not_allowed: "配置设置中不允许选择非二元性别"
 
 # 命令 /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "之前的姓氏："

@@ -30,6 +30,8 @@ family_player_not_found_full: "Player %s not found or not online."
 family_player_unknown: "Unknown player"
 family_player_not_found_db: "Player not found in the database."
 family_error_generic: "Unknown error"
+family_access_get: "%s has access: %s."
+family_access_root: "Player %s is one of the leaders of the family %s, their access cannot be changed"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Male"
@@ -42,6 +44,7 @@ family_gender_already_selected: "You have already chosen a gender before."
 family_gender_incorrectly_specified: "Incorrectly specified gender. Use MALE, FEMALE, or NON_BINARY (if non-binary gender is allowed in the plugin settings)."
 family_gender_player_reset: "Player %s's gender reset to 'Undecided'."
 family_gender_player_set_to: "Player %s's gender set to:"
+family_non_binary_not_allowed: "Selecting a non-binary gender is not allowed in the configuration settings"
 
 # Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Previous surname: "
