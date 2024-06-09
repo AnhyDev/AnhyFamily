@@ -18,7 +18,7 @@ public class CommandManager {
     	familiPlugin.getCommand("gender").setTabCompleter(new GenderTabCompleter());
     	
     	familiPlugin.getCommand("family").setExecutor(new FamilyCommand(familiPlugin));
-    	familiPlugin.getCommand("family").setTabCompleter(new FamilyTabCompleter());
+    	familiPlugin.getCommand("family").setTabCompleter(new FamilyCommandTabCompleter());
     	
     	familiPlugin.getCommand("marry").setExecutor(new MarryCommand(familiPlugin));
     	familiPlugin.getCommand("marry").setTabCompleter(new MarryTabCompleter());
