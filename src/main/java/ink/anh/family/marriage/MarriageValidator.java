@@ -12,6 +12,7 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.fplayer.FamilyService;
@@ -131,23 +132,32 @@ public class MarriageValidator extends Sender {
     }
 
     public boolean validateCeremonyParticipants(Player bride1, Player bride2, Player[] recipients) {
-
-    	if (isPublic && priest != null) {
-        	UUID uuidPriest = priest.getUniqueId();
+        if (isPublic && priest != null) {
+            UUID uuidPriest = priest.getUniqueId();
             if (uuidPriest.equals(bride1.getUniqueId()) || uuidPriest.equals(bride2.getUniqueId())) {
                 sendMessage(new MessageForFormatting("family_marry_failed_myself", new String[] {}), MessageType.WARNING, new Player[] {priest, bride1, bride2});
                 return false;
             }
-    	}
+        }
 
         familyBride1 = FamilyUtils.getFamily(bride1);
         familyBride2 = FamilyUtils.getFamily(bride2);
         
-        if (!FamilyUtils.areGendersCompatibleForTraditional(familyBride1, familyBride2)) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_traditional", new String[] {}), MessageType.WARNING, false, recipients);
+        if (!validateMarriageConfig(familyBride1, familyBride2, recipients)) {
             return false;
         }
 
+        return true;
+    }
+
+    public boolean validateMarriageConfig(PlayerFamily family1, PlayerFamily family2, Player[] recipients) {
+        FamilyConfig familyConfig = ((GlobalManager) libraryManager).getFamilyConfig();
+        boolean nonTraditionalAllowed = familyConfig.isNonBinaryMarry();
+        
+        if (!nonTraditionalAllowed && !FamilyUtils.areGendersCompatibleForTraditional(family1, family2)) {
+            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_traditional", new String[] {}), MessageType.WARNING, false, recipients);
+            return false;
+        }
         return true;
     }
 

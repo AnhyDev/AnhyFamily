@@ -25,7 +25,6 @@ public class FamilyCommandTabCompleter implements TabCompleter {
             completions.add("prefix");
             completions.add("setprefix");
             completions.add("acceptprefix");
-            completions.add("reload");
         } else if (args.length == 2) {
             switch (args[0].toLowerCase()) {
                 case "clear":

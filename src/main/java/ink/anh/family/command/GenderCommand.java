@@ -69,9 +69,18 @@ public class GenderCommand extends Sender implements CommandExecutor {
     private void handleSetGender(CommandSender sender, String genderStr) {
         Player player = (Player) sender;
 
+        // Перевіряємо, чи дозволено встановлювати небінарну стать
+        if (genderStr.equalsIgnoreCase("NON_BINARY") && !((GlobalManager) libraryManager).getFamilyConfig().isNonBinary()) {
+            sendMessage(new MessageForFormatting("family_non_binary_not_allowed", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+
         genderStr = genderStr.equalsIgnoreCase("boy") || genderStr.equalsIgnoreCase("man") ? "MALE"
-                : genderStr.equalsIgnoreCase("girl") || genderStr.equalsIgnoreCase("woman") ? "FEMALE" : genderStr.toUpperCase();
+                : genderStr.equalsIgnoreCase("girl") || genderStr.equalsIgnoreCase("woman") ? "FEMALE" 
+                : genderStr.toUpperCase();
+
         Gender gender = Gender.fromString(genderStr);
+
         if (gender != null && gender != Gender.UNDECIDED) {
             if (GenderManager.getGender(player) == Gender.UNDECIDED) {
                 MessageForFormatting message = new MessageForFormatting("family_set_gender_force " + Gender.getKey(gender), new String[]{});

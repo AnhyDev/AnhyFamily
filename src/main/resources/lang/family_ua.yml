@@ -263,3 +263,5 @@ family_err_chest_world_restriction: "Ви не в тому світі, де зн
 family_err_chest_click_disabled: "Відкриття скрині кліком заборонено."
 family_err_chest_not_set: "Місце для скрині не встановлено."
 
+
+family_non_binary_not_allowed: "Вибір небінарної статі заборонено в налаштуваннях конфігурації"
