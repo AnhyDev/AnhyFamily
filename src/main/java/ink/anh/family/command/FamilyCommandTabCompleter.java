@@ -18,7 +18,7 @@ public class FamilyCommandTabCompleter implements TabCompleter {
 
         if (args.length == 1) {
             completions.add("surname");
-            completions.add("clear");
+            completions.add("tree");
             completions.add("divorce");
             completions.add("separate");
             completions.add("info");
@@ -27,7 +27,7 @@ public class FamilyCommandTabCompleter implements TabCompleter {
             completions.add("acceptprefix");
         } else if (args.length == 2) {
             switch (args[0].toLowerCase()) {
-                case "clear":
+                case "tree":
                 case "info":
                 case "prefix":
                     completions.addAll(getPlayerNames(args[1]));

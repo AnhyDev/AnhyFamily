@@ -6,6 +6,8 @@ import org.bukkit.plugin.Plugin;
 import ink.anh.api.LibraryManager;
 import ink.anh.api.database.DatabaseManager;
 import ink.anh.api.database.MySQLConfig;
+import ink.anh.api.database.MySQLDatabaseManager;
+import ink.anh.api.database.SQLiteDatabaseManager;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.lingo.lang.LanguageManager;
 import ink.anh.api.messages.Logger;
@@ -156,16 +158,20 @@ public class GlobalManager extends LibraryManager {
 		return dbManager;
 	}
 	
-	private void setDatabaseManager() {
-		TableRegistry registry = new TableRegistry(familyPlugin);
-		dbManager = DatabaseManager.getInstance(this, registry);
-	}
+    private void setDatabaseManager() {
+        TableRegistry registry = new TableRegistry(familyPlugin);
+        if (mySQLConfig.isUseMySQL()) {
+            dbManager = new MySQLDatabaseManager(this, registry);
+        } else {
+            dbManager = new SQLiteDatabaseManager(this, registry);
+        }
+    }
 	
-	private void initializeDatabase() {
-		setDatabaseManager();
-		dbManager.initialize();
-		dbManager.initializeTables();
-	}
+    private void initializeDatabase() {
+        setDatabaseManager();
+        dbManager.initialize();
+        dbManager.initializeTables();
+    }
 	
 	private void setOrherManagers() {
         marriageManager = MarriageManager.getInstance(familyPlugin);
