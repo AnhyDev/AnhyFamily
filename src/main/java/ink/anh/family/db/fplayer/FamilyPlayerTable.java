@@ -126,6 +126,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 ps.setString(9, PlayerFamily.uuidSetToString(playerFamily.getChildren()));
                 ps.setString(10, playerFamily.getFamilyId() != null ? playerFamily.getFamilyId().toString() : null);
                 ps.setString(11, playerFamily.getDynastyId() != null ? playerFamily.getDynastyId().toString() : null);
+                ps.setBoolean(12, playerFamily.isDisableNotifications());
                 ps.executeUpdate();
             }
         }, "Failed to insert or replace player family data: " + playerFamily);
@@ -143,7 +144,8 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,
                 PlayerFamily.stringToUuidSet(rs.getString("children")),
                 rs.getString("family_id") != null ? UUID.fromString(rs.getString("family_id")) : null,
-                rs.getString("dynasty_id") != null ? UUID.fromString(rs.getString("dynasty_id")) : null
+                rs.getString("dynasty_id") != null ? UUID.fromString(rs.getString("dynasty_id")) : null,
+                rs.getBoolean("disable_notifications")
         );
     }
 

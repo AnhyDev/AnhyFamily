@@ -11,7 +11,8 @@ public enum FamilyPlayerField {
     SPOUSE("spouse", "VARCHAR(36)"),
     CHILDREN("children", "TEXT"),
     FAMILY_ID("family_id", "VARCHAR(36)"),
-    DYNASTY_ID("dynasty_id", "VARCHAR(36)");
+    DYNASTY_ID("dynasty_id", "VARCHAR(36)"),
+    DISABLE_NOTIFICATIONS("disable_notifications", "BOOLEAN");
 
     private final String fieldName;
     private final String fieldType;

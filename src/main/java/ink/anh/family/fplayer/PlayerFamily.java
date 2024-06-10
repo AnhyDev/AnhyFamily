@@ -26,9 +26,10 @@ public class PlayerFamily {
     private Set<UUID> children = new HashSet<>();
     private UUID familyId = null;
     private UUID dynastyId = null;
+    private boolean disableNotifications = false;
 
     public PlayerFamily(UUID root, Gender gender, String loverCaseName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
-            Set<UUID> children, UUID familyId, UUID dynastyId) {
+            Set<UUID> children, UUID familyId, UUID dynastyId, boolean disableNotifications) {
         
         this.root = root;
         this.gender = gender;
@@ -164,6 +165,14 @@ public class PlayerFamily {
     public void setDynastyId(UUID dynastyId) {
         this.dynastyId = dynastyId;
     }
+
+	public boolean isDisableNotifications() {
+		return disableNotifications;
+	}
+
+	public void setDisableNotifications(boolean disableNotifications) {
+		this.disableNotifications = disableNotifications;
+	}
 
     public boolean addChild(UUID childUuid) {
         if (childUuid == null) {
