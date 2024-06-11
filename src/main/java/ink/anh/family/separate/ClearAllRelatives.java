@@ -18,6 +18,7 @@ import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetailsGet;
+import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.marriage.FamilyHandler;
 import ink.anh.family.util.FamilySeparationUtils;
@@ -25,9 +26,11 @@ import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class ClearAllRelatives extends Sender {
+	private AnhyFamily familiPlugin;
 	
 	public ClearAllRelatives(AnhyFamily familiPlugin) {
 		super(GlobalManager.getInstance());
+		this.familiPlugin = familiPlugin;
 	}
 	
 	public void exeClearFamily(CommandSender sender, String[] args) {
@@ -101,11 +104,17 @@ public class ClearAllRelatives extends Sender {
         }
     }
 
-    private static void separateAllRelations(PlayerFamily playerFamily, Set<PlayerFamily> modifiedFamilies) {
+    private void separateAllRelations(PlayerFamily playerFamily, Set<PlayerFamily> modifiedFamilies) {
         if (playerFamily == null || modifiedFamilies == null || modifiedFamilies.isEmpty()) {
             return;
         }
         // Видалення всіх родичів з сім'ї
-        FamilyHandler.removeCrossFamilyRelations(playerFamily, modifiedFamilies, true, true);
+        FamilyHandler.removeCrossFamilyRelations(playerFamily, modifiedFamilies, true, false);
+        FamilyHandler.removeCrossFamilyRelations(playerFamily, modifiedFamilies, false, false);
+        
+        FamilyHandler.handleDivorce(playerFamily);
+
+        FamilySeparation utilsDivorce = new FamilySeparation(familiPlugin);
+        utilsDivorce.separateSpouses(playerFamily);
     }
 }
