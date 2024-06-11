@@ -315,7 +315,6 @@ public class Adopt extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
-                	
                     FamilyAdoption familyAdoption = new FamilyAdoption(familyPlugin);
                     
                     if (familyAdoption.adoption(adoptedFamily, adoptersFamily)) {
@@ -324,6 +323,7 @@ public class Adopt extends Sender {
                     } else {
                         sendMessage(messageFalse, MessageType.WARNING, senders);
                     }
+                    
                     if (manager != null) manager.removeParent(adoptedFamily.getRoot());
                 });
 

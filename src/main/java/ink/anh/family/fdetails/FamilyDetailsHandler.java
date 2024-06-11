@@ -42,7 +42,17 @@ public class FamilyDetailsHandler {
         FamilyUtils.saveFamily(spouse1);
         FamilyUtils.saveFamily(spouse2);
 
+        // Оновлення сімейних об'єктів родичів
+        updateRelativesFamilyDetails(spouse1, spouse2);
+        updateRelativesFamilyDetails(spouse2, spouse1);
+
         return familyDetails;
+    }
+
+    private static void addAccess(Map<UUID, AccessControl> accessMap, UUID member) {
+        if (member != null) {
+            accessMap.put(member, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+        }
     }
 
     private static void addChildrenAndParentsToAccessMap(PlayerFamily spouse, Map<UUID, AccessControl> childrenAccessMap, Map<UUID, AccessControl> ancestorsAccessMap) {
@@ -50,21 +60,50 @@ public class FamilyDetailsHandler {
         Set<UUID> children = spouse.getChildren();
         if (children != null) {
             for (UUID child : children) {
-                childrenAccessMap.put(child, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+                addAccess(childrenAccessMap, child);
             }
         }
 
         // Додавання батьків до мапи доступу батьків
-        UUID father = spouse.getFather();
-        UUID mother = spouse.getMother();
-        if (father != null) {
-            ancestorsAccessMap.put(father, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
-        }
-        if (mother != null) {
-            ancestorsAccessMap.put(mother, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+        addAccess(ancestorsAccessMap, spouse.getFather());
+        addAccess(ancestorsAccessMap, spouse.getMother());
+    }
+
+    private static void updateRelativesFamilyDetails(PlayerFamily spouse, PlayerFamily newSpouse) {
+        // Оновлення сімейних об'єктів батьків
+        updateParentFamilyDetails(spouse.getFather(), newSpouse.getRoot());
+        updateParentFamilyDetails(spouse.getMother(), newSpouse.getRoot());
+
+        // Оновлення сімейних об'єктів дітей
+        Set<UUID> children = spouse.getChildren();
+        if (children != null) {
+            for (UUID child : children) {
+                updateChildFamilyDetails(child, newSpouse.getRoot());
+            }
         }
     }
-    
+
+    private static void updateParentFamilyDetails(UUID parentUuid, UUID newSpouseUuid) {
+        if (parentUuid != null) {
+            FamilyDetails parentFamilyDetails = FamilyDetailsGet.getRootFamilyDetails(parentUuid);
+            if (parentFamilyDetails != null && !parentFamilyDetails.getChildrenAccessMap().containsKey(newSpouseUuid)) {
+                // Додаємо нового члена сім'ї тільки якщо він ще не доданий
+                parentFamilyDetails.getChildrenAccessMap().put(newSpouseUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+                FamilyDetailsSave.saveFamilyDetails(parentFamilyDetails, null);
+            }
+        }
+    }
+
+    private static void updateChildFamilyDetails(UUID childUuid, UUID newSpouseUuid) {
+        if (childUuid != null) {
+            FamilyDetails childFamilyDetails = FamilyDetailsGet.getRootFamilyDetails(childUuid);
+            if (childFamilyDetails != null) {
+                childFamilyDetails.getAncestorsAccessMap().put(newSpouseUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+                FamilyDetailsSave.saveFamilyDetails(childFamilyDetails, null);
+            }
+        }
+    }
+
     public static void handleAdoption(PlayerFamily[] adoptersFamily, PlayerFamily adoptedFamily) {
         if (adoptersFamily == null || adoptersFamily.length == 0 || adoptedFamily == null) {
             return; // Якщо немає батьків або дитини, виходимо
@@ -89,19 +128,19 @@ public class FamilyDetailsHandler {
             FamilyDetailsSave.saveFamilyDetails(familyDetails, null);
         }
     }
-    
+
     public static void handleDivorce(PlayerFamily spouse1) {
         UUID familyId = spouse1.getFamilyId();
-        
+
         if (familyId == null) {
-        	return;
+            return;
         }
-        
+
         FamilyDetailsDelete.deleteRootFamilyDetails(spouse1);
 
         spouse1.setFamilyId(null);
         FamilyUtils.saveFamily(spouse1);
-        
+
         UUID spouse2Uuid = spouse1.getSpouse();
 
         if (spouse2Uuid == null) {
@@ -126,9 +165,7 @@ public class FamilyDetailsHandler {
             boolean shouldRemove = (removeRelative && isRelativeOfSpouse1) || (!removeRelative && !isRelativeOfSpouse1);
 
             if (shouldRemove) {
-                if (removeFamilyFromRelative(spouseFamily, relative, false)) {
-                    shouldSaveSpouseFamilyDetails = true;
-                }
+                shouldSaveSpouseFamilyDetails |= removeFamilyFromRelative(spouseFamily, relative, false);
                 removeFamilyFromRelative(relative, spouseFamily, true);
             }
         }
@@ -148,14 +185,19 @@ public class FamilyDetailsHandler {
             FamilyDetails relativeDetails = FamilyDetailsGet.getRootFamilyDetails(relative);
 
             if (relativeDetails != null) {
-                boolean childRemoved = relativeDetails.getChildrenAccessMap().remove(spouseRoot) != null;
-                boolean ancestorRemoved = relativeDetails.getAncestorsAccessMap().remove(spouseRoot) != null;
+                boolean modified = false;
+                if (relativeDetails.getChildrenAccessMap().remove(spouseRoot) != null) {
+                    modified = true;
+                }
+                if (relativeDetails.getAncestorsAccessMap().remove(spouseRoot) != null) {
+                    modified = true;
+                }
 
-                if (shouldSave) {
+                if (shouldSave && modified) {
                     FamilyDetailsSave.saveFamilyDetails(relativeDetails, null);
                 }
 
-                return childRemoved || ancestorRemoved;
+                return modified;
             }
         }
         return false;
