@@ -19,9 +19,9 @@ import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.marriage.FamilyHandler;
 import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
-import ink.anh.family.util.FullFamilySeparation;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class Clear extends Sender {
@@ -70,14 +70,15 @@ public class Clear extends Sender {
 		return;
 	}
 
-	private void handleFamilySeparation(FamilySeparationEvent event, PlayerFamily playerFamily, ActionInitiator initiator, CommandSender sender) {
-	    Bukkit.getPluginManager().callEvent(event);
+    private void handleFamilySeparation(FamilySeparationEvent event, PlayerFamily playerFamily, ActionInitiator initiator, CommandSender sender) {
+        Bukkit.getPluginManager().callEvent(event);
 
         if (!event.isCancelled()) {
             SyncExecutor.runAsync(() -> {
-            	
-            	FullFamilySeparation.separateFamilyCompletely(playerFamily);
-            	
+
+                // Викликаємо метод для повного розриву зв'язків, передаючи модифіковані сім'ї
+            	separateAllRelations(playerFamily, event.getModifiedFamilies());
+
                 Set<Player> playersSet = new HashSet<>();
                 Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.clearRelatives(playerFamily, FamilySeparationReason.FULL_SEPARATION);
 
@@ -90,13 +91,18 @@ public class Clear extends Sender {
                 }
 
                 Player[] players = playersSet.toArray(new Player[0]);
-                
+
                 if (players.length > 0) {
-                	sendMessage(new MessageForFormatting("family_clear_relative_success", new String[] {}), MessageType.IMPORTANT, players);
-            		return;
+                    sendMessage(new MessageForFormatting("family_clear_relative_success", new String[] {}), MessageType.IMPORTANT, players);
+                    return;
                 }
-            	sendMessage(new MessageForFormatting("family_clear_relative_missing", new String[] {}), MessageType.WARNING, players);
+                sendMessage(new MessageForFormatting("family_clear_relative_missing", new String[] {}), MessageType.WARNING, players);
             });
         }
-	}
+    }
+
+    private static void separateAllRelations(PlayerFamily playerFamily, Set<PlayerFamily> modifiedFamilies) {
+        // Видалення всіх родичів з сім'ї
+        FamilyHandler.removeCrossFamilyRelations(playerFamily, modifiedFamilies, true, true);
+    }
 }
