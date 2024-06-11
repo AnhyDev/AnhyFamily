@@ -309,7 +309,6 @@ public class Adopt extends Sender {
                                 FamilyDetails[] adoptersDetails, FamilyDetails adoptedDetails, ActionInitiator initiator, CommandSender[] senders,
                                 MessageForFormatting messageTrue, MessageForFormatting messageFalse) {
 
-        final MessageType[] messageType = {MessageType.WARNING};
         try {
             AdoptionEvent event = new AdoptionEvent(adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator);
             Bukkit.getPluginManager().callEvent(event);
@@ -317,15 +316,13 @@ public class Adopt extends Sender {
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
                 	
-                	FamilyDetailsHandler.handleAdoption(adoptersFamily, adoptedFamily);
-                	
                     FamilyAdoption familyAdoption = new FamilyAdoption(familyPlugin);
-
+                    
                     if (familyAdoption.adoption(adoptedFamily, adoptersFamily)) {
-                        messageType[0] = MessageType.IMPORTANT;
-                        sendMessage(messageTrue, messageType[0], senders);
+                    	FamilyDetailsHandler.handleAdoption(adoptersFamily, adoptedFamily);
+                        sendMessage(messageTrue, MessageType.IMPORTANT, senders);
                     } else {
-                        sendMessage(messageFalse, messageType[0], senders);
+                        sendMessage(messageFalse, MessageType.WARNING, senders);
                     }
                     if (manager != null) manager.removeParent(adoptedFamily.getRoot());
                 });
