@@ -81,16 +81,20 @@ public class Divorce extends Sender {
     }
 
     private void handleDivorce(FamilySeparationEvent event, PlayerFamily initiatorFamily, PlayerFamily spouseFamily, FamilyDetails familyDetails,
-    		ActionInitiator initiatorAction, CommandSender[] senders, MessageForFormatting messageTrue, MessageForFormatting messageFalse) {
+            ActionInitiator initiatorAction, CommandSender[] senders, MessageForFormatting messageTrue, MessageForFormatting messageFalse) {
         final MessageType[] messageType = {MessageType.WARNING};
         try {
             Bukkit.getPluginManager().callEvent(event);
 
+            Set<PlayerFamily> modifiedFamilies = event.getModifiedFamilies();
+
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
-                	
-                	FamilyHandler.handleDivorce(spouseFamily);
-                	
+                    FamilyHandler.handleDivorce(spouseFamily);
+
+                    FamilyHandler.removeCrossFamilyRelations(initiatorFamily, modifiedFamilies);
+                    FamilyHandler.removeCrossFamilyRelations(spouseFamily, modifiedFamilies);
+
                     FamilySeparation utilsDivorce = new FamilySeparation(familyPlugin);
 
                     if (utilsDivorce.separateSpouses(initiatorFamily)) {
@@ -108,4 +112,5 @@ public class Divorce extends Sender {
             e.printStackTrace();
         }
     }
+
 }

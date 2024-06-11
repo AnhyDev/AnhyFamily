@@ -5,6 +5,7 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.symbol.UUIDToUniqueString;
 import ink.anh.family.fdetails.FamilyDetailsDelete;
+import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.enums.Access;
@@ -91,6 +92,35 @@ public class FamilyHandler {
         if (spouse2 != null) {
             spouse2.setFamilyId(null);
             FamilyUtils.saveFamily(spouse2);
+        }
+    }
+
+    public static void removeCrossFamilyRelations(PlayerFamily spouse1Family, Set<PlayerFamily> relatives) {
+        for (PlayerFamily relative : relatives) {
+            // Якщо цей родич є батьком або дитиною spouse1Family, не розриваємо зв'язок зі spouse1Family
+            boolean isRelativeOfSpouse1 = relative.getRoot().equals(spouse1Family.getFather()) || relative.getRoot().equals(spouse1Family.getMother()) || spouse1Family.getChildren().contains(relative.getRoot());
+
+            if (!isRelativeOfSpouse1) {
+                removeFamilyFromRelative(spouse1Family, relative);
+            }
+        }
+    }
+
+    private static void removeFamilyFromRelative(PlayerFamily spouseFamily, PlayerFamily relative) {
+        UUID spouseRoot = spouseFamily.getRoot();
+
+        if (relative.getFamilyId() != null) {
+            FamilyDetails relativeDetails = FamilyDetailsGet.getRootFamilyDetails(relative);
+
+            if (relativeDetails != null) {
+                // Видаляємо spouseFamily з мапи доступу дітей
+                relativeDetails.getChildrenAccessMap().remove(spouseRoot);
+
+                // Видаляємо spouseFamily з мапи доступу батьків
+                relativeDetails.getAncestorsAccessMap().remove(spouseRoot);
+
+                FamilyDetailsSave.saveFamilyDetails(relativeDetails, null);
+            }
         }
     }
 }
