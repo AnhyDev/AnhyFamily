@@ -319,9 +319,9 @@ public class Adopt extends Sender {
                 	
                 	FamilyDetailsHandler.handleAdoption(adoptersFamily, adoptedFamily);
                 	
-                    FamilyAdoption utilsAdopt = new FamilyAdoption(familyPlugin);
+                    FamilyAdoption familyAdoption = new FamilyAdoption(familyPlugin);
 
-                    if (utilsAdopt.adoption(adoptedFamily, adoptersFamily)) {
+                    if (familyAdoption.adoption(adoptedFamily, adoptersFamily)) {
                         messageType[0] = MessageType.IMPORTANT;
                         sendMessage(messageTrue, messageType[0], senders);
                     } else {
