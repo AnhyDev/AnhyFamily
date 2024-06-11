@@ -326,6 +326,7 @@ public class Adopt extends Sender {
                     }
                     if (manager != null) manager.removeParent(adoptedFamily.getRoot());
                 });
+
             } else {
                 sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, senders);
             }
