@@ -18,7 +18,7 @@ import ink.anh.family.db.TableRegistry;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
-import ink.anh.family.separate.Clear;
+import ink.anh.family.separate.ClearAllRelatives;
 
 public class AnhyFamilyCommand extends Sender implements CommandExecutor {
 
@@ -44,7 +44,7 @@ public class AnhyFamilyCommand extends Sender implements CommandExecutor {
 	                    new Surname().setSurnameFromConsole(sender, args);
 	                    break;
 	                case "clear":
-	                    new Clear(familyPlugin).exeClearFamily(sender, args);
+	                    new ClearAllRelatives(familyPlugin).exeClearFamily(sender, args);
 	                    break;
 	                case "reload":
 	                    reload(sender);

@@ -24,9 +24,9 @@ import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
-public class Clear extends Sender {
+public class ClearAllRelatives extends Sender {
 	
-	public Clear(AnhyFamily familiPlugin) {
+	public ClearAllRelatives(AnhyFamily familiPlugin) {
 		super(GlobalManager.getInstance());
 	}
 	
@@ -102,6 +102,9 @@ public class Clear extends Sender {
     }
 
     private static void separateAllRelations(PlayerFamily playerFamily, Set<PlayerFamily> modifiedFamilies) {
+        if (playerFamily == null || modifiedFamilies == null || modifiedFamilies.isEmpty()) {
+            return;
+        }
         // Видалення всіх родичів з сім'ї
         FamilyHandler.removeCrossFamilyRelations(playerFamily, modifiedFamilies, true, true);
     }
