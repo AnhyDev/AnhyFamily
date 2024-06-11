@@ -1,11 +1,6 @@
-package ink.anh.family.marriage;
+package ink.anh.family.fdetails;
 
-import ink.anh.family.fdetails.AccessControl;
-import ink.anh.family.fdetails.FamilyDetails;
-import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.symbol.UUIDToUniqueString;
-import ink.anh.family.fdetails.FamilyDetailsDelete;
-import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.enums.Access;
@@ -15,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class FamilyHandler {
+public class FamilyDetailsHandler {
 
     public static FamilyDetails createFamilyOnMarriage(PlayerFamily spouse1, PlayerFamily spouse2) {
 

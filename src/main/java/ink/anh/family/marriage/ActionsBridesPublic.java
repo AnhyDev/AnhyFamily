@@ -15,6 +15,7 @@ import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
+import ink.anh.family.fdetails.FamilyDetailsHandler;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.OtherUtils;
@@ -216,7 +217,7 @@ public class ActionsBridesPublic extends Sender {
                 SyncExecutor.runAsync(() -> {
                 	updateFamilyData(proposerFamily, receiverFamily, marryPublic, one);
                 	
-                	FamilyHandler.createFamilyOnMarriage(proposerFamily, receiverFamily);
+                	FamilyDetailsHandler.createFamilyOnMarriage(proposerFamily, receiverFamily);
         			
         			sendMessage(messageForFormatting, messageType[1], false, recipients);
 
