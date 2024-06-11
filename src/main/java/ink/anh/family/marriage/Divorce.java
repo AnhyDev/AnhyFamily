@@ -90,10 +90,10 @@ public class Divorce extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
-                    FamilyHandler.handleDivorce(spouseFamily);
+                    FamilyHandler.removeCrossFamilyRelations(initiatorFamily, modifiedFamilies, false, false);
+                    FamilyHandler.removeCrossFamilyRelations(spouseFamily, modifiedFamilies, false, false);
 
-                    FamilyHandler.removeCrossFamilyRelations(initiatorFamily, modifiedFamilies);
-                    FamilyHandler.removeCrossFamilyRelations(spouseFamily, modifiedFamilies);
+                    FamilyHandler.handleDivorce(spouseFamily);
 
                     FamilySeparation utilsDivorce = new FamilySeparation(familyPlugin);
 

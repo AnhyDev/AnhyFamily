@@ -95,32 +95,49 @@ public class FamilyHandler {
         }
     }
 
-    public static void removeCrossFamilyRelations(PlayerFamily spouse1Family, Set<PlayerFamily> relatives) {
-        for (PlayerFamily relative : relatives) {
-            // Якщо цей родич є батьком або дитиною spouse1Family, не розриваємо зв'язок зі spouse1Family
-            boolean isRelativeOfSpouse1 = relative.getRoot().equals(spouse1Family.getFather()) || relative.getRoot().equals(spouse1Family.getMother()) || spouse1Family.getChildren().contains(relative.getRoot());
+    public static void removeCrossFamilyRelations(PlayerFamily spouseFamily, Set<PlayerFamily> relatives, boolean removeRelative, boolean initiatorSave) {
+        boolean shouldSaveSpouseFamilyDetails = false;
 
-            if (!isRelativeOfSpouse1) {
-                removeFamilyFromRelative(spouse1Family, relative);
+        for (PlayerFamily relative : relatives) {
+            boolean isRelativeOfSpouse1 = relative.getRoot().equals(spouseFamily.getFather()) || 
+                                          relative.getRoot().equals(spouseFamily.getMother()) || 
+                                          spouseFamily.getChildren().contains(relative.getRoot());
+
+            boolean shouldRemove = (removeRelative && isRelativeOfSpouse1) || (!removeRelative && !isRelativeOfSpouse1);
+
+            if (shouldRemove) {
+                if (removeFamilyFromRelative(spouseFamily, relative, false)) {
+                    shouldSaveSpouseFamilyDetails = true;
+                }
+                removeFamilyFromRelative(relative, spouseFamily, true);
+            }
+        }
+
+        if (shouldSaveSpouseFamilyDetails && initiatorSave) {
+            FamilyDetails spouseDetails = FamilyDetailsGet.getRootFamilyDetails(spouseFamily);
+            if (spouseDetails != null) {
+                FamilyDetailsSave.saveFamilyDetails(spouseDetails, null);
             }
         }
     }
 
-    private static void removeFamilyFromRelative(PlayerFamily spouseFamily, PlayerFamily relative) {
+    private static boolean removeFamilyFromRelative(PlayerFamily spouseFamily, PlayerFamily relative, boolean shouldSave) {
         UUID spouseRoot = spouseFamily.getRoot();
 
         if (relative.getFamilyId() != null) {
             FamilyDetails relativeDetails = FamilyDetailsGet.getRootFamilyDetails(relative);
 
             if (relativeDetails != null) {
-                // Видаляємо spouseFamily з мапи доступу дітей
-                relativeDetails.getChildrenAccessMap().remove(spouseRoot);
+                boolean childRemoved = relativeDetails.getChildrenAccessMap().remove(spouseRoot) != null;
+                boolean ancestorRemoved = relativeDetails.getAncestorsAccessMap().remove(spouseRoot) != null;
 
-                // Видаляємо spouseFamily з мапи доступу батьків
-                relativeDetails.getAncestorsAccessMap().remove(spouseRoot);
+                if (shouldSave) {
+                    FamilyDetailsSave.saveFamilyDetails(relativeDetails, null);
+                }
 
-                FamilyDetailsSave.saveFamilyDetails(relativeDetails, null);
+                return childRemoved || ancestorRemoved;
             }
         }
+        return false;
     }
 }

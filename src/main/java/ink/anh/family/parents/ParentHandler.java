@@ -35,39 +35,4 @@ public class ParentHandler {
             FamilyDetailsSave.saveFamilyDetails(familyDetails, null);
         }
     }
-
-    public static void handleParentSeparation(PlayerFamily parentFamily, PlayerFamily childFamily) {
-        UUID familyId = parentFamily.getFamilyId();
-        if (familyId != null) {
-            removeFromFamilyDetails(familyId, childFamily);
-        }
-    }
-
-    public static void handleChildSeparation(PlayerFamily childFamily, PlayerFamily parentFamily) {
-        UUID familyId = childFamily.getFamilyId();
-        if (familyId != null) {
-            removeFromFamilyDetails(familyId, parentFamily);
-        }
-    }
-
-    private static void removeFromFamilyDetails(UUID familyId, PlayerFamily relatedFamily) {
-    	if (relatedFamily == null) {
-    		return;
-    	}
-
-    	UUID relatedUuid = relatedFamily.getRoot();
-        FamilyDetails familyDetails = FamilyDetailsGet.getFamilyDetails(familyId);
-        if (familyDetails != null) {
-            familyDetails.getChildrenAccessMap().remove(relatedUuid);
-            familyDetails.getAncestorsAccessMap().remove(relatedUuid);
-            FamilyDetailsSave.saveFamilyDetails(familyDetails, null);
-        }
-
-        FamilyDetails relatedDetails = FamilyDetailsGet.getFamilyDetails(relatedUuid);
-        if (relatedDetails != null) {
-            relatedDetails.getChildrenAccessMap().remove(familyId);
-            relatedDetails.getAncestorsAccessMap().remove(familyId);
-            FamilyDetailsSave.saveFamilyDetails(relatedDetails, null);
-        }
-    }
 }

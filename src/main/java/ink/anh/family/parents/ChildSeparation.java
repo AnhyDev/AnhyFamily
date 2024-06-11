@@ -9,6 +9,7 @@ import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.marriage.FamilyHandler;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.util.FamilySeparationUtils;
@@ -85,8 +86,6 @@ public class ChildSeparation extends Sender {
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
                 	
-                	ParentHandler.handleChildSeparation(senderFamily, targetFamily);
-                	
                     FamilySeparation familySeparation = new FamilySeparation(familyPlugin);
                     boolean success;
 
@@ -109,6 +108,7 @@ public class ChildSeparation extends Sender {
                     CommandSender[] senders = {sender, targetPlayer};
 
                     if (success) {
+                        FamilyHandler.removeCrossFamilyRelations(senderFamily, event.getModifiedFamilies(), true, true);
                         messageType[0] = MessageType.IMPORTANT;
                         sendMessage(messageTrue, messageType[0], senders);
                     } else {

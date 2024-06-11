@@ -9,6 +9,7 @@ import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.marriage.FamilyHandler;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.util.FamilySeparationUtils;
@@ -76,7 +77,7 @@ public class ParentSeparation extends Sender {
         return true;
     }
 
-    private void handleParentSeparation(FamilySeparationEvent event, PlayerFamily playerFamily, PlayerFamily targetFamily, CommandSender sender, Player targetPlayer) {
+    private void handleParentSeparation(FamilySeparationEvent event, PlayerFamily senderFamily, PlayerFamily targetFamily, CommandSender sender, Player targetPlayer) {
         final MessageType[] messageType = {MessageType.IMPORTANT, MessageType.WARNING};
         try {
             Bukkit.getPluginManager().callEvent(event);
@@ -84,12 +85,10 @@ public class ParentSeparation extends Sender {
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
                 	
-                	ParentHandler.handleParentSeparation(playerFamily, targetFamily);
-                	
                     FamilySeparation familySeparation = new FamilySeparation(familyPlugin);
                     boolean success;
 
-                    UUID playerUUID = playerFamily.getRoot();
+                    UUID playerUUID = senderFamily.getRoot();
                     UUID targetUUID = targetFamily.getRoot();
 
                     if (playerUUID.equals(targetFamily.getFather()) || playerUUID.equals(targetFamily.getMother())) {
@@ -105,6 +104,7 @@ public class ParentSeparation extends Sender {
                     CommandSender[] senders = {sender, targetPlayer};
 
                     if (success) {
+                        FamilyHandler.removeCrossFamilyRelations(senderFamily, event.getModifiedFamilies(), true, true);
                         messageType[0] = MessageType.IMPORTANT;
                         sendMessage(messageTrue, messageType[0], senders);
                     } else {
