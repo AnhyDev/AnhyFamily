@@ -13,7 +13,7 @@ import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
-import ink.anh.family.fdetails.FamilyDetailsHandler;
+import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.api.utils.SyncExecutor;
 
 public class ActionsBridesPrivate extends Sender {
@@ -145,7 +145,7 @@ public class ActionsBridesPrivate extends Sender {
                 	
                 	updateFamilyData(proposerFamily, receiverFamily, marryBase);
                 	
-                	FamilyDetailsHandler.createFamilyOnMarriage(proposerFamily, receiverFamily);
+                	FamilyDetailsService.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
                     messageType[0] = MessageType.IMPORTANT;
                     sendMessage(messageTrue, messageType[0], senders);

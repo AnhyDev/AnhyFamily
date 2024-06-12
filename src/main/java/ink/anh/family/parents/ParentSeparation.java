@@ -11,7 +11,7 @@ import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
-import ink.anh.family.fdetails.FamilyDetailsHandler;
+import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -104,7 +104,7 @@ public class ParentSeparation extends Sender {
                     CommandSender[] senders = {sender, targetPlayer};
 
                     if (success) {
-                        FamilyDetailsHandler.removeCrossFamilyRelations(senderFamily, event.getModifiedFamilies(), true, true);
+                        FamilyDetailsService.removeCrossFamilyRelations(senderFamily, event.getModifiedFamilies(), true, true);
                         messageType[0] = MessageType.IMPORTANT;
                         sendMessage(messageTrue, messageType[0], senders);
                     } else {

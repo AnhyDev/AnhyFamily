@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class FamilyDetailsDataHandler extends DataHandler {
+public class FamilyDetailsCacheManager extends DataHandler {
     
     private Map<UUID, FamilyDetails> localDataMap = new ConcurrentHashMap<>();
 
@@ -16,17 +16,17 @@ public class FamilyDetailsDataHandler extends DataHandler {
     private static final String FAMILY_MOTHER = "familyMother";
     private static final String FAMILY_CHILDREN = "familyChildren";
     
-    private static FamilyDetailsDataHandler instance;
+    private static FamilyDetailsCacheManager instance;
 
     // Приватний конструктор для запобігання створенню нових екземплярів
-    private FamilyDetailsDataHandler() {
+    private FamilyDetailsCacheManager() {
         super();
     }
 
     // Метод для отримання єдиного екземпляра класу
-    public static synchronized FamilyDetailsDataHandler getInstance() {
+    public static synchronized FamilyDetailsCacheManager getInstance() {
         if (instance == null) {
-            instance = new FamilyDetailsDataHandler();
+            instance = new FamilyDetailsCacheManager();
         }
         return instance;
     }

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class FamilyDetailsSave {
 
     private static FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) GlobalManager.getInstance().getDatabaseManager().getTable(FamilyDetails.class);
-    private static FamilyDetailsDataHandler dataHandler = FamilyDetailsDataHandler.getInstance();
+    private static FamilyDetailsCacheManager dataHandler = FamilyDetailsCacheManager.getInstance();
 
     public static void saveFamilyDetails(FamilyDetails familyDetails, FamilyDetailsField fieldToUpdate) {
         dataHandler.addFamilyDetails(familyDetails);

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class FamilyDetailsHandler {
+public class FamilyDetailsService {
 
     public static FamilyDetails createFamilyOnMarriage(PlayerFamily spouse1, PlayerFamily spouse2) {
 

@@ -16,7 +16,7 @@ import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
-import ink.anh.family.fdetails.FamilyDetailsHandler;
+import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.events.ActionInitiator;
@@ -91,10 +91,10 @@ public class Divorce extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
-                    FamilyDetailsHandler.removeCrossFamilyRelations(initiatorFamily, modifiedFamilies, false, false);
-                    FamilyDetailsHandler.removeCrossFamilyRelations(spouseFamily, modifiedFamilies, false, false);
+                    FamilyDetailsService.removeCrossFamilyRelations(initiatorFamily, modifiedFamilies, false, false);
+                    FamilyDetailsService.removeCrossFamilyRelations(spouseFamily, modifiedFamilies, false, false);
 
-                    FamilyDetailsHandler.handleDivorce(spouseFamily);
+                    FamilyDetailsService.handleDivorce(spouseFamily);
 
                     FamilySeparation utilsDivorce = new FamilySeparation(familyPlugin);
 

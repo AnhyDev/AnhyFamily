@@ -16,7 +16,7 @@ import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.AdoptionEvent;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
-import ink.anh.family.fdetails.FamilyDetailsHandler;
+import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -318,7 +318,7 @@ public class Adopt extends Sender {
                     FamilyAdoption familyAdoption = new FamilyAdoption(familyPlugin);
                     
                     if (familyAdoption.adoption(adoptedFamily, adoptersFamily)) {
-                    	FamilyDetailsHandler.handleAdoption(adoptersFamily, adoptedFamily);
+                    	FamilyDetailsService.handleAdoption(adoptersFamily, adoptedFamily);
                         sendMessage(messageTrue, MessageType.IMPORTANT, senders);
                     } else {
                         sendMessage(messageFalse, MessageType.WARNING, senders);

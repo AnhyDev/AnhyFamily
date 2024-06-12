@@ -18,7 +18,7 @@ import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetailsGet;
-import ink.anh.family.fdetails.FamilyDetailsHandler;
+import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilySeparationUtils;
@@ -109,10 +109,10 @@ public class ClearAllRelatives extends Sender {
             return;
         }
         // Видалення всіх родичів з сім'ї
-        FamilyDetailsHandler.removeCrossFamilyRelations(playerFamily, modifiedFamilies, true, false);
-        FamilyDetailsHandler.removeCrossFamilyRelations(playerFamily, modifiedFamilies, false, false);
+        FamilyDetailsService.removeCrossFamilyRelations(playerFamily, modifiedFamilies, true, false);
+        FamilyDetailsService.removeCrossFamilyRelations(playerFamily, modifiedFamilies, false, false);
         
-        FamilyDetailsHandler.handleDivorce(playerFamily);
+        FamilyDetailsService.handleDivorce(playerFamily);
 
         FamilySeparation utilsDivorce = new FamilySeparation(familiPlugin);
         utilsDivorce.separateSpouses(playerFamily);

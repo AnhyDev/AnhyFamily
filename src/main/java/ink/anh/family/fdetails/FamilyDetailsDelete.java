@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class FamilyDetailsDelete {
 
     private static FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) GlobalManager.getInstance().getDatabaseManager().getTable(FamilyDetails.class);
-    private static FamilyDetailsDataHandler dataHandler = FamilyDetailsDataHandler.getInstance();
+    private static FamilyDetailsCacheManager dataHandler = FamilyDetailsCacheManager.getInstance();
 
     public static void deleteFamilyDetails(UUID familyId) {
         if (familyId != null) {
