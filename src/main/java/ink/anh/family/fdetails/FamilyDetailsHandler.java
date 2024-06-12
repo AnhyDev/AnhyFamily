@@ -71,35 +71,27 @@ public class FamilyDetailsHandler {
 
     private static void updateRelativesFamilyDetails(PlayerFamily spouse, PlayerFamily newSpouse) {
         // Оновлення сімейних об'єктів батьків
-        updateParentFamilyDetails(spouse.getFather(), newSpouse.getRoot());
-        updateParentFamilyDetails(spouse.getMother(), newSpouse.getRoot());
+        addMemberToFamilyDetails(spouse.getFather(), newSpouse.getRoot(), true);
+        addMemberToFamilyDetails(spouse.getMother(), newSpouse.getRoot(), true);
 
         // Оновлення сімейних об'єктів дітей
         Set<UUID> children = spouse.getChildren();
         if (children != null) {
             for (UUID child : children) {
-                updateChildFamilyDetails(child, newSpouse.getRoot());
+                addMemberToFamilyDetails(child, newSpouse.getRoot(), false);
             }
         }
     }
 
-    private static void updateParentFamilyDetails(UUID parentUuid, UUID newSpouseUuid) {
-        if (parentUuid != null) {
-            FamilyDetails parentFamilyDetails = FamilyDetailsGet.getRootFamilyDetails(parentUuid);
-            if (parentFamilyDetails != null && !parentFamilyDetails.getChildrenAccessMap().containsKey(newSpouseUuid)) {
-                // Додаємо нового члена сім'ї тільки якщо він ще не доданий
-                parentFamilyDetails.getChildrenAccessMap().put(newSpouseUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
-                FamilyDetailsSave.saveFamilyDetails(parentFamilyDetails, null);
-            }
-        }
-    }
-
-    private static void updateChildFamilyDetails(UUID childUuid, UUID newSpouseUuid) {
-        if (childUuid != null) {
-            FamilyDetails childFamilyDetails = FamilyDetailsGet.getRootFamilyDetails(childUuid);
-            if (childFamilyDetails != null) {
-                childFamilyDetails.getAncestorsAccessMap().put(newSpouseUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
-                FamilyDetailsSave.saveFamilyDetails(childFamilyDetails, null);
+    private static void addMemberToFamilyDetails(UUID targetUuid, UUID newMemberUuid, boolean isParent) {
+        if (targetUuid != null && newMemberUuid != null) {
+            FamilyDetails targetFamilyDetails = FamilyDetailsGet.getRootFamilyDetails(targetUuid);
+            if (targetFamilyDetails != null) {
+                Map<UUID, AccessControl> accessMap = isParent ? targetFamilyDetails.getChildrenAccessMap() : targetFamilyDetails.getAncestorsAccessMap();
+                if (!accessMap.containsKey(newMemberUuid)) {
+                    accessMap.put(newMemberUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+                    FamilyDetailsSave.saveFamilyDetails(targetFamilyDetails, null);
+                }
             }
         }
     }
@@ -109,23 +101,25 @@ public class FamilyDetailsHandler {
             return; // Якщо немає батьків або дитини, виходимо
         }
 
-        UUID familyId1 = adoptersFamily[0].getFamilyId();
-        UUID familyId2 = (adoptersFamily.length > 1) ? adoptersFamily[1].getFamilyId() : null;
-
-        if (familyId1 != null) {
-            addAdoptedChildToFamilyDetails(familyId1, adoptedFamily.getRoot());
+        for (PlayerFamily adopter : adoptersFamily) {
+            if (adopter != null && adopter.getFamilyId() != null) {
+                addMemberToFamilyDetails(adopter.getFamilyId(), adoptedFamily.getRoot(), true);
+            }
         }
 
-        if (familyId2 != null && !familyId2.equals(familyId1)) {
-            addAdoptedChildToFamilyDetails(familyId2, adoptedFamily.getRoot());
-        }
+        // Оновлення сімейних об'єктів усиновлюваного
+        updateAdoptedFamilyDetails(adoptedFamily, adoptersFamily);
     }
 
-    private static void addAdoptedChildToFamilyDetails(UUID familyId, UUID childUuid) {
-        FamilyDetails familyDetails = FamilyDetailsGet.getFamilyDetails(familyId);
-        if (familyDetails != null) {
-            familyDetails.getChildrenAccessMap().put(childUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
-            FamilyDetailsSave.saveFamilyDetails(familyDetails, null);
+    private static void updateAdoptedFamilyDetails(PlayerFamily adoptedFamily, PlayerFamily[] adoptersFamily) {
+        if (adoptedFamily == null || adoptersFamily == null || adoptersFamily.length == 0) {
+            return; // Якщо немає усиновлюваного або усиновлювачів, виходимо
+        }
+
+        for (PlayerFamily adopter : adoptersFamily) {
+            if (adopter != null) {
+                addMemberToFamilyDetails(adoptedFamily.getRoot(), adopter.getRoot(), false);
+            }
         }
     }
 
