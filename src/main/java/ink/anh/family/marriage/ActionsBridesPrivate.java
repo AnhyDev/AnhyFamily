@@ -89,7 +89,7 @@ public class ActionsBridesPrivate extends Sender {
 
         MessageForFormatting messageTrue = new MessageForFormatting("family_proposal_accepted", new String[]{proposer.getName()});
         MessageForFormatting messageFalse = new MessageForFormatting("family_proposal_failed", new String[]{proposer.getName()});
-        CommandSender[] senders = {sender, proposer};
+        Player[] senders = {(Player) sender, proposer};
 
         SyncExecutor.runSync(() -> handleMarriage(proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF, senders, messageTrue, messageFalse, proposal));
     }
@@ -128,14 +128,14 @@ public class ActionsBridesPrivate extends Sender {
 	    FamilyUtils.saveFamily(familyOfOtherBride);
 	}
 
-    private void handleMarriage(PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, CommandSender[] senders,
+    private void handleMarriage(PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, Player[] players,
     		MessageForFormatting messageTrue, MessageForFormatting messageFalse, MarryBase marryBase) {
         final MessageType[] messageType = {MessageType.WARNING};
         try {
             MarriageEvent event = new MarriageEvent(null, proposerFamily, receiverFamily, initiator);
             Bukkit.getPluginManager().callEvent(event);
         	
-        	if (validator.paymentFailed(marryBase, (Player[]) senders, marriageManager)) {
+        	if (validator.paymentFailed(marryBase, players, marriageManager)) {
         		event.cancellEvent("Error in payment of peace enterprise");
         		return;
         	}
@@ -148,10 +148,10 @@ public class ActionsBridesPrivate extends Sender {
                 	FamilyDetailsService.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
                     messageType[0] = MessageType.IMPORTANT;
-                    sendMessage(messageTrue, messageType[0], senders);
+                    sendMessage(messageTrue, messageType[0], players);
                 });
             } else {
-                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, senders);
+                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, players);
             }
         } catch (Exception e) {
             Bukkit.getLogger().severe("Exception in handleMarriage: " + e.getMessage());
