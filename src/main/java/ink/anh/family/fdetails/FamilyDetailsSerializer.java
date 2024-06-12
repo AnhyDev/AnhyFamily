@@ -71,7 +71,7 @@ public class FamilyDetailsSerializer {
 
     public static String serializeChest(Chest chest) {
         if (chest == null) {
-            return "null";
+            return null;
         }
 
         JsonObject jsonObject = new JsonObject();

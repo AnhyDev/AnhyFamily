@@ -22,48 +22,52 @@ public class FamilyChatTabCompleter implements TabCompleter {
 
         List<String> completions = new ArrayList<>();
 
-        if (args.length == 1) {
-            // Додавання можливих варіантів для першого аргументу 
+        if (args.length >= 1) {
+            String lastArg = args[args.length - 1];
+
+            // Додавання можливих варіантів для аргументів 
             completions.add("access");
             completions.add("check");
             completions.add("default");
             completions.add("#");
             completions.add("@");
 
-            // Додавання символів сімей, якщо перший аргумент починається з #
-            if (args[0].startsWith("#")) {
-                String inputSymbol = args[0].substring(1).toUpperCase();
+            // Додавання символів сімей, якщо аргумент починається з #
+            if (lastArg.startsWith("#")) {
+                String inputSymbol = lastArg.substring(1).toUpperCase();
                 completions.addAll(FamilySymbolManager.getAllFamilySymbols().stream()
                         .filter(symbol -> symbol.startsWith(inputSymbol))
                         .map(symbol -> "#" + symbol)
                         .collect(Collectors.toList()));
             }
 
-            // Додавання імен гравців, якщо перший аргумент починається з @
-            if (args[0].startsWith("@")) {
-                String inputName = args[0].substring(1).toLowerCase();
+            // Додавання імен гравців, якщо аргумент починається з @
+            if (lastArg.startsWith("@")) {
+                String inputName = lastArg.substring(1).toLowerCase();
                 completions.addAll(Bukkit.getOnlinePlayers().stream()
                         .map(player -> "@" + player.getName())
                         .filter(name -> name.toLowerCase().startsWith("@" + inputName))
                         .collect(Collectors.toList()));
             }
-        } else if (args.length == 2 && (args[0].equalsIgnoreCase("access") || args[0].equalsIgnoreCase("check"))) {
-            // Додавання імен гравців для команди "access"
+        }
+
+        if (args.length >= 2 && (args[0].equalsIgnoreCase("access") || args[0].equalsIgnoreCase("check"))) {
+            // Додавання імен гравців для команд "access" та "check"
             String inputName = args[1].toLowerCase();
             completions.addAll(Bukkit.getOnlinePlayers().stream()
                     .map(Player::getName)
                     .filter(name -> name.toLowerCase().startsWith(inputName))
                     .collect(Collectors.toList()));
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("default")) {
+        } else if (args.length >= 2 && args[0].equalsIgnoreCase("default")) {
             // Додавання груп для команди "default"
             completions.add("children");
             completions.add("parents");
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("access")) {
+        } else if (args.length >= 3 && args[0].equalsIgnoreCase("access")) {
             // Додавання варіантів доступу для команди "access"
             completions.add("allow");
             completions.add("deny");
             completions.add("default");
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("default")) {
+        } else if (args.length >= 3 && args[0].equalsIgnoreCase("default")) {
             // Додавання варіантів доступу для команди "default"
             completions.add("allow");
             completions.add("deny");

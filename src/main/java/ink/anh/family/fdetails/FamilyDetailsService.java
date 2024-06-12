@@ -1,5 +1,6 @@
 package ink.anh.family.fdetails;
 
+import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fdetails.symbol.UUIDToUniqueString;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
@@ -46,6 +47,9 @@ public class FamilyDetailsService {
         updateRelativesFamilyDetails(spouse1, spouse2);
         updateRelativesFamilyDetails(spouse2, spouse1);
 
+        FamilyDetailsCacheManager.getInstance().addFamilyDetails(familyDetails);
+        FamilySymbolManager.addSymbol(symbol, familyId);
+        
         return familyDetails;
     }
 

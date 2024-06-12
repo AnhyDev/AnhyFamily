@@ -47,6 +47,12 @@ public class FamilySymbolManager extends Sender {
             sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
         }
     }
+    
+    public static void addSymbol(String symbol, UUID familyId) {
+        if (symbol != null && familyId != null) {
+            symbolMap.put(symbol.toUpperCase(), familyId);
+        }
+    }
 
     public void setSymbol() {
         if (player == null) {

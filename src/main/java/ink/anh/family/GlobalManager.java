@@ -49,6 +49,8 @@ public class GlobalManager extends LibraryManager {
             instance = new GlobalManager(AnhyFamily.getInstance());
             instance.initializeDatabase();
             instance.setOrherManagers();
+
+            SyncExecutor.runAsync(() -> FamilyDataLoader.loadData(instance.getDatabaseManager()));
         }
         return instance;
     }
@@ -92,6 +94,9 @@ public class GlobalManager extends LibraryManager {
                 saveDefaultConfig();
                 familyPlugin.reloadConfig();
                 loadFields(familyPlugin);
+
+                SyncExecutor.runAsync(() -> FamilyDataLoader.loadData(instance.getDatabaseManager()));
+                
                 Logger.info(familyPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded", new String[]{defaultLang}));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -118,8 +123,6 @@ public class GlobalManager extends LibraryManager {
         familyConfig = FamilyConfig.getInstance(familyPlugin);
         // Перезавантажуємо конфіг
         familyConfig.reloadConfig(familyPlugin);
-
-        SyncExecutor.runAsync(() -> FamilyDataLoader.loadData());
     }
 
     private void setMySQLConfig() {

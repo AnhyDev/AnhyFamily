@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import ink.anh.api.enums.Access;
 import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
@@ -48,49 +49,68 @@ public class FamilyChatManager extends Sender {
     public void sendMessageWithConditions() {
 
         String firstArg = args[0];
-        String message = StringUtils.colorize(String.join(" ", Arrays.copyOfRange(args, 1, args.length)));
 
         if (firstArg.startsWith("#")) {
-            handleSymbolMessage(firstArg.substring(1).toUpperCase(), message);
+        	handleChatMessage(firstArg.substring(1).toUpperCase(), 1);
         } else if (firstArg.startsWith("@")) {
-            handleNicknameMessage(firstArg.substring(1), message);
+        	handleChatMessage(firstArg.substring(1), 2);
         } else {
-            handleDefaultMessage(message);
+        	handleChatMessage(null, 0);
         }
     }
 
-    private void handleSymbolMessage(String symbol, String message) {
-        if (symbol.length() >= 3 && symbol.length() <= 6 && symbol.matches("[A-Z]+")) {
-            UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(symbol);
-            if (familyId != null) {
-                sendMessageToFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), message);
-                return;
-            }
+    private void handleChatMessage(String key, int typeKey) {
+        FamilyDetails familyDetails = null;
+        String lowerCaseKey = key.toLowerCase();
+
+        String message = StringUtils.colorize(String.join(" ", (typeKey > 0 ? Arrays.copyOfRange(args, 1, args.length) : args)));
+        if (message == null || message.isEmpty()) {
+            sendMessage(new MessageForFormatting("family_err_command_format", 
+            		new String[] {"/fchat access <args> | /fchat default <args> | /fchat <message> | /fchat #<RPEFIX> <message> | /fchat @<NickName> <message> | /fchat check <NickName>"}), MessageType.WARNING, player);
+            return;
         }
-        sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[] {symbol}), MessageType.WARNING, player);
-    }
-
-    private void handleNicknameMessage(String nickname, String message) {
-        Player targetPlayer = Bukkit.getOnlinePlayers().stream()
-            .filter(p -> p.getName().equalsIgnoreCase(nickname))
-            .findFirst()
-            .orElse(null);
-
-        if (targetPlayer != null) {
-            PlayerFamily targetFamily = FamilyUtils.getFamily(targetPlayer);
-            if (targetFamily != null) {
-                UUID familyId = targetFamily.getFamilyId();
+        
+        switch (typeKey) {
+            case 0:
+                // Відправка повідомлення сім'ї гравця
+                familyDetails = FamilyDetailsGet.getRootFamilyDetails(player);
+                break;
+            case 1:
+                Logger.info(AnhyFamily.getInstance(), "Відправка повідомлення сім'ї за символом сім'ї");
+                // Відправка повідомлення сім'ї за символом сім'ї
+                UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(key);
+                Logger.info(AnhyFamily.getInstance(), "UUID familyId = " + familyId);
                 if (familyId != null) {
-                    sendMessageToFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), message);
+                    familyDetails = FamilyDetailsGet.getRootFamilyDetails(familyId);
+                    Logger.info(AnhyFamily.getInstance(), "FamilySymbol = " + familyDetails.getFamilySymbol());
+                } else {
+                    sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[]{key}), MessageType.WARNING, player);
+                    return;
                 }
-            }
-        } else {
-            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[] {nickname}), MessageType.WARNING, player);
-        }
-    }
+                break;
+            case 2:
+                // Відправка повідомлення сім'ї за іменем або відображуваним іменем гравця без врахування регістру
+                Player targetPlayer = Bukkit.getOnlinePlayers().stream()
+                        .filter(p -> p.getName().toLowerCase().equals(lowerCaseKey) || p.getDisplayName().toLowerCase().equals(lowerCaseKey))
+                        .findFirst()
+                        .orElse(null);
 
-    private void handleDefaultMessage(String message) {
-        sendMessageToFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), message);
+                if (targetPlayer == null) {
+                    sendMessage(new MessageForFormatting("family_hover_player_offline", new String[]{key}), MessageType.WARNING, player);
+                    return;
+                }
+                familyDetails = FamilyDetailsGet.getRootFamilyDetails(targetPlayer);
+                break;
+            default:
+                // Невідомий тип ключа
+                sendMessage(new MessageForFormatting("family_err_invalid_typekey", new String[]{String.valueOf(typeKey)}), MessageType.WARNING, player);
+                return;
+        }
+
+        // Відправка повідомлення, якщо знайдено сімейні деталі
+        if (familyDetails != null) {
+            sendMessageToFamilyDetails(familyDetails, message);
+        }
     }
 
     private void sendMessageToFamilyDetails(FamilyDetails details, String message) {
@@ -236,7 +256,6 @@ public class FamilyChatManager extends Sender {
     
     public MessageComponents buildInteractiveMessage(FamilyDetails details, String message, Player recepient) {
         String symbol = details.getFamilySymbol();
-        String playerDisplayName = player.getDisplayName();
         String playerName = player.getName();
         String commandBase = "/fchat #" + symbol + " ";
         
@@ -244,8 +263,8 @@ public class FamilyChatManager extends Sender {
         String symbolColor = "#0bdebb";
         String arrowColor = "#8a690f";
         String treeColor = "#228B22";
-        String playerNameColor = "#FFFF00";
-        String messageColor = "#f54900";
+        String playerNameColor = "#fac32a";
+        String messageColor = "#2ab1fa";
         
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
         
@@ -253,7 +272,7 @@ public class FamilyChatManager extends Sender {
         String hoverCopyMessageKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_copy_message", langs), new String[] {symbol});
         String hoverReplyChatKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_reply_chat", langs), new String[] {});
         String hoverFamilyTree = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, familyTree, langs), new String[] {});
-        String hoverPlayerNameKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_player_reply", langs), new String[] {});
+        String hoverPlayerNameKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_player_reply", langs), new String[] {playerName});
 
         return MessageComponents.builder()
             .content("[" + symbol + "]")
@@ -261,24 +280,24 @@ public class FamilyChatManager extends Sender {
             .hoverMessage(hoverCopyMessageKey)
             .clickActionCopy(symbol)
             .append(MessageComponents.builder()
-                .content(" ➤")
-                .hexColor(arrowColor)
-                .hoverMessage(hoverReplyChatKey)
-                .clickActionRunCommand(commandBase)
-                .build())
-            .append(MessageComponents.builder()
-                .content(" ♣")
+                .content(" ♣ ")
                 .hexColor(treeColor)
                 .hoverMessage(hoverFamilyTree)
                 .build())
             .append(MessageComponents.builder()
-                .content(playerDisplayName)
+                .content(playerName)
                 .hexColor(playerNameColor)
                 .hoverMessage(hoverPlayerNameKey)
-                .clickActionRunCommand(commandBase + "@" + playerName)
+                .insertTextChat(commandBase + "@" + playerName)
                 .build())
             .append(MessageComponents.builder()
-                .content(": " + StringUtils.colorize(message))
+                .content(" ➡ ")
+                .hexColor(arrowColor)
+                .hoverMessage(hoverReplyChatKey)
+                .insertTextChat(commandBase)
+                .build())
+            .append(MessageComponents.builder()
+                .content(message)
                 .hexColor(messageColor)
                 .build())
             .build();
