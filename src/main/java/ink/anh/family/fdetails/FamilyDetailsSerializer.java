@@ -70,6 +70,10 @@ public class FamilyDetailsSerializer {
     }
 
     public static String serializeChest(Chest chest) {
+        if (chest == null) {
+            return "null";
+        }
+
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("chestLocation", serializeLocation(chest.getChestLocation()));
         jsonObject.addProperty("openDistance", chest.getOpenDistance());
@@ -78,6 +82,10 @@ public class FamilyDetailsSerializer {
     }
 
     public static Chest deserializeChest(String chestString) {
+        if (chestString == null || chestString.equals("null") || chestString.isEmpty()) {
+            return null;
+        }
+
         JsonObject jsonObject = JsonParser.parseString(chestString).getAsJsonObject();
         Location chestLocation = deserializeLocation(jsonObject.get("chestLocation").getAsString());
         int openDistance = jsonObject.get("openDistance").getAsInt();

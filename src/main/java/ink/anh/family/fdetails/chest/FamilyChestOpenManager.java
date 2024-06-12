@@ -42,6 +42,11 @@ public class FamilyChestOpenManager {
 
         String guiName = Translator.translateKyeWorld(GlobalManager.getInstance(), "repo_group_holder", LangUtils.getPlayerLanguage(player));
         FamilyChest holder = new FamilyChest(guiName, familyId);
+        
+        if (details.getFamilyChest() == null) {
+            player.sendMessage("Скриня не встановлена");
+            return;
+        }
         ItemStack[] familyChest = details.getFamilyChest().getFamilyChest();
         
         addChest(familyId, player.getName());
