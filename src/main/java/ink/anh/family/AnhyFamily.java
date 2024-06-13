@@ -2,7 +2,6 @@ package ink.anh.family;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.command.CommandManager;
 import ink.anh.family.listeners.ListenersRegistry;
 import ink.anh.family.util.EconomyHandler;
@@ -26,7 +25,6 @@ public class AnhyFamily extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        SyncExecutor.init(this);
         
         if (checkClass("net.milkbowl.vault.Vault")) {
         	economyHandler = EconomyHandler.getInstance();
