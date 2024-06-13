@@ -42,7 +42,7 @@ public class FamilyHomeSubCommand extends Sender {
                         homeManager.tpHomeWithConditions();
                 }
             } else {
-                homeManager.tpHome();
+                homeManager.tpHomeWithConditions();
             }
         });
 

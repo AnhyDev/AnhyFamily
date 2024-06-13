@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 
 import ink.anh.api.enums.Access;
+import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
@@ -139,50 +140,79 @@ public class FamilyChestManager extends Sender {
     }
 
     public void openChestWithConditions() {
+        if (args.length == 0) {
+            handleOpenChest(null, 0);
+            return;
+        }
+
         String firstArg = args[0];
+
         if (firstArg.startsWith("#")) {
-            String symbol = firstArg.substring(1).toUpperCase();
-            openChestBySymbol(symbol);
+            handleOpenChest(firstArg.substring(1).toUpperCase(), 1);
         } else if (firstArg.startsWith("@")) {
-            String nickname = firstArg.substring(1);
-            openChestByNickname(nickname);
+            handleOpenChest(firstArg.substring(1), 2);
         } else {
-            openChest();
+            handleOpenChest(null, 0);
         }
     }
 
-    private void openChestBySymbol(String symbol) {
-        if (symbol.length() < 3 || symbol.length() > 6 || !symbol.matches("[A-Z]+")) {
-            sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[]{symbol}), MessageType.WARNING, player);
-            return;
-        }
+    private void handleOpenChest(String key, int typeKey) {
+        try {
+            FamilyDetails familyDetails = null;
+            String lowerCaseKey = key != null ? key.toLowerCase() : "null";
 
-        UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(symbol);
-        if (familyId == null) {
-            sendMessage(new MessageForFormatting("family_err_symbol_not_found", new String[]{symbol}), MessageType.WARNING, player);
-            return;
-        }
+            switch (typeKey) {
+                case 0:
+                    familyDetails = FamilyDetailsGet.getRootFamilyDetails(player);
+                    break;
+                case 1:
+                    if (key.length() < 3 || key.length() > 6 || !key.matches("[A-Z]+")) {
+                        sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[]{key}), MessageType.WARNING, player);
+                        return;
+                    }
 
-        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> openChestIfPossible(details, symbol));
-    }
+                    UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(key);
+                    if (familyId == null) {
+                        sendMessage(new MessageForFormatting("family_err_symbol_not_found", new String[]{key}), MessageType.WARNING, player);
+                        return;
+                    }
 
-    private void openChestByNickname(String nickname) {
-        Player targetPlayer = Bukkit.getOnlinePlayers().stream()
-                .filter(p -> p.getName().equalsIgnoreCase(nickname))
-                .findFirst()
-                .orElse(null);
+                    familyDetails = FamilyDetailsGet.getRootFamilyDetails(familyId);
+                    break;
+                case 2:
+                    Player targetPlayer = Bukkit.getOnlinePlayers().stream()
+                        .filter(p -> p.getName().toLowerCase().equals(lowerCaseKey) || p.getDisplayName().toLowerCase().equals(lowerCaseKey))
+                        .findFirst()
+                        .orElse(null);
 
-        if (targetPlayer != null) {
-            PlayerFamily targetFamily = FamilyUtils.getFamily(targetPlayer);
-            if (targetFamily != null) {
-                UUID familyId = targetFamily.getFamilyId();
-                if (familyId != null) {
-                    executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> openChestIfPossible(details, nickname));
+                    if (targetPlayer == null) {
+                        sendMessage(new MessageForFormatting("family_hover_player_offline", new String[]{key}), MessageType.WARNING, player);
+                        return;
+                    }
+                    familyDetails = FamilyDetailsGet.getRootFamilyDetails(targetPlayer);
+                    break;
+                default:
+                    sendMessage(new MessageForFormatting("family_err_invalid_typekey", new String[]{String.valueOf(typeKey)}), MessageType.WARNING, player);
                     return;
-                }
             }
-        } else {
-            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[]{nickname}), MessageType.WARNING, player);
+
+            if (familyDetails != null) {
+                processOpenChest(familyDetails, key);
+            }
+        } catch (Exception e) {
+            Logger.error(AnhyFamily.getInstance(), "Exception in handleOpenChest: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void processOpenChest(FamilyDetails details, String identifier) {
+        if (canOpenChest(details)) {
+            PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+            if (details.hasAccessChest(playerFamily)) {
+                FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
+            } else {
+                sendMessage(new MessageForFormatting("family_err_no_access_chest", identifier != null ? new String[]{identifier} : new String[]{}), MessageType.WARNING, player);
+            }
         }
     }
 

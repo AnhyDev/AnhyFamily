@@ -48,68 +48,74 @@ public class FamilyChatManager extends Sender {
 
     public void sendMessageWithConditions() {
 
+        if (args.length == 0) {
+            handleChatMessage(null, 0);
+            return;
+        }
+
         String firstArg = args[0];
 
         if (firstArg.startsWith("#")) {
-        	handleChatMessage(firstArg.substring(1).toUpperCase(), 1);
+            handleChatMessage(firstArg.substring(1).toUpperCase(), 1);
         } else if (firstArg.startsWith("@")) {
-        	handleChatMessage(firstArg.substring(1), 2);
+            handleChatMessage(firstArg.substring(1), 2);
         } else {
-        	handleChatMessage(null, 0);
+            handleChatMessage(null, 0);
         }
     }
 
     private void handleChatMessage(String key, int typeKey) {
-        FamilyDetails familyDetails = null;
-        String lowerCaseKey = key.toLowerCase();
+        try {
+            FamilyDetails familyDetails = null;
+            String lowerCaseKey = key != null ? key.toLowerCase() : "null";
 
-        String message = StringUtils.colorize(String.join(" ", (typeKey > 0 ? Arrays.copyOfRange(args, 1, args.length) : args)));
-        if (message == null || message.isEmpty()) {
-            sendMessage(new MessageForFormatting("family_err_command_format", 
-            		new String[] {"/fchat access <args> | /fchat default <args> | /fchat <message> | /fchat #<RPEFIX> <message> | /fchat @<NickName> <message> | /fchat check <NickName>"}), MessageType.WARNING, player);
-            return;
-        }
-        
-        switch (typeKey) {
-            case 0:
-                // Відправка повідомлення сім'ї гравця
-                familyDetails = FamilyDetailsGet.getRootFamilyDetails(player);
-                break;
-            case 1:
-                Logger.info(AnhyFamily.getInstance(), "Відправка повідомлення сім'ї за символом сім'ї");
-                // Відправка повідомлення сім'ї за символом сім'ї
-                UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(key);
-                Logger.info(AnhyFamily.getInstance(), "UUID familyId = " + familyId);
-                if (familyId != null) {
-                    familyDetails = FamilyDetailsGet.getRootFamilyDetails(familyId);
-                    Logger.info(AnhyFamily.getInstance(), "FamilySymbol = " + familyDetails.getFamilySymbol());
-                } else {
-                    sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[]{key}), MessageType.WARNING, player);
-                    return;
-                }
-                break;
-            case 2:
-                // Відправка повідомлення сім'ї за іменем або відображуваним іменем гравця без врахування регістру
-                Player targetPlayer = Bukkit.getOnlinePlayers().stream()
-                        .filter(p -> p.getName().toLowerCase().equals(lowerCaseKey) || p.getDisplayName().toLowerCase().equals(lowerCaseKey))
-                        .findFirst()
-                        .orElse(null);
+            String message = StringUtils.colorize(String.join(" ", (typeKey > 0 ? Arrays.copyOfRange(args, 1, args.length) : args)));
 
-                if (targetPlayer == null) {
-                    sendMessage(new MessageForFormatting("family_hover_player_offline", new String[]{key}), MessageType.WARNING, player);
-                    return;
-                }
-                familyDetails = FamilyDetailsGet.getRootFamilyDetails(targetPlayer);
-                break;
-            default:
-                // Невідомий тип ключа
-                sendMessage(new MessageForFormatting("family_err_invalid_typekey", new String[]{String.valueOf(typeKey)}), MessageType.WARNING, player);
+            if (message == null || message.isEmpty()) {
+                String commandUsage = "\n| /fchat access <args> \n| /fchat default <args> \n| /fchat <message> \n| /fchat #<RPEFIX> <message> \n| /fchat @<NickName> <message> \n| /fchat check <NickName>";
+                sendMessage(new MessageForFormatting("family_err_command_format", new String[] {commandUsage}), MessageType.WARNING, player);
                 return;
-        }
+            }
 
-        // Відправка повідомлення, якщо знайдено сімейні деталі
-        if (familyDetails != null) {
-            sendMessageToFamilyDetails(familyDetails, message);
+            switch (typeKey) {
+                case 0:
+                    // Відправка повідомлення сім'ї
+                    familyDetails = FamilyDetailsGet.getRootFamilyDetails(player);
+                    break;
+                case 1:
+                    // Відправка повідомлення сім'ї за символом сім'ї
+                    UUID familyId = FamilySymbolManager.getFamilyIdBySymbol(key);
+                    if (familyId != null) {
+                        familyDetails = FamilyDetailsGet.getFamilyDetails(familyId);
+                    } else {
+                        sendMessage(new MessageForFormatting("family_err_prefix_not_found", new String[]{key}), MessageType.WARNING, player);
+                        return;
+                    }
+                    break;
+                case 2:
+                    Player targetPlayer = Bukkit.getOnlinePlayers().stream()
+                            .filter(p -> p.getName().toLowerCase().equals(lowerCaseKey) || p.getDisplayName().toLowerCase().equals(lowerCaseKey))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (targetPlayer == null) {
+                        sendMessage(new MessageForFormatting("family_hover_player_offline", new String[]{key}), MessageType.WARNING, player);
+                        return;
+                    }
+                    familyDetails = FamilyDetailsGet.getRootFamilyDetails(targetPlayer);
+                    break;
+                default:
+                    sendMessage(new MessageForFormatting("family_err_invalid_typekey", new String[]{String.valueOf(typeKey)}), MessageType.WARNING, player);
+                    return;
+            }
+
+            // Відправка повідомлення, якщо знайдено сімейні деталі
+            if (familyDetails != null) {
+                sendMessageToFamilyDetails(familyDetails, message);
+            }
+        } catch (Exception e) {
+            Logger.error(AnhyFamily.getInstance(), "Exception in handleChatMessage: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

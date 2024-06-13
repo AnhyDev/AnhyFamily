@@ -38,8 +38,9 @@ public class FamilyChatSubCommand extends Sender {
                     chatManager.sendMessageWithConditions();
                 }
             } else {
+            	String commandUsage = "\n| /fchat access <args> \n| /fchat default <args> \n| /fchat <message> \n| /fchat #<RPEFIX> <message> \n| /fchat @<NickName> <message> \n| /fchat check <NickName>";
                 sendMessage(new MessageForFormatting("family_err_command_format", 
-                		new String[] {"/fchat access <args> | /fchat default <args> | /fchat <message> | /fchat #<RPEFIX> <message> | /fchat @<NickName> <message> | /fchat check <NickName>"}), MessageType.WARNING, player);
+                		new String[] {commandUsage}), MessageType.WARNING, player);
             }
         });
 
