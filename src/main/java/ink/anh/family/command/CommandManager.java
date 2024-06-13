@@ -16,7 +16,7 @@ public class CommandManager {
     public void registerCommands() {
     	familiPlugin.getCommand("anhyfam").setExecutor(new AnhyFamilyCommand(familiPlugin));
     	
-    	familiPlugin.getCommand("gender").setExecutor(new GenderCommand());
+    	familiPlugin.getCommand("gender").setExecutor(new GenderCommand(familiPlugin));
     	familiPlugin.getCommand("gender").setTabCompleter(new GenderTabCompleter());
     	
     	familiPlugin.getCommand("family").setExecutor(new FamilyCommand(familiPlugin));
