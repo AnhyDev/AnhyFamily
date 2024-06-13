@@ -47,11 +47,6 @@ public class GenderCommand extends Sender implements CommandExecutor {
                             commandHandler.handleGenderInfo(sender, args[1]);
                         }
                         break;
-                    case "reset":
-                        if (args.length >= 2) {
-                            commandHandler.handleResetGender(sender, args[1]);
-                        }
-                        break;
                     default:
                         sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", new String[]{}), MessageType.WARNING, sender);
                 }
