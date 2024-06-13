@@ -100,16 +100,34 @@ public class FamilyDetailsService {
         }
     }
 
+    private static void addMemberToFamilyDetails(PlayerFamily targetPlayerFamily, UUID newMemberUuid, boolean isParent) {
+        if (targetPlayerFamily != null && newMemberUuid != null) {
+            FamilyDetails targetFamilyDetails = FamilyDetailsGet.getRootFamilyDetails(targetPlayerFamily);
+            if (targetFamilyDetails != null) {
+                Map<UUID, AccessControl> accessMap = isParent ? targetFamilyDetails.getChildrenAccessMap() : targetFamilyDetails.getAncestorsAccessMap();
+                if (!accessMap.containsKey(newMemberUuid)) {
+                    accessMap.put(newMemberUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+                    FamilyDetailsSave.saveFamilyDetails(targetFamilyDetails, null);
+                }
+            }
+        }
+    }
+
     public static void handleAdoption(PlayerFamily[] adoptersFamily, PlayerFamily adoptedFamily) {
         if (adoptersFamily == null || adoptersFamily.length == 0 || adoptedFamily == null) {
             return; // Якщо немає батьків або дитини, виходимо
         }
-
-        for (PlayerFamily adopter : adoptersFamily) {
-            if (adopter != null && adopter.getFamilyId() != null) {
-                addMemberToFamilyDetails(adopter.getFamilyId(), adoptedFamily.getRoot(), true);
+        
+        if (adoptersFamily.length == 1 || adoptersFamily.length > 1 && adoptersFamily[0].getFamilyId().equals(adoptersFamily[1].getFamilyId())) {
+            addMemberToFamilyDetails(adoptersFamily[0], adoptedFamily.getRoot(), true);
+        } else if (adoptersFamily.length > 1 && !adoptersFamily[0].getFamilyId().equals(adoptersFamily[1].getFamilyId())) {
+            for (PlayerFamily adopter : adoptersFamily) {
+                if (adopter != null && adopter.getFamilyId() != null) {
+                    addMemberToFamilyDetails(adopter, adoptedFamily.getRoot(), true);
+                }
             }
-        }
+    	}
+
 
         // Оновлення сімейних об'єктів усиновлюваного
         updateAdoptedFamilyDetails(adoptedFamily, adoptersFamily);

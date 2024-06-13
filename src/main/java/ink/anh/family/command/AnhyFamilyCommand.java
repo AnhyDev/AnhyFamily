@@ -17,6 +17,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.db.TableRegistry;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.marriage.MarriageManager;
+import ink.anh.family.parents.Adopt;
 import ink.anh.family.parents.ParentManager;
 import ink.anh.family.separate.ClearAllRelatives;
 
@@ -48,6 +49,9 @@ public class AnhyFamilyCommand extends Sender implements CommandExecutor {
 	                    break;
 	                case "reload":
 	                    reload(sender);
+	                    break;
+	                case "forceadopt":
+	                    new Adopt(familyPlugin).forceAdopt(sender, args);
 	                    break;
 	                default:
 	                    sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);

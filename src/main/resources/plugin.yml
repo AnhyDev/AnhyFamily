@@ -12,8 +12,8 @@ commands:
         aliases: [anhyfamily, afam]
         usage: "[AnhyFamily] The command '/anhyfamily (/anhyfam, /afam)' execution error, please check the arguments' correctness.adoption"
     gender:
-        aliases: [identity]
-        usage: "[AnhyFamily] The command '/gender (/identity)' execution error, please check the arguments' correctness."
+        aliases: [identity, gen]
+        usage: "[AnhyFamily] The command '/gender (/identity, /gen)' execution error, please check the arguments' correctness."
     family:
         aliases: [fam]
         usage: "[AnhyFamily] The command '/family (/fam)' execution error, please check the arguments' correctness.adoption"
@@ -24,11 +24,11 @@ commands:
         aliases: [adopt]
         usage: "[AnhyFamily] The command '/adoption (/adopt)' execution error, please check the arguments' correctness."
     fhome:
-        aliases: [familyhome]
-        usage: "[AnhyFamily] The command '/fhome (/familyhome)' execution error, please check the arguments' correctness."
+        aliases: [familyhome, fh]
+        usage: "[AnhyFamily] The command '/fhome (/familyhome, fh)' execution error, please check the arguments' correctness."
     fchat:
-        aliases: [familychat]
-        usage: "[AnhyFamily] The command '/fchat (/familychat)' execution error, please check the arguments' correctness."
+        aliases: [familychat, fc]
+        usage: "[AnhyFamily] The command '/fchat (/familychat, fc)' execution error, please check the arguments' correctness."
     fchest:
-        aliases: [familychest]
-        usage: "[AnhyFamily] The command '/fchest (/familychest)' execution error, please check the arguments' correctness."
+        aliases: [familychest, ft]
+        usage: "[AnhyFamily] The command '/fchest (/familychest, /ft)' execution error, please check the arguments' correctness."

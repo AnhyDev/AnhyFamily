@@ -27,9 +27,6 @@ public class AdoptionCommand extends Sender implements CommandExecutor {
         if (args.length > 0) {
         	CompletableFuture.runAsync(() -> {
                 switch (args[0].toLowerCase()) {
-                case "forceadopt":
-                    new Adopt(familyPlugin).forceAdopt(sender, args);
-                    break;
                 case "accept":
                     new Adopt(familyPlugin).accept(sender);
                     break;
