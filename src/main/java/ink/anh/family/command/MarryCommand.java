@@ -29,30 +29,34 @@ public class MarryCommand extends Sender implements CommandExecutor {
         }
 
         CompletableFuture.runAsync(() -> {
-            String type = args[0].toLowerCase();
-            switch (type) {
-                case "public":
-                    if (args.length < 3) {
-                        sendMessage(new MessageForFormatting("family_err_command_format '/marry public player1 player2'", new String[]{}), MessageType.WARNING, sender);
-                    } else {
-                        handlePublicMarriage(sender, args);
-                    }
-                    break;
-                case "private":
-                    if (args.length < 2) {
-                        sendMessage(new MessageForFormatting("family_err_command_format '/marry private player'", new String[]{}), MessageType.WARNING, sender);
-                    } else {
-                        handlePrivateMarriage(sender, args);
-                    }
-                    break;
-                case "accept":
-                    handleAcceptProposal(sender);
-                    break;
-                case "refuse":
-                    handleRefuseProposal(sender);
-                    break;
-                default:
-                    sendMessage(new MessageForFormatting("family_err_command_format '/marry public player1 player2' or '/marry private player'", new String[]{}), MessageType.WARNING, sender);
+            try {
+                String type = args[0].toLowerCase();
+                switch (type) {
+                    case "public":
+                        if (args.length < 3) {
+                            sendMessage(new MessageForFormatting("family_err_command_format '/marry public player1 player2'", new String[]{}), MessageType.WARNING, sender);
+                        } else {
+                            handlePublicMarriage(sender, args);
+                        }
+                        break;
+                    case "private":
+                        if (args.length < 2) {
+                            sendMessage(new MessageForFormatting("family_err_command_format '/marry private player'", new String[]{}), MessageType.WARNING, sender);
+                        } else {
+                            handlePrivateMarriage(sender, args);
+                        }
+                        break;
+                    case "accept":
+                        handleAcceptProposal(sender);
+                        break;
+                    case "refuse":
+                        handleRefuseProposal(sender);
+                        break;
+                    default:
+                        sendMessage(new MessageForFormatting("family_err_command_format '/marry public player1 player2' or '/marry private player'", new String[]{}), MessageType.WARNING, sender);
+                }
+            } catch (Exception e) {
+                e.printStackTrace(); // Вивід виключення в лог
             }
         });
 

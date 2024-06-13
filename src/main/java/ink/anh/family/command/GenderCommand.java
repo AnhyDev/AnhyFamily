@@ -27,44 +27,44 @@ public class GenderCommand extends Sender implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         CompletableFuture.runAsync(() -> {
-            if (args.length == 0) {
-                if (sender instanceof Player) {
-                    handleGenderInfo(sender, null);
+            try {
+                if (args.length == 0) {
+                    if (sender instanceof Player) {
+                        handleGenderInfo(sender, null);
+                    }
+                    return; // Early return for async context
                 }
-                return; // Early return for async context
-            }
-            
-            switch (args[0].toLowerCase()) {
-                case "set":
-                    if (sender instanceof Player && args.length >= 2) {
-                        handleSetGender(sender, args[1]);
-                    }
-                    break;
-                case "info":
-                    if (args.length <= 1) {
-                        if (sender instanceof Player) {
-                            handleGenderInfo(sender, null);
+
+                switch (args[0].toLowerCase()) {
+                    case "set":
+                        if (sender instanceof Player && args.length >= 2) {
+                            handleSetGender(sender, args[1]);
                         }
-                    } else if (args.length >= 2) {
-                        handleGenderInfo(sender, args[1]);
-                    }
-                    break;
-                case "reset":
-                    if (args.length >= 2) {
-                        handleResetGender(sender, args[1]);
-                    }
-                    break;
-                case "forceset":
-                    if (args.length >= 3) {
-                        handleForceSetGender(sender, args[1], args[2]);
-                    }
-                    break;
-                default:
-                    sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", new String[]{}), MessageType.WARNING, sender);
+                        break;
+                    case "info":
+                        if (args.length <= 1) {
+                            if (sender instanceof Player) {
+                                handleGenderInfo(sender, null);
+                            }
+                        } else if (args.length >= 2) {
+                            handleGenderInfo(sender, args[1]);
+                        }
+                        break;
+                    case "reset":
+                        if (args.length >= 2) {
+                            handleResetGender(sender, args[1]);
+                        }
+                        break;
+                    default:
+                        sendMessage(new MessageForFormatting("family_err_command_format /gender [set|info|reset|forceset]", new String[]{}), MessageType.WARNING, sender);
+                }
+            } catch (Exception e) {
+                e.printStackTrace(); // Вивід виключення в лог
             }
         });
         return true;
     }
+
 
     private void handleSetGender(CommandSender sender, String genderStr) {
         Player player = (Player) sender;
@@ -113,28 +113,6 @@ public class GenderCommand extends Sender implements CommandExecutor {
         if (playerFamily != null) {
             MessageForFormatting message = new MessageForFormatting("family_gender_player_reset", new String[]{playerName});
             SyncExecutor.runSync(() -> setPlayerGender(null, playerFamily, Gender.UNDECIDED, ActionInitiator.CONSOLE, sender, message));
-        } else {
-            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[]{playerName}), MessageType.WARNING, sender);
-        }
-    }
-
-    private void handleForceSetGender(CommandSender sender, String playerName, String genderStr) {
-        if (sender instanceof Player) {
-            return;
-        }
-
-        genderStr = genderStr.equalsIgnoreCase("MAN") ? "MALE" : genderStr.equalsIgnoreCase("WOMAN") ? "FEMALE" : genderStr.toUpperCase();
-        PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
-
-        if (playerFamily != null) {
-            Gender gender = Gender.fromString(genderStr);
-
-            if (gender != null && gender != Gender.UNDECIDED) {
-                MessageForFormatting message = new MessageForFormatting("family_gender_player_set_to " + Gender.getKey(gender), new String[]{playerName});
-                SyncExecutor.runSync(() -> setPlayerGender(null, playerFamily, gender, ActionInitiator.CONSOLE, sender, message));
-            } else {
-                sendMessage(new MessageForFormatting("family_gender_incorrectly_specified", new String[]{}), MessageType.WARNING, sender);
-            }
         } else {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[]{playerName}), MessageType.WARNING, sender);
         }

@@ -26,21 +26,25 @@ public class AdoptionCommand extends Sender implements CommandExecutor {
 
         if (args.length > 0) {
         	CompletableFuture.runAsync(() -> {
-                switch (args[0].toLowerCase()) {
-                case "accept":
-                    new Adopt(familyPlugin).accept(sender);
-                    break;
-                case "decline":
-                    new Adopt(familyPlugin).declineAdoption(sender);
-                    break;
-                case "invite":
-                    new Adopt(familyPlugin).adoption(sender, args);
-                    break;
-                case "cancel":
-                    new Adopt(familyPlugin).cancelAdoption(sender);
-                    break;
-                default:
-                	sendMessage(new MessageForFormatting("family_err_command_format /adoption [invite|accept|decline|cancel|forceadopt]", new String[] {}), MessageType.WARNING, sender);
+                try {
+                    switch (args[0].toLowerCase()) {
+                    case "accept":
+                        new Adopt(familyPlugin).accept(sender);
+                        break;
+                    case "decline":
+                        new Adopt(familyPlugin).declineAdoption(sender);
+                        break;
+                    case "invite":
+                        new Adopt(familyPlugin).adoption(sender, args);
+                        break;
+                    case "cancel":
+                        new Adopt(familyPlugin).cancelAdoption(sender);
+                        break;
+                    default:
+                    	sendMessage(new MessageForFormatting("family_err_command_format /adoption [invite|accept|decline|cancel|forceadopt]", new String[] {}), MessageType.WARNING, sender);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 

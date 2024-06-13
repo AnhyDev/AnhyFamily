@@ -17,29 +17,33 @@ public class FamilyChestSubCommand {
     public boolean onCommand(Player player, String[] args) {
 
         CompletableFuture.runAsync(() -> {
-            FamilyChestManager chestManager = new FamilyChestManager(familyPlugin, player, args);
-            if (args.length > 0) {
-                switch (args[0].toLowerCase()) {
-                case "set":
-                    chestManager.setChestLocation();
-                    break;
-                case "accept":
-                    chestManager.setAcceptChestLocation();
-                    break;
-                case "access":
-                    chestManager.setChestAccess();
-                    break;
-                case "default":
-                    chestManager.setChestAccessDefault();
-                    break;
-                case "check":
-                	chestManager.checkAccess();
-                    break;
-                default:
-                    chestManager.openChestWithConditions();
+            try {
+                FamilyChestManager chestManager = new FamilyChestManager(familyPlugin, player, args);
+                if (args.length > 0) {
+                    switch (args[0].toLowerCase()) {
+                    case "set":
+                        chestManager.setChestLocation();
+                        break;
+                    case "accept":
+                        chestManager.setAcceptChestLocation();
+                        break;
+                    case "access":
+                        chestManager.setChestAccess();
+                        break;
+                    case "default":
+                        chestManager.setChestAccessDefault();
+                        break;
+                    case "check":
+                    	chestManager.checkAccess();
+                        break;
+                    default:
+                        chestManager.openChestWithConditions();
+                    }
+                } else {
+                    chestManager.openChest();
                 }
-            } else {
-                chestManager.openChest();
+            } catch (Exception e) {
+                e.printStackTrace(); // Вивід виключення в лог
             }
         });
 

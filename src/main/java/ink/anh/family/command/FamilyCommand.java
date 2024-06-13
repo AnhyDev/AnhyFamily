@@ -29,47 +29,51 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 	    CompletableFuture.runAsync(() -> {
-	        if (args.length > 0) {
-	            switch (args[0].toLowerCase()) {
-	                case "surname":
-	                    new Surname().setSurname(sender, args);
-	                    break;
-	                case "divorce":
-	                    new Divorce(familyPlugin).separate(sender);
-	                    break;
-	                case "separate":
-	                    new Separation(familyPlugin).separate(sender, args);
-	                    break;
-	                case "info":
-	                    new FamilyInfoCommandHandler().handleCommand(sender, args, true);
-	                    break;
-	                case "infos":
-	                    new FamilyInfoCommandHandler().handleCommand(sender, args, false);
-	                    break;
-	                case "tree":
-	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, true);
-	                    break;
-	                case "trees":
-	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
-	                    break;
-	                case "pref":
-	                case "prefix":
-	                    new FamilySymbolManager(familyPlugin, sender, args).getPrefix();
-	                    break;
-	                case "setprefix":
-	                case "setpref":
-	                case "sp":
-	                    new FamilySymbolManager(familyPlugin, sender, args).setSymbol();
-	                    break;
-	                case "acceptprefix":
-	                case "acceptpref":
-	                case "ap":
-	                    new FamilySymbolManager(familyPlugin, sender, args).acceptSymbol();
-	                    break;
-	                default:
-	                    sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);
-	            }
-	        }
+            try {
+    	        if (args.length > 0) {
+    	            switch (args[0].toLowerCase()) {
+    	                case "surname":
+    	                    new Surname().setSurname(sender, args);
+    	                    break;
+    	                case "divorce":
+    	                    new Divorce(familyPlugin).separate(sender);
+    	                    break;
+    	                case "separate":
+    	                    new Separation(familyPlugin).separate(sender, args);
+    	                    break;
+    	                case "info":
+    	                    new FamilyInfoCommandHandler().handleCommand(sender, args, true);
+    	                    break;
+    	                case "infos":
+    	                    new FamilyInfoCommandHandler().handleCommand(sender, args, false);
+    	                    break;
+    	                case "tree":
+    	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, true);
+    	                    break;
+    	                case "trees":
+    	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
+    	                    break;
+    	                case "pref":
+    	                case "prefix":
+    	                    new FamilySymbolManager(familyPlugin, sender, args).getPrefix();
+    	                    break;
+    	                case "setprefix":
+    	                case "setpref":
+    	                case "sp":
+    	                    new FamilySymbolManager(familyPlugin, sender, args).setSymbol();
+    	                    break;
+    	                case "acceptprefix":
+    	                case "acceptpref":
+    	                case "ap":
+    	                    new FamilySymbolManager(familyPlugin, sender, args).acceptSymbol();
+    	                    break;
+    	                default:
+    	                    sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);
+    	            }
+    	        }
+            } catch (Exception e) {
+                e.printStackTrace(); // Вивід виключення в лог
+            }
 	    });
 	    return true;
 	}

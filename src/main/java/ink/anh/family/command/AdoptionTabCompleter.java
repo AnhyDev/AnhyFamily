@@ -31,21 +31,13 @@ public class AdoptionTabCompleter implements TabCompleter {
             }
         } else if (args.length == 2) {
             // Додавання імен гравців для команд, які потребують другого аргументу
-            if (args[0].equalsIgnoreCase("invite") || 
-                (args[0].equalsIgnoreCase("forceadopt") && (sender.hasPermission(Permissions.FAMILY_ADMIN)))) {
+            if (args[0].equalsIgnoreCase("invite")) {
                 String inputName = args[1].toLowerCase();
                 completions.addAll(Bukkit.getOnlinePlayers().stream()
                         .map(Player::getName)
                         .filter(name -> name.toLowerCase().startsWith(inputName))
                         .collect(Collectors.toList()));
             }
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("forceadopt") && (sender.hasPermission(Permissions.FAMILY_ADMIN))) {
-            // Додавання імен гравців для третього аргументу команди forceadopt
-            String inputName = args[2].toLowerCase();
-            completions.addAll(Bukkit.getOnlinePlayers().stream()
-                    .map(Player::getName)
-                    .filter(name -> name.toLowerCase().startsWith(inputName))
-                    .collect(Collectors.toList()));
         }
 
         // Фільтрація результатів для часткового співпадіння

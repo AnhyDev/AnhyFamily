@@ -20,29 +20,33 @@ public class FamilyHomeSubCommand extends Sender {
     public boolean onCommand(Player player, String[] args) {
 
         CompletableFuture.runAsync(() -> {
-            FamilyHomeManager homeManager = new FamilyHomeManager(familyPlugin, player, args);
-            if (args.length > 0) {
-                switch (args[0].toLowerCase()) {
-                    case "set":
-                        homeManager.setHome();
-                        break;
-                    case "accept":
-                        homeManager.setAccept();
-                        break;
-                    case "access":
-                        homeManager.setHomeAccess();
-                        break;
-                    case "default":
-                        homeManager.setDefaultHomeAccess();
-                        break;
-                    case "check":
-                    	homeManager.checkAccess();
-                        break;
-                    default:
-                        homeManager.tpHomeWithConditions();
+            try {
+                FamilyHomeManager homeManager = new FamilyHomeManager(familyPlugin, player, args);
+                if (args.length > 0) {
+                    switch (args[0].toLowerCase()) {
+                        case "set":
+                            homeManager.setHome();
+                            break;
+                        case "accept":
+                            homeManager.setAccept();
+                            break;
+                        case "access":
+                            homeManager.setHomeAccess();
+                            break;
+                        case "default":
+                            homeManager.setDefaultHomeAccess();
+                            break;
+                        case "check":
+                        	homeManager.checkAccess();
+                            break;
+                        default:
+                            homeManager.tpHomeWithConditions();
+                    }
+                } else {
+                    homeManager.tpHomeWithConditions();
                 }
-            } else {
-                homeManager.tpHomeWithConditions();
+            } catch (Exception e) {
+                e.printStackTrace(); // Вивід виключення в лог
             }
         });
 
