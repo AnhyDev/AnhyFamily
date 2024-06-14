@@ -29,6 +29,7 @@ import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.util.AccessTypeTarget;
 import ink.anh.family.util.FamilyUtils;
 
 public class FamilyChestManager extends Sender {
@@ -208,7 +209,7 @@ public class FamilyChestManager extends Sender {
     private void processOpenChest(FamilyDetails details, String identifier) {
         if (canOpenChest(details)) {
             PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-            if (details.hasAccessChest(playerFamily)) {
+            if (details.hasAccess(playerFamily, AccessTypeTarget.CHEST)) {
                 FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
             } else {
                 sendMessage(new MessageForFormatting("family_err_no_access_chest", identifier != null ? new String[]{identifier} : new String[]{}), MessageType.WARNING, player);
@@ -224,7 +225,7 @@ public class FamilyChestManager extends Sender {
     private void openChestIfPossible(FamilyDetails details, String identifier) {
         if (canOpenChest(details)) {
             PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-            if (details.hasAccessChest(playerFamily)) {
+            if (details.hasAccess(playerFamily, AccessTypeTarget.CHEST)) {
                 FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
             } else {
                 sendMessage(new MessageForFormatting("family_err_no_access_chest", identifier != null ? new String[]{identifier} : new String[]{}), MessageType.WARNING, player);
@@ -273,7 +274,7 @@ public class FamilyChestManager extends Sender {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
             if (canOpenChest(details)) {
                 PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-                if (details.hasAccessChest(playerFamily) || player.hasPermission(Permissions.FAMILY_CHEST_CLICK)) {
+                if (details.hasAccess(playerFamily, AccessTypeTarget.CHEST) || player.hasPermission(Permissions.FAMILY_CHEST_CLICK)) {
                     FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
                 } else {
                     sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[]{}), MessageType.WARNING, player);
@@ -400,7 +401,7 @@ public class FamilyChestManager extends Sender {
         if (senderFamily != null) {
         	
         	executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
-        		boolean accessControl = details.hasAccessChest(targetFamily);
+        		boolean accessControl = details.hasAccess(targetFamily, AccessTypeTarget.CHEST);
                 sendMessage(new MessageForFormatting("family_access_get", new String[] {nickname, String.valueOf(accessControl)}), MessageType.WARNING, player);
         	});
         }

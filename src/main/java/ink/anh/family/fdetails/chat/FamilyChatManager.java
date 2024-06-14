@@ -31,6 +31,7 @@ import ink.anh.family.fdetails.MessageComponentBuilder;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.info.FamilyTree;
+import ink.anh.family.util.AccessTypeTarget;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
 
@@ -127,7 +128,7 @@ public class FamilyChatManager extends Sender {
         if (details != null) {
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);
-                if (onlinePlayerFamily != null && details.hasAccessChat(onlinePlayerFamily)) {
+                if (onlinePlayerFamily != null && details.hasAccess(onlinePlayerFamily, AccessTypeTarget.CHAT)) {
                     sendInteractiveMessageToPlayer(onlinePlayer, details, message);
                 }
             }
@@ -251,7 +252,7 @@ public class FamilyChatManager extends Sender {
                 //boolean accessControl = details.hasAccessChat(targetFamily);
                 //details.getAccess(senderFamily, nickname);
 
-                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, details.getAccess(senderFamily, nickname), command);
+                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, details.getAccess(senderFamily, AccessTypeTarget.CHAT), command);
 
                 Messenger.sendMessage(familiPlugin, player, messageComponents, "family_access_get");
             });

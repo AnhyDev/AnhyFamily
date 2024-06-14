@@ -14,6 +14,7 @@ import ink.anh.api.enums.Access;
 import ink.anh.family.fdetails.chest.Chest;
 import ink.anh.family.fplayer.FamilyRelationType;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.util.AccessTypeTarget;
 
 public class FamilyDetails {
 
@@ -137,31 +138,31 @@ public class FamilyDetails {
         return duration.toMinutes() >= minutes;
     }
 
-    private boolean hasAccess(PlayerFamily playerFamily, String accessType) {
+    public boolean hasAccess(PlayerFamily playerFamily, AccessTypeTarget accessTypeTarget) {
         FamilyRelationType relationType = getRelationType(playerFamily);
 
         switch (relationType) {
             case FAMILY_ID:
                 return true;
             case PARENT_FAMILY_ID:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessType);
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessTypeTarget);
             case CHILD_FAMILY_IDS:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessType);
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessTypeTarget);
             default:
                 return false;
         }
     }
 
-    public Access getAccess(PlayerFamily playerFamily, String accessType) {
+    public Access getAccess(PlayerFamily playerFamily, AccessTypeTarget accessTypeTarget) {
         FamilyRelationType relationType = getRelationType(playerFamily);
 
         switch (relationType) {
             case FAMILY_ID:
                 return Access.TRUE; // Власна сім'я завжди має повний доступ
             case PARENT_FAMILY_ID:
-                return getSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessType);
+                return getSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessTypeTarget);
             case CHILD_FAMILY_IDS:
-                return getSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessType);
+                return getSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessTypeTarget);
             default:
                 return Access.FALSE;
         }
@@ -182,20 +183,8 @@ public class FamilyDetails {
         return FamilyRelationType.NOT_FOUND;
     }
 
-    public boolean hasAccessHome(PlayerFamily playerFamily) {
-        return hasAccess(playerFamily, "homeAccess");
-    }
-
-    public boolean hasAccessChest(PlayerFamily playerFamily) {
-        return hasAccess(playerFamily, "chestAccess");
-    }
-
-    public boolean hasAccessChat(PlayerFamily playerFamily) {
-        return hasAccess(playerFamily, "chatAccess");
-    }
-
-    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, String accessType) {
-        Access access = getSpecificOrDefaultAccess(playerId, accessMap, defaultAccessControl, accessType);
+    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, AccessTypeTarget accessTypeTarget) {
+        Access access = getSpecificOrDefaultAccess(playerId, accessMap, defaultAccessControl, accessTypeTarget);
 
         if (access == null) {
             return false;
@@ -213,27 +202,27 @@ public class FamilyDetails {
         }
     }
 
-    private Access getSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, String accessType) {
+    private Access getSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, AccessTypeTarget accessTypeTarget) {
         AccessControl accessControl = accessMap.get(playerId);
 
         if (accessControl != null) {
-            switch (accessType) {
-                case "homeAccess":
+            switch (accessTypeTarget) {
+                case HOME:
                     return accessControl.getHomeAccess();
-                case "chestAccess":
+                case CHEST:
                     return accessControl.getChestAccess();
-                case "chatAccess":
+                case CHAT:
                     return accessControl.getChatAccess();
                 default:
                     return null;
             }
         } else {
-            switch (accessType) {
-                case "homeAccess":
+            switch (accessTypeTarget) {
+                case HOME:
                     return defaultAccessControl.getHomeAccess();
-                case "chestAccess":
+                case CHEST:
                     return defaultAccessControl.getChestAccess();
-                case "chatAccess":
+                case CHAT:
                     return defaultAccessControl.getChatAccess();
                 default:
                     return null;

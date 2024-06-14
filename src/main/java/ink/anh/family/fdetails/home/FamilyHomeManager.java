@@ -25,6 +25,7 @@ import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.util.AccessTypeTarget;
 import ink.anh.family.util.FamilyUtils;
 
 public class FamilyHomeManager extends Sender {
@@ -154,7 +155,7 @@ public class FamilyHomeManager extends Sender {
     private void processTpHome(FamilyDetails details, String key) {
         PlayerFamily playerFamily = FamilyUtils.getFamily(player);
 
-        if (!details.hasAccessHome(playerFamily)) {
+        if (!details.hasAccess(playerFamily, AccessTypeTarget.CHEST)) {
             sendMessage(new MessageForFormatting("family_err_no_access_home", new String[]{key}), MessageType.WARNING, player);
             return;
         }
@@ -299,7 +300,7 @@ public class FamilyHomeManager extends Sender {
         PlayerFamily senderFamily = FamilyUtils.getFamily(player);
         if (senderFamily != null) {
             executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
-                boolean accessControl = details.hasAccessHome(targetFamily);
+                boolean accessControl = details.hasAccess(targetFamily, AccessTypeTarget.CHEST);
                 sendMessage(new MessageForFormatting("family_access_get", new String[] {nickname, String.valueOf(accessControl)}), MessageType.WARNING, player);
             });
         }
