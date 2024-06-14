@@ -146,25 +146,27 @@ public class FamilyChatManager extends Sender {
 
         String nickname = args[1];
         String accessArg = args[2].toLowerCase();
+        String colorStart = "";
         Access access;
         switch (accessArg) {
-            case "allow":
+        case "allow":
                 access = Access.TRUE;
+                colorStart = "§a";
                 break;
             case "deny":
                 access = Access.FALSE;
+                colorStart = "§c";
                 break;
             case "default":
                 access = Access.DEFAULT;
+                colorStart = "§e";
                 break;
             default:
                 sendMessage(new MessageForFormatting("family_err_invalid_access", new String[]{accessArg}), MessageType.WARNING, player);
                 return;
         }
 
-        String colorStart = MessageType.IMPORTANT.getColor(true);
-        String colorFinish = MessageType.NORMAL.getColor(true);
-        
+        String colorFinish = MessageType.NORMAL.getColor(true);     
         String accessUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, accessArg.toUpperCase(), colorFinish));
         String nicknameUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, nickname.toUpperCase(), colorFinish));
 
@@ -215,31 +217,32 @@ public class FamilyChatManager extends Sender {
 
         String targetGroup = args[1].toLowerCase();
         String accessArg = args[2].toLowerCase();
+        String colorStart = "";
         Access access;
         switch (accessArg) {
             case "allow":
                 access = Access.TRUE;
+                colorStart = "§a";
                 break;
             case "deny":
                 access = Access.FALSE;
+                colorStart = "§c";
                 break;
             default:
                 sendMessage(new MessageForFormatting("family_err_invalid_access", new String[]{accessArg}), MessageType.WARNING, player);
                 return;
         }
 
-        String colorStart = MessageType.IMPORTANT.getColor(true);
-        String colorFinish = MessageType.NORMAL.getColor(true);
-        
+        String colorFinish = MessageType.NORMAL.getColor(true);       
         String accessUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, accessArg.toUpperCase(), colorFinish));
-        String groupsUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, targetGroup.toUpperCase(), colorFinish));
+        String groupsUp = StringUtils.colorize(StringColorUtils.colorSet("§2", targetGroup.toUpperCase(), colorFinish));
         
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             if ("children".equals(targetGroup)) {
-                details.getChildrenAccess().setHomeAccess(access);
+                details.getChildrenAccess().setChatAccess(access);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.CHILDREN_ACCESS);
             } else if ("parents".equals(targetGroup)) {
-                details.getAncestorsAccess().setHomeAccess(access);
+                details.getAncestorsAccess().setChatAccess(access);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.ANCESTORS_ACCESS);
             } else {
                 sendMessage(new MessageForFormatting("family_err_invalid_group", new String[]{targetGroup}), MessageType.WARNING, player);
@@ -299,6 +302,7 @@ public class FamilyChatManager extends Sender {
             }
 
             Access currentAccess = accessControl.getChatAccess();
+            Logger.info(familiPlugin, currentAccess.name());
 
             MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, targetGroup, currentAccess, command);
 
