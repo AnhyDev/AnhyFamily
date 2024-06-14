@@ -20,28 +20,29 @@ public class FamilyChatSubCommand extends Sender {
     }
 
     public boolean onCommand(Player player, String[] args) {
-
         CompletableFuture.runAsync(() -> {
             try {
                 FamilyChatManager chatManager = new FamilyChatManager(familiPlugin, player, args);
                 if (args.length > 0) {
                     switch (args[0].toLowerCase()) {
-                    case "access":
-                        chatManager.setChatAccess();
-                        break;
-                    case "default":
-                        chatManager.setDefaultChatAccess();
-                        break;
-                    case "check":
-                    	chatManager.checkAccess();
-                        break;
-                    default:
-                        chatManager.sendMessageWithConditions();
+                        case "access":
+                            chatManager.setChatAccess();
+                            break;
+                        case "default":
+                            chatManager.setDefaultChatAccess();
+                            break;
+                        case "check":
+                            chatManager.checkAccess();
+                            break;
+                        case "defaultcheck":
+                            chatManager.checkDefaultAccess();
+                            break;
+                        default:
+                            chatManager.sendMessageWithConditions();
                     }
                 } else {
-                	String commandUsage = "\n| /fchat access <args> \n| /fchat default <args> \n| /fchat <message> \n| /fchat #<RPEFIX> <message> \n| /fchat @<NickName> <message> \n| /fchat check <NickName>";
-                    sendMessage(new MessageForFormatting("family_err_command_format", 
-                    		new String[] {commandUsage}), MessageType.WARNING, player);
+                    String commandUsage = "\n| /fchat access <args> \n| /fchat default <args> \n| /fchat <message> \n| /fchat #<RPEFIX> <message> \n| /fchat @<NickName> <message> \n| /fchat check <NickName> \n| /fchat defaultcheck <children|parents>";
+                    sendMessage(new MessageForFormatting("family_err_command_format", new String[]{commandUsage}), MessageType.WARNING, player);
                 }
             } catch (Exception e) {
                 e.printStackTrace(); // Вивід виключення в лог
@@ -50,4 +51,5 @@ public class FamilyChatSubCommand extends Sender {
 
         return true;
     }
+
 }

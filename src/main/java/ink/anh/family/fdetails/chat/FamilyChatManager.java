@@ -252,6 +252,36 @@ public class FamilyChatManager extends Sender {
         }
     }
 
+    public void checkDefaultAccess() {
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchat defaultcheck <children|parents>"}), MessageType.WARNING, player);
+            return;
+        }
+
+        String targetGroup = args[1].toLowerCase();
+
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
+            AccessControl accessControl;
+            String group;
+
+            switch (targetGroup) {
+                case "children":
+                    accessControl = details.getChildrenAccess();
+                    group = "children";
+                    break;
+                case "parents":
+                    accessControl = details.getAncestorsAccess();
+                    group = "parents";
+                    break;
+                default:
+                    sendMessage(new MessageForFormatting("family_err_invalid_group", new String[]{targetGroup}), MessageType.WARNING, player);
+                    return;
+            }
+
+            sendMessage(new MessageForFormatting("family_default_chat_access_check", new String[]{group, accessControl.getChatAccess().name()}), MessageType.NORMAL, player);
+        });
+    }
+
     private void executeWithFamilyDetails(FamilyDetails details, FamilyDetailsActionInterface action) {
         if (details != null) {
             action.execute(details);
