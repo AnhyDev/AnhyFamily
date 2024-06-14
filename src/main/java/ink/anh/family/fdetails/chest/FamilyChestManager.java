@@ -20,6 +20,7 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
@@ -35,6 +36,7 @@ import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.StringColorUtils;
 
 public class FamilyChestManager extends Sender {
 
@@ -313,6 +315,12 @@ public class FamilyChestManager extends Sender {
                 return;
         }
 
+        String colorStart = MessageType.IMPORTANT.getColor(true);
+        String colorFinish = MessageType.NORMAL.getColor(true);
+        
+        String accessUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, accessArg.toUpperCase(), colorFinish));
+        String nicknameUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, nickname.toUpperCase(), colorFinish));
+
         PlayerFamily targetFamily = FamilyUtils.getFamily(nickname);
         if (targetFamily == null) {
             sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[]{nickname}), MessageType.WARNING, player);
@@ -320,11 +328,11 @@ public class FamilyChestManager extends Sender {
         }
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
-        	if (targetFamily.getFamilyId() != null && targetFamily.getFamilyId().equals(details.getFamilyId())) {
-                sendMessage(new MessageForFormatting("family_access_root", new String[] {nickname, details.getFamilySymbol()}), MessageType.NORMAL, player);
+            if (targetFamily.getFamilyId() != null && targetFamily.getFamilyId().equals(details.getFamilyId())) {
+                sendMessage(new MessageForFormatting("family_access_root", new String[]{nicknameUp, details.getFamilySymbol()}), MessageType.NORMAL, player);
                 return;
-        	}
-        	
+            }
+
             UUID targetUUID = targetFamily.getRoot();
             Map<UUID, AccessControl> childrenAccessMap = details.getChildrenAccessMap();
             Map<UUID, AccessControl> ancestorsAccessMap = details.getAncestorsAccessMap();
@@ -345,7 +353,7 @@ public class FamilyChestManager extends Sender {
                     ancestorsAccessMap.put(targetUUID, accessControl);
                     FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.ANCESTORS_ACCESS_MAP);
                 }
-                sendMessage(new MessageForFormatting("family_chest_access_set", new String[]{nickname, accessArg}), MessageType.NORMAL, player);
+                sendMessage(new MessageForFormatting("family_chest_access_set", new String[]{nicknameUp, accessUp}), MessageType.NORMAL, player);
             } else {
                 sendMessage(new MessageForFormatting("family_err_nickname_not_found_in_access_maps", new String[]{nickname}), MessageType.WARNING, player);
             }
@@ -374,18 +382,24 @@ public class FamilyChestManager extends Sender {
                 return;
         }
 
+        String colorStart = MessageType.IMPORTANT.getColor(true);
+        String colorFinish = MessageType.NORMAL.getColor(true);
+        
+        String accessUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, accessArg.toUpperCase(), colorFinish));
+        String groupsUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, targetGroup.toUpperCase(), colorFinish));
+        
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             if ("children".equals(targetGroup)) {
                 details.getChildrenAccess().setChestAccess(access);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.CHILDREN_ACCESS);
-                sendMessage(new MessageForFormatting("family_default_chest_access_set", new String[]{"children", accessArg}), MessageType.NORMAL, player);
             } else if ("parents".equals(targetGroup)) {
                 details.getAncestorsAccess().setChestAccess(access);
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.ANCESTORS_ACCESS);
-                sendMessage(new MessageForFormatting("family_default_chest_access_set", new String[]{"parents", accessArg}), MessageType.NORMAL, player);
             } else {
                 sendMessage(new MessageForFormatting("family_err_invalid_group", new String[]{targetGroup}), MessageType.WARNING, player);
+                return;
             }
+            sendMessage(new MessageForFormatting("family_default_chest_access_set", new String[]{groupsUp, accessUp}), MessageType.NORMAL, player);
         });
     }
 

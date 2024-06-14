@@ -16,6 +16,7 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
@@ -31,6 +32,7 @@ import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.StringColorUtils;
 
 public class FamilyHomeManager extends Sender {
 
@@ -193,7 +195,7 @@ public class FamilyHomeManager extends Sender {
 
     public void setHomeAccess() {
         if (args.length < 3) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fhome access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhome access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
             return;
         }
         String nickname = args[1];
@@ -210,19 +212,25 @@ public class FamilyHomeManager extends Sender {
                 access = Access.DEFAULT;
                 break;
             default:
-                sendMessage(new MessageForFormatting("family_err_invalid_access", new String[] {accessArg}), MessageType.WARNING, player);
+                sendMessage(new MessageForFormatting("family_err_invalid_access", new String[]{accessArg}), MessageType.WARNING, player);
                 return;
         }
 
+        String colorStart = MessageType.IMPORTANT.getColor(true);
+        String colorFinish = MessageType.NORMAL.getColor(true);
+        
+        String accessUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, accessArg.toUpperCase(), colorFinish));
+        String nicknameUp = StringUtils.colorize(StringColorUtils.colorSet(colorStart, nickname.toUpperCase(), colorFinish));
+
         PlayerFamily targetFamily = FamilyUtils.getFamily(nickname);
         if (targetFamily == null) {
-            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[] {nickname}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[]{nickname}), MessageType.WARNING, player);
             return;
         }
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             if (targetFamily.getFamilyId() != null && targetFamily.getFamilyId().equals(details.getFamilyId())) {
-                sendMessage(new MessageForFormatting("family_access_root", new String[] {nickname, details.getFamilySymbol()}), MessageType.NORMAL, player);
+                sendMessage(new MessageForFormatting("family_access_root", new String[]{nicknameUp, details.getFamilySymbol()}), MessageType.NORMAL, player);
                 return;
             }
 
@@ -246,9 +254,9 @@ public class FamilyHomeManager extends Sender {
                     ancestorsAccessMap.put(targetUUID, accessControl);
                     FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.ANCESTORS_ACCESS_MAP);
                 }
-                sendMessage(new MessageForFormatting("family_home_access_set", new String[] {nickname, accessArg}), MessageType.NORMAL, player);
+                sendMessage(new MessageForFormatting("family_home_access_set", new String[]{nicknameUp, accessUp}), MessageType.NORMAL, player);
             } else {
-                sendMessage(new MessageForFormatting("family_err_nickname_not_found_in_access_maps", new String[] {nickname}), MessageType.WARNING, player);
+                sendMessage(new MessageForFormatting("family_err_nickname_not_found_in_access_maps", new String[]{nickname}), MessageType.WARNING, player);
             }
         });
     }
