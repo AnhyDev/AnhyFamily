@@ -57,7 +57,7 @@ public class MessageComponentBuilder {
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{manager.getDefaultLang()};
 
         String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_message_group_access", langs),
-                new String[]{StringUtils.colorize(StringColorUtils.colorSet(StringColorUtils.GROUP_COLOR, group.toUpperCase()))}));
+                new String[]{group.toUpperCase()}));
 
         String changeAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_access_change", langs),
                 new String[]{}));
@@ -67,6 +67,10 @@ public class MessageComponentBuilder {
                     	.content(checkAccessMessage)
                         .hexColor(StringColorUtils.MESSAGE_COLOR)
                     	.build())
+                    .append(MessageComponents.builder()
+                        .content(getFormattedAccessStatus(access))
+                        .hexColor(StringColorUtils.getAccessColor(access))
+                        .build())
                     .append(MessageComponents.builder()
                         .content(changeAccessMessage)
                         .hexColor(StringColorUtils.MESSAGE_COLOR)
@@ -96,7 +100,7 @@ public class MessageComponentBuilder {
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{manager.getDefaultLang()};
 
         String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_access_player_get", langs),
-                new String[]{StringUtils.colorize(StringColorUtils.colorSet(StringColorUtils.GROUP_COLOR, nickname))}));
+                new String[]{nickname}));
 
         String changeAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_access_change", langs),
                 new String[]{}));
