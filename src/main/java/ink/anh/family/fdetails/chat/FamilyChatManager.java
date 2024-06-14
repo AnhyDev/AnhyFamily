@@ -26,6 +26,7 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsActionInterface;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
+import ink.anh.family.fdetails.MessageComponentBuilder;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.info.FamilyTree;
@@ -230,25 +231,27 @@ public class FamilyChatManager extends Sender {
 
     public void checkAccess() {
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat check <NickName>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchat check <NickName>"}), MessageType.WARNING, player);
             return;
         }
         String nickname = args[1];
 
         PlayerFamily targetFamily = FamilyUtils.getFamily(nickname);
         if (targetFamily == null) {
-            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[] {nickname}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[]{nickname}), MessageType.WARNING, player);
             return;
         }
 
-
         PlayerFamily senderFamily = FamilyUtils.getFamily(player);
         if (senderFamily != null) {
-        	
-        	executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
-        		boolean accessControl = details.hasAccessChat(targetFamily);
-                sendMessage(new MessageForFormatting("family_access_get", new String[] {nickname, String.valueOf(accessControl)}), MessageType.WARNING, player);
-        	});
+            executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
+                //boolean accessControl = details.hasAccessChat(targetFamily);
+                //details.getAccess(senderFamily, nickname);
+
+                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessage(player, nickname, details.getAccess(senderFamily, nickname), "fchat");
+
+                Messenger.sendMessage(familiPlugin, player, messageComponents, "family_access_get");
+            });
         }
     }
 
@@ -278,7 +281,11 @@ public class FamilyChatManager extends Sender {
                     return;
             }
 
-            sendMessage(new MessageForFormatting("family_default_chat_access_check", new String[]{group, accessControl.getChatAccess().name()}), MessageType.NORMAL, player);
+            Access currentAccess = accessControl.getChatAccess();
+
+            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessage(player, group, currentAccess, "fchat");
+
+            Messenger.sendMessage(familiPlugin, player, messageComponents, "family_default_chat_access_check");
         });
     }
 

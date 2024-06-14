@@ -152,6 +152,21 @@ public class FamilyDetails {
         }
     }
 
+    public Access getAccess(PlayerFamily playerFamily, String accessType) {
+        FamilyRelationType relationType = getRelationType(playerFamily);
+
+        switch (relationType) {
+            case FAMILY_ID:
+                return Access.TRUE; // Власна сім'я завжди має повний доступ
+            case PARENT_FAMILY_ID:
+                return getSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessType);
+            case CHILD_FAMILY_IDS:
+                return getSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessType);
+            default:
+                return Access.FALSE;
+        }
+    }
+
     public FamilyRelationType getRelationType(PlayerFamily playerFamily) {
         UUID playerId = playerFamily.getRoot();
 
@@ -180,37 +195,10 @@ public class FamilyDetails {
     }
 
     private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, String accessType) {
-        AccessControl accessControl = accessMap.get(playerId);
+        Access access = getSpecificOrDefaultAccess(playerId, accessMap, defaultAccessControl, accessType);
 
-        Access access;
-        if (accessControl != null) {
-            switch (accessType) {
-                case "homeAccess":
-                    access = accessControl.getHomeAccess();
-                    break;
-                case "chestAccess":
-                    access = accessControl.getChestAccess();
-                    break;
-                case "chatAccess":
-                    access = accessControl.getChatAccess();
-                    break;
-                default:
-                    return false;
-            }
-        } else {
-            switch (accessType) {
-                case "homeAccess":
-                    access = defaultAccessControl.getHomeAccess();
-                    break;
-                case "chestAccess":
-                    access = defaultAccessControl.getChestAccess();
-                    break;
-                case "chatAccess":
-                    access = defaultAccessControl.getChatAccess();
-                    break;
-                default:
-                    return false;
-            }
+        if (access == null) {
+            return false;
         }
 
         switch (access) {
@@ -222,6 +210,34 @@ public class FamilyDetails {
                 return defaultAccessControl.getHomeAccess() == Access.TRUE;
             default:
                 return false;
+        }
+    }
+
+    private Access getSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, String accessType) {
+        AccessControl accessControl = accessMap.get(playerId);
+
+        if (accessControl != null) {
+            switch (accessType) {
+                case "homeAccess":
+                    return accessControl.getHomeAccess();
+                case "chestAccess":
+                    return accessControl.getChestAccess();
+                case "chatAccess":
+                    return accessControl.getChatAccess();
+                default:
+                    return null;
+            }
+        } else {
+            switch (accessType) {
+                case "homeAccess":
+                    return defaultAccessControl.getHomeAccess();
+                case "chestAccess":
+                    return defaultAccessControl.getChestAccess();
+                case "chatAccess":
+                    return defaultAccessControl.getChatAccess();
+                default:
+                    return null;
+            }
         }
     }
 
