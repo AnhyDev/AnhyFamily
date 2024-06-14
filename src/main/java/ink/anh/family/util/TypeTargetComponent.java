@@ -1,6 +1,6 @@
 package ink.anh.family.util;
 
-public enum AccessTypeTarget {
+public enum TypeTargetComponent {
 
 	CHAT,
 	CHEST,

@@ -2,6 +2,7 @@ package ink.anh.family.fdetails.chest;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 import ink.anh.family.AnhyFamily;
@@ -14,36 +15,39 @@ public class FamilyChestSubCommand {
         this.familyPlugin = familyPlugin;
     }
 
-    public boolean onCommand(Player player, String[] args) {
+    public boolean onCommand(Player player, Command cmd, String[] args) {
 
         CompletableFuture.runAsync(() -> {
             try {
-                FamilyChestManager chestManager = new FamilyChestManager(familyPlugin, player, args);
+                FamilyChestManager chestManager = new FamilyChestManager(familyPlugin, player, cmd, args);
                 if (args.length > 0) {
                     switch (args[0].toLowerCase()) {
-                    case "set":
-                        chestManager.setChestLocation();
-                        break;
-                    case "accept":
-                        chestManager.setAcceptChestLocation();
-                        break;
-                    case "access":
-                        chestManager.setChestAccess();
-                        break;
-                    case "default":
-                        chestManager.setChestAccessDefault();
-                        break;
-                    case "check":
-                    	chestManager.checkAccess();
-                        break;
-                    default:
-                        chestManager.openChestWithConditions();
+                        case "set":
+                            chestManager.setChestLocation();
+                            break;
+                        case "accept":
+                            chestManager.setAcceptChestLocation();
+                            break;
+                        case "access":
+                            chestManager.setChestAccess();
+                            break;
+                        case "default":
+                            chestManager.setChestAccessDefault();
+                            break;
+                        case "check":
+                            chestManager.checkAccess();
+                            break;
+                        case "defaultcheck":
+                            chestManager.checkDefaultAccess();
+                            break;
+                        default:
+                            chestManager.openChestWithConditions();
                     }
                 } else {
                     chestManager.openChest();
                 }
             } catch (Exception e) {
-                e.printStackTrace(); // Вивід виключення в лог
+                e.printStackTrace();
             }
         });
 

@@ -2,6 +2,7 @@ package ink.anh.family.fdetails.home;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.messages.Sender;
@@ -17,11 +18,11 @@ public class FamilyHomeSubCommand extends Sender {
         this.familyPlugin = familyPlugin;
     }
 
-    public boolean onCommand(Player player, String[] args) {
+    public boolean onCommand(Player player, Command cmd, String[] args) {
 
         CompletableFuture.runAsync(() -> {
             try {
-                FamilyHomeManager homeManager = new FamilyHomeManager(familyPlugin, player, args);
+                FamilyHomeManager homeManager = new FamilyHomeManager(familyPlugin, player, cmd, args);
                 if (args.length > 0) {
                     switch (args[0].toLowerCase()) {
                         case "set":
@@ -37,7 +38,10 @@ public class FamilyHomeSubCommand extends Sender {
                             homeManager.setDefaultHomeAccess();
                             break;
                         case "check":
-                        	homeManager.checkAccess();
+                            homeManager.checkAccess();
+                            break;
+                        case "defaultcheck":
+                            homeManager.checkDefaultAccess();
                             break;
                         default:
                             homeManager.tpHomeWithConditions();
@@ -46,7 +50,7 @@ public class FamilyHomeSubCommand extends Sender {
                     homeManager.tpHomeWithConditions();
                 }
             } catch (Exception e) {
-                e.printStackTrace(); // Вивід виключення в лог
+                e.printStackTrace();
             }
         });
 

@@ -9,13 +9,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 
 import ink.anh.api.enums.Access;
 import ink.anh.api.messages.Logger;
+import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.FamilyConfig;
@@ -27,9 +30,10 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsActionInterface;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
+import ink.anh.family.fdetails.MessageComponentBuilder;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.AccessTypeTarget;
+import ink.anh.family.util.TypeTargetComponent;
 import ink.anh.family.util.FamilyUtils;
 
 public class FamilyChestManager extends Sender {
@@ -39,12 +43,14 @@ public class FamilyChestManager extends Sender {
 
     private AnhyFamily familyPlugin;
     private Player player;
+    private String command;
     private String[] args;
 
-    public FamilyChestManager(AnhyFamily familyPlugin, Player player, String[] args) {
+    public FamilyChestManager(AnhyFamily familyPlugin, Player player, Command cmd, String[] args) {
         super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
         this.player = player;
+        this.command = cmd != null ? cmd.getName() : "fchest";
         this.args = args;
     }
 
@@ -209,7 +215,7 @@ public class FamilyChestManager extends Sender {
     private void processOpenChest(FamilyDetails details, String identifier) {
         if (canOpenChest(details)) {
             PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-            if (details.hasAccess(playerFamily, AccessTypeTarget.CHEST)) {
+            if (details.hasAccess(playerFamily, TypeTargetComponent.CHEST)) {
                 FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
             } else {
                 sendMessage(new MessageForFormatting("family_err_no_access_chest", identifier != null ? new String[]{identifier} : new String[]{}), MessageType.WARNING, player);
@@ -225,7 +231,7 @@ public class FamilyChestManager extends Sender {
     private void openChestIfPossible(FamilyDetails details, String identifier) {
         if (canOpenChest(details)) {
             PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-            if (details.hasAccess(playerFamily, AccessTypeTarget.CHEST)) {
+            if (details.hasAccess(playerFamily, TypeTargetComponent.CHEST)) {
                 FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
             } else {
                 sendMessage(new MessageForFormatting("family_err_no_access_chest", identifier != null ? new String[]{identifier} : new String[]{}), MessageType.WARNING, player);
@@ -274,7 +280,7 @@ public class FamilyChestManager extends Sender {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(familyId), details -> {
             if (canOpenChest(details)) {
                 PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-                if (details.hasAccess(playerFamily, AccessTypeTarget.CHEST) || player.hasPermission(Permissions.FAMILY_CHEST_CLICK)) {
+                if (details.hasAccess(playerFamily, TypeTargetComponent.CHEST) || player.hasPermission(Permissions.FAMILY_CHEST_CLICK)) {
                     FamilyChestOpenManager.getInstance().openFamilyChest(player, details);
                 } else {
                     sendMessage(new MessageForFormatting("family_err_no_access_chest", new String[]{}), MessageType.WARNING, player);
@@ -385,27 +391,58 @@ public class FamilyChestManager extends Sender {
 
     public void checkAccess() {
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchest check <NickName>"}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchest check <NickName>"}), MessageType.WARNING, player);
             return;
         }
         String nickname = args[1];
 
         PlayerFamily targetFamily = FamilyUtils.getFamily(nickname);
         if (targetFamily == null) {
-            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[] {nickname}), MessageType.WARNING, player);
+            sendMessage(new MessageForFormatting("family_err_nickname_not_found", new String[]{nickname}), MessageType.WARNING, player);
             return;
         }
 
-
         PlayerFamily senderFamily = FamilyUtils.getFamily(player);
         if (senderFamily != null) {
-        	
-        	executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
-        		boolean accessControl = details.hasAccess(targetFamily, AccessTypeTarget.CHEST);
-                sendMessage(new MessageForFormatting("family_access_get", new String[] {nickname, String.valueOf(accessControl)}), MessageType.WARNING, player);
-        	});
+            executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
+                Access currentAccess = details.getAccess(senderFamily, TypeTargetComponent.CHEST);
+                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, currentAccess, command);
+                Messenger.sendMessage(familyPlugin, player, messageComponents, "family_access_get");
+            });
         }
     }
+
+    public void checkDefaultAccess() {
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchest defaultcheck <children|parents>"}), MessageType.WARNING, player);
+            return;
+        }
+
+        String targetGroup = args[1].toLowerCase();
+
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
+            AccessControl accessControl;
+
+            switch (targetGroup) {
+                case "children":
+                    accessControl = details.getChildrenAccess();
+                    break;
+                case "parents":
+                    accessControl = details.getAncestorsAccess();
+                    break;
+                default:
+                    sendMessage(new MessageForFormatting("family_err_invalid_group", new String[]{targetGroup}), MessageType.WARNING, player);
+                    return;
+            }
+
+            Access currentAccess = accessControl.getChestAccess();
+
+            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, targetGroup, currentAccess, command);
+
+            Messenger.sendMessage(familyPlugin, player, messageComponents, "family_default_chest_access_check");
+        });
+    }
+
 
     private static class ChestRequest {
         private final UUID requesterUUID;

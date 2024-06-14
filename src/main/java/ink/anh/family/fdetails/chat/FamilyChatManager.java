@@ -31,7 +31,7 @@ import ink.anh.family.fdetails.MessageComponentBuilder;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.info.FamilyTree;
-import ink.anh.family.util.AccessTypeTarget;
+import ink.anh.family.util.TypeTargetComponent;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
 
@@ -47,7 +47,7 @@ public class FamilyChatManager extends Sender {
         super(GlobalManager.getInstance());
         this.familiPlugin = familiPlugin;
         this.player = player;
-        this.command = cmd.getName();
+        this.command = cmd != null ? cmd.getName() : "fchat";
         this.args = args;
     }
 
@@ -128,7 +128,7 @@ public class FamilyChatManager extends Sender {
         if (details != null) {
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 PlayerFamily onlinePlayerFamily = FamilyUtils.getFamily(onlinePlayer);
-                if (onlinePlayerFamily != null && details.hasAccess(onlinePlayerFamily, AccessTypeTarget.CHAT)) {
+                if (onlinePlayerFamily != null && details.hasAccess(onlinePlayerFamily, TypeTargetComponent.CHAT)) {
                     sendInteractiveMessageToPlayer(onlinePlayer, details, message);
                 }
             }
@@ -142,6 +142,7 @@ public class FamilyChatManager extends Sender {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[] {"/fchat access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
             return;
         }
+        
         String nickname = args[1];
         String accessArg = args[2].toLowerCase();
         Access access;
@@ -252,7 +253,7 @@ public class FamilyChatManager extends Sender {
                 //boolean accessControl = details.hasAccessChat(targetFamily);
                 //details.getAccess(senderFamily, nickname);
 
-                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, details.getAccess(senderFamily, AccessTypeTarget.CHAT), command);
+                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, details.getAccess(senderFamily, TypeTargetComponent.CHAT), command);
 
                 Messenger.sendMessage(familiPlugin, player, messageComponents, "family_access_get");
             });
@@ -269,16 +270,13 @@ public class FamilyChatManager extends Sender {
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             AccessControl accessControl;
-            String group;
 
             switch (targetGroup) {
                 case "children":
                     accessControl = details.getChildrenAccess();
-                    group = "children";
                     break;
                 case "parents":
                     accessControl = details.getAncestorsAccess();
-                    group = "parents";
                     break;
                 default:
                     sendMessage(new MessageForFormatting("family_err_invalid_group", new String[]{targetGroup}), MessageType.WARNING, player);
@@ -287,7 +285,7 @@ public class FamilyChatManager extends Sender {
 
             Access currentAccess = accessControl.getChatAccess();
 
-            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, group, currentAccess, command);
+            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, targetGroup, currentAccess, command);
 
             Messenger.sendMessage(familiPlugin, player, messageComponents, "family_default_chat_access_check");
         });

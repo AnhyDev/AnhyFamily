@@ -31,7 +31,7 @@ public class FamilyHomeCommand extends Sender implements CommandExecutor {
         	player = (Player) sender;
 
             if (player != null) {
-                return new FamilyHomeSubCommand(familyPlugin).onCommand(player, args);
+                return new FamilyHomeSubCommand(familyPlugin).onCommand(player, cmd, args);
             }
         }
         

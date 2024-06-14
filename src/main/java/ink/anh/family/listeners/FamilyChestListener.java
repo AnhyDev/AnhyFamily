@@ -46,7 +46,7 @@ public class FamilyChestListener implements Listener {
             if (clickedBlock != null && FamilyChestManager.isFamilyChest(clickedBlock.getLocation())) {
             	event.setCancelled(true);
             	
-                FamilyChestManager familyChestManager = new FamilyChestManager(familyPlugin, player, new String[]{});
+                FamilyChestManager familyChestManager = new FamilyChestManager(familyPlugin, player, null, new String[]{});
                 familyChestManager.attemptOpenFamilyChest(clickedBlock.getLocation());
             }
         }

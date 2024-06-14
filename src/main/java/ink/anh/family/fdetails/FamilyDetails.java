@@ -14,7 +14,7 @@ import ink.anh.api.enums.Access;
 import ink.anh.family.fdetails.chest.Chest;
 import ink.anh.family.fplayer.FamilyRelationType;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.AccessTypeTarget;
+import ink.anh.family.util.TypeTargetComponent;
 
 public class FamilyDetails {
 
@@ -138,31 +138,31 @@ public class FamilyDetails {
         return duration.toMinutes() >= minutes;
     }
 
-    public boolean hasAccess(PlayerFamily playerFamily, AccessTypeTarget accessTypeTarget) {
+    public boolean hasAccess(PlayerFamily playerFamily, TypeTargetComponent typeTargetComponent) {
         FamilyRelationType relationType = getRelationType(playerFamily);
 
         switch (relationType) {
             case FAMILY_ID:
                 return true;
             case PARENT_FAMILY_ID:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessTypeTarget);
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, typeTargetComponent);
             case CHILD_FAMILY_IDS:
-                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessTypeTarget);
+                return checkSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, typeTargetComponent);
             default:
                 return false;
         }
     }
 
-    public Access getAccess(PlayerFamily playerFamily, AccessTypeTarget accessTypeTarget) {
+    public Access getAccess(PlayerFamily playerFamily, TypeTargetComponent typeTargetComponent) {
         FamilyRelationType relationType = getRelationType(playerFamily);
 
         switch (relationType) {
             case FAMILY_ID:
                 return Access.TRUE; // Власна сім'я завжди має повний доступ
             case PARENT_FAMILY_ID:
-                return getSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, accessTypeTarget);
+                return getSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, typeTargetComponent);
             case CHILD_FAMILY_IDS:
-                return getSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, accessTypeTarget);
+                return getSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, typeTargetComponent);
             default:
                 return Access.FALSE;
         }
@@ -183,8 +183,8 @@ public class FamilyDetails {
         return FamilyRelationType.NOT_FOUND;
     }
 
-    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, AccessTypeTarget accessTypeTarget) {
-        Access access = getSpecificOrDefaultAccess(playerId, accessMap, defaultAccessControl, accessTypeTarget);
+    private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, TypeTargetComponent typeTargetComponent) {
+        Access access = getSpecificOrDefaultAccess(playerId, accessMap, defaultAccessControl, typeTargetComponent);
 
         if (access == null) {
             return false;
@@ -196,17 +196,26 @@ public class FamilyDetails {
             case FALSE:
                 return false;
             case DEFAULT:
-                return defaultAccessControl.getHomeAccess() == Access.TRUE;
+            	switch (typeTargetComponent) {
+                    case CHAT:
+                        return defaultAccessControl.getChatAccess() == Access.TRUE;
+                    case CHEST:
+                        return defaultAccessControl.getChestAccess() == Access.TRUE;
+                    case HOME:
+                        return defaultAccessControl.getHomeAccess() == Access.TRUE;
+                    default:
+                        return false;
+            	}
             default:
                 return false;
         }
     }
 
-    private Access getSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, AccessTypeTarget accessTypeTarget) {
+    private Access getSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, TypeTargetComponent typeTargetComponent) {
         AccessControl accessControl = accessMap.get(playerId);
 
         if (accessControl != null) {
-            switch (accessTypeTarget) {
+            switch (typeTargetComponent) {
                 case HOME:
                     return accessControl.getHomeAccess();
                 case CHEST:
@@ -216,18 +225,8 @@ public class FamilyDetails {
                 default:
                     return null;
             }
-        } else {
-            switch (accessTypeTarget) {
-                case HOME:
-                    return defaultAccessControl.getHomeAccess();
-                case CHEST:
-                    return defaultAccessControl.getChestAccess();
-                case CHAT:
-                    return defaultAccessControl.getChatAccess();
-                default:
-                    return null;
-            }
         }
+        return null;
     }
 
     @Override

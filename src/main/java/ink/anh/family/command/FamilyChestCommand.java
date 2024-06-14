@@ -31,7 +31,7 @@ public class FamilyChestCommand extends Sender implements CommandExecutor {
             player = (Player) sender;
 
             if (player != null) {
-                return new FamilyChestSubCommand(familyPlugin).onCommand(player, args);
+                return new FamilyChestSubCommand(familyPlugin).onCommand(player, cmd, args);
             }
         }
 
