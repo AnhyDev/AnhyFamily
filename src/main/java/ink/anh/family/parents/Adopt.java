@@ -2,6 +2,7 @@ package ink.anh.family.parents;
 
 import java.util.UUID;  
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -19,6 +20,7 @@ import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class Adopt extends Sender {
@@ -279,17 +281,20 @@ public class Adopt extends Sender {
 
         String adoptedPlayerName = args[1];
         String adopterPlayerName = args[2];
-
+        
         PlayerFamily adoptedFamily = FamilyUtils.getFamily(adoptedPlayerName);
         PlayerFamily adopterFamily = FamilyUtils.getFamily(adopterPlayerName);
+
 
         if (adoptedFamily == null || adopterFamily == null) {
             sendMessage(new MessageForFormatting("family_err_family_not_found", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
 
-        Player player1 = Bukkit.getPlayer(adoptedFamily.getRoot());
-        Player player2 = Bukkit.getPlayer(adopterFamily.getRoot());
+        OfflinePlayer offlinePlayer1 = Bukkit.getOfflinePlayer(adoptedFamily.getRoot());
+        OfflinePlayer offlinePlayer2 = Bukkit.getOfflinePlayer(adopterFamily.getRoot());
+
+        Logger.info(familyPlugin, "player1 != null " + (offlinePlayer1 != null) + " player2 != null " + (offlinePlayer2 != null));
 
         PlayerFamily[] adoptersFamily = {adopterFamily};
         FamilyDetails adoptedDetails = FamilyDetailsGet.getRootFamilyDetails(adoptedFamily);
@@ -297,8 +302,12 @@ public class Adopt extends Sender {
 
         ActionInitiator initiator = isPlayer ? ActionInitiator.PLAYER_WITH_PERMISSION : ActionInitiator.CONSOLE;
 
-        MessageForFormatting messageTrue = new MessageForFormatting("family_accept_success_adoption", new String[]{player1.getDisplayName(), player2.getDisplayName()});
+        MessageForFormatting messageTrue = new MessageForFormatting("family_accept_success_adoption", new String[]{offlinePlayer1.getName(), offlinePlayer2.getName()});
         MessageForFormatting messageFalse = new MessageForFormatting("family_err_adoption_failed", new String[]{});
+        
+        Player player1 = offlinePlayer1.isOnline() ? (Player) offlinePlayer1 : null;
+        Player player2 = offlinePlayer2.isOnline() ? (Player) offlinePlayer2 : null;
+        
         CommandSender[] senders = {sender, player1, player2};
 
         SyncExecutor.runSync(() -> handleAdoption(null, adoptersFamily, adoptedFamily, adoptersDetails, adoptedDetails, initiator, senders, messageTrue, messageFalse));

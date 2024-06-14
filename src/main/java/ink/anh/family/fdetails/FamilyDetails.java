@@ -155,7 +155,7 @@ public class FamilyDetails {
     public FamilyRelationType getRelationType(PlayerFamily playerFamily) {
         UUID playerId = playerFamily.getRoot();
 
-        if (playerFamily.getFamilyId().equals(familyId)) {
+        if (playerFamily.getFamilyId() != null && playerFamily.getFamilyId().equals(familyId)) {
             return FamilyRelationType.FAMILY_ID;
         }
         if (ancestorsAccessMap.containsKey(playerId)) {
