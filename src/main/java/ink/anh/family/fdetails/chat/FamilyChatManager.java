@@ -248,7 +248,7 @@ public class FamilyChatManager extends Sender {
                 //boolean accessControl = details.hasAccessChat(targetFamily);
                 //details.getAccess(senderFamily, nickname);
 
-                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessage(player, nickname, details.getAccess(senderFamily, nickname), "fchat");
+                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, details.getAccess(senderFamily, nickname), "fchat");
 
                 Messenger.sendMessage(familiPlugin, player, messageComponents, "family_access_get");
             });
@@ -283,7 +283,7 @@ public class FamilyChatManager extends Sender {
 
             Access currentAccess = accessControl.getChatAccess();
 
-            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessage(player, group, currentAccess, "fchat");
+            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, group, currentAccess, "fchat");
 
             Messenger.sendMessage(familiPlugin, player, messageComponents, "family_default_chat_access_check");
         });
