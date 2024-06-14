@@ -18,6 +18,10 @@ public class MessageComponentBuilder {
     private static final String ACCESS_COLOR_DEFAULT = "#FFFF00";
     private static final String SEPARATOR_COLOR = "#cedcf2";
     private static final String PREFIX_COLOR = "#cedcf2";
+    
+    private static String hoverReplyChat(String[] langs) {
+    	return StringUtils.formatString(Translator.translateKyeWorld(libraryManager, SEPARATOR_COLOR + "family_hover_reply_chat", langs), new String[] {});
+    }
 
     private static String getAccessColor(Access access) {
         return access == Access.TRUE ? ACCESS_COLOR_TRUE : access == Access.FALSE ? ACCESS_COLOR_FALSE : ACCESS_COLOR_DEFAULT;
@@ -34,7 +38,7 @@ public class MessageComponentBuilder {
     }
 
     private static String getPrefix(String baseCommand) {
-		return StringUtils.colorize(PREFIX_COLOR + "[" + baseCommand.toUpperCase() + "] " + MESSAGE_COLOR);
+		return StringUtils.colorize(colorize(PREFIX_COLOR, "[" + baseCommand.toUpperCase() + "] "));
     }
     
     private static String getFormattedAccessStatus(Access access) {
@@ -61,16 +65,28 @@ public class MessageComponentBuilder {
         
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
 
-        String groupAccess = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, getPrefix(baseCommand) + " family_message_group_access", langs),
+        String groupAccess = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, " family_message_group_access", langs),
                 new String[]{colorize(GROUP_COLOR, group), colorize(accessColor, getFormattedAccessStatus(access))}));
         // family_message_group_access: "У групи %s доступ %s, щоб змінити доступ оберіть варіант: "
+        
+        String prefix = getPrefix(baseCommand);
+        String accessTrue = getFormattedAccessStatus(Access.TRUE);
+        String accessFalse = getFormattedAccessStatus(Access.FALSE);
+        String hoverAccessTrue = formatSetAccessMessage(Access.TRUE, langs);
+        String hoverAccessFalse = formatSetAccessMessage(Access.FALSE, langs);
 
         return MessageComponents.builder()
-            .content(groupAccess)
+            .content(prefix)
+            .hoverMessage(hoverReplyChat(langs))
+            .insertTextChat("/" + baseCommand)
             .append(MessageComponents.builder()
-                .content(getFormattedAccessStatus(Access.TRUE))
+            	.content(groupAccess)
+                .hexColor(MESSAGE_COLOR)
+            	.build())
+            .append(MessageComponents.builder()
+                .content(accessTrue)
                 .hexColor(ACCESS_COLOR_TRUE)
-                .hoverMessage(formatSetAccessMessage(Access.TRUE, langs))
+                .hoverMessage(hoverAccessTrue)
                 .clickActionRunCommand(command + group + " allow")
                 .build())
             .append(MessageComponents.builder()
@@ -78,9 +94,9 @@ public class MessageComponentBuilder {
                 .hexColor(SEPARATOR_COLOR)
                 .build())
             .append(MessageComponents.builder()
-                .content(getFormattedAccessStatus(Access.FALSE))
+                .content(accessFalse)
                 .hexColor(ACCESS_COLOR_FALSE)
-                .hoverMessage(formatSetAccessMessage(Access.FALSE, langs))
+                .hoverMessage(hoverAccessFalse)
                 .clickActionRunCommand(command + group + " deny")
                 .build())
             .build();
@@ -93,23 +109,37 @@ public class MessageComponentBuilder {
 
         String accessStatus = getFormattedAccessStatus(access);
 
-        String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, getPrefix(baseCommand) + "family_access_get", langs),
+        String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_access_get", langs),
                 new String[]{nickname, colorize(getAccessColor(access), accessStatus)}));
         // family_access_get: "Гравець %s має доступ: %s"
         String chsngeAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_access_change", langs),
                 new String[]{}));
         // family_access_change: "Змінити доступ: "
+        
+        String prefix = getPrefix(baseCommand);
+        String accessTrue = getFormattedAccessStatus(Access.TRUE);
+        String accessFalse = getFormattedAccessStatus(Access.FALSE);
+        String accessDefault = getFormattedAccessStatus(Access.DEFAULT);
+        String hoverAccessTrue = formatSetAccessMessage(Access.TRUE, langs);
+        String hoverAccessFalse = formatSetAccessMessage(Access.FALSE, langs);
+        String hoverAccessDefault = formatSetAccessMessage(Access.DEFAULT, langs);
 
         return MessageComponents.builder()
-            .content(checkAccessMessage)
+            .content(prefix)
+            .hoverMessage(hoverReplyChat(langs))
+            .insertTextChat("/" + baseCommand)
+            .append(MessageComponents.builder()
+                .content(checkAccessMessage)
+                .hexColor(MESSAGE_COLOR)
+                .build())
             .append(MessageComponents.builder()
                 .content(chsngeAccessMessage)
                 .hexColor(MESSAGE_COLOR)
                 .build())
             .append(MessageComponents.builder()
-                .content(getFormattedAccessStatus(Access.TRUE))
+                .content(accessTrue)
                 .hexColor(ACCESS_COLOR_TRUE)
-                .hoverMessage(formatSetAccessMessage(Access.TRUE, langs))
+                .hoverMessage(hoverAccessTrue)
                 .clickActionRunCommand(command + nickname + " allow")
                 .build())
             .append(MessageComponents.builder()
@@ -117,9 +147,9 @@ public class MessageComponentBuilder {
                 .hexColor(SEPARATOR_COLOR)
                 .build())
             .append(MessageComponents.builder()
-                .content(getFormattedAccessStatus(Access.FALSE))
+                .content(accessFalse)
                 .hexColor(ACCESS_COLOR_FALSE)
-                .hoverMessage(formatSetAccessMessage(Access.FALSE, langs))
+                .hoverMessage(hoverAccessFalse)
                 .clickActionRunCommand(command + nickname + " deny")
                 .build())
             .append(MessageComponents.builder()
@@ -127,9 +157,9 @@ public class MessageComponentBuilder {
                 .hexColor(SEPARATOR_COLOR)
                 .build())
             .append(MessageComponents.builder()
-                .content(getFormattedAccessStatus(Access.DEFAULT))
+                .content(accessDefault)
                 .hexColor(ACCESS_COLOR_DEFAULT)
-                .hoverMessage(formatSetAccessMessage(Access.DEFAULT, langs))
+                .hoverMessage(hoverAccessDefault)
                 .clickActionRunCommand(command + nickname + " default")
                 .build())
             .build();

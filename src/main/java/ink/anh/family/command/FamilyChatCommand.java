@@ -31,7 +31,7 @@ public class FamilyChatCommand extends Sender implements CommandExecutor {
             player = (Player) sender;
 
             if (player != null) {
-                return new FamilyChatSubCommand(familiPlugin).onCommand(player, args);
+                return new FamilyChatSubCommand(familiPlugin).onCommand(player, cmd, args);
             }
         }
 

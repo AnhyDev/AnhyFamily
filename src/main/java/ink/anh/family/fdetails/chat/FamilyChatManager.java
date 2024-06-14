@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.enums.Access;
@@ -38,12 +39,14 @@ public class FamilyChatManager extends Sender {
     private AnhyFamily familiPlugin;
 
     private Player player;
+    private String command;
     private String[] args;
 
-    public FamilyChatManager(AnhyFamily familiPlugin, Player player, String[] args) {
+    public FamilyChatManager(AnhyFamily familiPlugin, Player player, Command cmd, String[] args) {
         super(GlobalManager.getInstance());
         this.familiPlugin = familiPlugin;
         this.player = player;
+        this.command = cmd.getName();
         this.args = args;
     }
 
@@ -248,7 +251,7 @@ public class FamilyChatManager extends Sender {
                 //boolean accessControl = details.hasAccessChat(targetFamily);
                 //details.getAccess(senderFamily, nickname);
 
-                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, details.getAccess(senderFamily, nickname), "fchat");
+                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, details.getAccess(senderFamily, nickname), command);
 
                 Messenger.sendMessage(familiPlugin, player, messageComponents, "family_access_get");
             });
@@ -283,7 +286,7 @@ public class FamilyChatManager extends Sender {
 
             Access currentAccess = accessControl.getChatAccess();
 
-            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, group, currentAccess, "fchat");
+            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, group, currentAccess, command);
 
             Messenger.sendMessage(familiPlugin, player, messageComponents, "family_default_chat_access_check");
         });

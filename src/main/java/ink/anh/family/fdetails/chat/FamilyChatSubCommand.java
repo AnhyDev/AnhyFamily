@@ -2,6 +2,7 @@ package ink.anh.family.fdetails.chat;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.messages.MessageForFormatting;
@@ -19,10 +20,10 @@ public class FamilyChatSubCommand extends Sender {
         this.familiPlugin = familiPlugin;
     }
 
-    public boolean onCommand(Player player, String[] args) {
+    public boolean onCommand(Player player, Command cmd, String[] args) {
         CompletableFuture.runAsync(() -> {
             try {
-                FamilyChatManager chatManager = new FamilyChatManager(familiPlugin, player, args);
+                FamilyChatManager chatManager = new FamilyChatManager(familiPlugin, player, cmd, args);
                 if (args.length > 0) {
                     switch (args[0].toLowerCase()) {
                         case "access":
