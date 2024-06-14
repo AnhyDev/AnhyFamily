@@ -270,5 +270,5 @@ family_default_chat_access_check: "Default access check for the group"
 family_message_group_access: "The group %s has access: "
 family_access_player_get: "%s has access set: "
 family_hover_set_default: "Set access %s"
-family_access_change: ". Change access: "
+family_access_change: ".\n Change access: "
 

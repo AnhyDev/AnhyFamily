@@ -270,4 +270,4 @@ family_default_chat_access_check: "Verificación de acceso predeterminado para e
 family_message_group_access: "El grupo %s tiene acceso: "
 family_access_player_get: "%s tiene acceso configurado: "
 family_hover_set_default: "Establecer acceso %s"
-family_access_change: ". Cambiar acceso: "
+family_access_change: ".\n Cambiar acceso: "

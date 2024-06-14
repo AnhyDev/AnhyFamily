@@ -270,4 +270,4 @@ family_default_chat_access_check: "Перевірка доступу за зам
 family_message_group_access: "У групи %s доступ: "
 family_access_player_get: "У %s встановлено доступ: "
 family_hover_set_default: "Встановити доступ %s"
-family_access_change: ". Змінити доступ: "
+family_access_change: ".\n Змінити доступ: "

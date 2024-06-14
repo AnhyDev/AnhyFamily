@@ -305,7 +305,7 @@ public class FamilyHomeManager extends Sender {
         PlayerFamily senderFamily = FamilyUtils.getFamily(player);
         if (senderFamily != null) {
             executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
-                Access currentAccess = details.getAccess(senderFamily, TypeTargetComponent.HOME);
+                Access currentAccess = details.getAccess(targetFamily, TypeTargetComponent.HOME);
                 MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, currentAccess, command);
                 Messenger.sendMessage(familyPlugin, player, messageComponents, "family_access_get");
             });

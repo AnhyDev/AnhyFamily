@@ -251,8 +251,7 @@ public class FamilyChatManager extends Sender {
         if (senderFamily != null) {
             executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
 
-            	Access access = details.getAccess(senderFamily, TypeTargetComponent.CHAT);
-            	Logger.info(familiPlugin, "Access " + access.name());
+            	Access access = details.getAccess(targetFamily, TypeTargetComponent.CHAT);
                 MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, access, command);
 
                 Messenger.sendMessage(familiPlugin, player, messageComponents, "family_access_get");

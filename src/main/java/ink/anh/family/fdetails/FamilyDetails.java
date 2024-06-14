@@ -11,8 +11,6 @@ import java.util.UUID;
 import org.bukkit.Location;
 
 import ink.anh.api.enums.Access;
-import ink.anh.api.messages.Logger;
-import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.chest.Chest;
 import ink.anh.family.fplayer.FamilyRelationType;
 import ink.anh.family.fplayer.PlayerFamily;
@@ -158,14 +156,12 @@ public class FamilyDetails {
     public Access getAccess(PlayerFamily playerFamily, TypeTargetComponent typeTargetComponent) {
         FamilyRelationType relationType = getRelationType(playerFamily);
 
-    	Logger.info(AnhyFamily.getInstance(), "FamilyRelationType " + relationType.name());
         switch (relationType) {
             case FAMILY_ID:
                 return Access.TRUE; // Власна сім'я завжди має повний доступ
             case PARENT_FAMILY_ID:
                 return getSpecificOrDefaultAccess(playerFamily.getRoot(), ancestorsAccessMap, ancestorsAccess, typeTargetComponent);
             case CHILD_FAMILY_IDS:
-            	Logger.info(AnhyFamily.getInstance(), "CHILD_FAMILY_IDS " + getSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, typeTargetComponent).name());
                 return getSpecificOrDefaultAccess(playerFamily.getRoot(), childrenAccessMap, childrenAccess, typeTargetComponent);
             default:
                 return Access.FALSE;
