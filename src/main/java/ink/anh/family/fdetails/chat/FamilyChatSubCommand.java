@@ -46,7 +46,7 @@ public class FamilyChatSubCommand extends Sender {
                     sendMessage(new MessageForFormatting("family_err_command_format", new String[]{commandUsage}), MessageType.WARNING, player);
                 }
             } catch (Exception e) {
-                e.printStackTrace(); // Вивід виключення в лог
+                e.printStackTrace();
             }
         });
 

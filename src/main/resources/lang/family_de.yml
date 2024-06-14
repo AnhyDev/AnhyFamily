@@ -265,3 +265,9 @@ family_err_chest_world_restriction: "Du bist nicht in der Welt, in der sich die 
 family_err_chest_click_disabled: "Das Öffnen der Truhe durch Klicken ist deaktiviert."
 family_err_chest_not_set: "Truhenstandort nicht festgelegt."
 
+# [ink.anh.family.fdetails.MessageComponentBuilder]
+family_default_chat_access_check: "Standard-Zugriffsprüfung für die Gruppe"
+family_message_group_access: "Die Gruppe %s hat Zugriff: "
+family_access_player_get: "%s hat Zugriff festgelegt: "
+family_hover_set_default: "Zugriff festlegen %s"
+family_access_change: ". Zugriff ändern: "

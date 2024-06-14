@@ -265,3 +265,9 @@ family_err_chest_world_restriction: "Ты не в том мире, где нах
 family_err_chest_click_disabled: "Открытие сундука щелчком запрещено."
 family_err_chest_not_set: "Место для сундука не установлено."
 
+# [ink.anh.family.fdetails.MessageComponentBuilder]
+family_default_chat_access_check: "Проверка доступа по умолчанию для группы"
+family_message_group_access: "У группы %s есть доступ: "
+family_access_player_get: "У %s установлен доступ: "
+family_hover_set_default: "Установить доступ %s"
+family_access_change: ". Изменить доступ: "

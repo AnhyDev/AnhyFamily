@@ -265,3 +265,9 @@ family_err_chest_world_restriction: "你不在箱子所在的世界里。"
 family_err_chest_click_disabled: "禁用点击打开箱子。"
 family_err_chest_not_set: "箱子位置未设定。"
 
+# [ink.anh.family.fdetails.MessageComponentBuilder]
+family_default_chat_access_check: "组的默认访问检查"
+family_message_group_access: "组 %s 拥有访问权限: "
+family_access_player_get: "%s 已设置访问权限: "
+family_hover_set_default: "设置访问 %s"
+family_access_change: ". 更改访问权限: "

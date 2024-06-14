@@ -56,14 +56,21 @@ public class MessageComponentBuilder {
         
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{manager.getDefaultLang()};
 
-        String groupAccess = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_message_group_access", langs),
-                new String[]{StringColorUtils.colorSet(StringColorUtils.GROUP_COLOR, group)}));
+        String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_message_group_access", langs),
+                new String[]{StringUtils.colorize(StringColorUtils.colorSet(StringColorUtils.GROUP_COLOR, group.toUpperCase()))}));
+
+        String changeAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_access_change", langs),
+                new String[]{}));
 
         return prefix(baseCommand, langs)
                 .append(MessageComponents.builder()
-                    	.content(groupAccess)
+                    	.content(checkAccessMessage)
                         .hexColor(StringColorUtils.MESSAGE_COLOR)
                     	.build())
+                    .append(MessageComponents.builder()
+                        .content(changeAccessMessage)
+                        .hexColor(StringColorUtils.MESSAGE_COLOR)
+                        .build())
                 .append(MessageComponents.builder()
                         .content(getFormattedAccessStatus(Access.TRUE))
                         .hexColor(StringColorUtils.ACCESS_COLOR_TRUE)
@@ -89,7 +96,7 @@ public class MessageComponentBuilder {
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{manager.getDefaultLang()};
 
         String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_access_player_get", langs),
-                new String[]{nickname}));
+                new String[]{StringUtils.colorize(StringColorUtils.colorSet(StringColorUtils.GROUP_COLOR, nickname))}));
 
         String changeAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_access_change", langs),
                 new String[]{}));

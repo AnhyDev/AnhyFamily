@@ -265,7 +265,7 @@ family_err_chest_world_restriction: "Ви не в тому світі, де зн
 family_err_chest_click_disabled: "Відкриття скрині кліком заборонено."
 family_err_chest_not_set: "Місце для скрині не встановлено."
 
-
+# [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "Перевірка доступу за замовчуванням для групи"
 family_message_group_access: "У групи %s доступ: "
 family_access_player_get: "У %s встановлено доступ: "

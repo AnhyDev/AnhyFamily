@@ -265,3 +265,9 @@ family_err_chest_world_restriction: "Non sei nel mondo in cui si trova il forzie
 family_err_chest_click_disabled: "L'apertura del forziere tramite clic è disabilitata."
 family_err_chest_not_set: "Posizione del forziere non impostata."
 
+# [ink.anh.family.fdetails.MessageComponentBuilder]
+family_default_chat_access_check: "Controllo di accesso predefinito per il gruppo"
+family_message_group_access: "Il gruppo %s ha accesso: "
+family_access_player_get: "%s ha accesso impostato: "
+family_hover_set_default: "Imposta accesso %s"
+family_access_change: ". Modifica accesso: "
