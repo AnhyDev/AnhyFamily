@@ -144,6 +144,10 @@ public class FamilyChestManager extends Sender {
                 locationToUUIDMap.put(newLocationHash, familyId);
 
                 // Оновлення локації скрині у FamilyDetails
+                if (details.getFamilyChest() == null) {
+                	FamilyChest chest = new FamilyChest(details.getFamilySymbol(), familyId);
+                	details.setFamilyChest(null);
+                }
                 details.getFamilyChest().setChestLocation(request.getLocation());
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.HOME_LOCATION);
                 chestRequests.remove(familyId);

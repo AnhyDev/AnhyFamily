@@ -11,9 +11,9 @@ public class FamilyChest implements InventoryHolder {
     private Inventory inventory;
     private UUID familyId;
 
-    public FamilyChest(String repoName, UUID familyId) {
+    public FamilyChest(String prefix, UUID familyId) {
         // Створення інвентаря на 54 слотів з назвою "Repository"
-        this.inventory = Bukkit.createInventory(this, 54, repoName);
+        this.inventory = Bukkit.createInventory(this, 54, prefix);
         this.familyId = familyId;
     }
 
