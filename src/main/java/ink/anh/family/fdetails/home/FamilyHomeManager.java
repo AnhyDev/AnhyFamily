@@ -64,6 +64,14 @@ public class FamilyHomeManager extends Sender {
                 Location currentLocation = player.getLocation();
                 homeRequests.put(details.getFamilyId(), new HomeRequest(currentLocation, player.getUniqueId()));
                 sendMessage(new MessageForFormatting("family_home_request_sent", new String[] {}), MessageType.NORMAL, player);
+                
+                
+                if (playerFamily.getSpouse() != null) {
+                	Player spouse = Bukkit.getPlayer(playerFamily.getSpouse());
+                	if (spouse != null && spouse.isOnline()) {
+                        sendMessage(new MessageForFormatting("family_home_accept_sent", new String[] {"/" + command + " accept"}), MessageType.NORMAL, player);
+                	}
+                }
 
                 // Запуск таймера на 60 секунд
                 Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {

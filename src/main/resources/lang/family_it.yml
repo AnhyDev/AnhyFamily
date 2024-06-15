@@ -253,7 +253,6 @@ family_err_invalid_chest_location: "Il forziere può essere posizionato solo su 
 family_err_chest_too_far_from_home: "Il forziere deve trovarsi entro un raggio di 20 blocchi dal punto di casa."
 family_chest_request_sent: "Richiesta di impostazione delle coordinate del forziere inviata. Il tuo partner deve confermare la richiesta entro 60 secondi."
 family_err_request_chest_not_confirmed: "La tua richiesta di impostazione delle coordinate del forziere non è stata confermata entro 60 secondi."
-family_err_chest_already_set: "Il timeout per il cambio delle coordinate del forziere non è ancora scaduto."
 family_chest_set: "Coordinate del forziere impostate con successo."
 family_err_no_access_chest: "Non hai accesso al forziere familiare."
 family_err_symbol_not_found: "Simbolo %s non trovato."

@@ -253,7 +253,6 @@ family_err_invalid_chest_location: "箱子只能放置在半径为5格的坚固�
 family_err_chest_too_far_from_home: "箱子必须在距离家点20格的半径内。"
 family_chest_request_sent: "已发送设置箱子坐标的请求。你的伴侣必须在60秒内确认请求。"
 family_err_request_chest_not_confirmed: "你的设置箱子坐标请求在60秒内未被确认。"
-family_err_chest_already_set: "更改箱子坐标的超时时间尚未到期。"
 family_chest_set: "箱子坐标成功设置。"
 family_err_no_access_chest: "你没有访问家庭箱子的权限。"
 family_err_symbol_not_found: "未找到符号 %s。"

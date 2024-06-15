@@ -253,7 +253,6 @@ family_err_invalid_chest_location: "El cofre solo se puede colocar en un bloque 
 family_err_chest_too_far_from_home: "El cofre debe estar dentro de un radio de 20 bloques desde el punto de hogar."
 family_chest_request_sent: "Solicitud de establecer coordenadas del cofre enviada. Tu pareja debe confirmar la solicitud dentro de los 60 segundos."
 family_err_request_chest_not_confirmed: "Tu solicitud de establecer coordenadas del cofre no fue confirmada dentro de los 60 segundos."
-family_err_chest_already_set: "El tiempo de espera para cambiar las coordenadas del cofre aún no ha expirado."
 family_chest_set: "Coordenadas del cofre establecidas con éxito."
 family_err_no_access_chest: "No tienes acceso al cofre familiar."
 family_err_symbol_not_found: "Símbolo %s no encontrado."

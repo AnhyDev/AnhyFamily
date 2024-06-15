@@ -35,6 +35,7 @@ import ink.anh.family.fdetails.MessageComponentBuilder;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
+import ink.anh.family.util.FamilyDetailsUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.StringColorUtils;
 
@@ -66,7 +67,6 @@ public class FamilyChestManager extends Sender {
         }
 
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
-            GlobalManager manager = (GlobalManager) libraryManager;
             Location homeLocation = details.getHomeLocation();
             Location targetLocation = targetBlock.getLocation();
 
@@ -80,7 +80,7 @@ public class FamilyChestManager extends Sender {
                 return;
             }
 
-            if (details.getFamilyChest().getChestLocation() == null || details.canChangeHome(manager.getFamilyConfig().getHomeChangeTimeoutMinutes())) {
+            if (FamilyDetailsUtils.isLocationWithinHomeRadius(details, targetLocation)) {
                 PlayerFamily playerFamily = FamilyUtils.getFamily(player);
                 UUID spouseUUID = playerFamily.getSpouse();
                 if (spouseUUID == null) {
@@ -90,6 +90,14 @@ public class FamilyChestManager extends Sender {
 
                 chestRequests.put(details.getFamilyId(), new ChestRequest(targetLocation, player.getUniqueId()));
                 sendMessage(new MessageForFormatting("family_chest_request_sent", new String[] {}), MessageType.NORMAL, player);
+                
+                
+                if (playerFamily.getSpouse() != null) {
+                	Player spouse = Bukkit.getPlayer(playerFamily.getSpouse());
+                	if (spouse != null && spouse.isOnline()) {
+                        sendMessage(new MessageForFormatting("family_chest_accept_sent", new String[] {"/" + command + " accept"}), MessageType.NORMAL, player);
+                	}
+                }
 
                 // Запуск таймера на 60 секунд
                 Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
@@ -99,7 +107,7 @@ public class FamilyChestManager extends Sender {
                     }
                 }, 1200L);
             } else {
-                sendMessage(new MessageForFormatting("family_err_chest_already_set", new String[] {}), MessageType.WARNING, player);
+                sendMessage(new MessageForFormatting("family_err_chest_home_distance", new String[] {}), MessageType.WARNING, player);
             }
         });
     }

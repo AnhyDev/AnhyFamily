@@ -253,7 +253,6 @@ family_err_invalid_chest_location: "Die Truhe kann nur auf einem festen Block im
 family_err_chest_too_far_from_home: "Die Truhe muss sich im Umkreis von 20 Blöcken vom Heimpunkt befinden."
 family_chest_request_sent: "Anfrage zum Setzen der Truhenkoordinaten gesendet. Dein Partner muss die Anfrage innerhalb von 60 Sekunden bestätigen."
 family_err_request_chest_not_confirmed: "Deine Anfrage zum Setzen der Truhenkoordinaten wurde innerhalb von 60 Sekunden nicht bestätigt."
-family_err_chest_already_set: "Der Timeout für das Ändern der Truhenkoordinaten ist noch nicht abgelaufen."
 family_chest_set: "Truhenkoordinaten erfolgreich gesetzt."
 family_err_no_access_chest: "Du hast keinen Zugang zur Familientruhe."
 family_err_symbol_not_found: "Symbol %s nicht gefunden."

@@ -253,7 +253,6 @@ family_err_invalid_chest_location: "The chest can only be placed on a solid bloc
 family_err_chest_too_far_from_home: "The chest must be within a radius of 20 blocks from the home point."
 family_chest_request_sent: "Chest coordinates set request sent. Your partner must confirm the request within 60 seconds."
 family_err_request_chest_not_confirmed: "Your chest coordinates set request was not confirmed within 60 seconds."
-family_err_chest_already_set: "Timeout for changing chest coordinates has not yet expired."
 family_chest_set: "Chest coordinates successfully set."
 family_err_no_access_chest: "You do not have access to the family chest."
 family_err_symbol_not_found: "Symbol %s not found."

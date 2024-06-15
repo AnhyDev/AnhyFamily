@@ -253,7 +253,6 @@ family_err_invalid_chest_location: "Сундук можно установить
 family_err_chest_too_far_from_home: "Сундук должен находиться не далее чем в радиусе 20 блоков от точки дома."
 family_chest_request_sent: "Запрос на установку координат сундука отправлен. Твой партнер должен подтвердить запрос в течение 60 секунд."
 family_err_request_chest_not_confirmed: "Твой запрос на установку координат сундука не был подтвержден в течение 60 секунд."
-family_err_chest_already_set: "Тайм-аут для изменения координат сундука еще не истек."
 family_chest_set: "Координаты сундука успешно установлены."
 family_err_no_access_chest: "У тебя нет доступа к семейному сундуку."
 family_err_symbol_not_found: "Символ %s не найден."
