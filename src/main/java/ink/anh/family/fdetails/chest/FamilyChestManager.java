@@ -145,8 +145,9 @@ public class FamilyChestManager extends Sender {
 
                 // Оновлення локації скрині у FamilyDetails
                 if (details.getFamilyChest() == null) {
-                	FamilyChest chest = new FamilyChest(details.getFamilySymbol(), familyId);
-                	details.setFamilyChest(null);
+                	FamilyConfig config = GlobalManager.getInstance().getFamilyConfig();
+                	Chest chest = new Chest(config.getChestDistance());
+                	details.setFamilyChest(chest);
                 }
                 details.getFamilyChest().setChestLocation(request.getLocation());
                 FamilyDetailsSave.saveFamilyDetails(details, FamilyDetailsField.HOME_LOCATION);

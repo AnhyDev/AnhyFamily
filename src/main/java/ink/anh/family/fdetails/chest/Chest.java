@@ -18,10 +18,10 @@ public class Chest {
         this.openDistance = openDistance;
     }
 
-    public Chest() {
+    public Chest(int openDistance) {
         this.familyChest = new ItemStack[54];
         this.chestLocation = null;
-        this.openDistance = 0;
+        this.openDistance = openDistance;
     }
 
     public ItemStack[] getFamilyChest() {
