@@ -19,6 +19,19 @@ public class MessageComponentBuilder {
                 new String[]{getFormattedAccessStatus(access)}));
     }
 
+    private static String prefixColor(String baseCommand) {
+        switch (baseCommand) {
+            case "fchat":
+                return StringColorUtils.PREFIX_CHAT_COLOR;
+            case "fchest":
+                return StringColorUtils.PREFIX_CHEST_COLOR;
+            case "fhome":
+                return StringColorUtils.PREFIX_HOME_COLOR;
+            default:
+                return StringColorUtils.PLUGIN_COLOR;
+        } 
+    }
+    
     private static MessageBuilder prefix(String baseCommand, String[] langs) {
     	String content = StringUtils.formatString(Translator.translateKyeWorld(manager, "family_hover_reply_chat", langs), new String[] {});
     	return MessageComponents.builder()
@@ -27,7 +40,7 @@ public class MessageComponentBuilder {
                 .decoration("BOLD", true)
                 .append(MessageComponents.builder()
                     .content("[" + baseCommand.toUpperCase() + "] ")
-                    .hexColor(StringColorUtils.PREFIX_COLOR)
+                    .hexColor(prefixColor(baseCommand))
                     .hoverComponent(MessageComponents.builder().content(content).hexColor(StringColorUtils.SEPARATOR_COLOR).build())
                     .insertTextChat("/" + baseCommand)
                     .build());

@@ -10,7 +10,9 @@ public class StringColorUtils {
     public static final String ACCESS_COLOR_FALSE = "#FF0000";
     public static final String ACCESS_COLOR_DEFAULT = "#FFFF00";
     public static final String SEPARATOR_COLOR = "#cedcf2";
-    public static final String PREFIX_COLOR = "#6ea4fa";
+    public static final String PREFIX_CHAT_COLOR = "#6ea4fa";
+    public static final String PREFIX_CHEST_COLOR = "#03f0fc";
+    public static final String PREFIX_HOME_COLOR = "#03fc94";
     public static final String PLUGIN_COLOR = "#1D87E4";
 
     public static String getAccessColor(Access access) {
