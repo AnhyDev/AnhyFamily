@@ -69,7 +69,7 @@ public class FamilyHomeManager extends Sender {
                 if (playerFamily.getSpouse() != null) {
                 	Player spouse = Bukkit.getPlayer(playerFamily.getSpouse());
                 	if (spouse != null && spouse.isOnline()) {
-                        sendMessage(new MessageForFormatting("family_home_accept_sent", new String[] {"/" + command + " accept"}), MessageType.NORMAL, player);
+                        sendMessage(new MessageForFormatting("family_home_accept_sent", new String[] {"/" + command + " accept"}), MessageType.NORMAL, spouse);
                 	}
                 }
 
