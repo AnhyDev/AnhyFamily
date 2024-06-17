@@ -144,14 +144,14 @@ public class MarriageValidator extends Sender {
         familyBride1 = FamilyUtils.getFamily(bride1);
         familyBride2 = FamilyUtils.getFamily(bride2);
         
-        if (!validateMarriageConfig(familyBride1, familyBride2, recipients)) {
+        if (!validateMarriageCompatibility(familyBride1, familyBride2, recipients)) {
             return false;
         }
 
         return true;
     }
 
-    public boolean validateMarriageConfig(PlayerFamily family1, PlayerFamily family2, Player[] recipients) {
+    public boolean validateMarriageCompatibility(PlayerFamily family1, PlayerFamily family2, Player[] recipients) {
         FamilyConfig familyConfig = ((GlobalManager) libraryManager).getFamilyConfig();
         boolean nonTraditionalAllowed = familyConfig.isNonBinaryMarry();
         
@@ -159,6 +159,17 @@ public class MarriageValidator extends Sender {
             sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_traditional", new String[] {}), MessageType.WARNING, false, recipients);
             return false;
         }
+        
+        if (family1.getLastName() == null || family1.getLastName()[0] == null || family1.getLastName()[0].isEmpty()) {
+            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_last_name_not_found", new String[] {family1.getRootrNickName()}), MessageType.WARNING, false, recipients);
+            return false;
+        }
+        
+        if (family2.getLastName() == null || family2.getLastName()[0] == null || family2.getLastName()[0].isEmpty()) {
+            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_last_name_not_found", new String[] {family1.getRootrNickName()}), MessageType.WARNING, false, recipients);
+            return false;
+        }
+        
         return true;
     }
 

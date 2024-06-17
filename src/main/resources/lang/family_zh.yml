@@ -32,6 +32,8 @@ family_player_not_found_db: "在数据库中未找到玩家。"
 family_error_generic: "未知错误"
 family_access_get: "%s 有访问权限：%s。"
 family_access_root: "玩家 %s 是家庭 %s 的领导者之一，无法更改其访问权限"
+family_err_no_family: "你没有家庭"
+family_err_player_no_family: "玩家 %s 没有家庭"
 
 # 命令 /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "男性"
@@ -227,6 +229,7 @@ family_home_access_set: "对 %s 的家庭访问设置为 %s。"
 family_err_nickname_not_found_in_access_maps: "在访问映射中找不到昵称 %s。"
 family_default_home_access_set: "默认家庭访问设置为 %s：%s。"
 family_err_invalid_group: "无效的组：%s。请使用 children 或 parents。"
+family_home_accept_sent: "通过命令确认设置家庭住所：&e%s"
 
 # 家庭前缀的命令 [ink.anh.family.fdetails.symbol.FamilySymbolManager]
 family_err_invalid_prefix: "无效的前缀。它应该是 3 到 5 个拉丁字母。"
@@ -249,8 +252,9 @@ family_hover_player_reply: "回复此聊天中的 '%s'"
 family_hover_player_offline: "玩家 '%s' 不在线"
 
 # 家庭箱子的命令 [ink.anh.family.fdetails.chest.FamilyChestManager]
-family_err_invalid_chest_location: "箱子只能放置在半径为5格的坚固方块上。"
-family_err_chest_too_far_from_home: "箱子必须在距离家点20格的半径内。"
+family_err_invalid_chest_location: "家庭箱可以是以下块：&e%s"
+family_err_chest_home_distance: "箱子离家庭住所太远"
+family_chest_accept_sent: "通过命令确认设置家庭箱：&e%s"
 family_chest_request_sent: "已发送设置箱子坐标的请求。你的伴侣必须在60秒内确认请求。"
 family_err_request_chest_not_confirmed: "你的设置箱子坐标请求在60秒内未被确认。"
 family_chest_set: "箱子坐标成功设置。"

@@ -32,6 +32,8 @@ family_player_not_found_db: "Игрок не найден в БД."
 family_error_generic: "Неизвестная ошибка"
 family_access_get: "У %s доступ: %s."
 family_access_root: "Игрок %s является одним из лидеров семьи %s, изменить его доступ невозможно"
+family_err_no_family: "У вас нет семьи"
+family_err_player_no_family: "У игрока %s нет семьи"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Мужской"
@@ -227,6 +229,7 @@ family_home_access_set: "Доступ к дому для %s установлен
 family_err_nickname_not_found_in_access_maps: "Никнейм %s не найден в картах доступа."
 family_default_home_access_set: "Доступ к дому по умолчанию установлен для %s: %s."
 family_err_invalid_group: "Недействительная группа: %s. Используйте children или parents."
+family_home_accept_sent: "Подтвердите установку семейного дома командой: &e%s"
 
 # Команды для семейного префикса [ink.anh.family.fdetails.symbol.FamilySymbolManager]
 family_err_invalid_prefix: "Неправильный префикс. Он должен быть от 3 до 5 латинских букв."
@@ -249,8 +252,9 @@ family_hover_player_reply: "Ответить '%s' в этом чате"
 family_hover_player_offline: "Игрок '%s' не в сети"
 
 # Команды для семейных сундуков [ink.anh.family.fdetails.chest.FamilyChestManager]
-family_err_invalid_chest_location: "Сундук можно установить только на твёрдый блок в радиусе 5 блоков."
-family_err_chest_too_far_from_home: "Сундук должен находиться не далее чем в радиусе 20 блоков от точки дома."
+family_err_invalid_chest_location: "Семейный сундук может быть следующими блоками: &e%s"
+family_err_chest_home_distance: "Сундук слишком далеко от семейного дома"
+family_chest_accept_sent: "Подтвердите установку семейного сундука командой: &e%s"
 family_chest_request_sent: "Запрос на установку координат сундука отправлен. Твой партнер должен подтвердить запрос в течение 60 секунд."
 family_err_request_chest_not_confirmed: "Твой запрос на установку координат сундука не был подтвержден в течение 60 секунд."
 family_chest_set: "Координаты сундука успешно установлены."

@@ -53,6 +53,8 @@ public class FamilyConfig {
     private boolean chestClick;
     // List of blocks that can be used as a chest
     private List<Material> chestBlocks;
+    //
+    private int chestDistanceToHome;
 
     private static FamilyConfig instance;
 
@@ -99,6 +101,7 @@ public class FamilyConfig {
         this.chestClick = config.getBoolean("chest.click", true);
         // Завантаження дозволених блоків для скринь
         loadChestBlocks(config);
+        this.chestDistanceToHome = config.getInt("chest.distance_to_home", 20);
 
         ItemStack[] items = loadItems(plugin);
         
@@ -199,6 +202,10 @@ public class FamilyConfig {
 	    return chestBlocks;
 	}
 
+	public int getChestDistanceToHome() {
+	    return chestDistanceToHome;
+	}
+	
 	public void setPrivateCeremonyLocationFromConfig(FileConfiguration config) {
 	    // Зчитування параметрів локації для приватного одруження
 	    String worldName = config.getString("privateCeremony.world");

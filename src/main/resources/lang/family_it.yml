@@ -32,6 +32,8 @@ family_player_not_found_db: "Giocatore non trovato nel database."
 family_error_generic: "Errore sconosciuto"
 family_access_get: "%s ha accesso: %s."
 family_access_root: "Il giocatore %s è uno dei leader della famiglia %s, il suo accesso non può essere modificato"
+family_err_no_family: "Non hai una famiglia"
+family_err_player_no_family: "Il giocatore %s non ha una famiglia"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Maschile"
@@ -227,6 +229,7 @@ family_home_access_set: "Accesso alla casa per %s impostato su %s."
 family_err_nickname_not_found_in_access_maps: "Nickname %s non trovato nelle mappe di accesso."
 family_default_home_access_set: "Accesso alla casa predefinito impostato per %s: %s."
 family_err_invalid_group: "Gruppo non valido: %s. Usa children o parents."
+family_home_accept_sent: "Conferma la configurazione della casa di famiglia con il comando: &e%s"
 
 # Comandi per il prefisso familiare [ink.anh.family.fdetails.symbol.FamilySymbolManager]
 family_err_invalid_prefix: "Prefisso non valido. Deve essere composto da 3 a 5 lettere latine."
@@ -249,8 +252,9 @@ family_hover_player_reply: "Rispondi a '%s' in questa chat"
 family_hover_player_offline: "Il giocatore '%s' è offline"
 
 # Comandi per forzieri familiari [ink.anh.family.fdetails.chest.FamilyChestManager]
-family_err_invalid_chest_location: "Il forziere può essere posizionato solo su un blocco solido entro un raggio di 5 blocchi."
-family_err_chest_too_far_from_home: "Il forziere deve trovarsi entro un raggio di 20 blocchi dal punto di casa."
+family_err_invalid_chest_location: "La cassa di famiglia può essere i seguenti blocchi: &e%s"
+family_err_chest_home_distance: "La cassa è troppo lontana dalla casa di famiglia"
+family_chest_accept_sent: "Conferma la configurazione della cassa di famiglia con il comando: &e%s"
 family_chest_request_sent: "Richiesta di impostazione delle coordinate del forziere inviata. Il tuo partner deve confermare la richiesta entro 60 secondi."
 family_err_request_chest_not_confirmed: "La tua richiesta di impostazione delle coordinate del forziere non è stata confermata entro 60 secondi."
 family_chest_set: "Coordinate del forziere impostate con successo."

@@ -9,11 +9,9 @@ import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.chest.FamilyChest;
 import ink.anh.family.fdetails.chest.FamilyChestManager;
 import ink.anh.family.fdetails.chest.FamilyChestOpenManager;
-import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.FamilyUtils;
-import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,8 +42,8 @@ public class FamilyChestListener implements Listener {
             
             // Перевірка чи є блок у мапі
             if (clickedBlock != null && FamilyChestManager.isFamilyChest(clickedBlock.getLocation())) {
-            	event.setCancelled(true);
-            	
+                event.setCancelled(true);
+                
                 FamilyChestManager familyChestManager = new FamilyChestManager(familyPlugin, player, null, new String[]{});
                 familyChestManager.attemptOpenFamilyChest(clickedBlock.getLocation());
             }
@@ -89,33 +87,22 @@ public class FamilyChestListener implements Listener {
         if (event.getInventory().getHolder() instanceof FamilyChest) {
             Player player = (Player) event.getPlayer();
 
-        	SyncExecutor.runAsync(() -> {
-                PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-
-                if (playerFamily == null) {
-                    return;
-                }
-
-                Map<UUID, FamilyDetails> detailsAll = FamilyDetailsGet.getAllFamilyDetails(playerFamily);
-
-                if (detailsAll == null || detailsAll.isEmpty()) {
-                    return;
-                }
-
+            SyncExecutor.runAsync(() -> {
                 FamilyChestOpenManager chestManager = FamilyChestOpenManager.getInstance();
+                UUID familyId = chestManager.getKeyByViewerName(player.getName());
 
-                for (UUID familyId : detailsAll.keySet()) {
-                    if (chestManager.hasChest(familyId) && player.getName().equals(chestManager.getViewer(familyId))) {
-                        FamilyDetails familyDetails = detailsAll.get(familyId);
-                        chestManager.removeChest(familyId);
-                        if (familyDetails != null) {
-                            familyDetails.getFamilyChest().setFamilyChest(event.getInventory().getContents());
-                            FamilyDetailsSave.saveFamilyDetails(familyDetails, FamilyDetailsField.FAMILY_CHEST);
-                        }
-                        return;
+                if (familyId != null) {
+                    chestManager.removeChest(familyId);
+
+                    // Збереження сімейної скрині
+                    FamilyDetails familyDetails = FamilyDetailsGet.getFamilyDetails(familyId);
+                    if (familyDetails != null) {
+                        familyDetails.getFamilyChest().setFamilyChest(event.getInventory().getContents());
+                        FamilyDetailsSave.saveFamilyDetails(familyDetails, FamilyDetailsField.FAMILY_CHEST);
+                        SyncExecutor.runSync(() -> player.getWorld().playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1.0f, 1.0f));
                     }
                 }
-        	});
+            });
         }
     }
 

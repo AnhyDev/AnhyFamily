@@ -106,7 +106,7 @@ public class FamilyDetailsGet {
         FamilyDetails rootDetails = getRootFamilyDetailsInternal(null, null, playerFamily);
         
         if (rootDetails != null) {
-            allUUIDs.add(rootDetails.getFamilyId());
+            familyDetailsMap.put(rootDetails.getFamilyId(), rootDetails);
 
             // Додаємо UUID з childrenAccessMap
             allUUIDs.addAll(rootDetails.getChildrenAccessMap().keySet());

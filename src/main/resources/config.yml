@@ -102,4 +102,6 @@ chest:
   material:
     - CHEST
     - BARREL
+  # The distance from the chest to the home point for installation and interaction
+  distance_to_home: 20
   

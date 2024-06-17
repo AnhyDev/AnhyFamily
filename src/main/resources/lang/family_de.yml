@@ -32,6 +32,8 @@ family_player_not_found_db: "Spieler nicht in der Datenbank gefunden."
 family_error_generic: "Unbekannter Fehler"
 family_access_get: "%s hat Zugriff: %s."
 family_access_root: "Spieler %s ist einer der Anführer der Familie %s, ihr Zugriff kann nicht geändert werden"
+family_err_no_family: "Sie haben keine Familie"
+family_err_player_no_family: "Spieler %s hat keine Familie"
 
 # Befehl /gender ... [Klassen: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Männlich"
@@ -227,6 +229,7 @@ family_home_access_set: "Heimzugriff für %s auf %s gesetzt."
 family_err_nickname_not_found_in_access_maps: "Spitzname %s in den Zugriffskarten nicht gefunden."
 family_default_home_access_set: "Standardzugriff für %s auf %s gesetzt."
 family_err_invalid_group: "Ungültige Gruppe: %s. Verwenden Sie children oder parents."
+family_home_accept_sent: "Bestätigen Sie das Einrichten des Familienhauses mit dem Befehl: &e%s"
 
 # Befehle für das Familienpräfix [ink.anh.family.fdetails.symbol.FamilySymbolManager]
 family_err_invalid_prefix: "Ungültiges Präfix. Es sollte aus 3 bis 5 lateinischen Buchstaben bestehen."
@@ -249,8 +252,9 @@ family_hover_player_reply: "Auf '%s' in diesem Chat antworten"
 family_hover_player_offline: "Spieler '%s' ist offline"
 
 # Befehle für Familientruhen [ink.anh.family.fdetails.chest.FamilyChestManager]
-family_err_invalid_chest_location: "Die Truhe kann nur auf einem festen Block im Umkreis von 5 Blöcken platziert werden."
-family_err_chest_too_far_from_home: "Die Truhe muss sich im Umkreis von 20 Blöcken vom Heimpunkt befinden."
+family_err_invalid_chest_location: "Die Familienschatztruhe kann die folgenden Blöcke sein: &e%s"
+family_err_chest_home_distance: "Die Truhe ist zu weit vom Familienhaus entfernt"
+family_chest_accept_sent: "Bestätigen Sie das Einrichten der Familienschatztruhe mit dem Befehl: &e%s"
 family_chest_request_sent: "Anfrage zum Setzen der Truhenkoordinaten gesendet. Dein Partner muss die Anfrage innerhalb von 60 Sekunden bestätigen."
 family_err_request_chest_not_confirmed: "Deine Anfrage zum Setzen der Truhenkoordinaten wurde innerhalb von 60 Sekunden nicht bestätigt."
 family_chest_set: "Truhenkoordinaten erfolgreich gesetzt."

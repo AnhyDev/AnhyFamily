@@ -4,24 +4,20 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Chest {
 
     private ItemStack[] familyChest;
     private Location chestLocation;
-    private int openDistance;
 
-    public Chest(ItemStack[] familyChest, Location chestLocation, int openDistance) {
+    public Chest(ItemStack[] familyChest, Location chestLocation) {
         this.familyChest = familyChest != null ? familyChest : new ItemStack[54];
         this.chestLocation = chestLocation;
-        this.openDistance = openDistance;
     }
 
-    public Chest(int openDistance) {
+    public Chest() {
         this.familyChest = new ItemStack[54];
         this.chestLocation = null;
-        this.openDistance = openDistance;
     }
 
     public ItemStack[] getFamilyChest() {
@@ -38,14 +34,6 @@ public class Chest {
 
     public void setChestLocation(Location chestLocation) {
         this.chestLocation = chestLocation;
-    }
-
-    public int getOpenDistance() {
-        return openDistance;
-    }
-
-    public void setOpenDistance(int openDistance) {
-        this.openDistance = openDistance;
     }
 
     public void addItem(ItemStack item, int slot) {
@@ -79,28 +67,10 @@ public class Chest {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(Arrays.hashCode(familyChest), chestLocation, openDistance);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Chest other = (Chest) obj;
-        return openDistance == other.openDistance &&
-                Arrays.equals(familyChest, other.familyChest) &&
-                Objects.equals(chestLocation, other.chestLocation);
-    }
-
-    @Override
     public String toString() {
         return "Chest{" +
                 "familyChest=" + Arrays.toString(familyChest) +
                 ", chestLocation=" + chestLocation +
-                ", openDistance=" + openDistance +
                 '}';
     }
 }

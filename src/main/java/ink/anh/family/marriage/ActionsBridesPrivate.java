@@ -1,6 +1,11 @@
 package ink.anh.family.marriage;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageForFormatting;
@@ -87,11 +92,9 @@ public class ActionsBridesPrivate extends Sender {
         PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
         PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver.getUniqueId());
 
-        MessageForFormatting messageTrue = new MessageForFormatting("family_proposal_accepted", new String[]{proposer.getName()});
-        MessageForFormatting messageFalse = new MessageForFormatting("family_proposal_failed", new String[]{proposer.getName()});
-        Player[] senders = {(Player) sender, proposer};
+        Player[] players = getPlayersWithRadius(new Player[] {receiver, proposer}, 10);
 
-        SyncExecutor.runSync(() -> handleMarriage(proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF, senders, messageTrue, messageFalse, proposal));
+        SyncExecutor.runSync(() -> handleMarriage(proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF, players, proposal));
     }
 
     public void refusePrivateMarriage(CommandSender sender) {
@@ -128,8 +131,7 @@ public class ActionsBridesPrivate extends Sender {
 	    FamilyUtils.saveFamily(familyOfOtherBride);
 	}
 
-    private void handleMarriage(PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, Player[] players,
-    		MessageForFormatting messageTrue, MessageForFormatting messageFalse, MarryBase marryBase) {
+    private void handleMarriage(PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, Player[] players,  MarryBase marryBase) {
         final MessageType[] messageType = {MessageType.WARNING};
         try {
             MarriageEvent event = new MarriageEvent(null, proposerFamily, receiverFamily, initiator);
@@ -148,7 +150,10 @@ public class ActionsBridesPrivate extends Sender {
                 	FamilyDetailsService.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
                     messageType[0] = MessageType.IMPORTANT;
-                    sendMessage(messageTrue, messageType[0], players);
+                    sendMessage(new MessageForFormatting("family_proposal_refused", new String[]{players[0].getName()}), messageType[0], players[1]);
+                    sendMessage(new MessageForFormatting("family_proposal_accepted", new String[]{players[1].getName()}), messageType[0], players[0]);
+
+                    sendMessage(new MessageForFormatting("family_proposal_refused_sender", new String[]{players[1].getName(), players[0].getName()}), messageType[0], players);
                 });
             } else {
                 sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, players);
@@ -159,5 +164,19 @@ public class ActionsBridesPrivate extends Sender {
         }
 
         marriageManager.removeProposal((MarryPrivate) marryBase);
+    }
+    
+    private Player[] getPlayersWithRadius(Player[] players, double radius) {
+        Player proposer = players[1];
+        Location center = proposer.getLocation();
+        
+        List<Player> nearbyPlayers = Bukkit.getOnlinePlayers().stream()
+            .filter(player -> !player.equals(players[0]) && !player.equals(players[1])
+                    && player.getWorld().equals(center.getWorld())
+                    && player.getLocation().distance(center) <= radius)
+            .collect(Collectors.toList());
+
+        return Stream.concat(Stream.of(players), nearbyPlayers.stream())
+            .toArray(Player[]::new);
     }
 }

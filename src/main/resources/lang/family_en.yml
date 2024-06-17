@@ -32,6 +32,8 @@ family_player_not_found_db: "Player not found in the database."
 family_error_generic: "Unknown error"
 family_access_get: "%s has access: %s."
 family_access_root: "Player %s is one of the leaders of the family %s, their access cannot be changed"
+family_err_no_family: "You don't have a family"
+family_err_player_no_family: "Player %s doesn't have a family"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Male"
@@ -239,6 +241,7 @@ family_err_prefix_not_found: "Prefix %s not found."
 family_prefix_info: "Player %s belongs to family %s, click to copy"
 family_prefix_info_hover: "Copy family prefix %s of player %s to clipboard"
 family_err_no_family_prefix: "Player %s does not have a family prefix"
+family_home_accept_sent: "Confirm setting up the family home with the command: &e%s"
 
 # Commands for family chats [ink.anh.family.fdetails.chat.FamilyChatManager]
 family_chat_access_set: "Chat access for %s set to %s."
@@ -249,8 +252,9 @@ family_hover_player_reply: "Reply to '%s' in this chat"
 family_hover_player_offline: "Player '%s' is offline"
 
 # Commands for family chests [ink.anh.family.fdetails.chest.FamilyChestManager]
-family_err_invalid_chest_location: "The chest can only be placed on a solid block within a radius of 5 blocks."
-family_err_chest_too_far_from_home: "The chest must be within a radius of 20 blocks from the home point."
+family_err_invalid_chest_location: "The family chest can be the following blocks: &e%s"
+family_err_chest_home_distance: "The chest is too far from the family home"
+family_chest_accept_sent: "Confirm setting up the family chest with the command: &e%s"
 family_chest_request_sent: "Chest coordinates set request sent. Your partner must confirm the request within 60 seconds."
 family_err_request_chest_not_confirmed: "Your chest coordinates set request was not confirmed within 60 seconds."
 family_chest_set: "Chest coordinates successfully set."

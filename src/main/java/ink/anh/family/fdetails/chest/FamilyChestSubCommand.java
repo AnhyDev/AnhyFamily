@@ -23,10 +23,10 @@ public class FamilyChestSubCommand {
                 if (args.length > 0) {
                     switch (args[0].toLowerCase()) {
                         case "set":
-                            chestManager.setChestLocation();
+                            chestManager.setChest();
                             break;
                         case "accept":
-                            chestManager.setAcceptChestLocation();
+                            chestManager.setAccept();
                             break;
                         case "access":
                             chestManager.setChestAccess();
@@ -44,7 +44,7 @@ public class FamilyChestSubCommand {
                             chestManager.openChestWithConditions();
                     }
                 } else {
-                    chestManager.openChest();
+                    chestManager.openChestWithConditions();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

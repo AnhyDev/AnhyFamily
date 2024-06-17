@@ -32,6 +32,8 @@ family_player_not_found_db: "Jugador no encontrado en la BD."
 family_error_generic: "Error desconocido"
 family_access_get: "%s tiene acceso: %s."
 family_access_root: "El jugador %s es uno de los líderes de la familia %s, su acceso no se puede cambiar"
+family_err_no_family: "No tienes una familia"
+family_err_player_no_family: "El jugador %s no tiene una familia"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Masculino"
@@ -227,6 +229,7 @@ family_home_access_set: "Acceso al hogar para %s establecido en %s."
 family_err_nickname_not_found_in_access_maps: "El apodo %s no se encontró en los mapas de acceso."
 family_default_home_access_set: "Acceso al hogar por defecto establecido para %s: %s."
 family_err_invalid_group: "Grupo inválido: %s. Usa children o parents."
+family_home_accept_sent: "Confirme la configuración de la casa familiar con el comando: &e%s"
 
 # Comandos para el prefijo familiar [ink.anh.family.fdetails.symbol.FamilySymbolManager]
 family_err_invalid_prefix: "Prefijo inválido. Debe tener de 3 a 5 letras latinas."
@@ -249,8 +252,9 @@ family_hover_player_reply: "Responder a '%s' en este chat"
 family_hover_player_offline: "El jugador '%s' está desconectado"
 
 # Comandos para cofres familiares [ink.anh.family.fdetails.chest.FamilyChestManager]
-family_err_invalid_chest_location: "El cofre solo se puede colocar en un bloque sólido dentro de un radio de 5 bloques."
-family_err_chest_too_far_from_home: "El cofre debe estar dentro de un radio de 20 bloques desde el punto de hogar."
+family_err_invalid_chest_location: "El cofre familiar puede ser los siguientes bloques: &e%s"
+family_err_chest_home_distance: "El cofre está demasiado lejos de la casa familiar"
+family_chest_accept_sent: "Confirme la configuración del cofre familiar con el comando: &e%s"
 family_chest_request_sent: "Solicitud de establecer coordenadas del cofre enviada. Tu pareja debe confirmar la solicitud dentro de los 60 segundos."
 family_err_request_chest_not_confirmed: "Tu solicitud de establecer coordenadas del cofre no fue confirmada dentro de los 60 segundos."
 family_chest_set: "Coordenadas del cofre establecidas con éxito."

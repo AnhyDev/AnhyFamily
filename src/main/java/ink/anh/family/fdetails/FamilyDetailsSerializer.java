@@ -76,7 +76,6 @@ public class FamilyDetailsSerializer {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("chestLocation", serializeLocation(chest.getChestLocation()));
-        jsonObject.addProperty("openDistance", chest.getOpenDistance());
         jsonObject.addProperty("familyChest", serializeFamilyChest(chest.getFamilyChest()));
         return gson.toJson(jsonObject);
     }
@@ -88,8 +87,7 @@ public class FamilyDetailsSerializer {
 
         JsonObject jsonObject = JsonParser.parseString(chestString).getAsJsonObject();
         Location chestLocation = deserializeLocation(jsonObject.get("chestLocation").getAsString());
-        int openDistance = jsonObject.get("openDistance").getAsInt();
         ItemStack[] familyChest = deserializeFamilyChest(jsonObject.get("familyChest").getAsString());
-        return new Chest(familyChest, chestLocation, openDistance);
+        return new Chest(familyChest, chestLocation);
     }
 }
