@@ -32,3 +32,6 @@ commands:
     fchest:
         aliases: [familychest, ft]
         usage: "[AnhyFamily] The command '/fchest (/familychest, /ft)' execution error, please check the arguments' correctness."
+    fhugs:
+        aliases: [familyhugs, hugs]
+        usage: "[AnhyFamily] The command '/fhugs (/familyhugs, /hugs)' execution error, please check the arguments' correctness."

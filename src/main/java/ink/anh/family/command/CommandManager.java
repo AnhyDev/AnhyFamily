@@ -36,5 +36,7 @@ public class CommandManager {
     	
     	familiPlugin.getCommand("fchest").setExecutor(new FamilyChestCommand(familiPlugin));
     	familiPlugin.getCommand("fchest").setTabCompleter(new FamilyChestTabCompleter());
+    	
+    	familiPlugin.getCommand("fhugs").setExecutor(new FamilyHugsCommand(familiPlugin));
     }
 }

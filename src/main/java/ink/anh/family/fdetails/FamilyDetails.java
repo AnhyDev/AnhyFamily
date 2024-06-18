@@ -22,8 +22,8 @@ public class FamilyDetails {
     private String familySymbol;
     private Location homeLocation = null;
     private Chest familyChest = null;
-    private AccessControl childrenAccess = new AccessControl(Access.FALSE, Access.FALSE, Access.FALSE);
-    private AccessControl ancestorsAccess = new AccessControl(Access.FALSE, Access.FALSE, Access.FALSE);
+    private AccessControl childrenAccess = new AccessControl(Access.FALSE, Access.FALSE, Access.FALSE, Access.FALSE);
+    private AccessControl ancestorsAccess = new AccessControl(Access.FALSE, Access.FALSE, Access.FALSE, Access.FALSE);
     private Map<UUID, AccessControl> childrenAccessMap = new HashMap<>();
     private Map<UUID, AccessControl> ancestorsAccessMap = new HashMap<>();
     private LocalDateTime homeSetDate = null;

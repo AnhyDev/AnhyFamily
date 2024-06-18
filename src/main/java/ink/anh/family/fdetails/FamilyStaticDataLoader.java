@@ -8,14 +8,17 @@ import java.util.stream.Collectors;
 import ink.anh.api.database.DatabaseManager;
 import ink.anh.api.messages.Logger;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 import ink.anh.family.db.fdetails.FamilyDetailsTable;
 import ink.anh.family.fdetails.chest.FamilyChestManager;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import org.bukkit.Location;
 
-public class FamilyDataLoader {
+public class FamilyStaticDataLoader {
 
     public static void loadData(DatabaseManager dbManager) {
+    	boolean debug = GlobalManager.getInstance().isDebug();
+    	
         FamilyDetailsTable familyDetailsTable = (FamilyDetailsTable) dbManager.getTable(FamilyDetails.class);
 
         // Load family details from database
@@ -30,9 +33,11 @@ public class FamilyDataLoader {
                 ));
         FamilyChestManager.setLocationToUUIDMap(locationToUUIDMap);
 
-        // Log the contents of locationToUUIDMap
-        locationToUUIDMap.forEach((key, value) -> Logger.info(AnhyFamily.getInstance(), 
-                "locationToUUIDMap - Key: " + key + ", Value: " + value));
+        if (debug) {
+            // Log the contents of locationToUUIDMap
+            locationToUUIDMap.forEach((key, value) -> Logger.info(AnhyFamily.getInstance(), 
+                    "Chest Family. Key: " + key + ", Value: " + value));
+        }
 
         // Initialize FamilySymbolManager symbolMap
         Map<String, UUID> symbolMap = familyDetailsMap.values().stream()
@@ -43,11 +48,13 @@ public class FamilyDataLoader {
                 ));
         FamilySymbolManager.setFamilyIdBySymbolMap(symbolMap);
 
-        // Log the contents of symbolMap
-        symbolMap.forEach((key, value) -> Logger.info(AnhyFamily.getInstance(), 
-                "symbolMap - Key: " + key + ", Value: " + value));
+        if (debug) {
+            // Log the contents of symbolMap
+            symbolMap.forEach((key, value) -> Logger.info(AnhyFamily.getInstance(), 
+                    "Symbol Family. Key: " + key + ", Value: " + value));
+        }
         
-        Logger.info(AnhyFamily.getInstance(), "The static maps of the FamilyChestManager and FamilySymbolManager classes have been loaded");
+        Logger.info(AnhyFamily.getInstance(), "The static maps of the Chest Family and Symbol Family classes have been loaded");
     }
 
     public static int getLocationHash(Location location) {

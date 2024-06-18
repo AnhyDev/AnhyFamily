@@ -192,6 +192,7 @@ family_marry_start_success: |
   novelli sposi, dite ad alta voce (SÌ!) per confermare il vostro consenso. Dopo di che saranno pronunciati i voti.
   O dite (NO!) per rifiutare!
 family_marry_start_priest: "Il rituale è iniziato, aspetta il consenso dei novelli sposi o annulla il matrimonio."
+family_marry_last_name_not_found: "Il matrimonio ora è impossibile, a %s manca un cognome!"
 
 # Proposte di matrimonio private [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Nessuna proposta di matrimonio."
@@ -202,6 +203,7 @@ family_proposal_accepted: "Hai accettato la proposta di matrimonio da %s."
 family_proposal_accepted_sender: "%s ha accettato la tua proposta di matrimonio."
 family_proposal_refused: "Hai rifiutato la proposta di matrimonio da %s."
 family_proposal_refused_sender: "%s ha rifiutato la tua proposta di matrimonio."
+family_marriage_successful: "%s e %s si sono appena sposati in segreto."
 
 family_marry_failed_distance: "Il matrimonio attualmente non è possibile perché la coppia è troppo lontana!"
 family_marry_private_prefix: "San Valentino"

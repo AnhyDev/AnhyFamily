@@ -287,4 +287,13 @@ public abstract class AbstractDetailsManager extends Sender {
     }
 
     protected abstract String getDefaultAccessCheckMessageKey(TypeTargetComponent component);
+
+    protected void sendActionBarMessage(Player player, String message, String hexColor) {
+        MessageComponents messageComponents = MessageComponents.builder()
+            .content(message)
+            .hexColor(hexColor)
+            .build();
+        
+        Messenger.sendActionBar(familyPlugin, player, messageComponents, message);
+    }
 }

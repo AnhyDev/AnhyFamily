@@ -3,6 +3,7 @@ package ink.anh.family.db.fplayer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.UUID;
 
 import ink.anh.api.database.AbstractTable;
@@ -11,6 +12,7 @@ import ink.anh.api.database.TableField;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilySerializer;
 import ink.anh.family.fplayer.gender.Gender;
 
 public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
@@ -125,8 +127,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 ps.setString(8, playerFamily.getSpouse() != null ? playerFamily.getSpouse().toString() : null);
                 ps.setString(9, PlayerFamily.uuidSetToString(playerFamily.getChildren()));
                 ps.setString(10, playerFamily.getFamilyId() != null ? playerFamily.getFamilyId().toString() : null);
-                ps.setString(11, playerFamily.getDynastyId() != null ? playerFamily.getDynastyId().toString() : null);
-                ps.setBoolean(12, playerFamily.isDisableNotifications());
+                ps.setString(11, PlayerFamilySerializer.serializePermissionsMap(playerFamily.getPermissionsMap()));
                 ps.executeUpdate();
             }
         }, "Failed to insert or replace player family data: " + playerFamily);
@@ -144,8 +145,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,
                 PlayerFamily.stringToUuidSet(rs.getString("children")),
                 rs.getString("family_id") != null ? UUID.fromString(rs.getString("family_id")) : null,
-                rs.getString("dynasty_id") != null ? UUID.fromString(rs.getString("dynasty_id")) : null,
-                rs.getBoolean("disable_notifications")
+                rs.getString("permissions_map") != null ? PlayerFamilySerializer.deserializePermissionsMap(rs.getString("permissions_map")) : new HashMap<>()
         );
     }
 

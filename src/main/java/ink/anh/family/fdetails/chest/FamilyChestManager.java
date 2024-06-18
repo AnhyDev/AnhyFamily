@@ -1,7 +1,6 @@
 package ink.anh.family.fdetails.chest;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,6 +21,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fdetails.AccessControl;
+import ink.anh.family.fdetails.FamilyStaticDataLoader;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
@@ -151,7 +151,7 @@ public class FamilyChestManager extends AbstractDetailsManager {
                 locationToUUIDMap.values().removeIf(uuid -> uuid.equals(familyId));
 
                 // Додавання нового запису з новою локацією
-                int newLocationHash = getLocationHash(request.getLocation());
+                int newLocationHash = FamilyStaticDataLoader.getLocationHash(request.getLocation());
                 locationToUUIDMap.put(newLocationHash, familyId);
 
                 // Оновлення локації скрині у FamilyDetails
@@ -307,18 +307,9 @@ public class FamilyChestManager extends AbstractDetailsManager {
         checkDefaultAccess(args[1], TypeTargetComponent.CHEST);
     }
 
-    // Отримати хеш для мапи з локації
-    public static int getLocationHash(Location location) {
-        int x = location.getBlockX();
-        int y = location.getBlockY();
-        int z = location.getBlockZ();
-        int worldHash = location.getWorld().hashCode();
-        return Objects.hash(worldHash, x, y, z);
-    }
-
     // перевірити наявність локації у мапі
     public static boolean isFamilyChest(Location location) {
-        return locationToUUIDMap.containsKey(getLocationHash(location));
+        return locationToUUIDMap.containsKey(FamilyStaticDataLoader.getLocationHash(location));
     }
 
     // отримати сымейний UUID за локацыэю
@@ -326,7 +317,7 @@ public class FamilyChestManager extends AbstractDetailsManager {
         if (location == null) {
             return null;
         }
-        int locationHash = getLocationHash(location);
+        int locationHash = FamilyStaticDataLoader.getLocationHash(location);
         return locationToUUIDMap.get(locationHash);
     }
 

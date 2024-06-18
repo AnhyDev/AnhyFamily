@@ -132,7 +132,6 @@ public class ActionsBridesPrivate extends Sender {
 	}
 
     private void handleMarriage(PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, Player[] players,  MarryBase marryBase) {
-        final MessageType[] messageType = {MessageType.WARNING};
         try {
             MarriageEvent event = new MarriageEvent(null, proposerFamily, receiverFamily, initiator);
             Bukkit.getPluginManager().callEvent(event);
@@ -149,11 +148,11 @@ public class ActionsBridesPrivate extends Sender {
                 	
                 	FamilyDetailsService.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
-                    messageType[0] = MessageType.IMPORTANT;
-                    sendMessage(new MessageForFormatting("family_proposal_refused", new String[]{players[0].getName()}), messageType[0], players[1]);
-                    sendMessage(new MessageForFormatting("family_proposal_accepted", new String[]{players[1].getName()}), messageType[0], players[0]);
+                	MessageType messageType = MessageType.IMPORTANT;
+                    sendMessage(new MessageForFormatting("family_proposal_accepted_sender", new String[]{players[1].getName()}), messageType, players[0]);
+                    sendMessage(new MessageForFormatting("family_proposal_accepted", new String[]{players[0].getName()}), messageType, players[1]);
 
-                    sendMessage(new MessageForFormatting("family_proposal_refused_sender", new String[]{players[1].getName(), players[0].getName()}), messageType[0], players);
+                    sendMessage(new MessageForFormatting("family_marriage_successful", new String[]{players[0].getName(), players[1].getName()}), MessageType.ESPECIALLY, players);
                 });
             } else {
                 sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, players);

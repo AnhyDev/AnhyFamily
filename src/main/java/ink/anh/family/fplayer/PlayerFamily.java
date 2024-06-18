@@ -1,5 +1,7 @@
 package ink.anh.family.fplayer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -12,6 +14,8 @@ import org.bukkit.OfflinePlayer;
 import com.google.gson.Gson;
 
 import ink.anh.family.fplayer.gender.Gender;
+import ink.anh.family.fplayer.permissions.AbstractPermission;
+import ink.anh.family.fplayer.permissions.ActionsPermissions;
 
 public class PlayerFamily {
 
@@ -25,11 +29,10 @@ public class PlayerFamily {
     private UUID spouse;
     private Set<UUID> children = new HashSet<>();
     private UUID familyId = null;
-    private UUID dynastyId = null;
-    private boolean disableNotifications = false;
+    private Map<ActionsPermissions, AbstractPermission> permissionsMap = new HashMap<>();
 
-    public PlayerFamily(UUID root, Gender gender, String loverCaseName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
-            Set<UUID> children, UUID familyId, UUID dynastyId, boolean disableNotifications) {
+	public PlayerFamily(UUID root, Gender gender, String loverCaseName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
+            Set<UUID> children, UUID familyId, Map<ActionsPermissions, AbstractPermission> permissionsMap) {
         
         this.root = root;
         this.gender = gender;
@@ -41,7 +44,7 @@ public class PlayerFamily {
         this.spouse = spouse;
         this.children = children;
         this.familyId = familyId;
-        this.dynastyId = dynastyId;
+        this.permissionsMap = permissionsMap;
     }
     
     public PlayerFamily(UUID root, String loverCaseName) {
@@ -55,10 +58,10 @@ public class PlayerFamily {
         this.spouse = null;
         this.children = new HashSet<>();
         this.familyId = null;
-        this.dynastyId = null;
+        this.permissionsMap = new HashMap<>();
     }
 
-    public static PlayerFamily getMyFamily(String str) {
+	public static PlayerFamily getMyFamily(String str) {
         if (str == null || str.isEmpty()) {
             return null;
         }
@@ -158,22 +161,6 @@ public class PlayerFamily {
         this.familyId = familyId;
     }
 
-    public UUID getDynastyId() {
-        return dynastyId;
-    }
-
-    public void setDynastyId(UUID dynastyId) {
-        this.dynastyId = dynastyId;
-    }
-
-	public boolean isDisableNotifications() {
-		return disableNotifications;
-	}
-
-	public void setDisableNotifications(boolean disableNotifications) {
-		this.disableNotifications = disableNotifications;
-	}
-
     public boolean addChild(UUID childUuid) {
         if (childUuid == null) {
             return false; // Перевірка на null для вхідного параметра
@@ -194,6 +181,29 @@ public class PlayerFamily {
         return true; // Дитина успішно додана
     }
 
+    public Map<ActionsPermissions, AbstractPermission> getPermissionsMap() {
+		return permissionsMap;
+	}
+
+    public void setPermissionsMap(Map<ActionsPermissions, AbstractPermission> permissionsMap) {
+		this.permissionsMap = permissionsMap;
+	}
+
+    // Метод для додавання дозволів
+    public void addPermission(ActionsPermissions action, AbstractPermission permission) {
+        permissionsMap.put(action, permission);
+    }
+
+    // Метод для отримання дозволів
+    public AbstractPermission getPermission(ActionsPermissions action) {
+        return permissionsMap.get(action);
+    }
+
+    // Метод для видалення дозволів
+    public void removePermission(ActionsPermissions action) {
+        permissionsMap.remove(action);
+    }
+
     public FamilyRelationType checkUUIDRelation(UUID uuid) {
         if (uuid == null) {
             return FamilyRelationType.NOT_FOUND;
@@ -203,9 +213,6 @@ public class PlayerFamily {
         }
         if (uuid.equals(familyId)) {
             return FamilyRelationType.FAMILY_ID;
-        }
-        if (uuid.equals(dynastyId)) {
-            return FamilyRelationType.DYNASTY_ID;
         }
         if (uuid.equals(father)) {
             return FamilyRelationType.PARENT_FAMILY_ID;

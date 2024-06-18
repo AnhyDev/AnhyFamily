@@ -13,7 +13,7 @@ import ink.anh.api.lingo.lang.LanguageManager;
 import ink.anh.api.messages.Logger;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.db.TableRegistry;
-import ink.anh.family.fdetails.FamilyDataLoader;
+import ink.anh.family.fdetails.FamilyStaticDataLoader;
 import ink.anh.family.lang.LangMessage;
 import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
@@ -50,7 +50,7 @@ public class GlobalManager extends LibraryManager {
             instance.initializeDatabase();
             instance.setOrherManagers();
 
-            SyncExecutor.runAsync(() -> FamilyDataLoader.loadData(instance.getDatabaseManager()));
+            SyncExecutor.runAsync(() -> FamilyStaticDataLoader.loadData(instance.getDatabaseManager()));
         }
         return instance;
     }
@@ -95,7 +95,10 @@ public class GlobalManager extends LibraryManager {
                 familyPlugin.reloadConfig();
                 loadFields(familyPlugin);
 
-                SyncExecutor.runAsync(() -> FamilyDataLoader.loadData(instance.getDatabaseManager()));
+                // Перезавантаження бази даних
+                initializeDatabase();
+
+                SyncExecutor.runAsync(() -> FamilyStaticDataLoader.loadData(instance.getDatabaseManager()));
                 
                 Logger.info(familyPlugin, Translator.translateKyeWorld(instance, "family_configuration_reloaded", new String[]{defaultLang}));
             } catch (Exception e) {
@@ -112,12 +115,8 @@ public class GlobalManager extends LibraryManager {
         debug = familyPlugin.getConfig().getBoolean("debug", false);
 
         setMySQLConfig();
-
-        if (this.langManager == null) {
-            this.langManager = LangMessage.getInstance(this);
-        } else {
-            this.langManager.reloadLanguages();
-        }
+        LangMessage.reloadInstance(instance);
+    	this.langManager = LangMessage.getInstance(this);
 
         // Ініціалізуємо конфіг
         familyConfig = FamilyConfig.getInstance(familyPlugin);

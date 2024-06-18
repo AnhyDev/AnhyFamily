@@ -55,7 +55,7 @@ public class FamilyDetailsService {
 
     private static void addAccess(Map<UUID, AccessControl> accessMap, UUID member) {
         if (member != null) {
-            accessMap.put(member, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+            accessMap.put(member, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
         }
     }
 
@@ -93,7 +93,7 @@ public class FamilyDetailsService {
             if (targetFamilyDetails != null) {
                 Map<UUID, AccessControl> accessMap = isParent ? targetFamilyDetails.getChildrenAccessMap() : targetFamilyDetails.getAncestorsAccessMap();
                 if (!accessMap.containsKey(newMemberUuid)) {
-                    accessMap.put(newMemberUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+                    accessMap.put(newMemberUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
                     FamilyDetailsSave.saveFamilyDetails(targetFamilyDetails, null);
                 }
             }
@@ -106,7 +106,7 @@ public class FamilyDetailsService {
             if (targetFamilyDetails != null) {
                 Map<UUID, AccessControl> accessMap = isParent ? targetFamilyDetails.getChildrenAccessMap() : targetFamilyDetails.getAncestorsAccessMap();
                 if (!accessMap.containsKey(newMemberUuid)) {
-                    accessMap.put(newMemberUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
+                    accessMap.put(newMemberUuid, new AccessControl(Access.DEFAULT, Access.DEFAULT, Access.DEFAULT, Access.DEFAULT));
                     FamilyDetailsSave.saveFamilyDetails(targetFamilyDetails, null);
                 }
             }

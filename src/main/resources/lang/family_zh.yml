@@ -192,6 +192,7 @@ family_marry_start_success: |
   新婚夫妇，大声说（是的！）以确认你的同意。之后将发表誓言。
   或者说（不！）来拒绝！
 family_marry_start_priest: "仪式已经开始，等待新婚夫妇的同意或取消婚礼。"
+family_marry_last_name_not_found: "现在无法举行婚礼，%s 缺少姓氏！"
 
 # 私人婚姻提议 [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "没有婚姻提议。"
@@ -202,6 +203,7 @@ family_proposal_accepted: "您接受了来自 %s 的婚姻提议。"
 family_proposal_accepted_sender: "%s 接受了您的婚姻提议。"
 family_proposal_refused: "您拒绝了来自 %s 的婚姻提议。"
 family_proposal_refused_sender: "%s 拒绝了您的婚姻提议。"
+family_marriage_successful: "%s 和 %s 刚刚秘密结婚了。"
 
 family_marry_failed_distance: "婚姻目前不可能，因为夫妻双方相距太远了！"
 family_marry_private_prefix: "圣瓦伦丁"
