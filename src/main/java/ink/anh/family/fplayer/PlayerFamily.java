@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.permissions.AbstractPermission;
 import ink.anh.family.fplayer.permissions.ActionsPermissions;
+import ink.anh.family.fplayer.permissions.PermissionManager;
 
 public class PlayerFamily {
 
@@ -55,7 +56,7 @@ public class PlayerFamily {
         this.spouse = null;
         this.children = new HashSet<>();
         this.familyId = null;
-        this.permissionsMap = new HashMap<>();
+        this.permissionsMap = PermissionManager.createDefaultPermissionsMap(this);;
     }
 
 	public static PlayerFamily getMyFamily(String str) {

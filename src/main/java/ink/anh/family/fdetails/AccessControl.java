@@ -1,6 +1,7 @@
 package ink.anh.family.fdetails;
 
 import ink.anh.api.enums.Access;
+import ink.anh.family.util.TypeTargetComponent;
 
 public class AccessControl {
     private Access homeAccess;
@@ -39,11 +40,27 @@ public class AccessControl {
         this.chatAccess = chatAccess;
     }
 
-	public Access getHugsAccess() {
-		return hugsAccess;
-	}
+    public Access getHugsAccess() {
+        return hugsAccess;
+    }
 
-	public void setHugsAccess(Access hugsAccess) {
-		this.hugsAccess = hugsAccess;
-	}
+    public void setHugsAccess(Access hugsAccess) {
+        this.hugsAccess = hugsAccess;
+    }
+
+    // Додаємо метод getAccess
+    public Access getAccess(TypeTargetComponent typeTargetComponent) {
+        switch (typeTargetComponent) {
+            case HOME:
+                return getHomeAccess();
+            case CHEST:
+                return getChestAccess();
+            case CHAT:
+                return getChatAccess();
+            case HUGS:
+                return getHugsAccess();
+            default:
+                return Access.DEFAULT;
+        }
+    }
 }

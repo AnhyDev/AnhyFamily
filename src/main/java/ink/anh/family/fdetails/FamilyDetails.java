@@ -183,6 +183,7 @@ public class FamilyDetails {
         return FamilyRelationType.NOT_FOUND;
     }
 
+
     private boolean checkSpecificOrDefaultAccess(UUID playerId, Map<UUID, AccessControl> accessMap, AccessControl defaultAccessControl, TypeTargetComponent typeTargetComponent) {
         Access access = getSpecificOrDefaultAccess(playerId, accessMap, defaultAccessControl, typeTargetComponent);
 
@@ -196,16 +197,7 @@ public class FamilyDetails {
             case FALSE:
                 return false;
             case DEFAULT:
-            	switch (typeTargetComponent) {
-                    case CHAT:
-                        return defaultAccessControl.getChatAccess() == Access.TRUE;
-                    case CHEST:
-                        return defaultAccessControl.getChestAccess() == Access.TRUE;
-                    case HOME:
-                        return defaultAccessControl.getHomeAccess() == Access.TRUE;
-                    default:
-                        return false;
-            	}
+                return defaultAccessControl.getAccess(typeTargetComponent) == Access.TRUE;
             default:
                 return false;
         }
@@ -215,16 +207,7 @@ public class FamilyDetails {
         AccessControl accessControl = accessMap.get(playerId);
 
         if (accessControl != null) {
-            switch (typeTargetComponent) {
-                case HOME:
-                    return accessControl.getHomeAccess();
-                case CHEST:
-                    return accessControl.getChestAccess();
-                case CHAT:
-                    return accessControl.getChatAccess();
-                default:
-                    return null;
-            }
+            return accessControl.getAccess(typeTargetComponent);
         }
         return null;
     }

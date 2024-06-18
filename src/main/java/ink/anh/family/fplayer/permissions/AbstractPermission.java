@@ -10,15 +10,15 @@ import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
 
 public abstract class AbstractPermission {
-	
+    
     protected Map<UUID, Access> permissionsMap = new HashMap<>();
     protected boolean allowAll = false;
     protected boolean denyAllExceptFamily = false;
 
-	protected PlayerFamily playerFamily;
+    protected PlayerFamily playerFamily;
     
     public AbstractPermission(PlayerFamily playerFamily) {
-    	this.playerFamily = playerFamily;
+        this.playerFamily = playerFamily;
     }
 
     public abstract ActionsPermissions getActionsPermissions();
@@ -27,17 +27,22 @@ public abstract class AbstractPermission {
         if (allowAll) {
             return Access.TRUE;
         }
-        if (denyAllExceptFamily && !isFamilyDetailsAccess(details, typeTargetComponent)) {
+
+        boolean detailsAccess = isFamilyDetailsAccess(details, typeTargetComponent);
+
+        if (denyAllExceptFamily && !detailsAccess) {
             return Access.FALSE;
         }
-        return permissionsMap.getOrDefault(playerFamily.getRoot(), Access.DEFAULT);
+
+        Access access = permissionsMap.get(playerFamily.getRoot());
+        return access != null ? access : (detailsAccess ? Access.TRUE : Access.FALSE);
     }
 
     public boolean isFamilyDetailsAccess(FamilyDetails details, TypeTargetComponent typeTargetComponent) {
-    	if (details == null || typeTargetComponent == null) {
-    		return true;
-    	}
-		return details.hasAccess(playerFamily, typeTargetComponent);
+        if (details == null || typeTargetComponent == null) {
+            return true;
+        }
+        return details.hasAccess(playerFamily, typeTargetComponent);
     }
 
     public void setPermission(UUID uuid, Access access) {
@@ -58,22 +63,22 @@ public abstract class AbstractPermission {
     }
 
     protected boolean isAllowAll() {
-		return allowAll;
-	}
+        return allowAll;
+    }
 
-	protected void setAllowAll(boolean allowAll) {
-		this.allowAll = allowAll;
-	}
+    protected void setAllowAll(boolean allowAll) {
+        this.allowAll = allowAll;
+    }
 
-	protected boolean isDenyAllExceptFamily() {
-		return denyAllExceptFamily;
-	}
+    protected boolean isDenyAllExceptFamily() {
+        return denyAllExceptFamily;
+    }
 
-	protected void setDenyAllExceptFamily(boolean denyAllExceptFamily) {
-		this.denyAllExceptFamily = denyAllExceptFamily;
-	}
+    protected void setDenyAllExceptFamily(boolean denyAllExceptFamily) {
+        this.denyAllExceptFamily = denyAllExceptFamily;
+    }
 
-	public void removePermissionMap(UUID uuid) {
+    public void removePermissionMap(UUID uuid) {
         permissionsMap.remove(uuid);
     }
 }
