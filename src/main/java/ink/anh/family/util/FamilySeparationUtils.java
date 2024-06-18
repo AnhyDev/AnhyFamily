@@ -1,7 +1,9 @@
 package ink.anh.family.util;
 
+import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -136,7 +138,7 @@ public class FamilySeparationUtils {
         }
 
         playerFamily.setChildren(new HashSet<UUID>());
-        FamilyUtils.saveFamily(playerFamily);
+        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, FamilyPlayerField.CHILDREN);
         modifiedFamilies.add(playerFamily);
         return modifiedFamilies;
     }
@@ -154,7 +156,7 @@ public class FamilySeparationUtils {
             childFamily.setMother(null);
         }
 
-        FamilyUtils.saveFamily(childFamily); // Збереження оновленої сім'ї дитини
+        PlayerFamilyDBServsce.savePlayerFamily(childFamily, null);
     }
 
     public static Set<PlayerFamily> removeParents(PlayerFamily playerFamily, Set<PlayerFamily> parents) {
@@ -162,13 +164,13 @@ public class FamilySeparationUtils {
 
         for (PlayerFamily parentFamily : parents) {
             parentFamily.getChildren().remove(playerFamily.getRoot());
-            FamilyUtils.saveFamily(parentFamily);
+            PlayerFamilyDBServsce.savePlayerFamily(parentFamily, FamilyPlayerField.CHILDREN);
             modifiedFamilies.add(parentFamily);
         }
 
         playerFamily.setFather(null);
-        playerFamily.setMother(null);
-        FamilyUtils.saveFamily(playerFamily);
+        playerFamily.setMother(null);;
+        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
         modifiedFamilies.add(playerFamily);
         return modifiedFamilies;
     }
@@ -182,7 +184,7 @@ public class FamilySeparationUtils {
                 spouseFamily.setLastName(spouseFamily.getOldLastName());
                 spouseFamily.setOldLastName(new String[2]);
             }
-            FamilyUtils.saveFamily(spouseFamily);
+            PlayerFamilyDBServsce.savePlayerFamily(spouseFamily, null);
             modifiedFamilies.add(spouseFamily);
         }
 
@@ -193,7 +195,7 @@ public class FamilySeparationUtils {
         } else {
             playerFamily.setLastName(new String[2]);
         }
-        FamilyUtils.saveFamily(playerFamily);
+        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
         modifiedFamilies.add(playerFamily);
         return modifiedFamilies;
     }

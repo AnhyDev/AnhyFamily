@@ -17,6 +17,7 @@ import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
@@ -167,8 +168,8 @@ public class ActionsBridesPublic extends Sender {
 	    familyBride2.setSpouse(familyBride1.getRoot());
 
 	    // Зберегти змінені дані сімей
-	    FamilyUtils.saveFamily(familyBride1);
-	    FamilyUtils.saveFamily(familyBride2);
+        PlayerFamilyDBServsce.savePlayerFamily(familyBride1, null);
+        PlayerFamilyDBServsce.savePlayerFamily(familyBride2, null);
 	}
 
     private void setMarriageConsent(MarryPublic marryPublic, int one) {

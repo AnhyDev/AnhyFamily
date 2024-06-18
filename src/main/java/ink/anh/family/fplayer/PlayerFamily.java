@@ -6,9 +6,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import com.google.gson.Gson;
@@ -204,57 +201,11 @@ public class PlayerFamily {
         permissionsMap.remove(action);
     }
 
-    public FamilyRelationType checkUUIDRelation(UUID uuid) {
-        if (uuid == null) {
-            return FamilyRelationType.NOT_FOUND;
-        }
-        if (uuid.equals(root)) {
-            return FamilyRelationType.ROOT_ID;
-        }
-        if (uuid.equals(familyId)) {
-            return FamilyRelationType.FAMILY_ID;
-        }
-        if (uuid.equals(father)) {
-            return FamilyRelationType.PARENT_FAMILY_ID;
-        }
-        if (uuid.equals(mother)) {
-            return FamilyRelationType.PARENT_FAMILY_ID;
-        }
-        if (children.contains(uuid)) {
-            return FamilyRelationType.CHILD_FAMILY_IDS;
-        }
-        return FamilyRelationType.NOT_FOUND;
-    }
-
     @Override
     public String toString() {
         Gson gson = new Gson();
         String str = gson.toJson(this);
         return str;
-    }
-
-    public static String uuidSetToString(Set<UUID> uuidSet) {
-        return uuidSet.stream()
-                      .map(UUID::toString)
-                      .collect(Collectors.joining(","));
-    }
-
-    public static Set<UUID> stringToUuidSet(String uuidString) {
-        if (uuidString == null || uuidString.isEmpty()) {
-            return new HashSet<>();
-        }
-
-        return Arrays.stream(uuidString.split(","))
-                     .filter(str -> !str.isEmpty())
-                     .map(str -> {
-                         try {
-                             return UUID.fromString(str);
-                         } catch (IllegalArgumentException e) {
-                             return null;
-                         }
-                     })
-                     .filter(Objects::nonNull)
-                     .collect(Collectors.toSet());
     }
 
     @Override

@@ -11,6 +11,7 @@ import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
+import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.SurnameSelectEvent;
 import ink.anh.family.util.FamilyUtils;
@@ -55,7 +56,7 @@ public class Surname extends Sender {
         }
 
         UUID uuid = player.getUniqueId();
-        PlayerFamily playerFamily = new FamilyDataHandler().getFamilyData(uuid);
+        PlayerFamily playerFamily = FamilyCacheManager.getInstance().getFamilyData(uuid);
 
         if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, sender);
@@ -118,7 +119,7 @@ public class Surname extends Sender {
         SyncExecutor.runAsync(() -> {
             if (playerFamily.getLastName() == null || playerFamily.getLastName()[0] == null) {
                 playerFamily.setLastName(newSurname);
-                FamilyUtils.saveFamily(playerFamily);
+                PlayerFamilyDBServsce.savePlayerFamily(playerFamily, FamilyPlayerField.LAST_NAME);
 
                 String myfam = String.join(" / ", newSurname);
                 sendMessage(new MessageForFormatting("family_surname_selected", new String[]{myfam}), MessageType.IMPORTANT, sender);

@@ -125,7 +125,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 ps.setString(6, playerFamily.getFather() != null ? playerFamily.getFather().toString() : null);
                 ps.setString(7, playerFamily.getMother() != null ? playerFamily.getMother().toString() : null);
                 ps.setString(8, playerFamily.getSpouse() != null ? playerFamily.getSpouse().toString() : null);
-                ps.setString(9, PlayerFamily.uuidSetToString(playerFamily.getChildren()));
+                ps.setString(9, PlayerFamilySerializer.serializeUuidSet(playerFamily.getChildren()));
                 ps.setString(10, playerFamily.getFamilyId() != null ? playerFamily.getFamilyId().toString() : null);
                 ps.setString(11, PlayerFamilySerializer.serializePermissionsMap(playerFamily.getPermissionsMap()));
                 ps.executeUpdate();
@@ -143,7 +143,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 rs.getString("father") != null ? UUID.fromString(rs.getString("father")) : null,
                 rs.getString("mother") != null ? UUID.fromString(rs.getString("mother")) : null,
                 rs.getString("spouse") != null ? UUID.fromString(rs.getString("spouse")) : null,
-                PlayerFamily.stringToUuidSet(rs.getString("children")),
+                PlayerFamilySerializer.deserializeUuidSet(rs.getString("children")),
                 rs.getString("family_id") != null ? UUID.fromString(rs.getString("family_id")) : null,
                 rs.getString("permissions_map") != null ? PlayerFamilySerializer.deserializePermissionsMap(rs.getString("permissions_map")) : new HashMap<>()
         );

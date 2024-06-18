@@ -34,10 +34,10 @@ public abstract class AbstractPermission {
     }
 
     public boolean isFamilyDetailsAccess(FamilyDetails details, TypeTargetComponent typeTargetComponent) {
-    	if (details != null && typeTargetComponent != null) {
-    		return details.hasAccess(playerFamily, typeTargetComponent);
+    	if (details == null || typeTargetComponent == null) {
+    		return true;
     	}
-		return true;
+		return details.hasAccess(playerFamily, typeTargetComponent);
     }
 
     public void setPermission(UUID uuid, Access access) {

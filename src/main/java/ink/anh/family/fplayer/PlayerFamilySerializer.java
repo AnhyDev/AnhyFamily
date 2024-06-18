@@ -2,7 +2,8 @@ package ink.anh.family.fplayer;
 
 import java.lang.reflect.Type;
 import java.util.Map;
-
+import java.util.Set;
+import java.util.UUID;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -18,6 +19,17 @@ import ink.anh.family.fplayer.permissions.AbstractPermission;
 import ink.anh.family.fplayer.permissions.ActionsPermissions;
 
 public class PlayerFamilySerializer {
+
+    private static final Gson gson = new Gson();
+
+    public static String serializeUuidSet(Set<UUID> uuidSet) {
+        return gson.toJson(uuidSet);
+    }
+
+    public static Set<UUID> deserializeUuidSet(String uuidString) {
+        Type setType = new TypeToken<Set<UUID>>(){}.getType();
+        return gson.fromJson(uuidString, setType);
+    }
 
     // Метод для серіалізації мапи
     public static String serializePermissionsMap(Map<ActionsPermissions, AbstractPermission> permissionsMap) {

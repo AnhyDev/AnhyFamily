@@ -14,6 +14,7 @@ import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.events.ActionInitiator;
@@ -127,8 +128,8 @@ public class ActionsBridesPrivate extends Sender {
 	    familyOfOtherBride.setSpouse(familyOfBrideChoosingSurname.getRoot());
 
 	    // Зберегти змінені дані сімей
-	    FamilyUtils.saveFamily(familyOfBrideChoosingSurname);
-	    FamilyUtils.saveFamily(familyOfOtherBride);
+        PlayerFamilyDBServsce.savePlayerFamily(familyOfBrideChoosingSurname, null);
+        PlayerFamilyDBServsce.savePlayerFamily(familyOfOtherBride, null);
 	}
 
     private void handleMarriage(PlayerFamily proposerFamily, PlayerFamily receiverFamily, ActionInitiator initiator, Player[] players,  MarryBase marryBase) {

@@ -6,20 +6,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import ink.anh.family.GlobalManager;
-import ink.anh.family.db.fplayer.FamilyPlayerTable;
-import ink.anh.family.fplayer.FamilyDataHandler;
+import ink.anh.family.fplayer.FamilyCacheManager;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.info.FamilyTree;
 
 public class FamilyUtils {
-	
-	private static FamilyPlayerTable familyTable = (FamilyPlayerTable) GlobalManager.getInstance().getDatabaseManager().getTable(PlayerFamily.class);
-	
-	public static void saveFamily(PlayerFamily playerFamily) {
-		familyTable.insert(playerFamily);
-	}
 	
     // Для UUID
     public static PlayerFamily createNewFamily(UUID playerUUID) {
@@ -27,7 +20,7 @@ public class FamilyUtils {
         String displayName = (offlinePlayer != null) ? offlinePlayer.getName() : "Unknown";
 
         PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        saveFamily(playerFamily);
+        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
         return playerFamily;
     }
 
@@ -37,9 +30,9 @@ public class FamilyUtils {
         String displayName = player.getName();
 
         PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        saveFamily(playerFamily);
+        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
         if (player.isOnline()) {
-            new FamilyDataHandler().addFamilyData(playerUUID, playerFamily);
+            FamilyCacheManager.getInstance().addFamily(playerFamily);
         }
         return playerFamily;
     }
@@ -50,15 +43,15 @@ public class FamilyUtils {
         String displayName = offlinePlayer.getName();
 
         PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        saveFamily(playerFamily);
+        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
         return playerFamily;
     }
 
 	public static PlayerFamily getFamily(Player onlinePlayer) {
 		UUID playerUUID = onlinePlayer.getUniqueId();
-	    PlayerFamily playerFamily = new FamilyDataHandler().getFamilyData(playerUUID);
+	    PlayerFamily playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
 	    if (playerFamily == null) {
-	        playerFamily = familyTable.getFamily(playerUUID, onlinePlayer.getDisplayName());
+	        playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamily(playerUUID, onlinePlayer.getDisplayName());
 	        if (playerFamily == null) {
                 playerFamily = createNewFamily(onlinePlayer);
 	        }
@@ -70,9 +63,9 @@ public class FamilyUtils {
 
 	    PlayerFamily playerFamily = null;
 	    try {
-	        playerFamily = new FamilyDataHandler().getFamilyData(playerUUID);
+	        playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
 	        if (playerFamily == null) {
-	            playerFamily = familyTable.getFamily(playerUUID);
+	            playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamily(playerUUID);
 	            if (playerFamily == null) {
 	                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
 	                if (offlinePlayer.hasPlayedBefore()) {
@@ -94,7 +87,7 @@ public class FamilyUtils {
 	    if (onlinePlayer != null) {
 		    return getFamily(onlinePlayer);
 	    } else {
-	        PlayerFamily playerFamily = familyTable.getFamilyByDisplayName(playerName);
+	        PlayerFamily playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamilyByDisplayName(playerName);
 	        
 	        if (playerFamily != null) {
 	        	return playerFamily;

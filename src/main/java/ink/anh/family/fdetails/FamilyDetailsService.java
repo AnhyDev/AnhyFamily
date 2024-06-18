@@ -1,8 +1,10 @@
 package ink.anh.family.fdetails;
 
+import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fdetails.symbol.UUIDToUniqueString;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.enums.Access;
 
@@ -40,8 +42,8 @@ public class FamilyDetailsService {
         // Оновлення інформації про familyId у PlayerFamily
         spouse1.setFamilyId(familyId);
         spouse2.setFamilyId(familyId);
-        FamilyUtils.saveFamily(spouse1);
-        FamilyUtils.saveFamily(spouse2);
+        PlayerFamilyDBServsce.savePlayerFamily(spouse1, FamilyPlayerField.FAMILY_ID);
+        PlayerFamilyDBServsce.savePlayerFamily(spouse2, FamilyPlayerField.FAMILY_ID);
 
         // Оновлення сімейних об'єктів родичів
         updateRelativesFamilyDetails(spouse1, spouse2);
@@ -155,7 +157,7 @@ public class FamilyDetailsService {
         FamilyDetailsDelete.deleteRootFamilyDetails(spouse1);
 
         spouse1.setFamilyId(null);
-        FamilyUtils.saveFamily(spouse1);
+        PlayerFamilyDBServsce.savePlayerFamily(spouse1, FamilyPlayerField.FAMILY_ID);
 
         UUID spouse2Uuid = spouse1.getSpouse();
 
@@ -166,7 +168,7 @@ public class FamilyDetailsService {
         PlayerFamily spouse2 = FamilyUtils.getFamily(spouse2Uuid);
         if (spouse2 != null) {
             spouse2.setFamilyId(null);
-            FamilyUtils.saveFamily(spouse2);
+            PlayerFamilyDBServsce.savePlayerFamily(spouse2, FamilyPlayerField.FAMILY_ID);
         }
     }
 
