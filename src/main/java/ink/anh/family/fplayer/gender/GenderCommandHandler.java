@@ -109,7 +109,6 @@ public class GenderCommandHandler extends Sender {
                     } else {
                         GenderManager.setGender(playerFamily.getRoot(), gender);
                     }
-                    Logger.info(familyPlugin, "Gender set " + gender + " for player: " + playerFamily.getCurrentSurname());
                     sendMessage(message, MessageType.IMPORTANT, sender);
                 });
             } else {
@@ -119,9 +118,5 @@ public class GenderCommandHandler extends Sender {
             Logger.info(familyPlugin, "Exception in setPlayerGender: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    private void sendMessage(MessageForFormatting message, MessageType type, CommandSender sender) {
-        // Твоє повідомлення, яке відправляє повідомлення sender
     }
 }

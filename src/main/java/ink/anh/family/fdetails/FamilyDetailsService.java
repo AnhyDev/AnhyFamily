@@ -1,6 +1,7 @@
 package ink.anh.family.fdetails;
 
 import ink.anh.family.db.fplayer.FamilyPlayerField;
+import ink.anh.family.fdetails.chest.FamilyChestManager;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fdetails.symbol.UUIDToUniqueString;
 import ink.anh.family.fplayer.PlayerFamily;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+
+import org.bukkit.Location;
 
 public class FamilyDetailsService {
 
@@ -154,8 +157,11 @@ public class FamilyDetailsService {
             return;
         }
 
-        FamilyDetailsDelete.deleteRootFamilyDetails(spouse1);
+        FamilyDetails details = FamilyDetailsGet.getFamilyDetails(familyId);
+        Location chestLoc = details.getFamilyChest().getChestLocation();
+        String symbol = details.getFamilySymbol();
 
+        FamilyDetailsDelete.deleteRootFamilyDetails(spouse1);
         spouse1.setFamilyId(null);
         PlayerFamilyDBServsce.savePlayerFamily(spouse1, FamilyPlayerField.FAMILY_ID);
 
@@ -167,9 +173,12 @@ public class FamilyDetailsService {
 
         PlayerFamily spouse2 = FamilyUtils.getFamily(spouse2Uuid);
         if (spouse2 != null) {
+            FamilyDetailsDelete.deleteRootFamilyDetails(spouse2);
             spouse2.setFamilyId(null);
             PlayerFamilyDBServsce.savePlayerFamily(spouse2, FamilyPlayerField.FAMILY_ID);
         }
+    	FamilyChestManager.removeLocationFromUUIDMap(chestLoc);
+    	FamilySymbolManager.removeSymbol(symbol);
     }
 
     public static void removeCrossFamilyRelations(PlayerFamily spouseFamily, Set<PlayerFamily> relatives, boolean removeRelative, boolean initiatorSave) {

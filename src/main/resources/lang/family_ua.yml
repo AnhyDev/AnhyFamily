@@ -287,7 +287,7 @@ family_symbol_set: "Символ сім'ї встановлено."
 
 
 
-family_hugs_family_chat: "Родич %s згадав тебе у сімейному чаті"
+family_notify_family_chat: "Родич %s згадав тебе у сімейному чаті"
 
 family_err_no_access_hugs: "Гравець %s не дозволяє вам обіймати його"
 family_hugs_access: "Ви обняли %s"

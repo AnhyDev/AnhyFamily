@@ -204,4 +204,10 @@ public class FamilySymbolManager extends Sender {
     public static List<String> getAllFamilySymbols() {
         return new ArrayList<>(symbolMap.keySet());
     }
+    
+    public static void removeSymbol(String symbol) {
+        if (symbol != null) {
+            symbolMap.remove(symbol.toUpperCase());
+        }
+    }
 }

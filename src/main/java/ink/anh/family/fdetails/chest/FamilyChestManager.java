@@ -327,6 +327,13 @@ public class FamilyChestManager extends AbstractDetailsManager {
         locationToUUIDMap.putAll(newMap);
     }
 
+    public static void removeLocationFromUUIDMap(Location location) {
+        if (location != null) {
+            int locationHash = FamilyStaticDataLoader.getLocationHash(location);
+            locationToUUIDMap.remove(locationHash);
+        }
+    }
+
     private static class ChestRequest {
         private final UUID requesterUUID;
         private Location location;

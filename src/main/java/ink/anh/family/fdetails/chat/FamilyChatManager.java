@@ -192,10 +192,10 @@ public class FamilyChatManager extends AbstractDetailsManager {
                     (target.getDisplayName() != null && target.getDisplayName().equalsIgnoreCase(playerName)))) {
                 	//target.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.1f, 0.8f);
                 	target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f);
-                    sendActionBarMessage(target, new MessageForFormatting("family_hugs_family_chat", new String[]{player.getName()}), StringColorUtils.PREFIX_CHAT_COLOR);
+                    sendActionBarMessage(target, new MessageForFormatting("family_notify_family_chat", new String[]{player.getName()}), StringColorUtils.PREFIX_CHAT_COLOR);
 
                     Location particleLocation = target.getLocation().add(0, 1.6, 0);
-                    target.spawnParticle(Particle.VILLAGER_HAPPY, particleLocation, 10, 0.5, 0.5, 0.5, 0.05);
+                    target.spawnParticle(Particle.VILLAGER_HAPPY, particleLocation, 8, 0.4, 0.4, 0.4, 0.08);
                     notify = true;
                     break;
                 }

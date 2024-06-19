@@ -94,6 +94,7 @@ public class GlobalManager extends LibraryManager {
                 saveDefaultConfig();
                 familyPlugin.reloadConfig();
                 loadFields(familyPlugin);
+                LangMessage.reloadInstance(instance);
 
                 // Перезавантаження бази даних
                 initializeDatabase();
@@ -115,7 +116,7 @@ public class GlobalManager extends LibraryManager {
         debug = familyPlugin.getConfig().getBoolean("debug", false);
 
         setMySQLConfig();
-    	this.langManager = LangMessage.getInstance(this);
+    	this.langManager = LangMessage.getInstance(instance);
 
         // Ініціалізуємо конфіг
         familyConfig = FamilyConfig.getInstance(familyPlugin);
