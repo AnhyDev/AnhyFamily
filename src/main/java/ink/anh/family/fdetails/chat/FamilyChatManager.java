@@ -1,6 +1,9 @@
 package ink.anh.family.fdetails.chat;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
@@ -21,7 +24,7 @@ import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.info.FamilyTree;
 import ink.anh.family.util.TypeTargetComponent;
 import ink.anh.family.util.FamilyUtils;
-import ink.anh.family.util.OtherUtils;
+import ink.anh.family.util.StringColorUtils;
 
 public class FamilyChatManager extends AbstractDetailsManager {
 
@@ -173,9 +176,33 @@ public class FamilyChatManager extends AbstractDetailsManager {
 
     private void sendInteractiveMessageToPlayer(Player recipient, FamilyDetails details, String message) {
         SyncExecutor.runSync(() -> {
-        	OtherUtils.notifyPlayerOnMention(recipient, args);
+        	notifyPlayerOnMention(recipient, args);
         });
         MessageComponents messageComponents = buildInteractiveMessage(details, message, recipient);
         Messenger.sendMessage(familyPlugin, recipient, messageComponents, message);
+    }
+
+    private void notifyPlayerOnMention(Player target, String[] args) {
+		boolean notify = false;
+        for (String arg : args) {
+            if (arg.charAt(0) == '@') {
+                String playerName = arg.substring(1);
+                if (target != null && target.isOnline() &&
+                	(target.getName().equalsIgnoreCase(playerName) || 
+                    (target.getDisplayName() != null && target.getDisplayName().equalsIgnoreCase(playerName)))) {
+                	//target.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.1f, 0.8f);
+                	target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f);
+                    sendActionBarMessage(target, new MessageForFormatting("family_hugs_family_chat", new String[]{player.getName()}), StringColorUtils.PREFIX_CHAT_COLOR);
+
+                    Location particleLocation = target.getLocation().add(0, 1.6, 0);
+                    target.spawnParticle(Particle.VILLAGER_HAPPY, particleLocation, 10, 0.5, 0.5, 0.5, 0.05);
+                    notify = true;
+                    break;
+                }
+            }
+        }
+        if (!notify) {
+        	target.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.1f, 0.8f);
+        }
     }
 }
