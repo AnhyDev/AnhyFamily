@@ -194,12 +194,25 @@ public class PlayerFamily {
 
     // Метод для отримання дозволів
     public AbstractPermission getPermission(ActionsPermissions action) {
+        if (!permissionsMap.containsKey(action)) {
+            AbstractPermission newPermission = PermissionManager.createPermission(action, this);
+            if (newPermission != null) {
+                permissionsMap.put(action, newPermission);
+            }
+        }
         return permissionsMap.get(action);
     }
 
     // Метод для видалення дозволів
     public void removePermission(ActionsPermissions action) {
         permissionsMap.remove(action);
+    }
+
+    public boolean isFamilyMember(UUID uuid) {
+        if (uuid == null) {
+            return false;
+        }
+        return uuid.equals(father) || uuid.equals(mother) || children.contains(uuid);
     }
 
     @Override

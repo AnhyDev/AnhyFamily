@@ -15,20 +15,14 @@ public abstract class AbstractPermission {
     protected boolean allowAll = false;
     protected boolean denyAllExceptFamily = false;
 
-    protected PlayerFamily playerFamily;
-    
-    public AbstractPermission(PlayerFamily playerFamily) {
-        this.playerFamily = playerFamily;
-    }
-
     public abstract ActionsPermissions getActionsPermissions();
 
-    public Access getPermission(FamilyDetails details, TypeTargetComponent typeTargetComponent) {
+    public Access getPermission(PlayerFamily playerFamily, FamilyDetails details, TypeTargetComponent typeTargetComponent) {
         if (allowAll) {
             return Access.TRUE;
         }
 
-        boolean detailsAccess = isFamilyDetailsAccess(details, typeTargetComponent);
+        boolean detailsAccess = isFamilyDetailsAccess(playerFamily, details, typeTargetComponent);
 
         if (denyAllExceptFamily && !detailsAccess) {
             return Access.FALSE;
@@ -38,7 +32,7 @@ public abstract class AbstractPermission {
         return access != null ? access : (detailsAccess ? Access.TRUE : Access.FALSE);
     }
 
-    public boolean isFamilyDetailsAccess(FamilyDetails details, TypeTargetComponent typeTargetComponent) {
+    public boolean isFamilyDetailsAccess(PlayerFamily playerFamily, FamilyDetails details, TypeTargetComponent typeTargetComponent) {
         if (details == null || typeTargetComponent == null) {
             return true;
         }
@@ -49,8 +43,8 @@ public abstract class AbstractPermission {
         permissionsMap.put(uuid, access);
     }
 
-    public boolean checkPermission(FamilyDetails details, TypeTargetComponent typeTargetComponent) {
-        Access access = getPermission(details, typeTargetComponent);
+    public boolean checkPermission(PlayerFamily playerFamily, FamilyDetails details, TypeTargetComponent typeTargetComponent) {
+        Access access = getPermission(playerFamily, details, typeTargetComponent);
         return access == Access.TRUE;
     }
 

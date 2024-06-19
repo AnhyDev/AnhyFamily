@@ -286,4 +286,8 @@ family_err_symbol_already_set: "Символ сім'ї вже встановле
 family_symbol_set: "Символ сім'ї встановлено."
 
 
+family_err_no_access_hugs: "Гравець %s не дозволяє вам обіймати його"
+family_hugs_access: "Ви обняли %s"
+family_hugs_access_you: "Ви потрапили в обійми до %s"
+
 

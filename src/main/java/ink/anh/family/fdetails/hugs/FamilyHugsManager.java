@@ -7,6 +7,7 @@ import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import ink.anh.api.enums.Access;
 import ink.anh.api.messages.MessageComponents;
@@ -17,6 +18,7 @@ import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.permissions.HugsPermission;
 import ink.anh.family.fdetails.AbstractDetailsManager;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.TypeTargetComponent;
@@ -82,46 +84,64 @@ public class FamilyHugsManager extends AbstractDetailsManager {
         //
     }
 
-    public void tryHug(Player target) {
-        if (player.getLocation().getPitch() > 0 && player.getLocation().getPitch() < 70 &&
-            player.isSneaking() &&
-            player.getLocation().distance(target.getLocation()) < 2 &&
-            cooldownPlayers.contains(player)) {
+    public boolean tryHug(Player target) {
+        if (player.getLocation().getPitch() > 0 && player.getLocation().getPitch() < 70 && player.isSneaking() && player.getLocation().distance(target.getLocation()) < 2) {
+        	
+        	if (cooldownPlayers.contains(player)) {
+                // Встановити КД
+                cooldownPlayers.add(player);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        cooldownPlayers.remove(player);
+                    }
+                }.runTaskLater(familyPlugin, 60L);
 
-            // Встановити КД
-            cooldownPlayers.add(player);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    cooldownPlayers.remove(player);
+                PlayerFamily targetFamily = FamilyUtils.getFamily(target);
+                PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+                
+                HugsPermission permission = new HugsPermission();
+                
+                FamilyDetails details = FamilyDetailsGet.getRootFamilyDetails(targetFamily);
+                
+                if (permission.checkPermission(playerFamily, details, getTypeTargetComponent())) {
+                    // Відштовхнути гравця
+                    Vector direction = player.getLocation().toVector().subtract(target.getLocation().toVector()).normalize();
+                    direction.setY(0.5);
+                    player.setVelocity(direction.multiply(1.5));
+
+                    player.damage(1.0);
+                    
+                    // Ефект VILLAGER_ANGRY перед очима гравця
+                    player.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, player.getLocation().add(0, 1.5, 0), 1, 0.2, 0.2, 0.2, 0.05);
+
+                    // тут потрібно вставити ефект VILLAGER_ANGRY щоб гравець player добре його побачив у себе перед очима
+                    sendActionBarMessage(player, new MessageForFormatting(getInvalidAccessMessage(), new String[]{target.getName()}), "#820419");
+                    return true;
                 }
-            }.runTaskLater(familyPlugin, 60L);
-            
-            PlayerFamily targetFamily = FamilyUtils.getFamily(target);
-            FamilyDetails details = FamilyDetailsGet.getRootFamilyDetails(targetFamily);
-            
-            boolean access = false;
 
-            if (details != null && details.hasAccess(targetFamily, getTypeTargetComponent())) {
-            	access = true;
-            } else /*if (   )*/ {
-            	access = true;
-            }
-            
-            if (access) {
+
+                Particle particle = Particle.SPELL_WITCH;
+                String hexColor = "#a40cf0";
+                
+                if (playerFamily.getSpouse() != null && playerFamily.getSpouse() == targetFamily.getRoot()) {
+                	particle = Particle.HEART;
+                	hexColor = "#f24607";
+                } else if (playerFamily.isFamilyMember(targetFamily.getRoot())) {
+                	particle = Particle.VILLAGER_HAPPY;
+                	hexColor = "#62fc03";
+                }
+                
+                target.getWorld().spawnParticle(particle, target.getLocation(), 10);
+                player.getWorld().spawnParticle(particle, player.getLocation(), 10);
+                
                 // Повідомлення в actionbar
-                sendActionBarMessage(player, "Ви обняли гравця " + target.getName(), "#fc4e03");
-                sendActionBarMessage(target, "Вас обійняв гравець " + player.getName(), "#fc4e03");
-
-                // Частинки сердець, якщо стать різна
-                if (true) { // Передбачається, що є метод getGender()
-                    target.getWorld().spawnParticle(Particle.HEART, target.getLocation(), 10);
-                    player.getWorld().spawnParticle(Particle.HEART, player.getLocation(), 10);
-                }
-            } else {
-                sendMessage(new MessageForFormatting(getInvalidAccessMessage(), new String[]{target.getName()}), MessageType.WARNING, player);
-            }
+                sendActionBarMessage(player, new MessageForFormatting("family_hugs_access", new String[]{target.getName()}), hexColor);
+                sendActionBarMessage(target, new MessageForFormatting("family_hugs_access_you", new String[]{player.getName()}), hexColor);
+                return true;
+        	}
         }
+		return false;
     }
     
     public void setHugsAccess() {

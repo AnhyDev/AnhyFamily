@@ -5,12 +5,14 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 import ink.anh.api.enums.Access;
+import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
+import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
@@ -288,7 +290,11 @@ public abstract class AbstractDetailsManager extends Sender {
 
     protected abstract String getDefaultAccessCheckMessageKey(TypeTargetComponent component);
 
-    protected void sendActionBarMessage(Player player, String message, String hexColor) {
+    protected void sendActionBarMessage(Player player, MessageForFormatting textForFormatting, String hexColor) {
+    	String[] langs = LangUtils.getPlayerLanguage(player);
+    	
+    	String message = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, textForFormatting.getTemplate(), langs), textForFormatting.getReplacements());
+    	
         MessageComponents messageComponents = MessageComponents.builder()
             .content(message)
             .hexColor(hexColor)

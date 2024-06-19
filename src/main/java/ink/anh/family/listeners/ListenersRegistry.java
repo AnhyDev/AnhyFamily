@@ -9,6 +9,7 @@ public class ListenersRegistry {
     
     private AnswerBridesChatListener bridesChatListener;
     private FamilyChestListener familyChestListener;
+    private PlayerInteractionListener playerInteractionListener;
 
     public ListenersRegistry(AnhyFamily familyPlugin) {
         this.familyPlugin = familyPlugin;
@@ -17,8 +18,9 @@ public class ListenersRegistry {
     public void register() {
     	bridesChatListener = new AnswerBridesChatListener(familyPlugin);
         familyChestListener = new FamilyChestListener(familyPlugin);
+        playerInteractionListener = new PlayerInteractionListener(familyPlugin);
     	
-        Listener[] listeners = new Listener[] {bridesChatListener, familyChestListener};
+        Listener[] listeners = new Listener[] {bridesChatListener, familyChestListener, playerInteractionListener};
         registerListeners(listeners);
     }
 

@@ -13,16 +13,6 @@ import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.info.FamilyTree;
 
 public class FamilyUtils {
-	
-    // Для UUID
-    public static PlayerFamily createNewFamily(UUID playerUUID) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
-        String displayName = (offlinePlayer != null) ? offlinePlayer.getName() : "Unknown";
-
-        PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
-        return playerFamily;
-    }
 
     // Для Player
     public static PlayerFamily createNewFamily(Player player) {
@@ -69,7 +59,7 @@ public class FamilyUtils {
 	            if (playerFamily == null) {
 	                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
 	                if (offlinePlayer.hasPlayedBefore()) {
-	                    playerFamily = createNewFamily(playerUUID);
+	                    playerFamily = createNewFamily(offlinePlayer);
 	                }
 	            }
 	        }

@@ -115,7 +115,6 @@ public class GlobalManager extends LibraryManager {
         debug = familyPlugin.getConfig().getBoolean("debug", false);
 
         setMySQLConfig();
-        LangMessage.reloadInstance(instance);
     	this.langManager = LangMessage.getInstance(this);
 
         // Ініціалізуємо конфіг
