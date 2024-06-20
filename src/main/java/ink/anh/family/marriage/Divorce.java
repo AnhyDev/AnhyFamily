@@ -67,8 +67,8 @@ public class Divorce extends Sender {
         FamilyDetails familyDetails = FamilyDetailsGet.getRootFamilyDetails(playerFamily);
         ActionInitiator initiatorAction = ActionInitiator.PLAYER_SELF;
 
-        MessageForFormatting messageTrue = new MessageForFormatting("family_separation_spouse_successful", new String[]{});
-        MessageForFormatting messageFalse = new MessageForFormatting("family_error_generic", new String[]{});
+        MessageForFormatting divorceTrue = new MessageForFormatting("family_separation_spouse_successful", new String[]{});
+        MessageForFormatting messageDivorceFalse = new MessageForFormatting("family_error_generic", new String[]{});
         CommandSender[] senders = {sender, Bukkit.getPlayer(spouseUUID)};
 
         Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.getRelatives(playerFamily, FamilySeparationReason.DIVORCE);
@@ -76,13 +76,13 @@ public class Divorce extends Sender {
         SyncExecutor.runSync(() -> {
     	    FamilySeparationEvent event = new FamilySeparationEvent(playerFamily, FamilyDetailsGet.getRootFamilyDetails(playerFamily), modifiedFamilies,
     	    		FamilySeparationReason.DIVORCE, initiatorAction);
-        	handleDivorce(event, playerFamily, spouseFamily, familyDetails, initiatorAction, senders, messageTrue, messageFalse);
+        	handleDivorce(event, playerFamily, spouseFamily, familyDetails, initiatorAction, senders, divorceTrue, messageDivorceFalse);
         	});
         return true;
     }
 
     private void handleDivorce(FamilySeparationEvent event, PlayerFamily initiatorFamily, PlayerFamily spouseFamily, FamilyDetails familyDetails,
-            ActionInitiator initiatorAction, CommandSender[] senders, MessageForFormatting messageTrue, MessageForFormatting messageFalse) {
+            ActionInitiator initiatorAction, CommandSender[] senders, MessageForFormatting divorceTrue, MessageForFormatting messageDivorceFalse) {
         final MessageType[] messageType = {MessageType.WARNING};
         try {
             Bukkit.getPluginManager().callEvent(event);
@@ -100,9 +100,9 @@ public class Divorce extends Sender {
 
                     if (utilsDivorce.separateSpouses(initiatorFamily)) {
                         messageType[0] = MessageType.IMPORTANT;
-                        sendMessage(messageTrue, messageType[0], senders);
+                        sendMessage(divorceTrue, messageType[0], senders);
                     } else {
-                        sendMessage(messageFalse, messageType[0], senders);
+                        sendMessage(messageDivorceFalse, messageType[0], senders);
                     }
                 });
             } else {

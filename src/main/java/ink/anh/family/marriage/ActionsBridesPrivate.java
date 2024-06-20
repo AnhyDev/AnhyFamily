@@ -27,12 +27,14 @@ public class ActionsBridesPrivate extends Sender {
     private GlobalManager manager;
     private MarriageManager marriageManager;
     private MarriageValidator validator;
+	private String priestTitle = "";
 
     public ActionsBridesPrivate(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
         this.manager = GlobalManager.getInstance();
         this.marriageManager = GlobalManager.getInstance().getMarriageManager();
         this.validator = new MarriageValidator(familyPlugin, false);
+        this.priestTitle = FamilyUtils.getPriestTitle(null);
     }
 
     public void proposePrivateMarriage(CommandSender sender, String[] args) {

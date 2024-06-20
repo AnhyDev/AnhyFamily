@@ -116,7 +116,9 @@ public class GlobalManager extends LibraryManager {
         debug = familyPlugin.getConfig().getBoolean("debug", false);
 
         setMySQLConfig();
-    	this.langManager = LangMessage.getInstance(instance);
+        
+        // Не змінювати на LangMessage.getInstance(instance) бо буде циклічна залежність!!!
+    	this.langManager = LangMessage.getInstance(this);
 
         // Ініціалізуємо конфіг
         familyConfig = FamilyConfig.getInstance(familyPlugin);

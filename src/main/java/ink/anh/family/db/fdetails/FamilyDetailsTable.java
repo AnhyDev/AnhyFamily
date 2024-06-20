@@ -2,6 +2,7 @@ package ink.anh.family.db.fdetails;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -94,6 +95,9 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
     }
 
     protected FamilyDetails getFamilyDetailsFromResultSet(ResultSet rs) throws Exception {
+        String homeSetDateString = rs.getString("home_set_date");
+        LocalDateTime homeSetDate = homeSetDateString != null ? LocalDateTime.parse(homeSetDateString) : null;
+
         return new FamilyDetails(
                 UUID.fromString(rs.getString("family_id")),
                 rs.getString("family_symbol"),
@@ -103,7 +107,7 @@ public abstract class FamilyDetailsTable extends AbstractTable<FamilyDetails> {
                 FamilyDetailsSerializer.deserializeAccessControl(rs.getString("ancestors_access")),
                 FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("children_access_map")),
                 FamilyDetailsSerializer.deserializeAccessControlMap(rs.getString("ancestors_access_map")),
-                rs.getTimestamp("home_set_date") != null ? rs.getTimestamp("home_set_date").toLocalDateTime() : null
+                homeSetDate
         );
     }
 
