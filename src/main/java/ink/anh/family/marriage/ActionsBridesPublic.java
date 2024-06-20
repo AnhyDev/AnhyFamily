@@ -40,103 +40,108 @@ public class ActionsBridesPublic extends Sender {
 	}
 	
 	public void accept(AsyncPlayerChatEvent event) {
-		String message = event.getMessage();
-		
-		if (familyConfig.checkAnswer(message) == 0) {
-			return;
-		}
-		
-		event.setCancelled(true);
-		
-		Player bride1 = event.getPlayer();
+	    String message = event.getMessage();
 
-		UUID uuidBride1 = (bride1 != null) ? bride1.getUniqueId() : null;
-		
-        if (uuidBride1 == null || !bride1.isOnline()) {
-        	if (uuidBride1 != null) {
-        		marriageManager.remove(uuidBride1);
-        	}
-		    event.setCancelled(false);
-            return;
-        }
-		
-		Player[] recipients = OtherUtils.getPlayersWithinRadius(bride1.getLocation(), familyConfig.getCeremonyHearingRadius());
-		
-		PlayerFamily bride1family = FamilyUtils.getFamily(uuidBride1);
+	    if (familyConfig.checkAnswer(message) == 0) {
+	        return;
+	    }
 
-		MarryPublic marryPublic = marriageManager.getMarryElement(uuidBride1);
-		
-		if (areAllParticipantsPresent(marryPublic)) {
-			marriageManager.remove(bride1);
-		    event.setCancelled(false);
-		    return;
-		}
+	    event.setCancelled(true);
 
-		int one = 0;
+	    Player bride1 = event.getPlayer();
 
-		if (marryPublic.getProposer() != null && marryPublic.getReceiver().getUniqueId().equals(uuidBride1)) {
-		    one = 1;
-		}
+	    UUID uuidBride1 = (bride1 != null) ? bride1.getUniqueId() : null;
 
-		Player bride2 = (one == 0) ? marryPublic.getProposer() : marryPublic.getReceiver();
-		UUID uuidBride2 = bride2.getUniqueId();
-		PlayerFamily bride2family = FamilyUtils.getFamily(uuidBride2);
-		
-		Player priest = marryPublic.getPriest();
-		
-		if (!validateMembers(recipients, new Player[] {bride1, priest, bride2})) {
-			marriageManager.remove(bride1);
-			return;
-		}
+	    if (uuidBride1 == null || !bride1.isOnline()) {
+	        if (uuidBride1 != null) {
+	            marriageManager.remove(uuidBride1);
+	        }
+	        event.setCancelled(false);
+	        return;
+	    }
 
-        setTitles(priest, bride1);
-		
-		String marry1 = ": family_marry_vows_man";
-		String marry2 = ": family_marry_vows_woman";
-		String marry0 = ": family_marry_vows_nonbinary";
-		
-		String stringMarry = "family_marry_success";
+	    Player[] recipients = OtherUtils.getPlayersWithinRadius(bride1.getLocation(), familyConfig.getCeremonyHearingRadius());
 
-		String bride1Name = bride1family.getLoverCaseName();
-		String bride2Name = bride2family.getLoverCaseName();
-		
-        int gender1Starus = bride2family.getGender() == Gender.MALE ? 1 : bride2family.getGender() == Gender.FEMALE ? 2 : 0;
+	    PlayerFamily bride1family = FamilyUtils.getFamily(uuidBride1);
 
-		String message1 = gender1Starus == 1 ? marry1 : gender1Starus == 2 ? marry2 : marry0;;
-		
-		MessageForFormatting messageForFormatting = new MessageForFormatting(bride1Title + message1, new String[] {bride2Name, bride1Name});
-		
-		if (familyConfig.checkAnswer(message) == 2) {
-			
-			marriageManager.remove(uuidBride1);
-			
-			sendMessage(new MessageForFormatting(bride1Title + ": family_marry_refuse", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
-			Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
-				sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
-			
-			return;
-			
-		} else if (familyConfig.checkAnswer(message) == 1) {
-			
-			setMarriageConsent(marryPublic, one);
-			
-			if (!marryPublic.areBothConsentsGiven()) {
-				sendMessage(messageForFormatting, MessageType.WARNING, false, recipients);
-				sendMessage(new MessageForFormatting(priestTitle + ": family_marry_waiting_for_consent", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
-				return;
-			}
+	    MarryPublic marryPublic = marriageManager.getMarryElement(uuidBride1);
 
-			SyncExecutor.runSync(() -> {
-				handleMarriage(priest, bride1family, bride2family, recipients, messageForFormatting, marryPublic, gender1Starus,
-						new String[] {bride1Name, bride2Name}, stringMarry, marryPublic);
-			});
-			
-			return;
-			
-		} else {
-			marriageManager.remove(uuidBride1);
-			event.setCancelled(false);
-		}
+	    if (marryPublic == null) {
+	        event.setCancelled(false);
+	        return;
+	    }
+
+	    if (areAllParticipantsPresent(marryPublic)) {
+	        marriageManager.remove(bride1);
+	        event.setCancelled(false);
+	        return;
+	    }
+
+	    int one = 0;
+
+	    if (marryPublic.getProposer() != null && marryPublic.getReceiver().getUniqueId().equals(uuidBride1)) {
+	        one = 1;
+	    }
+
+	    Player bride2 = (one == 0) ? marryPublic.getProposer() : marryPublic.getReceiver();
+	    UUID uuidBride2 = bride2.getUniqueId();
+	    PlayerFamily bride2family = FamilyUtils.getFamily(uuidBride2);
+
+	    Player priest = marryPublic.getPriest();
+
+	    if (!validateMembers(recipients, new Player[]{bride1, priest, bride2})) {
+	        marriageManager.remove(bride1);
+	        return;
+	    }
+
+	    setTitles(priest, bride1);
+
+	    String marry1 = ": family_marry_vows_man";
+	    String marry2 = ": family_marry_vows_woman";
+	    String marry0 = ": family_marry_vows_nonbinary";
+
+	    String stringMarry = "family_marry_success";
+
+	    String bride1Name = bride1family.getLoverCaseName();
+	    String bride2Name = bride2family.getLoverCaseName();
+
+	    int gender1Starus = bride2family.getGender() == Gender.MALE ? 1 : bride2family.getGender() == Gender.FEMALE ? 2 : 0;
+
+	    String message1 = gender1Starus == 1 ? marry1 : gender1Starus == 2 ? marry2 : marry0;
+
+	    MessageForFormatting messageForFormatting = new MessageForFormatting(bride1Title + message1, new String[]{bride2Name, bride1Name});
+
+	    if (familyConfig.checkAnswer(message) == 2) {
+
+	        marriageManager.remove(uuidBride1);
+
+	        sendMessage(new MessageForFormatting(bride1Title + ": family_marry_refuse", new String[]{bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
+	        Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () ->
+	                sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed", new String[]{bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
+
+	        return;
+
+	    } else if (familyConfig.checkAnswer(message) == 1) {
+
+	        setMarriageConsent(marryPublic, one);
+
+	        if (!marryPublic.areBothConsentsGiven()) {
+	            sendMessage(messageForFormatting, MessageType.WARNING, false, recipients);
+	            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_waiting_for_consent", new String[]{bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
+	            return;
+	        }
+
+	        SyncExecutor.runSync(() -> {
+	            handleMarriage(priest, bride1family, bride2family, recipients, messageForFormatting, marryPublic, gender1Starus,
+	                    new String[]{bride1Name, bride2Name}, stringMarry, marryPublic);
+	        });
+
+	        return;
+
+	    } else {
+	        marriageManager.remove(uuidBride1);
+	        event.setCancelled(false);
+	    }
 	}
 
 	private void updateFamilyData(PlayerFamily familyBride1, PlayerFamily familyBride2, MarryPublic marryPublic, int one) {

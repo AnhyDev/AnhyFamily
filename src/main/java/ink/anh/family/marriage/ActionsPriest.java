@@ -27,7 +27,7 @@ public class ActionsPriest extends Sender {
 		this.familyPlugin = familyPlugin;
         this.manager = GlobalManager.getInstance();
         this.marriageManager = GlobalManager.getInstance().getMarriageManager();
-        this.validator = new MarriageValidator(familyPlugin, true);
+        this.setValidator(new MarriageValidator(familyPlugin, true));
         this.familyConfig = manager.getFamilyConfig();
     }
     
@@ -87,6 +87,10 @@ public class ActionsPriest extends Sender {
 			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
 
         return true;
+	}
+
+	public void setValidator(MarriageValidator validator) {
+		this.validator = validator;
 	}
 
 }

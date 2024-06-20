@@ -42,7 +42,7 @@ public class PlayerFamily {
         this.spouse = spouse;
         this.children = children;
         this.familyId = familyId;
-        this.permissionsMap = permissionsMap;
+        this.permissionsMap = permissionsMap != null ? permissionsMap : PermissionManager.createDefaultPermissionsMap(this);
     }
     
     public PlayerFamily(UUID root, String loverCaseName) {
@@ -56,7 +56,7 @@ public class PlayerFamily {
         this.spouse = null;
         this.children = new HashSet<>();
         this.familyId = null;
-        this.permissionsMap = PermissionManager.createDefaultPermissionsMap(this);;
+        this.permissionsMap = PermissionManager.createDefaultPermissionsMap(this);
     }
 
 	public static PlayerFamily getMyFamily(String str) {
