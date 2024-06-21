@@ -89,7 +89,7 @@ public class ActionsPriest extends Sender {
         return true;
 	}
 
-	public void setValidator(MarriageValidator validator) {
+	private void setValidator(MarriageValidator validator) {
 		this.validator = validator;
 	}
 

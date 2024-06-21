@@ -40,7 +40,6 @@ public class ActionsPriestTest {
         when(GlobalManager.getInstance()).thenReturn(manager);
 
         actionsPriest = new ActionsPriest(familyPlugin);
-        actionsPriest.setValidator(validator); // Override the validator with the mocked one
     }
 
     @Test
@@ -55,46 +54,47 @@ public class ActionsPriestTest {
         when(validator.validateCommandInput(sender, args)).thenReturn(true);
         when(sender instanceof Player).thenReturn(true);
         when((Player) sender).thenReturn(priest);
-        when(Bukkit.getPlayerExact("bride1")).thenReturn(bride1);
-        when(Bukkit.getPlayerExact("bride2")).thenReturn(bride2);
         when(FamilyUtils.getPriestTitle(priest)).thenReturn("Priest");
         when(familyConfig.getCeremonyHearingRadius()).thenReturn(10);
         Player[] recipients = new Player[]{};
-        try (MockedStatic<OtherUtils> otherUtilsMockedStatic = Mockito.mockStatic(OtherUtils.class)) {
+
+        try (MockedStatic<OtherUtils> otherUtilsMockedStatic = Mockito.mockStatic(OtherUtils.class);
+             MockedStatic<Bukkit> bukkitMockedStatic = Mockito.mockStatic(Bukkit.class)) {
+
             otherUtilsMockedStatic.when(() -> OtherUtils.getPlayersWithinRadius(any(), anyInt())).thenReturn(recipients);
+            bukkitMockedStatic.when(() -> Bukkit.getPlayerExact("bride1")).thenReturn(bride1);
+            bukkitMockedStatic.when(() -> Bukkit.getPlayerExact("bride2")).thenReturn(bride2);
+            BukkitScheduler scheduler = mock(BukkitScheduler.class);
+            bukkitMockedStatic.when(Bukkit::getScheduler).thenReturn(scheduler);
+
             when(validator.validateCeremonyConditions(bride1, bride2, recipients)).thenReturn(true);
             when(validator.validatePermissions(bride1, bride2, recipients)).thenReturn(true);
             when(validator.validateCeremonyParticipants(bride1, bride2, recipients)).thenReturn(true);
 
             ProcessLastName processLastName = mock(ProcessLastName.class);
-            String[] lastName = {"LastName1, LastName1"};
+            String[] lastName = {"LastName"};
             when(processLastName.getLastName()).thenReturn(lastName);
             when(processLastName.getNumberLastName()).thenReturn(1);
             when(validator.processLastNameArgs(args)).thenReturn(processLastName);
             when(validator.validatePayment(bride1, bride2, recipients, "bride1", "bride2")).thenReturn(true);
             when(marriageManager.add(bride1, bride2, priest, 1, lastName)).thenReturn(true);
 
-            BukkitScheduler scheduler = mock(BukkitScheduler.class);
-            try (MockedStatic<Bukkit> bukkitMockedStatic = Mockito.mockStatic(Bukkit.class)) {
-                bukkitMockedStatic.when(Bukkit::getScheduler).thenReturn(scheduler);
+            boolean result = actionsPriest.marry(sender, args);
 
-                boolean result = actionsPriest.marry(sender, args);
+            assertTrue(result);
 
-                assertTrue(result);
+            ArgumentCaptor<Runnable> captor = ArgumentCaptor.forClass(Runnable.class);
+            verify(scheduler).runTaskLater(eq(familyPlugin), captor.capture(), eq(10L));
 
-                ArgumentCaptor<Runnable> captor = ArgumentCaptor.forClass(Runnable.class);
-                verify(scheduler).runTaskLater(eq(familyPlugin), captor.capture(), eq(10L));
+            // Run the captured runnable
+            captor.getValue().run();
 
-                // Run the captured runnable
-                captor.getValue().run();
-
-                verify(validator).validateCommandInput(sender, args);
-                verify(validator).validateCeremonyConditions(bride1, bride2, recipients);
-                verify(validator).validatePermissions(bride1, bride2, recipients);
-                verify(validator).validateCeremonyParticipants(bride1, bride2, recipients);
-                verify(validator).validatePayment(bride1, bride2, recipients, "bride1", "bride2");
-                verify(marriageManager).add(bride1, bride2, priest, 1, lastName);
-            }
+            verify(validator).validateCommandInput(sender, args);
+            verify(validator).validateCeremonyConditions(bride1, bride2, recipients);
+            verify(validator).validatePermissions(bride1, bride2, recipients);
+            verify(validator).validateCeremonyParticipants(bride1, bride2, recipients);
+            verify(validator).validatePayment(bride1, bride2, recipients, "bride1", "bride2");
+            verify(marriageManager).add(bride1, bride2, priest, 1, lastName);
         }
     }
 

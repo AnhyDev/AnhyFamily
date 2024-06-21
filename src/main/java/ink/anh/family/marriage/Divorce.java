@@ -63,7 +63,7 @@ public class Divorce extends Sender {
             return false;
         }
 
-        PlayerFamily spouseFamily = FamilyUtils.getFamily(Bukkit.getPlayer(spouseUUID));
+        PlayerFamily spouseFamily = FamilyUtils.getFamily(spouseUUID);
         FamilyDetails familyDetails = FamilyDetailsGet.getRootFamilyDetails(playerFamily);
         ActionInitiator initiatorAction = ActionInitiator.PLAYER_SELF;
 

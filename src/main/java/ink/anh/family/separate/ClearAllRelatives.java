@@ -50,7 +50,7 @@ public class ClearAllRelatives extends Sender {
 		}
 		
         if (args.length <= 1) {
-            sendMessage(new MessageForFormatting("family_err_command_format  /family clear <player1>", new String[] {}), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format  /family clearfamily <player1>", new String[] {}), MessageType.WARNING, sender);
             return;
         }
 
