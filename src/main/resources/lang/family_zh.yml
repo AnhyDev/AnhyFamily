@@ -206,7 +206,8 @@ family_proposal_refused_sender: "%s 拒绝了您的婚姻提议。"
 family_marriage_successful: "%s 和 %s 刚刚秘密结婚了。"
 
 family_marry_failed_distance: "婚姻目前不可能，因为夫妻双方相距太远了！"
-family_marry_private_prefix: "圣瓦伦丁"
+family_marry_private_prefix: "✨🌟✨"
+family_marry_private_priest: "圣瓦伦丁"
 family_err_event_is_canceled: "事件因外部因素被取消"
 
 # Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]

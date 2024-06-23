@@ -206,7 +206,8 @@ family_proposal_refused_sender: "%s hat Ihren Heiratsantrag abgelehnt."
 family_marriage_successful: "%s und %s haben gerade heimlich geheiratet."
 
 family_marry_failed_distance: "Heirat ist derzeit nicht möglich, weil das Paar zu weit voneinander entfernt ist!"
-family_marry_private_prefix: "Sankt Valentin"
+family_marry_private_prefix: "✨🌟✨"
+family_marry_private_priest: "Sankt Valentin"
 family_err_event_is_canceled: "Die Veranstaltung wurde durch äußere Kräfte abgesagt"
 
 # Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]

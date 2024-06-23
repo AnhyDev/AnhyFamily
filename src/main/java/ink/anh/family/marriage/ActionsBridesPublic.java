@@ -8,11 +8,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
-import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.FamilyConfig;
-import ink.anh.family.GlobalManager;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fdetails.FamilyDetailsService;
@@ -22,21 +19,13 @@ import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
 
-public class ActionsBridesPublic extends Sender {
+public class ActionsBridesPublic extends AbstractMarriageActions {
 
-    private AnhyFamily familyPlugin;
-    private GlobalManager manager;
-    private MarriageManager marriageManager;
-    private FamilyConfig familyConfig;
     private String priestTitle = "";
     private String bride1Title = "";
 
     public ActionsBridesPublic(AnhyFamily familyPlugin) {
-        super(GlobalManager.getInstance());
-        this.familyPlugin = familyPlugin;
-        this.manager = GlobalManager.getInstance();
-        this.marriageManager = GlobalManager.getInstance().getMarriageManager();
-        this.familyConfig = manager.getFamilyConfig();
+        super(familyPlugin);
     }
 
     public void accept(AsyncPlayerChatEvent event) {

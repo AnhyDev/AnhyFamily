@@ -10,9 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
-import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 import ink.anh.family.util.FamilyUtils;
@@ -22,19 +20,13 @@ import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.api.utils.SyncExecutor;
 
-public class ActionsBridesPrivate extends Sender {
+public class ActionsBridesPrivate extends AbstractMarriageActions {
 
-    private GlobalManager manager;
-    private MarriageManager marriageManager;
     private MarriageValidator validator;
-	private String priestTitle = "";
 
     public ActionsBridesPrivate(AnhyFamily familyPlugin) {
-        super(GlobalManager.getInstance());
-        this.manager = GlobalManager.getInstance();
-        this.marriageManager = GlobalManager.getInstance().getMarriageManager();
+        super(familyPlugin);
         this.validator = new MarriageValidator(familyPlugin, false);
-        this.priestTitle = FamilyUtils.getPriestTitle(null);
     }
 
     public void proposePrivateMarriage(CommandSender sender, String[] args) {

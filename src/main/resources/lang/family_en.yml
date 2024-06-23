@@ -206,7 +206,8 @@ family_proposal_refused_sender: "%s declined your marriage proposal."
 family_marriage_successful: "%s and %s just secretly got married."
 
 family_marry_failed_distance: "Marriage is currently not possible because the couple is too far apart!"
-family_marry_private_prefix: "Saint Valentine"
+family_marry_private_prefix: "✨🌟✨"
+family_marry_private_priest: "Saint Valentine"
 family_err_event_is_canceled: "The event has been canceled by external forces"
 
 # Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
