@@ -206,7 +206,7 @@ family_proposal_refused_sender: "%s отказался(лась) от вашег
 family_marriage_successful: "%s и %s только что тайно поженились."
 
 family_marry_failed_distance: "Брак в настоящее время невозможен, потому что пара слишком далеко друг от друга!"
-family_marry_private_prefix: "✨🌟✨"
+family_marry_private_prefix: "☁☀☁"
 family_marry_private_priest: "Святой Валентин"
 family_err_event_is_canceled: "Событие было отменено внешними силами"
 

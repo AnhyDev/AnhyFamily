@@ -19,10 +19,7 @@ import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
 
-public class ActionsBridesPublic extends AbstractMarriageActions {
-
-    private String priestTitle = "";
-    private String bride1Title = "";
+public class ActionsBridesPublic extends AbstractMarriageSender {
 
     public ActionsBridesPublic(AnhyFamily familyPlugin) {
         super(familyPlugin);
@@ -73,16 +70,25 @@ public class ActionsBridesPublic extends AbstractMarriageActions {
             return false;
         }
 
-        setTitles(priest, bride1);
-
-        String bride1Name = bride1.getName();
-        String bride2Name = bride2.getName();
+        String bride1Name = bride1.getDisplayName() != null ? bride1.getDisplayName() : bride1.getName();
+        String bride2Name = bride2.getDisplayName() != null ? bride2.getDisplayName() : bride2.getName();
+        String priestName = priest.getDisplayName() != null ? priest.getDisplayName() : priest.getName();
+        
+        priestPrefixType = MarryPrefixType.getMarryPrefixType(FamilyUtils.getFamily(priest).getGender(), 0);
+        
+        PlayerFamily bride1family = FamilyUtils.getFamily(bride1);
+        bridePrefixType = MarryPrefixType.getMarryPrefixType(bride1family.getGender(), 0);
 
         if (!consentGiven) {
             marriageManager.remove(uuidBride1);
-            sendMessage(new MessageForFormatting(bride1Title + ": family_marry_refuse", new String[]{bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
-            Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () ->
-                    sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed", new String[]{bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
+            
+        	sendMAnnouncement(bride1, bride1Name, "family_marry_refuse", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, bridePrefixType, recipients);
+            
+            Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> {
+
+            	sendMAnnouncement(priest, priestName, "family_marry_failed", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, priestPrefixType, recipients);
+            }, 10L);
+            
             return true;
         }
 
@@ -91,26 +97,26 @@ public class ActionsBridesPublic extends AbstractMarriageActions {
         String family_marry_vows_nonbinary = ":§f family_marry_vows_nonbinary";
         String family_marry_success = "family_marry_success";
 
-        PlayerFamily bride1family = FamilyUtils.getFamily(bride1);
         PlayerFamily bride2family = FamilyUtils.getFamily(bride2);
 
-        int gender1Status = bride2family.getGender() == Gender.MALE ? 1 : bride2family.getGender() == Gender.FEMALE ? 2 : 0;
+        int genderStatus = bride2family.getGender() == Gender.MALE ? 1 : bride2family.getGender() == Gender.FEMALE ? 2 : 0;
 
-        String vowOfNewlyweds = gender1Status == 1 ? family_marry_vows_man : gender1Status == 2 ? family_marry_vows_woman : family_marry_vows_nonbinary;
-
-        MessageForFormatting vowOfNewlywedsFormatting = new MessageForFormatting(bride1Title + vowOfNewlyweds, new String[]{bride2Name, bride1Name});
+        String vowOfNewlyweds = genderStatus == 1 ? family_marry_vows_man : genderStatus == 2 ? family_marry_vows_woman : family_marry_vows_nonbinary;
 
         setMarriageConsent(marryPublic, one);
+        
+    	sendMAnnouncement(bride1, bride1Name, vowOfNewlyweds, MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, bridePrefixType, recipients);
 
         if (!marryPublic.areBothConsentsGiven()) {
-            sendMessage(vowOfNewlywedsFormatting, MessageType.WARNING, false, recipients);
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_waiting_for_consent", new String[]{bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
+        	sendMAnnouncement(priest, priestName, "family_marry_waiting_for_consent", MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, priestPrefixType, recipients);
+
             return true;
         }
 
         final int num = one;
+
         SyncExecutor.runSync(() -> {
-            processMarriage(priest, bride1family, bride2family, recipients, vowOfNewlywedsFormatting, marryPublic, num, new String[]{bride1Name, bride2Name}, family_marry_success);
+            processMarriage(priest, bride1family, bride2family, recipients, vowOfNewlyweds, marryPublic, num, new String[]{bride1Name, bride2Name}, family_marry_success);
         });
         return true;
     }
@@ -151,11 +157,6 @@ public class ActionsBridesPublic extends AbstractMarriageActions {
         }
     }
 
-    private void setTitles(Player priest, Player bride1) {
-        priestTitle = FamilyUtils.getPriestTitle(priest);
-        bride1Title = FamilyUtils.getBrideTitle(bride1);
-    }
-
     private boolean validateMembers(Player[] recipients, Player... members) {
         for (Player player : members) {
             if (player == null || !player.isOnline()) {
@@ -174,14 +175,13 @@ public class ActionsBridesPublic extends AbstractMarriageActions {
     }
 
     private void processMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, Player[] recipients,
-                                 MessageForFormatting messageForFormatting, MarryPublic marryPublic, int one, String[] brides, String stringMarry) {
+    		String vowOfNewlyweds, MarryPublic marryPublic, int one, String[] brides, String stringMarry) {
         final MessageType[] messageType = {MessageType.WARNING, MessageType.ESPECIALLY};
         try {
             MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF);
             Bukkit.getPluginManager().callEvent(event);
 
             if (new MarriageValidator(familyPlugin, true).paymentFailed(marryPublic, recipients, marriageManager)) {
-                event.cancellEvent("Error in payment of peace enterprise");
                 return;
             }
 
@@ -191,15 +191,16 @@ public class ActionsBridesPublic extends AbstractMarriageActions {
 
                     FamilyDetailsService.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
-                    sendMessage(messageForFormatting, messageType[1], false, recipients);
-
                     Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () ->
-                            sendMessage(new MessageForFormatting(priestTitle + stringMarry, brides), messageType[1], false, recipients), 10L);
+                    sendMAnnouncement(priest, priest.getName(), stringMarry, messageType[1].getColor(true), brides, priestPrefixType, recipients), 10L);
 
                     marriageManager.remove(proposerFamily.getRoot());
                 });
             } else {
-                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), messageType[0], recipients);
+            	String reason = event.getCancellationReason();
+            	reason = (reason != null && !reason.isEmpty()) ? ": " + reason : "";
+            	
+                sendMessage(new MessageForFormatting("family_err_event_is_canceled" + reason, new String[]{}), messageType[0], recipients);
             }
         } catch (Exception e) {
             Bukkit.getLogger().severe("Exception in handleMarriage: " + e.getMessage());

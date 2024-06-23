@@ -16,6 +16,8 @@ public class MarryComponentBuilder {
     private static MessageBuilder prefix(MarryPrefixType prefixType, String playerName, String[] langs) {
     	if (prefixType == null) {
     		prefixType = MarryPrefixType.DEFAULT;
+    	} else if (prefixType == MarryPrefixType.PRIVATE_MARRY_PREFIX && (playerName == null || playerName.isEmpty())) {
+    		playerName = "family_marry_private_priest";
     	}
     	
     	String content = StringUtils.formatString(Translator.translateKyeWorld(manager, prefixType.getKey(), langs), new String[] {});
@@ -33,15 +35,12 @@ public class MarryComponentBuilder {
                     .hexColor(prefixType.getPrefixColor())
                     .build());
     }
-    
-    
-    
-    
-    
 
     public static MessageComponents announcementMessageComponent(Player recipient, String senderName, String messageKey, String messageColor, String[] placeholders, MarryPrefixType prefixType) {
         String[] langs = getLangs(recipient);
-        
+    	
+        senderName = translateSenderName(prefixType, senderName, langs);
+
     	String messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageKey, langs), placeholders));
 
         return prefix(prefixType, senderName, langs)
@@ -54,6 +53,8 @@ public class MarryComponentBuilder {
     
     public static MessageComponents priestAcceptMessageComponent(MarryPrefixType prefixType, String senderName, Player recipient) {
         String[] langs = getLangs(recipient);
+    	
+        senderName = translateSenderName(prefixType, senderName, langs);
         
     	String messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent", langs), new String[]{recipient.getName()}));
     	String messageAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent1", langs), new String[]{}));
@@ -91,5 +92,12 @@ public class MarryComponentBuilder {
     
     private static String[] getLangs(Player recipient) {
     	return recipient != null ? LangUtils.getPlayerLanguage(recipient) : new String[]{manager.getDefaultLang()};
+    }
+    
+    private static String translateSenderName(MarryPrefixType prefixType, String senderName, String[] langs) {
+    	if (prefixType == MarryPrefixType.PRIVATE_MARRY_PREFIX) {
+    		senderName = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, senderName, langs), new String[] {}));
+    	}
+    	return senderName;
     }
 }

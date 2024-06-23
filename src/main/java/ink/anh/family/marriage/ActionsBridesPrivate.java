@@ -20,7 +20,7 @@ import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.api.utils.SyncExecutor;
 
-public class ActionsBridesPrivate extends AbstractMarriageActions {
+public class ActionsBridesPrivate extends AbstractMarriageSender {
 
     private MarriageValidator validator;
 
