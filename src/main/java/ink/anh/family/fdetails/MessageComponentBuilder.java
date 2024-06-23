@@ -20,7 +20,7 @@ public class MessageComponentBuilder {
     }
 
     private static String prefixColor(String baseCommand) {
-        switch (baseCommand) {
+        switch (baseCommand.toLowerCase()) {
             case "fchat":
                 return StringColorUtils.PREFIX_CHAT_COLOR;
             case "fchest":
@@ -33,7 +33,6 @@ public class MessageComponentBuilder {
     }
     
     private static MessageBuilder prefix(String baseCommand, String[] langs) {
-    	String content = StringUtils.formatString(Translator.translateKyeWorld(manager, "family_hover_reply_chat", langs), new String[] {});
     	return MessageComponents.builder()
                 .content("[" + manager.getPluginName() + "] ")
                 .hexColor(StringColorUtils.PLUGIN_COLOR)
@@ -41,8 +40,6 @@ public class MessageComponentBuilder {
                 .append(MessageComponents.builder()
                     .content("[" + baseCommand.toUpperCase() + "] ")
                     .hexColor(prefixColor(baseCommand))
-                    .hoverComponent(MessageComponents.builder().content(content).hexColor(StringColorUtils.SEPARATOR_COLOR).build())
-                    .insertTextChat("/" + baseCommand)
                     .build());
     }
     
@@ -66,8 +63,8 @@ public class MessageComponentBuilder {
 
     public static MessageComponents buildDefaultAccessMessageComponent(Player player, String group, Access access, String baseCommand) {
         String command = "/" + baseCommand + " default ";
-        
-        String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{manager.getDefaultLang()};
+
+        String[] langs = getLangs(player);
 
         String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_message_group_access", langs),
                 new String[]{group.toUpperCase()}));
@@ -109,8 +106,8 @@ public class MessageComponentBuilder {
     
     public static MessageComponents buildCheckAccessMessageComponent(Player player, String nickname, Access access, String baseCommand) {
         String command = "/" + baseCommand + " access ";
-        
-        String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{manager.getDefaultLang()};
+
+        String[] langs = getLangs(player);
 
         String checkAccessMessage = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_access_player_get", langs),
                 new String[]{nickname}));
@@ -158,5 +155,43 @@ public class MessageComponentBuilder {
                         .clickActionRunCommand(command + nickname + " default")
                         .build())
                     .build();
+    }
+    
+    public static MessageComponents priestAcceptMessageComponent(String messageBase, String baseCommand, String commandAccept, String commandRefuse, Player recipient) {
+        String[] langs = getLangs(recipient);
+        
+    	messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageBase, langs), new String[]{recipient.getName()}));
+    	String messageAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_confirm", langs), new String[]{}));
+    	String messageRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_reject", langs), new String[]{}));
+    	
+    	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_confirm_hover", langs), new String[]{}));
+    	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_reject_hover", langs), new String[]{}));
+
+        return prefix(baseCommand, langs)
+                	.append(MessageComponents.builder()
+                        .content(messageBase)
+                        .hexColor(StringColorUtils.MESSAGE_COLOR)
+                        .build())
+                    .append(MessageComponents.builder()
+                        .content(messageAccept)
+                        .hexColor(StringColorUtils.ACCESS_COLOR_TRUE)
+                        .hoverComponent(MessageComponents.builder().content(hoverAccept).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
+                        .clickActionRunCommand(commandAccept)
+                        .build())
+                    .append(MessageComponents.builder()
+                        .content(" | ")
+                        .hexColor(StringColorUtils.SEPARATOR_COLOR)
+                        .build())
+                    .append(MessageComponents.builder()
+                        .content(messageRefuse)
+                        .hexColor(StringColorUtils.ACCESS_COLOR_FALSE)
+                        .hoverComponent(MessageComponents.builder().content(hoverRefuse).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
+                        .clickActionRunCommand(commandRefuse)
+                        .build())
+                    .build();
+    }
+    
+    private static String[] getLangs(Player recipient) {
+    	return recipient != null ? LangUtils.getPlayerLanguage(recipient) : new String[]{manager.getDefaultLang()};
     }
 }

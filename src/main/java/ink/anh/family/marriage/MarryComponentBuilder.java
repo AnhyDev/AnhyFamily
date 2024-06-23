@@ -60,8 +60,8 @@ public class MarryComponentBuilder {
     	String messageAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent1", langs), new String[]{}));
     	String messageRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{}));
     	
-    	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{}));
-    	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{}));
+    	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_hover_consent1", langs), new String[]{}));
+    	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_hover_consent2", langs), new String[]{}));
 
         String commandAccept = "/marry accept";
         String commandRefuse = "/marry refuse";

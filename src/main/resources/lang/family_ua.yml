@@ -297,6 +297,12 @@ family_hugs_access_you: "Ви потрапили в обійми до %s"
 family_groom_consent: "%s тобі необхідно дати відповідь: "
 family_groom_consent1: "[Відповісти ТАК!] "
 family_groom_consent2: " [Відповісти НІ!]"
-family_groom_hover_consent1: "Для підтвердження клікни, \nабо введи команду /marry accept, \nабо напиши в чат ТАК! "
-family_groom_hover_consent2: "Для відмови клікни, \nабо введи команду /marry refuse, \nабо напиши в чат НІ! "
+family_groom_hover_consent1: "Для підтвердження клікни, \nабо відправ команду /marry accept"
+family_groom_hover_consent2: "Для відмови клікни, \nабо відправ команду /marry refuseІ"
+
+
+family_request_confirm: "[ПІДТВЕРДИТИ] "
+family_request_reject: " [ВІДХИЛИТИ]"
+family_request_confirm_hover: "Клікни щоб підтвердити"
+family_request_reject_hover: "Клікни щоб відхилити"
 
