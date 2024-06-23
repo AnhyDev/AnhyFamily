@@ -1,5 +1,9 @@
 package ink.anh.family.marriage;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
@@ -43,12 +47,20 @@ public class ActionsPriest extends Sender {
         String bride1Name = args[1];
         String bride2Name = args[2];
 
+
         Player bride1 = Bukkit.getPlayerExact(bride1Name);
         Player bride2 = Bukkit.getPlayerExact(bride2Name);
 
-    	priestTitle = FamilyUtils.getPriestTitle(priest);
-        
-		Player[] recipients = OtherUtils.getPlayersWithinRadius(priest.getLocation(), familyConfig.getCeremonyHearingRadius());
+        priestTitle = FamilyUtils.getPriestTitle(priest);
+
+        Player[] initialRecipients = OtherUtils.getPlayersWithinRadius(priest.getLocation(), familyConfig.getCeremonyHearingRadius());
+
+        Set<Player> recipientSet = new HashSet<>(Arrays.asList(initialRecipients));
+
+        recipientSet.add(bride1);
+        recipientSet.add(bride2);
+
+        Player[] recipients = recipientSet.toArray(new Player[0]);
 		
 		if (!validator.validateCeremonyConditions(bride1, bride2, recipients)) {
 			return false;
@@ -76,15 +88,15 @@ public class ActionsPriest extends Sender {
 			return false;
 		}
         
-    	if (marriageManager.add(bride1, bride2, priest, surnameChoice, lastName)) {
+    	if (!marriageManager.add(bride1, bride2, priest, surnameChoice, lastName)) {
             sendMessage(new MessageForFormatting("family_marry_already_started", new String[] {bride1Name, bride2Name}), MessageType.WARNING, true, priest);
             return false;
     	}
 
-    	sendMessage(new MessageForFormatting("family_marry_start_priest", new String[] {}), MessageType.WARNING, priest);
+    	sendMessage(new MessageForFormatting("family_marry_start_priest", new String[] {}), MessageType.NORMAL, priest);
     	
 		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
-			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients), 10L);
+			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.ESPECIALLY, false, recipients), 10L);
 
         return true;
 	}

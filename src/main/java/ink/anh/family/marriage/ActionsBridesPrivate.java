@@ -77,18 +77,11 @@ public class ActionsBridesPrivate extends Sender {
         }
     }
 
-    public void acceptPrivateMarriage(CommandSender sender) {
-        if (!(sender instanceof Player)) {
-            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
-            return;
-        }
-
-        Player receiver = (Player)sender;
+    public boolean acceptPrivateMarriage(Player receiver) {
         MarryPrivate proposal = marriageManager.getProposal(receiver);
 
         if (proposal == null) {
-            sendMessage(new MessageForFormatting("family_err_no_proposal", new String[]{}), MessageType.WARNING, sender);
-            return;
+            return false;
         }
 
         Player proposer = proposal.getProposer();
@@ -98,25 +91,20 @@ public class ActionsBridesPrivate extends Sender {
         Player[] players = getPlayersWithRadius(new Player[] {receiver, proposer}, 10);
 
         SyncExecutor.runSync(() -> handleMarriage(proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF, players, proposal));
+		return true;
     }
 
-    public void refusePrivateMarriage(CommandSender sender) {
-        if (!(sender instanceof Player)) {
-            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
-            return;
-        }
-
-        Player receiver = (Player)sender;
+    public boolean refusePrivateMarriage(Player receiver) {
         MarryPrivate proposal = marriageManager.getProposal(receiver);
 
         if (proposal == null) {
-            sendMessage(new MessageForFormatting("family_err_no_proposal", new String[]{}), MessageType.WARNING, sender);
-            return;
+            return false;
         }
 
         Player proposer = proposal.getProposer();
-        sendMessage(new MessageForFormatting("family_proposal_refused", new String[]{proposer.getName()}), MessageType.NORMAL, sender);
+        sendMessage(new MessageForFormatting("family_proposal_refused", new String[]{proposer.getName()}), MessageType.NORMAL, receiver);
         sendMessage(new MessageForFormatting("family_proposal_refused_sender", new String[]{receiver.getName()}), MessageType.NORMAL, proposer);
+		return true;
     }
 
 	private void updateFamilyData(PlayerFamily familyOfBrideChoosingSurname, PlayerFamily familyOfOtherBride, MarryBase marryBase) {

@@ -144,7 +144,7 @@ public class MessageComponentBuilder {
                     .append(MessageComponents.builder()
                         .content(getFormattedAccessStatus(Access.FALSE))
                         .hexColor(StringColorUtils.ACCESS_COLOR_FALSE)
-                        .hoverComponent(MessageComponents.builder().content(formatSetAccessMessage(Access.FALSE, langs)).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
+                        .hoverComponent(MessageComponents.builder().content(formatSetAccessMessage(Access.FALSE, langs)).hexColor(StringColorUtils.ACCESS_COLOR_FALSE).build())
                         .clickActionRunCommand(command + nickname + " deny")
                         .build())
                     .append(MessageComponents.builder()
@@ -154,7 +154,7 @@ public class MessageComponentBuilder {
                     .append(MessageComponents.builder()
                         .content(getFormattedAccessStatus(Access.DEFAULT))
                         .hexColor(StringColorUtils.ACCESS_COLOR_DEFAULT)
-                        .hoverComponent(MessageComponents.builder().content(formatSetAccessMessage(Access.DEFAULT, langs)).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
+                        .hoverComponent(MessageComponents.builder().content(formatSetAccessMessage(Access.DEFAULT, langs)).hexColor(StringColorUtils.ACCESS_COLOR_DEFAULT).build())
                         .clickActionRunCommand(command + nickname + " default")
                         .build())
                     .build();

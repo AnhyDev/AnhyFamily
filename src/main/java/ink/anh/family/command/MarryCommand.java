@@ -4,11 +4,14 @@ import java.util.concurrent.CompletableFuture;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.marriage.ActionsBridesPrivate;
+import ink.anh.family.marriage.ActionsBridesPublic;
 import ink.anh.family.marriage.ActionsPriest;
 import ink.anh.api.messages.MessageForFormatting;
 
@@ -72,10 +75,40 @@ public class MarryCommand extends Sender implements CommandExecutor {
     }
 
     private void handleAcceptProposal(CommandSender sender) {
-        new ActionsBridesPrivate(familyPlugin).acceptPrivateMarriage(sender);
+        if (!(sender instanceof Player)) {
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
+            return;
+        }
+
+        Player player = (Player) sender;
+        ActionsBridesPrivate privateActions = new ActionsBridesPrivate(familyPlugin);
+        
+        if (privateActions.acceptPrivateMarriage(player)) {
+        	return;
+        } else {
+            ActionsBridesPublic publicActions = new ActionsBridesPublic(familyPlugin);
+        	if (publicActions.handleMarriage((Player) player, true)) {
+            	return;
+        	}
+        }
+        sendMessage(new MessageForFormatting("family_err_no_proposal", new String[]{}), MessageType.WARNING, sender);
     }
 
     private void handleRefuseProposal(CommandSender sender) {
-        new ActionsBridesPrivate(familyPlugin).refusePrivateMarriage(sender);
+        if (!(sender instanceof Player)) {
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[]{}), MessageType.WARNING, sender);
+            return;
+        }
+
+        Player player = (Player) sender;
+        ActionsBridesPrivate privateActions = new ActionsBridesPrivate(familyPlugin);
+        
+        if (privateActions.refusePrivateMarriage(player)) {
+            return;
+        } else {
+            ActionsBridesPublic publicActions = new ActionsBridesPublic(familyPlugin);
+            publicActions.handleMarriage(player, false);
+        }
+        sendMessage(new MessageForFormatting("family_err_no_proposal", new String[]{}), MessageType.WARNING, sender);
     }
 }

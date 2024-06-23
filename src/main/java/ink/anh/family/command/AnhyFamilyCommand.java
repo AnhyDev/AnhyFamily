@@ -37,6 +37,9 @@ public class AnhyFamilyCommand extends Sender implements CommandExecutor {
             try {
     	        if (args.length > 0) {
     	            switch (args[0].toLowerCase()) {
+	                	case "reload":
+	                		reload(sender);
+	                		break;
     	                case "parentinfo":
     	                    infoParentElement(sender);
     	                    break;
@@ -48,9 +51,6 @@ public class AnhyFamilyCommand extends Sender implements CommandExecutor {
     	                    break;
     	                case "clearfamily":
     	                    new ClearAllRelatives(familyPlugin).exeClearFamily(sender, args);
-    	                    break;
-    	                case "reload":
-    	                    reload(sender);
     	                    break;
     	                case "forceadopt":
     	                    new Adopt(familyPlugin).forceAdopt(sender, args);

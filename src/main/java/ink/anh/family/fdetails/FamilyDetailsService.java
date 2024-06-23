@@ -158,7 +158,7 @@ public class FamilyDetailsService {
         }
 
         FamilyDetails details = FamilyDetailsGet.getFamilyDetails(familyId);
-        Location chestLoc = details.getFamilyChest().getChestLocation();
+        Location chestLoc = details.getFamilyChest() != null ? details.getFamilyChest().getChestLocation() : null;
         String symbol = details.getFamilySymbol();
 
         FamilyDetailsDelete.deleteRootFamilyDetails(spouse1);
@@ -177,8 +177,8 @@ public class FamilyDetailsService {
             spouse2.setFamilyId(null);
             PlayerFamilyDBServsce.savePlayerFamily(spouse2, FamilyPlayerField.FAMILY_ID);
         }
-    	FamilyChestManager.removeLocationFromUUIDMap(chestLoc);
-    	FamilySymbolManager.removeSymbol(symbol);
+    	if (chestLoc != null) FamilyChestManager.removeLocationFromUUIDMap(chestLoc);
+    	if (symbol != null) FamilySymbolManager.removeSymbol(symbol);
     }
 
     public static void removeCrossFamilyRelations(PlayerFamily spouseFamily, Set<PlayerFamily> relatives, boolean removeRelative, boolean initiatorSave) {
