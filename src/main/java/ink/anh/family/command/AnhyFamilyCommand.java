@@ -67,7 +67,7 @@ public class AnhyFamilyCommand extends Sender implements CommandExecutor {
                             break;
     	                default:
     	                    sendMessage(new MessageForFormatting(
-    	                    		"family_err_command_format /anhyfamily <parentinfo|marriageinfo|forcesurname|clearfamily|reload|forceadopt|forcegender|genderreset>",
+    	                    		"family_err_command_format /anhyfamily <reload|parentinfo|marriageinfo|forcesurname|clearfamily|forceadopt|forcegender|genderreset>",
     	                    		new String[] {}), MessageType.WARNING, sender);
     	            }
     	        }

@@ -13,58 +13,24 @@ public class MarryComponentBuilder {
 
     private static GlobalManager manager = GlobalManager.getInstance();
 
-    private static String[] prefixColor(String prefixType) {
-        switch (prefixType) {
-            case "priest_male":
-                return new String[] {"#000080", "#ADD8E6"}; // Navy for prefix, Light Blue for nickname
-            case "priest_female":
-                return new String[] {"#800080", "#FF69B4"}; // Purple for prefix, Hot Pink for nickname
-            case "priest_non_binary":
-                return new String[] {"#808080", "#32CD32"}; // Gray for prefix, Lime Green for nickname
-            case "bride_male":
-                return new String[] {"#006400", "#00FF00"}; // Dark Green for prefix, Green for nickname
-            case "bride_female":
-                return new String[] {"#FFC0CB", "#FF1493"}; // Pink for prefix, Deep Pink for nickname
-            case "bride_non_binary":
-                return new String[] {"#40E0D0", "#20B2AA"}; // Turquoise for prefix, Light Sea Green for nickname
-            default:
-                return new String[] {"#FFA500", "#FFD700"}; // Orange for prefix, Gold for nickname
-        }
-    }
-
-    private static String prefixKey(String prefixType) {
-        switch (prefixType) {
-            case "priest_male":
-                return "family_marry_priest_male";
-            case "priest_female":
-                return "family_marry_priest_female";
-            case "priest_non_binary":
-                return "family_marry_priest_nonbinary";
-            case "bride_male":
-                return "family_marry_groom_male";
-            case "bride_female":
-                return "family_marry_groom_female";
-            case "bride_non_binary":
-                return "family_marry_groom_nonbinary";
-            default:
-                return "";
-        } 
-    }
-
-    private static MessageBuilder prefix(String prefixType, String playerName, String[] langs) {    	
-    	String content = StringUtils.formatString(Translator.translateKyeWorld(manager, prefixKey(prefixType), langs), new String[] {});
+    private static MessageBuilder prefix(MarryPrefixType prefixType, String playerName, String[] langs) {
+    	if (prefixType == null) {
+    		prefixType = MarryPrefixType.DEFAULT;
+    	}
+    	
+    	String content = StringUtils.formatString(Translator.translateKyeWorld(manager, prefixType.getKey(), langs), new String[] {});
     	
     	return MessageComponents.builder()
                 .content("[" + content + "] ")
-                .hexColor(prefixColor(prefixType)[0])
+                .hexColor(prefixType.getPrefixColor())
                 .decoration("BOLD", true)
                 .append(MessageComponents.builder()
                     .content(playerName)
-                    .hexColor(prefixColor(prefixType)[1])
+                    .hexColor(prefixType.getNicknameColor())
                     .build())
                 .append(MessageComponents.builder()
                     .content(": ")
-                    .hexColor(prefixColor(prefixType)[0])
+                    .hexColor(prefixType.getPrefixColor())
                     .build());
     }
     
@@ -72,22 +38,34 @@ public class MarryComponentBuilder {
     
     
     
-    
-    
-    public static MessageComponents priestAcceptMessageComponent(Player player, String nickname, String prefixType) {
-        String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{manager.getDefaultLang()};
+
+    public static MessageComponents announcementMessageComponent(Player recipient, String senderName, String messageKey, String messageColor, String[] placeholders, MarryPrefixType prefixType) {
+        String[] langs = getLangs(recipient);
         
-    	String messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent", langs), new String[]{nickname}));
-    	String messageAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent1", langs), new String[]{nickname}));
-    	String messageRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{nickname}));
+    	String messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageKey, langs), placeholders));
+
+        return prefix(prefixType, senderName, langs)
+                	.append(MessageComponents.builder()
+                        .content(messageBase)
+                        .hexColor(messageColor)
+                        .build())
+                    .build();
+    }
+    
+    public static MessageComponents priestAcceptMessageComponent(MarryPrefixType prefixType, String senderName, Player recipient) {
+        String[] langs = getLangs(recipient);
+        
+    	String messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent", langs), new String[]{recipient.getName()}));
+    	String messageAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent1", langs), new String[]{}));
+    	String messageRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{}));
     	
-    	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{nickname}));
-    	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{nickname}));
+    	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{}));
+    	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{}));
 
         String commandAccept = "/marry accept";
         String commandRefuse = "/marry refuse";
 
-        return prefix(prefixType, nickname, langs)
+        return prefix(prefixType, senderName, langs)
                 	.append(MessageComponents.builder()
                         .content(messageBase)
                         .hexColor(StringColorUtils.MESSAGE_COLOR)
@@ -109,5 +87,9 @@ public class MarryComponentBuilder {
                         .clickActionRunCommand(commandRefuse)
                         .build())
                     .build();
+    }
+    
+    private static String[] getLangs(Player recipient) {
+    	return recipient != null ? LangUtils.getPlayerLanguage(recipient) : new String[]{manager.getDefaultLang()};
     }
 }
