@@ -157,7 +157,7 @@ public class MessageComponentBuilder {
                     .build();
     }
     
-    public static MessageComponents priestAcceptMessageComponent(String messageBase, String baseCommand, String commandAccept, String commandRefuse, Player recipient) {
+    public static MessageComponents acceptMessageComponent(String messageBase, String baseCommand, String commandAccept, String commandRefuse, Player recipient) {
         String[] langs = getLangs(recipient);
         
     	messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageBase, langs), new String[]{recipient.getName()}));
@@ -166,6 +166,9 @@ public class MessageComponentBuilder {
     	
     	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_confirm_hover", langs), new String[]{}));
     	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_reject_hover", langs), new String[]{}));
+
+    	commandAccept = "/" + baseCommand + " " + commandAccept;
+    	commandRefuse = "/" + baseCommand + " " + commandRefuse;
 
         return prefix(baseCommand, langs)
                 	.append(MessageComponents.builder()

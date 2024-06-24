@@ -1,5 +1,6 @@
 package ink.anh.family.marriage;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -77,16 +78,16 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
         priestPrefixType = MarryPrefixType.getMarryPrefixType(FamilyUtils.getFamily(priest).getGender(), 0);
         
         PlayerFamily bride1family = FamilyUtils.getFamily(bride1);
-        bridePrefixType = MarryPrefixType.getMarryPrefixType(bride1family.getGender(), 0);
+        bridePrefixType = MarryPrefixType.getMarryPrefixType(bride1family.getGender(), 1);
 
         if (!consentGiven) {
             marriageManager.remove(uuidBride1);
             
-        	sendMAnnouncement(bride1, bride1Name, "family_marry_refuse", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, bridePrefixType, recipients);
+        	sendMAnnouncement(bridePrefixType, bride1Name, "family_marry_refuse", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
             
             Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> {
 
-            	sendMAnnouncement(priest, priestName, "family_marry_failed", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, priestPrefixType, recipients);
+            	sendMAnnouncement(priestPrefixType, priestName, "family_marry_failed", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
             }, 10L);
             
             return true;
@@ -105,10 +106,10 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
 
         setMarriageConsent(marryPublic, one);
         
-    	sendMAnnouncement(bride1, bride1Name, vowOfNewlyweds, MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, bridePrefixType, recipients);
+    	sendMAnnouncement(bridePrefixType, bride1Name, vowOfNewlyweds, MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
 
         if (!marryPublic.areBothConsentsGiven()) {
-        	sendMAnnouncement(priest, priestName, "family_marry_waiting_for_consent", MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, priestPrefixType, recipients);
+        	sendMAnnouncement(priestPrefixType, priestName, "family_marry_waiting_for_consent", MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
 
             return true;
         }
@@ -177,13 +178,16 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
     private void processMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, Player[] recipients,
     		String vowOfNewlyweds, MarryPublic marryPublic, int one, String[] brides, String stringMarry) {
         final MessageType[] messageType = {MessageType.WARNING, MessageType.ESPECIALLY};
+        final String priestName = priest.getDisplayName() != null ? priest.getDisplayName() : priest.getName();
         try {
             MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF);
             Bukkit.getPluginManager().callEvent(event);
 
-            if (new MarriageValidator(familyPlugin, true).paymentFailed(marryPublic, recipients, marriageManager)) {
-                return;
-            }
+        	String[] paymentFailedResult = new MarriageValidator(familyPlugin, true).paymentFailed(marryPublic, marriageManager);
+        	if (paymentFailedResult != null) {
+        	    sendMAnnouncement(priestPrefixType, priestName, paymentFailedResult[0], MessageType.WARNING.getColor(true), Arrays.copyOfRange(paymentFailedResult, 1, paymentFailedResult.length), recipients);
+        	    return;
+        	}
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
@@ -192,7 +196,7 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
                     FamilyDetailsService.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
                     Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () ->
-                    sendMAnnouncement(priest, priest.getName(), stringMarry, messageType[1].getColor(true), brides, priestPrefixType, recipients), 10L);
+                    sendMAnnouncement(priestPrefixType, priestName, stringMarry, messageType[1].getColor(true), brides, recipients), 10L);
 
                     marriageManager.remove(proposerFamily.getRoot());
                 });

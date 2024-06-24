@@ -30,14 +30,14 @@ public abstract class AbstractMarriageSender extends Sender {
         this.familyConfig = manager.getFamilyConfig();
     }
 
-    protected void sendMAnnouncement(Player sender, String senderName, String messageKey, String messageColor, String[] placeholders, MarryPrefixType prefixType, Player[] recipients) {
+    protected void sendMAnnouncement(MarryPrefixType prefixType, String senderName, String messageKey, String messageColor, String[] placeholders, Player[] recipients) {
         executeForPlayers(recipients, recipient -> {
-            sendMessageComponent(recipient, MarryComponentBuilder.announcementMessageComponent(sender, senderName, messageKey, messageColor, placeholders, prefixType));
+            sendMessageComponent(recipient, MarryComponentBuilder.announcementMessageComponent(recipient, senderName, messageKey, messageColor, placeholders, prefixType));
         });
     }
 
-    protected void sendPriestAcceptMessage(MarryPrefixType prefixType, String senderName, Player recipient, Player[] recipients) {
-        executeForPlayers(recipients, player -> {
+    protected void sendPriestAcceptMessage(MarryPrefixType prefixType, String senderName, Player[] recipients) {
+        executeForPlayers(recipients, recipient -> {
             sendMessageComponent(recipient, MarryComponentBuilder.priestAcceptMessageComponent(prefixType, senderName, recipient));
         });
     }

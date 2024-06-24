@@ -1,6 +1,8 @@
 package ink.anh.family.marriage;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,34 +40,52 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         Player proposer = (Player)sender;
         Player receiver = Bukkit.getPlayerExact(args[1]);
 
+        
+        priestPrefixType = MarryPrefixType.getMarryPrefixType(null, 2);
+
         if (receiver == null || !receiver.isOnline()) {
-            sendMessage(new MessageForFormatting("family_err_player_not_found", new String[]{args[1]}), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_player_not_found_full", new String[]{args[1]}), MessageType.WARNING, sender); // +
             return;
         }
 
         Player[] recipients = OtherUtils.getPlayersWithinRadius(proposer.getLocation(), manager.getFamilyConfig().getCeremonyRadius());
 
-        if (!validator.validateCeremonyConditions(proposer, receiver, recipients)) {
-            return;
-        }
+		String[] validateCeremonyConditionsResult = validator.validateCeremonyConditions(proposer, receiver);
+		if (validateCeremonyConditionsResult != null) {
+			 String members = String.join(", ", Arrays.stream(validateCeremonyConditionsResult).skip(1).filter(Objects::nonNull).toArray(String[]::new));
+		        sendMAnnouncement(priestPrefixType, null, validateCeremonyConditionsResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+		        return ;
+		}
 
         if (!validator.validateCeremonyParticipants(proposer, receiver, recipients)) {
             return;
         }
 
-        if (!validator.validatePermissions(proposer, receiver, recipients)) {
-            return;
+        String[] validatePerm = validator.validatePermissions(proposer, receiver, recipients);
+        if (validatePerm != null) {
+            if (validatePerm[0] == null) {
+                // Переривання роботи без відправлення складного повідомлення
+                return;
+            } else {
+                String members = String.join(", ", Arrays.copyOfRange(validatePerm, 1, validatePerm.length));
+                sendMAnnouncement(priestPrefixType, null, validatePerm[0], MessageType.ESPECIALLY.getColor(true), new String[] {members}, recipients);
+                return;
+            }
         }
 
-        String[] chosenSurname = FamilyUtils.getFamily(proposer).getLastName();
+        PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
+        String[] chosenSurname = proposerFamily.getLastName();
 
         MarryPrivate proposal = new MarryPrivate(proposer, receiver, chosenSurname);
 
         if (marriageManager.addProposal(proposal)) {
-            sendMessage(new MessageForFormatting("family_proposal_sent", new String[]{receiver.getName()}), MessageType.NORMAL, sender);
-            sendMessage(new MessageForFormatting("family_proposal_received", new String[]{proposer.getName()}), MessageType.NORMAL, receiver);
+            String proposerName = proposer.getDisplayName() != null ? proposer.getDisplayName() : proposer.getName();
+            String receiverName = receiver.getDisplayName() != null ? receiver.getDisplayName() : receiver.getName();
+            
+        	sendMAnnouncement(priestPrefixType, null, "family_proposal_sent", MessageType.ESPECIALLY.getColor(true), new String[]{receiverName}, new Player[] {proposer});
+        	sendMAnnouncement(priestPrefixType, null, "family_proposal_received", MessageType.ESPECIALLY.getColor(true), new String[]{proposerName}, new Player[] {receiver});
         } else {
-            sendMessage(new MessageForFormatting("family_proposal_failed", new String[]{receiver.getName()}), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_proposal_failed", new String[]{receiver.getName()}), MessageType.WARNING, sender); // +
         }
     }
 
@@ -77,8 +97,11 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         }
 
         Player proposer = proposal.getProposer();
-        PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
-        PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver.getUniqueId());
+        PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer);
+        PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver);
+        
+        priestPrefixType = MarryPrefixType.getMarryPrefixType(null, 2);
+        bridePrefixType = MarryPrefixType.getMarryPrefixType(receiverFamily.getGender(), 1);
 
         Player[] players = getPlayersWithRadius(new Player[] {receiver, proposer}, 10);
 
@@ -94,8 +117,12 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         }
 
         Player proposer = proposal.getProposer();
-        sendMessage(new MessageForFormatting("family_proposal_refused", new String[]{proposer.getName()}), MessageType.NORMAL, receiver);
-        sendMessage(new MessageForFormatting("family_proposal_refused_sender", new String[]{receiver.getName()}), MessageType.NORMAL, proposer);
+        
+    	sendMAnnouncement(priestPrefixType, null, "family_proposal_refused", MessageType.NORMAL.getColor(true),
+    			new String[]{proposer.getDisplayName() != null ? proposer.getDisplayName() : proposer.getName()}, new Player[] {receiver});
+        
+    	sendMAnnouncement(priestPrefixType, null, "family_proposal_refused_sender", MessageType.NORMAL.getColor(true),
+    			new String[]{receiver.getDisplayName() != null ? receiver.getDisplayName() : receiver.getName()}, new Player[] {proposer});
 		return true;
     }
 
@@ -118,12 +145,13 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         try {
             MarriageEvent event = new MarriageEvent(null, proposerFamily, receiverFamily, initiator);
             Bukkit.getPluginManager().callEvent(event);
-        	
-        	if (validator.paymentFailed(marryBase, players, marriageManager)) {
-        		event.cancellEvent("Error in payment of peace enterprise");
-        		return;
-        	}
 
+        	String[] paymentFailedResult = validator.paymentFailed(marryBase, marriageManager);
+        	if (paymentFailedResult != null) {
+        	    sendMAnnouncement(priestPrefixType, null, paymentFailedResult[0], MessageType.WARNING.getColor(true), Arrays.copyOfRange(paymentFailedResult, 1, paymentFailedResult.length), players);
+        	    return;
+        	}
+        	
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
                 	
@@ -131,14 +159,20 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
                 	
                 	FamilyDetailsService.createFamilyOnMarriage(proposerFamily, receiverFamily);
 
-                	MessageType messageType = MessageType.IMPORTANT;
-                    sendMessage(new MessageForFormatting("family_proposal_accepted_sender", new String[]{players[1].getName()}), messageType, players[0]);
-                    sendMessage(new MessageForFormatting("family_proposal_accepted", new String[]{players[0].getName()}), messageType, players[1]);
-
-                    sendMessage(new MessageForFormatting("family_marriage_successful", new String[]{players[0].getName(), players[1].getName()}), MessageType.ESPECIALLY, players);
+                    String proposerName = players[0].getDisplayName() != null ? players[0].getDisplayName() : players[0].getName();
+                    String receiverName = players[1].getDisplayName() != null ? players[1].getDisplayName() : players[1].getName();
+                    
+                	sendMAnnouncement(priestPrefixType, null, "family_proposal_refused_sender", MessageType.IMPORTANT.getColor(true),
+                			new String[]{proposerName}, new Player[] {players[1]});
+                    
+                	sendMAnnouncement(priestPrefixType, null, "family_proposal_accepted", MessageType.NORMAL.getColor(true),
+                			new String[]{receiverName}, new Player[] {players[0]});
+                    
+                	sendMAnnouncement(priestPrefixType, null, "family_marriage_successful", MessageType.NORMAL.getColor(true),
+                			new String[]{proposerName, receiverName}, players);
                 });
             } else {
-                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, players);
+                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[]{}), MessageType.WARNING, players); // +
             }
         } catch (Exception e) {
             Bukkit.getLogger().severe("Exception in handleMarriage: " + e.getMessage());

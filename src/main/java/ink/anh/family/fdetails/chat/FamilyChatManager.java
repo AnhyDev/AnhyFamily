@@ -12,7 +12,6 @@ import ink.anh.api.lingo.Translator;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
-import ink.anh.api.messages.Messenger;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.api.utils.SyncExecutor;
@@ -179,7 +178,7 @@ public class FamilyChatManager extends AbstractDetailsManager {
         	notifyPlayerOnMention(recipient, args);
         });
         MessageComponents messageComponents = buildInteractiveMessage(details, message, recipient);
-        Messenger.sendMessage(familyPlugin, recipient, messageComponents, message);
+        sendMessageComponent(player, messageComponents);
     }
 
     private void notifyPlayerOnMention(Player target, String[] args) {

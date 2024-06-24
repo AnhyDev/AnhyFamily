@@ -261,7 +261,8 @@ public abstract class AbstractDetailsManager extends Sender {
             executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
                 Access currentAccess = details.getAccess(targetFamily, component);
                 MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, currentAccess, command);
-                Messenger.sendMessage(familyPlugin, player, messageComponents, "family_access_get");
+
+                sendMessageComponent(player, messageComponents);
             });
         }
     }
@@ -284,8 +285,13 @@ public abstract class AbstractDetailsManager extends Sender {
 
             Access currentAccess = accessControl.getChatAccess();
             MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, targetGroup, currentAccess, command);
-            Messenger.sendMessage(familyPlugin, player, messageComponents, getDefaultAccessCheckMessageKey(component));
+
+            sendMessageComponent(player, messageComponents);
         });
+    }
+
+    protected void sendMessageComponent(Player recipient, MessageComponents messageComponents) {
+        Messenger.sendMessage(familyPlugin, recipient, messageComponents, "MessageComponents");
     }
 
     protected abstract String getDefaultAccessCheckMessageKey(TypeTargetComponent component);

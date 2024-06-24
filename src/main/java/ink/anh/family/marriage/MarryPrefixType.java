@@ -45,10 +45,8 @@ public enum MarryPrefixType {
                         return MarryPrefixType.PRIEST_MALE;
                     case FEMALE:
                         return MarryPrefixType.PRIEST_FEMALE;
-                    case NON_BINARY:
-                        return MarryPrefixType.PRIEST_NON_BINARY;
                     default:
-                        return MarryPrefixType.DEFAULT;
+                        return MarryPrefixType.PRIEST_NON_BINARY;
                 }
             case 1:
                 switch (gender) {
@@ -56,10 +54,8 @@ public enum MarryPrefixType {
                         return MarryPrefixType.BRIDE_MALE;
                     case FEMALE:
                         return MarryPrefixType.BRIDE_FEMALE;
-                    case NON_BINARY:
-                        return MarryPrefixType.BRIDE_NON_BINARY;
                     default:
-                        return MarryPrefixType.DEFAULT;
+                        return MarryPrefixType.BRIDE_NON_BINARY;
                 }
             case 2:
                 return MarryPrefixType.PRIVATE_MARRY_PREFIX;

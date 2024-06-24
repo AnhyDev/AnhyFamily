@@ -25,7 +25,6 @@ public class MarriageValidator extends Sender {
 
 	private AnhyFamily familyPlugin;
 	private Player priest = null;
-	private String priestTitle = "";
     private boolean isPublic;
 
     private PlayerFamily familyBride1;
@@ -39,7 +38,6 @@ public class MarriageValidator extends Sender {
     
     public void setPriest(Player priest) {
 		this.priest = priest;
-		this.priestTitle = FamilyUtils.getPriestTitle(priest);
 	}
 
     public boolean validateCommandInput(CommandSender sender, String[] args) {
@@ -59,77 +57,81 @@ public class MarriageValidator extends Sender {
         return true;
     }
 
-    public boolean validateCeremonyConditions(Player bride1, Player bride2, Player[] recipients) {
-        Player[] players = isPublic ? new Player[] {bride1, bride2, priest} : new Player[] {bride1, bride2};
-
-        if (!validateMembers(recipients, players)) {
-            return false;
-        }
-
+    public String[] validateCeremonyConditions(Player bride1, Player bride2) {
         FamilyConfig config = ((GlobalManager) libraryManager).getFamilyConfig();
+        
         int radius = isPublic ? config.getCeremonyRadius() : 5;
         Location location = isPublic && priest != null ? priest.getLocation() : config.getPrivateCeremonyLocation();
-        if (!OtherUtils.isPlayerWithinRadius(bride1, location, radius) || !OtherUtils.isPlayerWithinRadius(bride2, location, radius)) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_distance", new String[] {}), MessageType.WARNING, false, recipients);
-            return false;
+        
+        boolean isBride1WithinRadius = OtherUtils.isPlayerWithinRadius(bride1, location, radius);
+        boolean isBride2WithinRadius = OtherUtils.isPlayerWithinRadius(bride2, location, radius);
+
+        if (!isBride1WithinRadius || !isBride2WithinRadius) {
+            return new String[] {"family_marry_failed_distance %s", !isBride1WithinRadius ? bride1.getDisplayName() : null, !isBride2WithinRadius ? bride2.getDisplayName() : null};
         }
 
-        return true;
+        return null;
     }
 
-    public boolean validatePermissions(Player bride1, Player bride2, Player[] recipients) {
-        boolean perm = true; // призначено для того щоб вивести всі повідомлення про дозволи
-        List<String> members = new ArrayList<>();
+    public String[] validatePermissions(Player bride1, Player bride2, Player[] recipients) {
+        String[] result = null;
 
         if (isPublic && priest != null && !priest.hasPermission(Permissions.FAMILY_PASTOR)) {
             sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[] {}), MessageType.WARNING, priest);
-            return false;
+            return new String[] {null};
         }
 
         if (!bride1.hasPermission(Permissions.FAMILY_USER)) {
             sendMessage(new MessageForFormatting("family_mary_not_have_permission", new String[] {}), MessageType.WARNING, bride1);
-            members.add(bride1.getDisplayName());
-            perm = false;
+            result = new String[] {"family_mary_not_have_permission_members", bride1.getDisplayName(), null};
         }
 
         if (!bride2.hasPermission(Permissions.FAMILY_USER)) {
             sendMessage(new MessageForFormatting("family_mary_not_have_permission", new String[] {}), MessageType.WARNING, bride2);
-            if (!members.isEmpty()) members.add(", ");
-            members.add(bride2.getDisplayName());
-            perm = false;
+            if (result == null) {
+                result = new String[] {"family_mary_not_have_permission_members", bride2.getDisplayName()};
+            } else {
+                result[2] = bride2.getDisplayName();
+            }
         }
 
-        if (!members.isEmpty()) {
-            String[] membersArray = members.toArray(new String[0]);
-            sendMessage(new MessageForFormatting(priestTitle + ": family_mary_not_have_permission_members", membersArray), MessageType.WARNING, recipients);
-        }
-
-        return perm;
+        return result;
     }
 
-    public boolean validatePayment(Player bride1, Player bride2, Player[] recipients, String bride1Name, String bride2Name) {
+    public String[] validatePayment(Player bride1, Player bride2, Player[] recipients, String bride1Name, String bride2Name) {
         PaymentManager pay = new PaymentManager(familyPlugin);
+        List<String> issues = new ArrayList<>();
+        issues.add("family_marry_payment_failed_check %s");
 
-        if (pay.canAfford(bride1, FamilyService.MARRIAGE) && pay.canAfford(bride2, FamilyService.MARRIAGE)) {
-            return true;
+        boolean canAffordBride1 = pay.canAfford(bride1, FamilyService.MARRIAGE);
+        boolean canAffordBride2 = pay.canAfford(bride2, FamilyService.MARRIAGE);
+
+        if (canAffordBride1 && canAffordBride2) {
+            return null;
         }
-		sendMessage(new MessageForFormatting(priestTitle + ": family_marry_payment_failed_check", new String[] {bride1Name, bride2Name}), MessageType.WARNING, false, recipients);
-        return false;
+
+        if (!canAffordBride1) {
+            issues.add(bride1Name);
+        }
+
+        if (!canAffordBride2) {
+            issues.add(bride2Name);
+        }
+
+        return issues.toArray(new String[0]);
     }
 
-    public boolean paymentFailed(MarryBase marryBase, Player[] recipients, MarriageManager marriageManager) {
-    	Player bride1 = marryBase.getProposer();
-    	Player bride2 = marryBase.getReceiver();
-    	
+    public String[] paymentFailed(MarryBase marryBase, MarriageManager marriageManager) {
+        Player bride1 = marryBase.getProposer();
+        Player bride2 = marryBase.getReceiver();
+        
         PaymentManager pay = new PaymentManager(familyPlugin);
 
         if (!pay.makePayment(bride1, FamilyService.MARRIAGE) || !pay.makePayment(bride2, FamilyService.MARRIAGE)) {
-        	marriageManager.remove(bride1.getUniqueId());
-			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_payment_failed", new String[] {bride1.getDisplayName(), bride2.getDisplayName()}),
-					MessageType.WARNING, false, recipients);
-            return true;
+            marriageManager.remove(bride1.getUniqueId());
+            return new String[] {"family_marry_payment_failed", bride1.getDisplayName(), bride2.getDisplayName()};
         }
-        return false;
+        return null;
     }
 
     public boolean validateCeremonyParticipants(Player bride1, Player bride2, Player[] recipients) {

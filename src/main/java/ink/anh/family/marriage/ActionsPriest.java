@@ -2,6 +2,7 @@ package ink.anh.family.marriage;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -9,30 +10,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
 
 import ink.anh.family.AnhyFamily;
-import ink.anh.family.FamilyConfig;
-import ink.anh.family.GlobalManager;
-import ink.anh.family.util.OtherUtils;
+import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.OtherUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
-import ink.anh.api.messages.Sender;
 
-public class ActionsPriest extends Sender {
+public class ActionsPriest extends AbstractMarriageSender {
 
-	private AnhyFamily familyPlugin;
-    private GlobalManager manager;
-    private MarriageManager marriageManager;
     private MarriageValidator validator;
-    private FamilyConfig familyConfig;
-    private String priestTitle = "";
     
     public ActionsPriest(AnhyFamily familyPlugin) {
-        super(GlobalManager.getInstance());
-		this.familyPlugin = familyPlugin;
-        this.manager = GlobalManager.getInstance();
-        this.marriageManager = GlobalManager.getInstance().getMarriageManager();
+        super(familyPlugin);
         this.setValidator(new MarriageValidator(familyPlugin, true));
-        this.familyConfig = manager.getFamilyConfig();
     }
     
     public boolean marry(CommandSender sender, String[] args) {
@@ -44,32 +34,45 @@ public class ActionsPriest extends Sender {
 		Player priest = (Player) sender;
 		validator.setPriest(priest);
 
-        String bride1Name = args[1];
-        String bride2Name = args[2];
-
-
-        Player bride1 = Bukkit.getPlayerExact(bride1Name);
-        Player bride2 = Bukkit.getPlayerExact(bride2Name);
-
-        priestTitle = FamilyUtils.getPriestTitle(priest);
+        Player bride1 = Bukkit.getPlayerExact(args[1]);
+        Player bride2 = Bukkit.getPlayerExact(args[2]);
 
         Player[] initialRecipients = OtherUtils.getPlayersWithinRadius(priest.getLocation(), familyConfig.getCeremonyHearingRadius());
-
         Set<Player> recipientSet = new HashSet<>(Arrays.asList(initialRecipients));
 
         recipientSet.add(bride1);
         recipientSet.add(bride2);
 
         Player[] recipients = recipientSet.toArray(new Player[0]);
+        
+        final String priestName = priest.getDisplayName() != null ? priest.getDisplayName() : priest.getName();
+		final String bride1Name = bride1.getDisplayName() != null ? bride1.getDisplayName() : bride1.getName();
+		final String bride2Name = bride2.getDisplayName() != null ? bride2.getDisplayName() : bride2.getName();
 		
-		if (!validator.validateCeremonyConditions(bride1, bride2, recipients)) {
+		if (validator.validateMembers(recipients, bride1, bride2, priest)) {
 			return false;
 		}
-		
-		if (!validator.validatePermissions(bride1, bride2, recipients)) {
-			return false;
+
+        PlayerFamily priestFamily = FamilyUtils.getFamily(priest);
+        priestPrefixType = MarryPrefixType.getMarryPrefixType(priestFamily != null ? priestFamily.getGender() : null, 0);
+
+        String[] validatePerm = validator.validatePermissions(bride1, bride2, recipients);
+        if (validatePerm != null) {
+            if (validatePerm[0] == null) {
+                return false;
+            } else {
+                String members = String.join(", ", Arrays.copyOfRange(validatePerm, 1, validatePerm.length));
+                sendMAnnouncement(priestPrefixType, priestName, validatePerm[0], MessageType.ESPECIALLY.getColor(true), new String[] {members}, recipients);
+                return false;
+            }
+        }
+
+		String[] validateCeremonyConditionsResult = validator.validateCeremonyConditions(bride1, bride2);
+		if (validateCeremonyConditionsResult != null) {
+			 String members = String.join(", ", Arrays.stream(validateCeremonyConditionsResult).skip(1).filter(Objects::nonNull).toArray(String[]::new));
+		        sendMAnnouncement(priestPrefixType, priestName, validateCeremonyConditionsResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+		        return false;
 		}
-       
 		
 		if (!validator.validateCeremonyParticipants(bride1, bride2, recipients)) {
 			return false;
@@ -80,14 +83,17 @@ public class ActionsPriest extends Sender {
         int surnameChoice = processLastName.getNumberLastName();
         
     	if (lastName == null) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_last_name", new String[] {}), MessageType.WARNING, false, recipients);
+            sendMessage(new MessageForFormatting("family_marry_failed_last_name", new String[] {}), MessageType.WARNING, false, recipients);
             return false;
     	}
-		
-		if (!validator.validatePayment(bride1, bride2, recipients, bride1Name, bride2Name)) {
-			return false;
+
+		String[] validatePaymentResult = validator.validatePayment(bride1, bride2, recipients, bride1Name, bride2Name);
+		if (validatePaymentResult != null) {
+		    String members = String.join(", ", Arrays.copyOfRange(validatePaymentResult, 1, validatePaymentResult.length));
+		    sendMAnnouncement(priestPrefixType, priestName, validatePaymentResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+		    return false;
 		}
-        
+
     	if (!marriageManager.add(bride1, bride2, priest, surnameChoice, lastName)) {
             sendMessage(new MessageForFormatting("family_marry_already_started", new String[] {bride1Name, bride2Name}), MessageType.WARNING, true, priest);
             return false;
@@ -96,7 +102,7 @@ public class ActionsPriest extends Sender {
     	sendMessage(new MessageForFormatting("family_marry_start_priest", new String[] {}), MessageType.NORMAL, priest);
     	
 		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
-			sendMessage(new MessageForFormatting(priestTitle + ": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.ESPECIALLY, false, recipients), 10L);
+			sendMessage(new MessageForFormatting(": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.ESPECIALLY, false, recipients), 10L);
 
         return true;
 	}
