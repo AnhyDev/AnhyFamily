@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.utils.SyncExecutor;
@@ -24,20 +22,6 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
 
     public ActionsBridesPublic(AnhyFamily familyPlugin) {
         super(familyPlugin, true);
-    }
-
-    public void accept(AsyncPlayerChatEvent event) {
-        String message = event.getMessage();
-
-        if (familyConfig.checkAnswer(message) == 0) {
-            return;
-        }
-
-        event.setCancelled(true);
-
-        Player bride1 = event.getPlayer();
-        boolean consentGiven = familyConfig.checkAnswer(message) == 1;
-        handleMarriage(bride1, consentGiven);
     }
 
     public boolean handleMarriage(Player bride1, boolean consentGiven) {

@@ -34,6 +34,10 @@ family_access_get: "%s has access: %s."
 family_access_root: "Player %s is one of the leaders of the family %s, their access cannot be changed"
 family_err_no_family: "You don't have a family"
 family_err_player_no_family: "Player %s doesn't have a family"
+family_request_confirm: "[CONFIRM] "
+family_request_reject: " [REJECT]"
+family_request_confirm_hover: "Click to confirm %s"
+family_request_reject_hover: "Click to reject %s"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Male"
@@ -257,6 +261,7 @@ family_hover_copy_message: "Click to copy the prefix '%s' to the clipboard"
 family_hover_reply_chat: "Reply to this chat"
 family_hover_player_reply: "Reply to '%s' in this chat"
 family_hover_player_offline: "Player '%s' is offline"
+family_notify_family_chat: "Relative %s mentioned you in the family chat"
 
 # Commands for family chests [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "The family chest can be the following blocks: &e%s"

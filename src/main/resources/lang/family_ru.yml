@@ -34,6 +34,10 @@ family_access_get: "У %s доступ: %s."
 family_access_root: "Игрок %s является одним из лидеров семьи %s, изменить его доступ невозможно"
 family_err_no_family: "У вас нет семьи"
 family_err_player_no_family: "У игрока %s нет семьи"
+family_request_confirm: "[ПОДТВЕРДИТЬ] "
+family_request_reject: " [ОТКЛОНИТЬ]"
+family_request_confirm_hover: "Кликни чтобы подтвердить %s"
+family_request_reject_hover: "Кликни чтобы отклонить %s"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Мужской"
@@ -257,6 +261,7 @@ family_hover_copy_message: "Нажмите, чтобы скопировать п
 family_hover_reply_chat: "Ответить в этот чат"
 family_hover_player_reply: "Ответить '%s' в этом чате"
 family_hover_player_offline: "Игрок '%s' не в сети"
+family_notify_family_chat: "Родственник %s упомянул вас в семейном чате"
 
 # Команды для семейных сундуков [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "Семейный сундук может быть следующими блоками: &e%s"

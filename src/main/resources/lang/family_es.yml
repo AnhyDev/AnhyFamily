@@ -34,6 +34,10 @@ family_access_get: "%s tiene acceso: %s."
 family_access_root: "El jugador %s es uno de los líderes de la familia %s, su acceso no se puede cambiar"
 family_err_no_family: "No tienes una familia"
 family_err_player_no_family: "El jugador %s no tiene una familia"
+family_request_confirm: "[CONFIRMAR] "
+family_request_reject: " [RECHAZAR]"
+family_request_confirm_hover: "Haz clic para confirmar %s"
+family_request_reject_hover: "Haz clic para rechazar %s"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Masculino"
@@ -257,6 +261,7 @@ family_hover_copy_message: "Haz clic para copiar el prefijo '%s' al portapapeles
 family_hover_reply_chat: "Responder a este chat"
 family_hover_player_reply: "Responder a '%s' en este chat"
 family_hover_player_offline: "El jugador '%s' está desconectado"
+family_notify_family_chat: "El pariente %s te mencionó en el chat familiar"
 
 # Comandos para cofres familiares [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "El cofre familiar puede ser los siguientes bloques: &e%s"

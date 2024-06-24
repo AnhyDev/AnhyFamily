@@ -7,7 +7,7 @@ public class ListenersRegistry {
 
     private final AnhyFamily familyPlugin;
     
-    private AnswerBridesChatListener bridesChatListener;
+    private FamilyPlayerChatEvent bridesChatListener;
     private FamilyChestListener familyChestListener;
     private PlayerInteractionListener playerInteractionListener;
 
@@ -16,7 +16,7 @@ public class ListenersRegistry {
     }
     
     public void register() {
-    	bridesChatListener = new AnswerBridesChatListener(familyPlugin);
+    	bridesChatListener = new FamilyPlayerChatEvent(familyPlugin);
         familyChestListener = new FamilyChestListener(familyPlugin);
         playerInteractionListener = new PlayerInteractionListener(familyPlugin);
     	

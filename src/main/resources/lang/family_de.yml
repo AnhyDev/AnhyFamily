@@ -34,6 +34,10 @@ family_access_get: "%s hat Zugriff: %s."
 family_access_root: "Spieler %s ist einer der Anführer der Familie %s, ihr Zugriff kann nicht geändert werden"
 family_err_no_family: "Sie haben keine Familie"
 family_err_player_no_family: "Spieler %s hat keine Familie"
+family_request_confirm: "[BESTÄTIGEN] "
+family_request_reject: " [ABLEHNEN]"
+family_request_confirm_hover: "Klicken, um %s zu bestätigen"
+family_request_reject_hover: "Klicken, um %s abzulehnen"
 
 # Befehl /gender ... [Klassen: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Männlich"
@@ -257,6 +261,7 @@ family_hover_copy_message: "Klicken, um das Präfix '%s' in die Zwischenablage z
 family_hover_reply_chat: "Auf diesen Chat antworten"
 family_hover_player_reply: "Auf '%s' in diesem Chat antworten"
 family_hover_player_offline: "Spieler '%s' ist offline"
+family_notify_family_chat: "Verwandter %s hat dich im Familienchat erwähnt"
 
 # Befehle für Familientruhen [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "Die Familienschatztruhe kann die folgenden Blöcke sein: &e%s"

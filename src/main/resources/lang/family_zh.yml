@@ -34,6 +34,10 @@ family_access_get: "%s 有访问权限：%s。"
 family_access_root: "玩家 %s 是家庭 %s 的领导者之一，无法更改其访问权限"
 family_err_no_family: "你没有家庭"
 family_err_player_no_family: "玩家 %s 没有家庭"
+family_request_confirm: "[确认] "
+family_request_reject: " [拒绝]"
+family_request_confirm_hover: "点击确认 %s"
+family_request_reject_hover: "点击拒绝 %s"
 
 # 命令 /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "男性"
@@ -257,6 +261,7 @@ family_hover_copy_message: "点击复制前缀 '%s' 到剪贴板"
 family_hover_reply_chat: "回复此聊天"
 family_hover_player_reply: "回复此聊天中的 '%s'"
 family_hover_player_offline: "玩家 '%s' 不在线"
+family_notify_family_chat: "亲戚 %s 在家庭群聊中提到了你"
 
 # 家庭箱子的命令 [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "家庭箱可以是以下块：&e%s"

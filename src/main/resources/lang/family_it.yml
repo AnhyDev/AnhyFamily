@@ -34,6 +34,10 @@ family_access_get: "%s ha accesso: %s."
 family_access_root: "Il giocatore %s è uno dei leader della famiglia %s, il suo accesso non può essere modificato"
 family_err_no_family: "Non hai una famiglia"
 family_err_player_no_family: "Il giocatore %s non ha una famiglia"
+family_request_confirm: "[CONFERMA] "
+family_request_reject: " [RIFIUTA]"
+family_request_confirm_hover: "Clicca per confermare %s"
+family_request_reject_hover: "Clicca per rifiutare %s"
 
 # Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Maschile"
@@ -257,6 +261,7 @@ family_hover_copy_message: "Clicca per copiare il prefisso '%s' negli appunti"
 family_hover_reply_chat: "Rispondi a questa chat"
 family_hover_player_reply: "Rispondi a '%s' in questa chat"
 family_hover_player_offline: "Il giocatore '%s' è offline"
+family_notify_family_chat: "Il parente %s ti ha menzionato nella chat familiare"
 
 # Comandi per forzieri familiari [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "La cassa di famiglia può essere i seguenti blocchi: &e%s"
