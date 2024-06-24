@@ -142,37 +142,32 @@ public class MarriageValidator extends Sender {
                 return false;
             }
         }
-
-        familyBride1 = FamilyUtils.getFamily(bride1);
-        familyBride2 = FamilyUtils.getFamily(bride2);
-        
-        if (!validateMarriageCompatibility(familyBride1, familyBride2, recipients)) {
-            return false;
-        }
-
         return true;
     }
 
-    public boolean validateMarriageCompatibility(PlayerFamily family1, PlayerFamily family2, Player[] recipients) {
+    public String[] validateMarriageCompatibility(PlayerFamily family1, PlayerFamily family2, Player[] recipients) {
         FamilyConfig familyConfig = ((GlobalManager) libraryManager).getFamilyConfig();
         boolean nonTraditionalAllowed = familyConfig.isNonBinaryMarry();
         
         if (!nonTraditionalAllowed && !FamilyUtils.areGendersCompatibleForTraditional(family1, family2)) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_failed_traditional", new String[] {}), MessageType.WARNING, false, recipients);
-            return false;
+            return new String[] {"family_marry_failed_traditional", ""};
         }
-        
+
+        String[] result = null;
+
         if (family1.getLastName() == null || family1.getLastName()[0] == null || family1.getLastName()[0].isEmpty()) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_last_name_not_found", new String[] {family1.getRootrNickName()}), MessageType.WARNING, false, recipients);
-            return false;
+            result = new String[] {"family_marry_last_name_not_found", family1.getRootrNickName(), null};
         }
-        
+
         if (family2.getLastName() == null || family2.getLastName()[0] == null || family2.getLastName()[0].isEmpty()) {
-            sendMessage(new MessageForFormatting(priestTitle + ": family_marry_last_name_not_found", new String[] {family1.getRootrNickName()}), MessageType.WARNING, false, recipients);
-            return false;
+            if (result == null) {
+                result = new String[] {"family_marry_last_name_not_found", family2.getRootrNickName()};
+            } else {
+                result[2] = family2.getRootrNickName();
+            }
         }
-        
-        return true;
+
+        return result;
     }
 
     public boolean validateMembers(Player[] recipients, Player... members) {

@@ -66,6 +66,10 @@ public class ActionsPriest extends AbstractMarriageSender {
                 return false;
             }
         }
+		
+		if (!validator.validateCeremonyParticipants(bride1, bride2, recipients)) {
+			return false;
+		}
 
 		String[] validateCeremonyConditionsResult = validator.validateCeremonyConditions(bride1, bride2);
 		if (validateCeremonyConditionsResult != null) {
@@ -73,10 +77,19 @@ public class ActionsPriest extends AbstractMarriageSender {
 		        sendMAnnouncement(priestPrefixType, priestName, validateCeremonyConditionsResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
 		        return false;
 		}
-		
-		if (!validator.validateCeremonyParticipants(bride1, bride2, recipients)) {
-			return false;
-		}
+
+        PlayerFamily bride1Family = FamilyUtils.getFamily(bride1.getUniqueId());
+        PlayerFamily bride2Family = FamilyUtils.getFamily(bride2.getUniqueId());
+        
+        String[] validateCompatibilityResult = validator.validateMarriageCompatibility(bride1Family, bride2Family, recipients);
+        if (validateCompatibilityResult != null) {
+        	String members = String.join(", ", Arrays.stream(Arrays.copyOfRange(validateCompatibilityResult, 1, validateCompatibilityResult.length))
+                    .filter(Objects::nonNull)
+                    .toArray(String[]::new));
+
+            sendMAnnouncement(priestPrefixType, null, validateCompatibilityResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+            return false;
+        }
         
         ProcessLastName processLastName = validator.processLastNameArgs(args);
         String lastName[] = processLastName.getLastName();

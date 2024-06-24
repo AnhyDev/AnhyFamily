@@ -56,11 +56,7 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
 		        sendMAnnouncement(priestPrefixType, null, validateCeremonyConditionsResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
 		        return ;
 		}
-
-        if (!validator.validateCeremonyParticipants(proposer, receiver, recipients)) {
-            return;
-        }
-
+        
         String[] validatePerm = validator.validatePermissions(proposer, receiver, recipients);
         if (validatePerm != null) {
             if (validatePerm[0] == null) {
@@ -74,6 +70,18 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         }
 
         PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
+        PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver.getUniqueId());
+        
+        String[] validateCompatibilityResult = validator.validateMarriageCompatibility(proposerFamily, receiverFamily, recipients);
+        if (validateCompatibilityResult != null) {
+        	String members = String.join(", ", Arrays.stream(Arrays.copyOfRange(validateCompatibilityResult, 1, validateCompatibilityResult.length))
+                    .filter(Objects::nonNull)
+                    .toArray(String[]::new));
+
+            sendMAnnouncement(priestPrefixType, null, validateCompatibilityResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+            return;
+        }
+
         String[] chosenSurname = proposerFamily.getLastName();
 
         MarryPrivate proposal = new MarryPrivate(proposer, receiver, chosenSurname);
