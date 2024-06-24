@@ -29,7 +29,10 @@ public class FamilyHomeSubCommand extends Sender {
                             homeManager.setHome();
                             break;
                         case "accept":
-                            homeManager.setAccept();
+                            homeManager.requestAccept();
+                            break;
+                        case "refuse":
+                            homeManager.requestRejected();
                             break;
                         case "access":
                             homeManager.setHomeAccess();

@@ -24,6 +24,7 @@ public class FamilyChestTabCompleter implements TabCompleter {
         if (args.length == 1) {
             completions.add("set");
             completions.add("accept");
+            completions.add("refuse");
             completions.add("access");
             completions.add("default");
             completions.add("check");

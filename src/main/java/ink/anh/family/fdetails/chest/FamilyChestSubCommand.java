@@ -26,7 +26,10 @@ public class FamilyChestSubCommand {
                             chestManager.setChest();
                             break;
                         case "accept":
-                            chestManager.setAccept();
+                            chestManager.requestAccept();
+                            break;
+                        case "refuse":
+                        	chestManager.requestRejected();
                             break;
                         case "access":
                             chestManager.setChestAccess();

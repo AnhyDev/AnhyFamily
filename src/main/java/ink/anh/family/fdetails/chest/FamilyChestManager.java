@@ -145,7 +145,7 @@ public class FamilyChestManager extends AbstractDetailsManager {
         });
     }
 
-    public void setAccept() {
+    public void requestAccept() {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             ChestRequest request = chestRequests.get(familyId);
@@ -168,6 +168,20 @@ public class FamilyChestManager extends AbstractDetailsManager {
 
                 Player[] players = new Player[]{player, Bukkit.getPlayer(request.getRequesterUUID())};
                 sendMessage(new MessageForFormatting("family_chest_set", new String[]{}), MessageType.NORMAL, players);
+            } else {
+                sendMessage(new MessageForFormatting("family_err_no_pending_request", new String[]{}), MessageType.WARNING, player);
+            }
+        });
+    }
+    
+    public void requestRejected() {
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
+            UUID familyId = details.getFamilyId();
+            ChestRequest request = chestRequests.get(familyId);
+            if (request != null && !request.getRequesterUUID().equals(player.getUniqueId())) {
+            	chestRequests.remove(familyId);
+                Player[] players = new Player[]{player, Bukkit.getPlayer(request.getRequesterUUID())};
+                sendMessage(new MessageForFormatting("family_request_rejected", new String[]{}), MessageType.NORMAL, players);
             } else {
                 sendMessage(new MessageForFormatting("family_err_no_pending_request", new String[]{}), MessageType.WARNING, player);
             }

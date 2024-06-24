@@ -25,6 +25,7 @@ public class FamilyHomeTabCompleter implements TabCompleter {
         if (args.length == 1) {
             completions.add("set");
             completions.add("accept");
+            completions.add("refuse");
             completions.add("access");
             completions.add("check");
             completions.add("default");

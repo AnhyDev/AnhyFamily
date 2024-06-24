@@ -299,6 +299,8 @@ family_symbol_set: "Символ сім'ї встановлено."
 
 
 
+family_request_rejected: "Запит відхилено."
+
 family_err_no_access_hugs: "Гравець %s не дозволяє вам обіймати його"
 family_hugs_access: "Ви обняли %s"
 family_hugs_access_you: "Ви потрапили в обійми до %s"

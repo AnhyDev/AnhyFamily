@@ -6,6 +6,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import ink.anh.api.enums.Access;
+import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.utils.SyncExecutor;
@@ -17,6 +18,7 @@ import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
+import ink.anh.family.fdetails.MessageComponentBuilder;
 import ink.anh.family.fdetails.AbstractDetailsManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
@@ -126,7 +128,8 @@ public class FamilyHomeManager extends AbstractDetailsManager {
 
                 Player spouse = Bukkit.getPlayer(spouseUUID);
                 if (spouse != null && spouse.isOnline()) {
-                    sendMessage(new MessageForFormatting("family_home_accept_sent", new String[]{"/" + command + " accept"}), MessageType.NORMAL, spouse);
+                    MessageComponents messageComponents = MessageComponentBuilder.acceptMessageComponent("family_home_accept_sent", command, "accept", "refuse", spouse);
+                    sendMessageComponent(player, messageComponents);
                 }
 
                 Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
@@ -141,7 +144,7 @@ public class FamilyHomeManager extends AbstractDetailsManager {
         });
     }
 
-    public void setAccept() {
+    public void requestAccept() {
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             HomeRequest request = homeRequests.get(familyId);
@@ -151,6 +154,20 @@ public class FamilyHomeManager extends AbstractDetailsManager {
                 homeRequests.remove(familyId);
                 Player[] players = new Player[]{player, Bukkit.getPlayer(request.getRequesterUUID())};
                 sendMessage(new MessageForFormatting("family_home_set", new String[]{}), MessageType.NORMAL, players);
+            } else {
+                sendMessage(new MessageForFormatting("family_err_no_pending_request", new String[]{}), MessageType.WARNING, player);
+            }
+        });
+    }
+    
+    public void requestRejected() {
+        executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
+            UUID familyId = details.getFamilyId();
+            HomeRequest request = homeRequests.get(familyId);
+            if (request != null && !request.getRequesterUUID().equals(player.getUniqueId())) {
+                homeRequests.remove(familyId);
+                Player[] players = new Player[]{player, Bukkit.getPlayer(request.getRequesterUUID())};
+                sendMessage(new MessageForFormatting("family_request_rejected", new String[]{}), MessageType.NORMAL, players);
             } else {
                 sendMessage(new MessageForFormatting("family_err_no_pending_request", new String[]{}), MessageType.WARNING, player);
             }
