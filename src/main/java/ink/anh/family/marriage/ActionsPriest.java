@@ -17,12 +17,9 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 
 public class ActionsPriest extends AbstractMarriageSender {
-
-    private MarriageValidator validator;
     
     public ActionsPriest(AnhyFamily familyPlugin) {
-        super(familyPlugin);
-        this.setValidator(new MarriageValidator(familyPlugin, true));
+        super(familyPlugin, true);
     }
     
     public boolean marry(CommandSender sender, String[] args) {
@@ -119,9 +116,4 @@ public class ActionsPriest extends AbstractMarriageSender {
 
         return true;
 	}
-
-	private void setValidator(MarriageValidator validator) {
-		this.validator = validator;
-	}
-
 }

@@ -24,11 +24,9 @@ import ink.anh.api.utils.SyncExecutor;
 
 public class ActionsBridesPrivate extends AbstractMarriageSender {
 
-    private MarriageValidator validator;
 
     public ActionsBridesPrivate(AnhyFamily familyPlugin) {
-        super(familyPlugin);
-        this.validator = new MarriageValidator(familyPlugin, false);
+        super(familyPlugin, false);
     }
 
     public void proposePrivateMarriage(CommandSender sender, String[] args) {

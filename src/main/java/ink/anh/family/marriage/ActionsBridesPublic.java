@@ -23,7 +23,7 @@ import ink.anh.family.util.FamilyUtils;
 public class ActionsBridesPublic extends AbstractMarriageSender {
 
     public ActionsBridesPublic(AnhyFamily familyPlugin) {
-        super(familyPlugin);
+        super(familyPlugin, true);
     }
 
     public void accept(AsyncPlayerChatEvent event) {
@@ -93,9 +93,9 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
             return true;
         }
 
-        String family_marry_vows_man = ":§b family_marry_vows_man";
-        String family_marry_vows_woman = ":§d family_marry_vows_woman";
-        String family_marry_vows_nonbinary = ":§f family_marry_vows_nonbinary";
+        String family_marry_vows_man = "family_marry_vows_man";
+        String family_marry_vows_woman = "family_marry_vows_woman";
+        String family_marry_vows_nonbinary = "family_marry_vows_nonbinary";
         String family_marry_success = "family_marry_success";
 
         PlayerFamily bride2family = FamilyUtils.getFamily(bride2);
@@ -183,7 +183,7 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
             MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF);
             Bukkit.getPluginManager().callEvent(event);
 
-        	String[] paymentFailedResult = new MarriageValidator(familyPlugin, true).paymentFailed(marryPublic, marriageManager);
+        	String[] paymentFailedResult = validator.paymentFailed(marryPublic, marriageManager);
         	if (paymentFailedResult != null) {
         	    sendMAnnouncement(priestPrefixType, priestName, paymentFailedResult[0], MessageType.WARNING.getColor(true), Arrays.copyOfRange(paymentFailedResult, 1, paymentFailedResult.length), recipients);
         	    return;

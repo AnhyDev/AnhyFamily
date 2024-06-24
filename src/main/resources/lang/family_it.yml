@@ -193,6 +193,11 @@ family_marry_start_success: |
   O dite (NO!) per rifiutare!
 family_marry_start_priest: "Il rituale è iniziato, aspetta il consenso dei novelli sposi o annulla il matrimonio."
 family_marry_last_name_not_found: "Il matrimonio ora è impossibile, a %s manca un cognome!"
+family_groom_consent: "%s devi dare una risposta:"
+family_groom_consent1: " [Rispondi SÌ!] "
+family_groom_consent2: " [Rispondi NO!]"
+family_groom_hover_consent1: "Clicca per confermare, \no invia il comando /marry accept"
+family_groom_hover_consent2: "Clicca per rifiutare, \no invia il comando /marry refuse"
 
 # Proposte di matrimonio private [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Nessuna proposta di matrimonio."

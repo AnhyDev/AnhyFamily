@@ -18,16 +18,17 @@ public abstract class AbstractMarriageSender extends Sender {
     protected GlobalManager manager;
     protected MarriageManager marriageManager;
     protected FamilyConfig familyConfig;
+    protected MarriageValidator validator;
     protected MarryPrefixType priestPrefixType = MarryPrefixType.DEFAULT;
     protected MarryPrefixType bridePrefixType = MarryPrefixType.DEFAULT;
-    protected MarryPrefixType bridxPrefixType = MarryPrefixType.DEFAULT;
 
-    public AbstractMarriageSender(AnhyFamily familyPlugin) {
+    public AbstractMarriageSender(AnhyFamily familyPlugin, boolean isPublic) {
         super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
         this.manager = GlobalManager.getInstance();
         this.marriageManager = GlobalManager.getInstance().getMarriageManager();
         this.familyConfig = manager.getFamilyConfig();
+        this.validator = new MarriageValidator(familyPlugin, isPublic);
     }
 
     protected void sendMAnnouncement(MarryPrefixType prefixType, String senderName, String messageKey, String messageColor, String[] placeholders, Player[] recipients) {

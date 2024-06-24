@@ -193,6 +193,11 @@ family_marry_start_success: |
   Or say (NO!) to refuse!
 family_marry_start_priest: "The ceremony has begun, wait for the consent of the newlyweds or cancel the wedding"
 family_marry_last_name_not_found: "The wedding is impossible now, %s is missing a last name!"
+family_groom_consent: "%s you need to give an answer:"
+family_groom_consent1: " [Reply YES!] "
+family_groom_consent2: " [Reply NO!]"
+family_groom_hover_consent1: "Click to confirm, \nor send the command /marry accept"
+family_groom_hover_consent2: "Click to refuse, \nor send the command /marry refuse"
 
 # Private Marriage Proposals [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "No marriage proposal."

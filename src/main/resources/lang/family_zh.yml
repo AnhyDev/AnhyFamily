@@ -193,6 +193,11 @@ family_marry_start_success: |
   或者说（不！）来拒绝！
 family_marry_start_priest: "仪式已经开始，等待新婚夫妇的同意或取消婚礼。"
 family_marry_last_name_not_found: "现在无法举行婚礼，%s 缺少姓氏！"
+family_groom_consent: "%s 你需要给出答案："
+family_groom_consent1: " [回复是！] "
+family_groom_consent2: " [回复否！]"
+family_groom_hover_consent1: "点击确认，\n或发送命令 /marry accept"
+family_groom_hover_consent2: "点击拒绝，\n或发送命令 /marry refuse"
 
 # 私人婚姻提议 [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "没有婚姻提议。"
