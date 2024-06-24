@@ -278,6 +278,8 @@ family_err_chest_distance_restriction: "You are too far from the chest."
 family_err_chest_world_restriction: "You are not in the world where the chest is located."
 family_err_chest_click_disabled: "Opening the chest by clicking is disabled."
 family_err_chest_not_set: "Chest location not set."
+family_chest_inventory: "Family chest: %s"
+family_err_chest_open_other: "Family chest %s is already opened by player %s"
 
 # [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "Default access check for the group"

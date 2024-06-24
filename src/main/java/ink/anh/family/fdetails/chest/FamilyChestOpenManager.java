@@ -10,16 +10,22 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageForFormatting;
+import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.LangUtils;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fdetails.FamilyDetails;
+import ink.anh.family.util.StringColorUtils;
 
-public class FamilyChestOpenManager {
+public class FamilyChestOpenManager extends Sender {
 
     private static final FamilyChestOpenManager instance = new FamilyChestOpenManager();
     private final BiMap<UUID, String> chestMap;
 
     private FamilyChestOpenManager() {
+        super(GlobalManager.getInstance());
     	chestMap = HashBiMap.create();
     }
 
@@ -38,22 +44,27 @@ public class FamilyChestOpenManager {
         synchronized (chestMap) {
             if (chestMap.containsKey(familyId)) {
                 String viewerName = chestMap.get(familyId);
-                player.sendMessage("Інвентар вже відкритий гравцем: " + viewerName);
+                sendMessage(new MessageForFormatting("family_err_chest_open_other", new String[] {details.getFamilySymbol(), viewerName}), MessageType.WARNING, player);
                 return;
             }
 
-            String guiName = Translator.translateKyeWorld(GlobalManager.getInstance(), "repo_group_holder", LangUtils.getPlayerLanguage(player));
+            String[] langs = LangUtils.getPlayerLanguage(player);
+            
+            String translateText = Translator.translateKyeWorld(libraryManager, "&" + StringColorUtils.PREFIX_CHEST_COLOR + "family_chest_inventory", langs);
+            translateText = StringUtils.colorize(StringUtils.formatString(translateText, new String[] {details.getFamilySymbol()}));
+            
+            String guiName = Translator.translateKyeWorld(libraryManager, translateText, langs);
             FamilyChest holder = new FamilyChest(guiName, familyId);
 
             if (details.getFamilyChest() == null) {
-                player.sendMessage("Скриня не встановлена");
+                sendMessage(new MessageForFormatting("family_err_chest_not_set", new String[] {}), MessageType.WARNING, player);
                 return;
             }
             ItemStack[] familyChest = details.getFamilyChest().getFamilyChest();
 
             chestMap.put(familyId, player.getName());
 
-            Bukkit.getScheduler().runTask(GlobalManager.getInstance().getPlugin(), () -> {
+            Bukkit.getScheduler().runTask(libraryManager.getPlugin(), () -> {
                 holder.addItems(familyChest);
                 player.openInventory(holder.getInventory());
                 player.getWorld().playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1.0f, 1.0f);

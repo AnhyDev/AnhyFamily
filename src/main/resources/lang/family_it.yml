@@ -278,6 +278,8 @@ family_err_chest_distance_restriction: "Sei troppo lontano dal forziere."
 family_err_chest_world_restriction: "Non sei nel mondo in cui si trova il forziere."
 family_err_chest_click_disabled: "L'apertura del forziere tramite clic è disabilitata."
 family_err_chest_not_set: "Posizione del forziere non impostata."
+family_chest_inventory: "Forziere familiare: %s"
+family_err_chest_open_other: "Il forziere familiare %s è già aperto dal giocatore %s"
 
 # [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "Controllo di accesso predefinito per il gruppo"

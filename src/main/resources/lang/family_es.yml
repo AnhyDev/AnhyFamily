@@ -278,6 +278,8 @@ family_err_chest_distance_restriction: "Estás demasiado lejos del cofre."
 family_err_chest_world_restriction: "No estás en el mundo donde se encuentra el cofre."
 family_err_chest_click_disabled: "Abrir el cofre haciendo clic está deshabilitado."
 family_err_chest_not_set: "La ubicación del cofre no está establecida."
+family_chest_inventory: "Cofre familiar: %s"
+family_err_chest_open_other: "El cofre familiar %s ya está abierto por el jugador %s"
 
 # [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "Verificación de acceso predeterminado para el grupo"

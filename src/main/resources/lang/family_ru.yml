@@ -278,6 +278,8 @@ family_err_chest_distance_restriction: "Ты слишком далеко от с
 family_err_chest_world_restriction: "Ты не в том мире, где находится сундук."
 family_err_chest_click_disabled: "Открытие сундука щелчком запрещено."
 family_err_chest_not_set: "Место для сундука не установлено."
+family_chest_inventory: "Семейный сундук: %s"
+family_err_chest_open_other: "Семейный сундук %s уже открыт игроком %s"
 
 # [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "Проверка доступа по умолчанию для группы"

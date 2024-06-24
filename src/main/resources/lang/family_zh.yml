@@ -278,6 +278,8 @@ family_err_chest_distance_restriction: "你离箱子太远了。"
 family_err_chest_world_restriction: "你不在箱子所在的世界里。"
 family_err_chest_click_disabled: "禁用点击打开箱子。"
 family_err_chest_not_set: "箱子位置未设定。"
+family_chest_inventory: "家庭宝箱：%s"
+family_err_chest_open_other: "家庭宝箱 %s 已被玩家 %s 打开"
 
 # [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "组的默认访问检查"

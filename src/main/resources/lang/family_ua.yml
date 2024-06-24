@@ -278,6 +278,8 @@ family_err_chest_distance_restriction: "Ви занадто далеко від 
 family_err_chest_world_restriction: "Ви не в тому світі, де знаходиться скриня."
 family_err_chest_click_disabled: "Відкриття скрині кліком заборонено."
 family_err_chest_not_set: "Місце для скрині не встановлено."
+family_chest_inventory: "Сімейна скриня: %s"
+family_err_chest_open_other: "Сімейна скриня %s вже відкрита гравцем %s"
 
 # [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "Перевірка доступу за замовчуванням для групи"

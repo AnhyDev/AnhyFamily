@@ -278,6 +278,8 @@ family_err_chest_distance_restriction: "Du bist zu weit von der Truhe entfernt."
 family_err_chest_world_restriction: "Du bist nicht in der Welt, in der sich die Truhe befindet."
 family_err_chest_click_disabled: "Das Öffnen der Truhe durch Klicken ist deaktiviert."
 family_err_chest_not_set: "Truhenstandort nicht festgelegt."
+family_chest_inventory: "Familienschatz: %s"
+family_err_chest_open_other: "Der Familienschatz %s wird bereits von Spieler %s geöffnet"
 
 # [ink.anh.family.fdetails.MessageComponentBuilder]
 family_default_chat_access_check: "Standard-Zugriffsprüfung für die Gruppe"
