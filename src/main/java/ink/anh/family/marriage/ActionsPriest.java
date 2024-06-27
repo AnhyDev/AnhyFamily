@@ -113,7 +113,7 @@ public class ActionsPriest extends AbstractMarriageSender {
     	
 		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> {
 		    sendMAnnouncement(priestPrefixType, priestName, "family_marry_start_success", MessageType.IMPORTANT.getColor(true), new String[] {bride1Name, bride2Name}, recipients);
-		    sendPriestAcceptMessage(bridePrefixType, priestName, new Player[] {bride1, bride2});
+		    sendPriestAcceptMessage(priestPrefixType, priestName, new Player[] {bride1, bride2});
 		    
 		}, 10L);
 
