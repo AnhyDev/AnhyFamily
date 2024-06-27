@@ -35,3 +35,6 @@ commands:
     fhugs:
         aliases: [familyhugs, hugs]
         usage: "[AnhyFamily] The command '/fhugs (/familyhugs, /hugs)' execution error, please check the arguments' correctness."
+    fprefix:
+        aliases: [familyprefix, prefix]
+        usage: "[AnhyFamily] The command '/fprefix (/familyprefix, /prefix)' execution error, please check the arguments' correctness."

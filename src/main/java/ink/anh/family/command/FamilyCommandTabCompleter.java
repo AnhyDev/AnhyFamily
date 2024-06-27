@@ -22,9 +22,6 @@ public class FamilyCommandTabCompleter implements TabCompleter {
             completions.add("divorce");
             completions.add("separate");
             completions.add("info");
-            completions.add("prefix");
-            completions.add("setprefix");
-            completions.add("acceptprefix");
         } else if (args.length == 2) {
             switch (args[0].toLowerCase()) {
                 case "tree":

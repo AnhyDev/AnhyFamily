@@ -5,5 +5,6 @@ public enum TypeTargetComponent {
 	CHAT,
 	CHEST,
 	HOME,
-	HUGS;
+	HUGS,
+	SYMBOL;
 }

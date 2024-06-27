@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
@@ -18,11 +17,13 @@ import ink.anh.api.messages.MessageType;
 
 public class ActionsPriest extends AbstractMarriageSender {
     
+
     public ActionsPriest(AnhyFamily familyPlugin) {
         super(familyPlugin, true);
     }
     
     public boolean marry(CommandSender sender, String[] args) {
+		
 		
 		if (!validator.validateCommandInput(sender, args)) {
             return false;
@@ -41,14 +42,14 @@ public class ActionsPriest extends AbstractMarriageSender {
         recipientSet.add(bride2);
 
         Player[] recipients = recipientSet.toArray(new Player[0]);
+		
+		if (!validator.validateMembers(recipients, bride1, bride2, priest)) {
+			return false;
+		}
         
         final String priestName = priest.getDisplayName() != null ? priest.getDisplayName() : priest.getName();
 		final String bride1Name = bride1.getDisplayName() != null ? bride1.getDisplayName() : bride1.getName();
 		final String bride2Name = bride2.getDisplayName() != null ? bride2.getDisplayName() : bride2.getName();
-		
-		if (validator.validateMembers(recipients, bride1, bride2, priest)) {
-			return false;
-		}
 
         PlayerFamily priestFamily = FamilyUtils.getFamily(priest);
         priestPrefixType = MarryPrefixType.getMarryPrefixType(priestFamily != null ? priestFamily.getGender() : null, 0);
@@ -59,7 +60,7 @@ public class ActionsPriest extends AbstractMarriageSender {
                 return false;
             } else {
                 String members = String.join(", ", Arrays.copyOfRange(validatePerm, 1, validatePerm.length));
-                sendMAnnouncement(priestPrefixType, priestName, validatePerm[0], MessageType.ESPECIALLY.getColor(true), new String[] {members}, recipients);
+                sendMAnnouncement(priestPrefixType, priestName, validatePerm[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
                 return false;
             }
         }
@@ -83,7 +84,6 @@ public class ActionsPriest extends AbstractMarriageSender {
         	String members = String.join(", ", Arrays.stream(Arrays.copyOfRange(validateCompatibilityResult, 1, validateCompatibilityResult.length))
                     .filter(Objects::nonNull)
                     .toArray(String[]::new));
-
             sendMAnnouncement(priestPrefixType, null, validateCompatibilityResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
             return false;
         }
@@ -111,8 +111,11 @@ public class ActionsPriest extends AbstractMarriageSender {
 
     	sendMessage(new MessageForFormatting("family_marry_start_priest", new String[] {}), MessageType.NORMAL, priest);
     	
-		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> 
-			sendMessage(new MessageForFormatting(": family_marry_start_success", new String[] {bride1Name, bride2Name}), MessageType.ESPECIALLY, false, recipients), 10L);
+		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> {
+		    sendMAnnouncement(priestPrefixType, priestName, "family_marry_start_success", MessageType.IMPORTANT.getColor(true), new String[] {bride1Name, bride2Name}, recipients);
+		    sendPriestAcceptMessage(bridePrefixType, priestName, new Player[] {bride1, bride2});
+		    
+		}, 10L);
 
         return true;
 	}

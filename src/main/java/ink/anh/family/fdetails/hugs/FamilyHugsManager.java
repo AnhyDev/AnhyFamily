@@ -115,7 +115,6 @@ public class FamilyHugsManager extends AbstractDetailsManager {
                     // Ефект VILLAGER_ANGRY перед очима гравця
                     player.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, player.getLocation().add(0, 1.5, 0), 1, 0.2, 0.2, 0.2, 0.05);
 
-                    // тут потрібно вставити ефект VILLAGER_ANGRY щоб гравець player добре його побачив у себе перед очима
                     sendActionBarMessage(player, new MessageForFormatting(getInvalidAccessMessage(), new String[]{target.getName()}), "#820419");
                     return true;
                 }

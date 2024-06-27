@@ -31,6 +31,19 @@ public abstract class MarryBase {
     public void setChosenSurname(String[] chosenSurname) {
         this.chosenSurname = chosenSurname;
     }
+    
+    public Player getOtherParticipant(Player player) {
+        if (player == null) {
+            return null;
+        }
+        if (player.equals(proposer)) {
+            return receiver;
+        } else if (player.equals(receiver)) {
+            return proposer;
+        } else {
+            return null;
+        }
+    }
 
     @Override
     public int hashCode() {

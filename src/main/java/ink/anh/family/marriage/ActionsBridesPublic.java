@@ -24,10 +24,10 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
         super(familyPlugin, true);
     }
 
-    public boolean handleMarriage(Player bride1, boolean consentGiven) {
-        UUID uuidBride1 = bride1 != null ? bride1.getUniqueId() : null;
+    public boolean handleMarriage(Player sender, boolean consentGiven) {
+        UUID uuidBride1 = sender != null ? sender.getUniqueId() : null;
 
-        if (uuidBride1 == null || !bride1.isOnline()) {
+        if (uuidBride1 == null || !sender.isOnline()) {
             marriageManager.remove(uuidBride1);
             return false;
         }
@@ -45,33 +45,33 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
             one = 1;
         }
 
-        Player bride2 = one == 0 ? marryPublic.getProposer() : marryPublic.getReceiver();
+        Player bride = marryPublic.getOtherParticipant(sender);
         Player priest = marryPublic.getPriest();
 
-        Player[] recipients = OtherUtils.getPlayersWithinRadius(bride1.getLocation(), familyConfig.getCeremonyHearingRadius());
+        Player[] recipients = OtherUtils.getPlayersWithinRadius(sender.getLocation(), familyConfig.getCeremonyHearingRadius());
 
-        if (!validateMembers(recipients, bride1, priest, bride2)) {
-            marriageManager.remove(bride1);
+        if (!validateMembers(recipients, sender, priest, bride)) {
+            marriageManager.remove(sender);
             return false;
         }
 
-        String bride1Name = bride1.getDisplayName() != null ? bride1.getDisplayName() : bride1.getName();
-        String bride2Name = bride2.getDisplayName() != null ? bride2.getDisplayName() : bride2.getName();
+        String senderName = sender.getDisplayName() != null ? sender.getDisplayName() : sender.getName();
+        String brideName = bride.getDisplayName() != null ? bride.getDisplayName() : bride.getName();
         String priestName = priest.getDisplayName() != null ? priest.getDisplayName() : priest.getName();
         
         priestPrefixType = MarryPrefixType.getMarryPrefixType(FamilyUtils.getFamily(priest).getGender(), 0);
         
-        PlayerFamily bride1family = FamilyUtils.getFamily(bride1);
-        bridePrefixType = MarryPrefixType.getMarryPrefixType(bride1family.getGender(), 1);
+        PlayerFamily senderfamily = FamilyUtils.getFamily(sender);
+        bridePrefixType = MarryPrefixType.getMarryPrefixType(senderfamily.getGender(), 1);
 
         if (!consentGiven) {
             marriageManager.remove(uuidBride1);
             
-        	sendMAnnouncement(bridePrefixType, bride1Name, "family_marry_refuse", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
+        	sendMAnnouncement(bridePrefixType, senderName, "family_marry_refuse", MessageType.WARNING.getColor(true), new String[]{senderName, brideName}, recipients);
             
             Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> {
 
-            	sendMAnnouncement(priestPrefixType, priestName, "family_marry_failed", MessageType.WARNING.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
+            	sendMAnnouncement(priestPrefixType, priestName, "family_marry_failed", MessageType.WARNING.getColor(true), new String[]{senderName, brideName}, recipients);
             }, 10L);
             
             return true;
@@ -82,26 +82,26 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
         String family_marry_vows_nonbinary = "family_marry_vows_nonbinary";
         String family_marry_success = "family_marry_success";
 
-        PlayerFamily bride2family = FamilyUtils.getFamily(bride2);
-
-        int genderStatus = bride2family.getGender() == Gender.MALE ? 1 : bride2family.getGender() == Gender.FEMALE ? 2 : 0;
+        int genderStatus = senderfamily.getGender() == Gender.MALE ? 1 : senderfamily.getGender() == Gender.FEMALE ? 2 : 0;
 
         String vowOfNewlyweds = genderStatus == 1 ? family_marry_vows_man : genderStatus == 2 ? family_marry_vows_woman : family_marry_vows_nonbinary;
 
         setMarriageConsent(marryPublic, one);
         
-    	sendMAnnouncement(bridePrefixType, bride1Name, vowOfNewlyweds, MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
+    	sendMAnnouncement(bridePrefixType, senderName, vowOfNewlyweds, MessageType.IMPORTANT.getColor(true), new String[]{brideName}, recipients);
 
         if (!marryPublic.areBothConsentsGiven()) {
-        	sendMAnnouncement(priestPrefixType, priestName, "family_marry_waiting_for_consent", MessageType.ESPECIALLY.getColor(true), new String[]{bride1Name, bride2Name}, recipients);
+        	sendMAnnouncement(priestPrefixType, priestName, "family_marry_waiting_for_consent", MessageType.IMPORTANT.getColor(true), new String[]{senderName, brideName}, recipients);
 
             return true;
         }
 
+        PlayerFamily bridefamily = FamilyUtils.getFamily(bride);
+
         final int num = one;
 
         SyncExecutor.runSync(() -> {
-            processMarriage(priest, bride1family, bride2family, recipients, vowOfNewlyweds, marryPublic, num, new String[]{bride1Name, bride2Name}, family_marry_success);
+            processMarriage(priest, senderfamily, bridefamily, recipients, vowOfNewlyweds, marryPublic, num, new String[]{senderName, brideName}, family_marry_success);
         });
         return true;
     }
@@ -161,7 +161,7 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
 
     private void processMarriage(Player priest, PlayerFamily proposerFamily, PlayerFamily receiverFamily, Player[] recipients,
     		String vowOfNewlyweds, MarryPublic marryPublic, int one, String[] brides, String stringMarry) {
-        final MessageType[] messageType = {MessageType.WARNING, MessageType.ESPECIALLY};
+        final MessageType[] messageType = {MessageType.WARNING, MessageType.IMPORTANT};
         final String priestName = priest.getDisplayName() != null ? priest.getDisplayName() : priest.getName();
         try {
             MarriageEvent event = new MarriageEvent(priest, proposerFamily, receiverFamily, ActionInitiator.PLAYER_SELF);
