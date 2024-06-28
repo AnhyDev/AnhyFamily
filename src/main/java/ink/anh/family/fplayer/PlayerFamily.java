@@ -121,6 +121,18 @@ public class PlayerFamily {
     public String[] getLastName() {
         return lastName;
     }
+    
+    public String getActualLastName() {
+    	if (lastName == null) return "";
+    	
+        if (gender == Gender.MALE) {
+            return lastName[0] != null ? lastName[0] : "";
+        } else if (gender == Gender.FEMALE && lastName.length > 1 && lastName[1] != null && !lastName[1].isEmpty()) {
+            return lastName[1];
+        } else {
+            return lastName[0] != null ? lastName[0] : "";
+        }
+    }
 
     public String[] getOldLastName() {
         return oldLastName;

@@ -138,7 +138,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
         return new PlayerFamily(
                 UUID.fromString(rs.getString("player_uuid")),
                 Gender.fromString(rs.getString("gender")),
-                rs.getString("displayName"),
+                rs.getString("display_name"),
                 rs.getString("first_name"),
                 splitStringAndNullify(rs.getString("last_name"), ","),
                 splitStringAndNullify(rs.getString("old_last_name"), ","),

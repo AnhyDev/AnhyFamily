@@ -13,7 +13,7 @@ public class SQLiteFamilyTable extends FamilyPlayerTable {
 
     @Override
     protected String getCreateIndexSQL() {
-        return "CREATE INDEX IF NOT EXISTS idx_displayName ON " + dbName + " (displayName);";
+        return "CREATE INDEX IF NOT EXISTS idx_display_name ON " + dbName + " (display_name);";
     }
 
     @Override
@@ -30,7 +30,7 @@ public class SQLiteFamilyTable extends FamilyPlayerTable {
 
     @Override
     public PlayerFamily getFamilyByDisplayName(String displayName) {
-        String selectSQL = "SELECT * FROM " + dbName + " WHERE displayName = ?;";
+        String selectSQL = "SELECT * FROM " + dbName + " WHERE display_name = ?;";
         return fetchPlayerFamily(selectSQL, displayName.toLowerCase());
     }
 }
