@@ -63,6 +63,12 @@ public class Surname extends Sender {
             return false;
         }
 
+        // Перевірка наявності firstName
+        if (playerFamily.getFirstName() == null || playerFamily.getFirstName().isEmpty()) {
+            sendMessage(new MessageForFormatting("family_err_firstname_not_set", new String[]{"/family firstname <FirstName>"}), MessageType.WARNING, sender);
+            return false;
+        }
+
         SyncExecutor.runSync(() -> handleSurnameChange(player, playerFamily, newFamily, ActionInitiator.PLAYER_SELF, sender));
         return true;
     }

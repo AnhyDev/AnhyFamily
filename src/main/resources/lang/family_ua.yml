@@ -309,5 +309,8 @@ family_hugged_player_you1: "Ти потрапив в обійми до %s"
 family_hugged_player_you2: "Ти потрапила в обійми до %s"
 family_hugged_player_you3: "Ти потрапило в обійми до %s"
 
+family_err_firstname_not_set: "Щоб встановити прізвище, спершу потрібно встановити ім'я: %s"
+family_firstname_too_long: "Ім'я не може перевищувати 10 символів, та мати пробіли і числа."
+family_firstname_selected: "Ім'я було успішно встановлено: %s."
 
 

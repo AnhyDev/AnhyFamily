@@ -15,6 +15,7 @@ import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.db.TableRegistry;
+import ink.anh.family.fplayer.FirstName;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.fplayer.gender.GenderCommandHandler;
 import ink.anh.family.marriage.MarriageManager;
@@ -46,6 +47,9 @@ public class AnhyFamilyCommand extends Sender implements CommandExecutor {
     	                case "marriageinfo":
     	                    infoMarryElement(sender);
     	                    break;
+                        case "forcefirstname":
+                            new FirstName().setFirstNameFromConsole(sender, args);
+                            break;
     	                case "forcesurname":
     	                    new Surname().setSurnameFromConsole(sender, args);
     	                    break;

@@ -9,6 +9,7 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.fplayer.FirstName;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.fplayer.info.FamilyInfoCommandHandler;
 import ink.anh.family.fplayer.info.FamilyTreeCommandHandler;
@@ -31,6 +32,9 @@ public class FamilyCommand extends Sender implements CommandExecutor {
             try {
     	        if (args.length > 0) {
     	            switch (args[0].toLowerCase()) {
+                    	case "firstname":
+                    		new FirstName().setFirstName(sender, args);
+                    		break;
     	                case "surname":
     	                    new Surname().setSurname(sender, args);
     	                    break;
@@ -57,7 +61,7 @@ public class FamilyCommand extends Sender implements CommandExecutor {
     	            }
     	        }
             } catch (Exception e) {
-                e.printStackTrace(); // Вивід виключення в лог
+                e.printStackTrace();
             }
 	    });
 	    return true;

@@ -17,6 +17,7 @@ public class FamilyCommandTabCompleter implements TabCompleter {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
+            completions.add("firstname");
             completions.add("surname");
             completions.add("tree");
             completions.add("divorce");
