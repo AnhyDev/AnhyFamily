@@ -120,14 +120,15 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 ps.setString(1, playerFamily.getRoot().toString());
                 ps.setString(2, Gender.toStringSafe(playerFamily.getGender()));
                 ps.setString(3, playerFamily.getLoverCaseName().toLowerCase());
-                ps.setString(4, joinOrReturnNull(playerFamily.getLastName()));
-                ps.setString(5, joinOrReturnNull(playerFamily.getOldLastName()));
-                ps.setString(6, playerFamily.getFather() != null ? playerFamily.getFather().toString() : null);
-                ps.setString(7, playerFamily.getMother() != null ? playerFamily.getMother().toString() : null);
-                ps.setString(8, playerFamily.getSpouse() != null ? playerFamily.getSpouse().toString() : null);
-                ps.setString(9, PlayerFamilySerializer.serializeUuidSet(playerFamily.getChildren()));
-                ps.setString(10, playerFamily.getFamilyId() != null ? playerFamily.getFamilyId().toString() : null);
-                ps.setString(11, PlayerFamilySerializer.serializePermissionsMap(playerFamily.getPermissionsMap()));
+                ps.setString(4, playerFamily.getFirstName());
+                ps.setString(5, joinOrReturnNull(playerFamily.getLastName()));
+                ps.setString(6, joinOrReturnNull(playerFamily.getOldLastName()));
+                ps.setString(7, playerFamily.getFather() != null ? playerFamily.getFather().toString() : null);
+                ps.setString(8, playerFamily.getMother() != null ? playerFamily.getMother().toString() : null);
+                ps.setString(9, playerFamily.getSpouse() != null ? playerFamily.getSpouse().toString() : null);
+                ps.setString(10, PlayerFamilySerializer.serializeUuidSet(playerFamily.getChildren()));
+                ps.setString(11, playerFamily.getFamilyId() != null ? playerFamily.getFamilyId().toString() : null);
+                ps.setString(12, PlayerFamilySerializer.serializePermissionsMap(playerFamily.getPermissionsMap()));
                 ps.executeUpdate();
             }
         }, "Failed to insert or replace player family data: " + playerFamily);
@@ -138,6 +139,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                 UUID.fromString(rs.getString("player_uuid")),
                 Gender.fromString(rs.getString("gender")),
                 rs.getString("displayName"),
+                rs.getString("first_name"),
                 splitStringAndNullify(rs.getString("last_name"), ","),
                 splitStringAndNullify(rs.getString("old_last_name"), ","),
                 rs.getString("father") != null ? UUID.fromString(rs.getString("father")) : null,
@@ -161,7 +163,7 @@ public abstract class FamilyPlayerTable extends AbstractTable<PlayerFamily> {
                     }
                 } catch (Exception e) {
                     ErrorLogger.log(familyPlugin, e, "Failed to create index on family tableInsert");
-				}
+                }
             }
         }, "Failed to get player family data for parameter: " + param);
 

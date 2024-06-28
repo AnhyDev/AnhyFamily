@@ -301,9 +301,13 @@ family_symbol_set: "Символ сім'ї встановлено."
 
 family_request_rejected: "Запит відхилено."
 
-family_err_no_access_hugs: "Гравець %s не дозволяє вам обіймати його"
-family_hugs_access: "Ви обняли %s"
-family_hugs_access_you: "Ви потрапили в обійми до %s"
+family_err_no_access_hugs: "Отримуй ляпас від %s за спробу обійняти без дозволу"
+family_you_hugged_player1: "Ти обійняв %s"
+family_you_hugged_player2: "Ти обняла %s"
+family_you_hugged_player3: "Ти обняло %s"
+family_hugged_player_you1: "Ти потрапив в обійми до %s"
+family_hugged_player_you2: "Ти потрапила в обійми до %s"
+family_hugged_player_you3: "Ти потрапило в обійми до %s"
 
 
 

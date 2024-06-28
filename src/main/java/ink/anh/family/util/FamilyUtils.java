@@ -38,6 +38,10 @@ public class FamilyUtils {
     }
 
 	public static PlayerFamily getFamily(Player onlinePlayer) {
+		if (onlinePlayer == null) {
+			return null;
+		}
+		
 		UUID playerUUID = onlinePlayer.getUniqueId();
 	    PlayerFamily playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
 	    if (playerFamily == null) {
@@ -50,7 +54,10 @@ public class FamilyUtils {
 	}
 
 	public static PlayerFamily getFamily(UUID playerUUID) {
-
+		if (playerUUID == null) {
+			return null;
+		}
+		
 	    PlayerFamily playerFamily = null;
 	    try {
 	        playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
@@ -71,6 +78,10 @@ public class FamilyUtils {
 	}
 
 	public static PlayerFamily getFamily(String playerName) {
+		if (playerName == null) {
+			return null;
+		}
+		
 	    Player onlinePlayer = Bukkit.getPlayerExact(playerName);
 	    UUID playerUUID;
 
@@ -146,5 +157,77 @@ public class FamilyUtils {
             // Якщо друге прізвище відсутнє або null, повертаємо перше
             return (surnames[1] != null) ? surnames[1] : surnames[0] != null ? surnames[0] : "";
         }
+    }
+
+    public static RelationshipDegree getRelationshipDegree(PlayerFamily playerFamily, UUID uuid) {
+        if (uuid == null) {
+            return RelationshipDegree.UNKNOWN;
+        }
+
+        if (uuid.equals(playerFamily.getSpouse())) {
+            return RelationshipDegree.SPOUSE;
+        } else if (uuid.equals(playerFamily.getFather())) {
+            return RelationshipDegree.FATHER;
+        } else if (uuid.equals(playerFamily.getMother())) {
+            return RelationshipDegree.MOTHER;
+        } else if (playerFamily.getChildren().contains(uuid)) {
+            return RelationshipDegree.GRANDCHILD;
+        } else {
+            PlayerFamily fatherFamily = FamilyUtils.getFamily(playerFamily.getFather());
+            PlayerFamily motherFamily = FamilyUtils.getFamily(playerFamily.getMother());
+
+            if (fatherFamily != null) {
+                if (fatherFamily.getFather() != null && fatherFamily.getFather().equals(uuid)) {
+                    return RelationshipDegree.GRANDPARENT;
+                }
+                if (fatherFamily.getMother() != null && fatherFamily.getMother().equals(uuid)) {
+                    return RelationshipDegree.GRANDPARENT;
+                }
+            }
+
+            if (motherFamily != null) {
+                if (motherFamily.getFather() != null && motherFamily.getFather().equals(uuid)) {
+                    return RelationshipDegree.GRANDPARENT;
+                }
+                if (motherFamily.getMother() != null && motherFamily.getMother().equals(uuid)) {
+                    return RelationshipDegree.GRANDPARENT;
+                }
+            }
+
+            for (UUID child : playerFamily.getChildren()) {
+                PlayerFamily childFamily = FamilyUtils.getFamily(child);
+                if (childFamily != null) {
+                    if (childFamily.getChildren().contains(uuid)) {
+                        return RelationshipDegree.GREAT_GRANDCHILD;
+                    }
+                }
+            }
+
+            if (fatherFamily != null) {
+                for (UUID sibling : fatherFamily.getChildren()) {
+                    if (sibling.equals(uuid)) {
+                        return RelationshipDegree.UNKNOWN;  // Не є прямим родичем
+                    }
+                    PlayerFamily siblingFamily = FamilyUtils.getFamily(sibling);
+                    if (siblingFamily != null && siblingFamily.getChildren().contains(uuid)) {
+                        return RelationshipDegree.GREAT_GRANDCHILD;
+                    }
+                }
+            }
+
+            if (motherFamily != null) {
+                for (UUID sibling : motherFamily.getChildren()) {
+                    if (sibling.equals(uuid)) {
+                        return RelationshipDegree.UNKNOWN;  // Не є прямим родичем
+                    }
+                    PlayerFamily siblingFamily = FamilyUtils.getFamily(sibling);
+                    if (siblingFamily != null && siblingFamily.getChildren().contains(uuid)) {
+                        return RelationshipDegree.GREAT_GRANDCHILD;
+                    }
+                }
+            }
+        }
+
+        return RelationshipDegree.UNKNOWN;
     }
 }

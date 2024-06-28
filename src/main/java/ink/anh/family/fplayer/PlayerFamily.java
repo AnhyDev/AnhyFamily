@@ -20,6 +20,7 @@ public class PlayerFamily {
     private UUID root;
     private Gender gender; 
     private String loverCaseName;
+    private String firstName;
     private String[] lastName;
     private String[] oldLastName;
     private UUID father;
@@ -29,12 +30,13 @@ public class PlayerFamily {
     private UUID familyId = null;
     private Map<ActionsPermissions, AbstractPermission> permissionsMap = new HashMap<>();
 
-	public PlayerFamily(UUID root, Gender gender, String loverCaseName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
+    public PlayerFamily(UUID root, Gender gender, String loverCaseName, String firstName, String[] lastName, String[] oldLastName, UUID father, UUID mother, UUID spouse,
             Set<UUID> children, UUID familyId, Map<ActionsPermissions, AbstractPermission> permissionsMap) {
         
         this.root = root;
         this.gender = gender;
         this.loverCaseName = loverCaseName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.oldLastName = oldLastName;
         this.father = father;
@@ -49,6 +51,7 @@ public class PlayerFamily {
         this.root = root;
         this.gender = Gender.UNDECIDED;
         this.loverCaseName = loverCaseName;
+        this.firstName = null;
         this.lastName = new String[2];
         this.oldLastName = new String[2];
         this.father = null;
@@ -59,7 +62,7 @@ public class PlayerFamily {
         this.permissionsMap = PermissionManager.createDefaultPermissionsMap(this);
     }
 
-	public static PlayerFamily getMyFamily(String str) {
+    public static PlayerFamily getMyFamily(String str) {
         if (str == null || str.isEmpty()) {
             return null;
         }
@@ -105,6 +108,14 @@ public class PlayerFamily {
 
     public String getLoverCaseName() {
         return loverCaseName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
     public String[] getLastName() {
@@ -180,12 +191,12 @@ public class PlayerFamily {
     }
 
     public Map<ActionsPermissions, AbstractPermission> getPermissionsMap() {
-		return permissionsMap;
-	}
+        return permissionsMap;
+    }
 
     public void setPermissionsMap(Map<ActionsPermissions, AbstractPermission> permissionsMap) {
-		this.permissionsMap = permissionsMap;
-	}
+        this.permissionsMap = permissionsMap;
+    }
 
     // Метод для додавання дозволів
     public void addPermission(ActionsPermissions action, AbstractPermission permission) {

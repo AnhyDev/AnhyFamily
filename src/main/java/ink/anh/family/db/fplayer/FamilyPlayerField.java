@@ -3,7 +3,8 @@ package ink.anh.family.db.fplayer;
 public enum FamilyPlayerField {
     PLAYER_UUID("player_uuid", "VARCHAR(36) PRIMARY KEY"),
     GENDER("gender", "VARCHAR(36)"),
-    DISPLAY_NAME("displayName", "VARCHAR(255) NOT NULL UNIQUE"),
+    DISPLAY_NAME("display_name", "VARCHAR(255) NOT NULL UNIQUE"),
+    FIRST_NAME("first_name", "VARCHAR(255)"),
     LAST_NAME("last_name", "TEXT"),
     OLD_LAST_NAME("old_last_name", "TEXT"),
     FATHER("father", "VARCHAR(36)"),

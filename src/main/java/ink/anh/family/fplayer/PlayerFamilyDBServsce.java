@@ -45,6 +45,9 @@ public class PlayerFamilyDBServsce {
             case DISPLAY_NAME:
                 fieldValue = playerFamily.getLoverCaseName();
                 break;
+            case FIRST_NAME:
+                fieldValue = playerFamily.getFirstName();
+                break;
             case LAST_NAME:
                 fieldValue = String.join(",", playerFamily.getLastName());
                 break;
