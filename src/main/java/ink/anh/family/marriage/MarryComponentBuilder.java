@@ -87,7 +87,7 @@ public class MarryComponentBuilder {
                     .append(MessageComponents.builder()
                         .content(messageRefuse)
                         .hexColor(StringColorUtils.ACCESS_COLOR_FALSE)
-                        .hoverComponent(MessageComponents.builder().content(hoverRefuse).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
+                        .hoverComponent(MessageComponents.builder().content(hoverRefuse).hexColor(StringColorUtils.ACCESS_COLOR_FALSE).build())
                         .clickActionRunCommand(commandRefuse)
                         .build())
                     .build();

@@ -5,11 +5,14 @@ import java.util.Set;
 
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import ink.anh.api.enums.Access;
+import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
@@ -85,11 +88,14 @@ public class FamilyHugsManager extends AbstractDetailsManager {
     }
 
     public boolean tryHug(Player target) {
+
         if (player.getLocation().getPitch() > 0 && player.getLocation().getPitch() < 70 && player.isSneaking() && player.getLocation().distance(target.getLocation()) < 2) {
-        	
-        	if (cooldownPlayers.contains(player)) {
+
+            if (!cooldownPlayers.contains(player)) {
+                
                 // Встановити КД
                 cooldownPlayers.add(player);
+
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -99,50 +105,68 @@ public class FamilyHugsManager extends AbstractDetailsManager {
 
                 PlayerFamily targetFamily = FamilyUtils.getFamily(target);
                 PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-                
+
                 HugsPermission permission = new HugsPermission();
-                
                 FamilyDetails details = FamilyDetailsGet.getRootFamilyDetails(targetFamily);
-                
-                if (permission.checkPermission(playerFamily, details, getTypeTargetComponent())) {
+
+                if (!permission.checkPermission(playerFamily, details, getTypeTargetComponent())) {
+                    
                     // Відштовхнути гравця
                     Vector direction = player.getLocation().toVector().subtract(target.getLocation().toVector()).normalize();
                     direction.setY(0.5);
                     player.setVelocity(direction.multiply(1.5));
 
-                    player.damage(1.0);
-                    
+                    DamageSource slapDamageSource = DamageSource.builder(DamageType.PLAYER_ATTACK)
+                            .withCausingEntity(target)
+                            .withDirectEntity(target)
+                            .build();
+
+                    player.damage(1.0, slapDamageSource);
+
                     // Ефект VILLAGER_ANGRY перед очима гравця
                     player.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, player.getLocation().add(0, 1.5, 0), 1, 0.2, 0.2, 0.2, 0.05);
 
                     sendActionBarMessage(player, new MessageForFormatting(getInvalidAccessMessage(), new String[]{target.getName()}), "#820419");
+
                     return true;
                 }
 
+                Logger.info(familyPlugin, "Permission check failed");
 
                 Particle particle = Particle.SPELL_WITCH;
                 String hexColor = "#a40cf0";
                 
                 if (playerFamily.getSpouse() != null && playerFamily.getSpouse() == targetFamily.getRoot()) {
-                	particle = Particle.HEART;
-                	hexColor = "#f24607";
+                    particle = Particle.HEART;
+                    hexColor = "#f24607";
+                    Logger.info(familyPlugin, "Spouse relationship detected");
                 } else if (playerFamily.isFamilyMember(targetFamily.getRoot())) {
-                	particle = Particle.VILLAGER_HAPPY;
-                	hexColor = "#62fc03";
+                    particle = Particle.VILLAGER_HAPPY;
+                    hexColor = "#62fc03";
+                    Logger.info(familyPlugin, "Family member relationship detected");
                 }
-                
+
                 target.getWorld().spawnParticle(particle, target.getLocation(), 10);
                 player.getWorld().spawnParticle(particle, player.getLocation(), 10);
-                
+                Logger.info(familyPlugin, "Particle effects spawned");
+
                 // Повідомлення в actionbar
                 sendActionBarMessage(player, new MessageForFormatting("family_hugs_access", new String[]{target.getName()}), hexColor);
                 sendActionBarMessage(target, new MessageForFormatting("family_hugs_access_you", new String[]{player.getName()}), hexColor);
+                Logger.info(familyPlugin, "Action bar messages sent to player and target");
+
                 return true;
-        	}
+            } else {
+                Logger.info(familyPlugin, "Player is in cooldown");
+            }
+        } else {
+            Logger.info(familyPlugin, "Position check false");
         }
-		return false;
+
+        Logger.info(familyPlugin, "tryHug end");
+        return false;
     }
-    
+
     public void setHugsAccess() {
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
