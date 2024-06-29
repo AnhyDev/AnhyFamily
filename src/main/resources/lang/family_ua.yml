@@ -83,6 +83,9 @@ family_surname_selected: "Ваше прізвище: %s "
 family_surname_already_exists: "Прізвище вже є: %s, щоб змінити його, зверніться до священника"
 family_surname_forced_change: "Для гравця %s примусово встановлено прізвище: %s "
 family_surname_build_failed: "Не вдалося зберегти прізвище, можливо, один або обидва варіанти містять недопустимі символи або > 15 символів"
+family_err_firstname_not_set: "Щоб встановити прізвище, спершу потрібно встановити ім'я: %s"
+family_firstname_too_long: "Ім'я не може перевищувати 10 символів, та мати пробіли і числа."
+family_firstname_selected: "Ім'я було успішно встановлено: %s."
 
 # Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Гравець %s вже має батьків, усиновлення неможливе"
@@ -309,9 +312,6 @@ family_hugged_player_you1: "Ти потрапив в обійми до %s"
 family_hugged_player_you2: "Ти потрапила в обійми до %s"
 family_hugged_player_you3: "Ти потрапило в обійми до %s"
 
-family_err_firstname_not_set: "Щоб встановити прізвище, спершу потрібно встановити ім'я: %s"
-family_firstname_too_long: "Ім'я не може перевищувати 10 символів, та мати пробіли і числа."
-family_firstname_selected: "Ім'я було успішно встановлено: %s."
 
 
 

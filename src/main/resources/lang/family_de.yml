@@ -83,6 +83,9 @@ family_surname_selected: "Ihr Nachname: %s "
 family_surname_already_exists: "Nachname bereits vorhanden: %s, um ihn zu ändern, kontaktieren Sie einen Priester"
 family_surname_forced_change: "Spieler %s's Nachname wurde erzwungen festgelegt auf: %s "
 family_surname_build_failed: "Der Nachname konnte nicht gespeichert werden, eine oder beide Optionen können ungültige Zeichen enthalten oder mehr als 15 Zeichen umfassen"
+family_err_firstname_not_set: "Um den Nachnamen festzulegen, müssen Sie zuerst den Vornamen festlegen: %s"
+family_firstname_too_long: "Der Vorname darf 10 Zeichen nicht überschreiten und darf keine Leerzeichen oder Zahlen enthalten."
+family_firstname_selected: "Der Vorname wurde erfolgreich festgelegt: %s."
 
 # Befehl /adoption invite (forceadopt) [Klasse: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Spieler %s hat bereits Eltern, Adoption unmöglich"

@@ -83,6 +83,9 @@ family_surname_selected: "Ваша фамилия: %s "
 family_surname_already_exists: "Фамилия уже есть: %s, чтобы её изменить, обратитесь к священнику"
 family_surname_forced_change: "Для игрока %s принудительно установлена фамилия: %s "
 family_surname_build_failed: "Не удалось сохранить фамилию, один или оба варианта могут содержать недопустимые символы или превышать 15 символов"
+family_err_firstname_not_set: "Чтобы установить фамилию, сначала нужно установить имя: %s"
+family_firstname_too_long: "Имя не может превышать 10 символов и содержать пробелы или цифры."
+family_firstname_selected: "Имя было успешно установлено: %s."
 
 # Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Игрок %s уже имеет родителей, усыновление невозможно"

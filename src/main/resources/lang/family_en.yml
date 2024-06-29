@@ -83,6 +83,9 @@ family_surname_selected: "Your surname: %s "
 family_surname_already_exists: "Surname already exists: %s, to change it, contact a priest"
 family_surname_forced_change: "Player %s's surname forcibly set to: %s "
 family_surname_build_failed: "Failed to save the surname, one or both options may contain invalid characters or exceed 15 characters"
+family_err_firstname_not_set: "To set the surname, you first need to set the first name: %s"
+family_firstname_too_long: "The first name cannot exceed 10 characters, and cannot contain spaces or numbers."
+family_firstname_selected: "The first name has been successfully set: %s."
 
 # Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Player %s already has parents, adoption impossible"

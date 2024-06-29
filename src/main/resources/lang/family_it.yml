@@ -83,6 +83,9 @@ family_surname_selected: "Il tuo cognome: %s "
 family_surname_already_exists: "Il cognome esiste già: %s, per cambiarlo, consulta il sacerdote"
 family_surname_forced_change: "Il cognome per il giocatore %s è stato cambiato forzatamente: %s "
 family_surname_build_failed: "Impossibile salvare il cognome, una o entrambe le opzioni potrebbero contenere caratteri non validi o superare i 15 caratteri"
+family_err_firstname_not_set: "Per impostare il cognome, devi prima impostare il nome: %s"
+family_firstname_too_long: "Il nome non può superare i 10 caratteri e non può contenere spazi o numeri."
+family_firstname_selected: "Il nome è stato impostato con successo: %s."
 
 # Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Il giocatore %s ha già dei genitori, non può essere adottato"
