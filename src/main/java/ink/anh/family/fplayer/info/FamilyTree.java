@@ -3,7 +3,6 @@ package ink.anh.family.fplayer.info;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;

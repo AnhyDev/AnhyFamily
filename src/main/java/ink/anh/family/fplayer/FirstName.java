@@ -31,7 +31,7 @@ public class FirstName extends Sender {
         Player player = (Player) sender;
 
         if (args.length <= 1) {
-            sendMessage(new MessageForFormatting("family_err_command_format_firstname", new String[]{}), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/family firstname <FirstName>"}), MessageType.WARNING, sender);
             return false;
         }
 
