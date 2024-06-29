@@ -13,6 +13,7 @@ family_err_not_have_permission: "У вас нет разрешения на ис
 family_err_not_alloved_config: "Команда не разрешена в настройках конфигурации."
 family_err_command_only_player: "Эта команда может выполняться только игроком."
 family_err_command_format: "Формат команды: %s"
+family_request_rejected: "Запрос отклонен."
 
 # 2 Загрузка конфигураций
 family_err_folder_is_empty: "Папка пуста или произошла ошибка при ее чтении."

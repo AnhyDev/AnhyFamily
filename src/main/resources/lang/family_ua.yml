@@ -13,6 +13,7 @@ family_err_not_have_permission: "Ви не маєте дозволу на вик
 family_err_not_alloved_config: "Команда не дозволена в налаштуваннях конфігурації."
 family_err_command_only_player: "Ця команда може виконуватися тільки гравцем."
 family_err_command_format: "Формат команди: %s"
+family_request_rejected: "Запит відхилено."
 
 # 2 Завантаження конфігурацій
 family_err_folder_is_empty: "Папка порожня або сталася помилка при її читанні."
@@ -302,7 +303,6 @@ family_symbol_set: "Символ сім'ї встановлено."
 
 
 
-family_request_rejected: "Запит відхилено."
 
 family_err_no_access_hugs: "Отримуй ляпас від %s за спробу обійняти без дозволу"
 family_you_hugged_player1: "Ти обійняв %s"

@@ -13,6 +13,7 @@ family_err_not_have_permission: "你无权使用此命令。"
 family_err_not_alloved_config: "该命令在配置中不被允许。"
 family_err_command_only_player: "此命令只能由玩家执行。"
 family_err_command_format: "命令格式：%s"
+family_request_rejected: "请求被拒绝。"
 
 # 2 加载配置
 family_err_folder_is_empty: "文件夹为空或读取时出错。"

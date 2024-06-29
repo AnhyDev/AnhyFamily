@@ -13,6 +13,7 @@ family_err_not_have_permission: "Sie haben keine Berechtigung, diesen Befehl zu 
 family_err_not_alloved_config: "Der Befehl ist in den Konfigurationseinstellungen nicht erlaubt."
 family_err_command_only_player: "Dieser Befehl kann nur von einem Spieler ausgeführt werden."
 family_err_command_format: "Befehl Format: %s"
+family_request_rejected: "Anfrage abgelehnt."
 
 # 2 Konfigurationen laden
 family_err_folder_is_empty: "Der Ordner ist leer oder es ist ein Fehler beim Lesen aufgetreten."

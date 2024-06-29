@@ -13,6 +13,7 @@ family_err_not_have_permission: "No tienes permiso para usar este comando."
 family_err_not_alloved_config: "El comando no está permitido en la configuración."
 family_err_command_only_player: "Este comando solo puede ser ejecutado por un jugador."
 family_err_command_format: "Formato del comando: %s"
+family_request_rejected: "Solicitud rechazada."
 
 # 2 Carga de configuraciones
 family_err_folder_is_empty: "La carpeta está vacía o ocurrió un error al leerla."
