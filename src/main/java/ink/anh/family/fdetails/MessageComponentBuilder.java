@@ -8,6 +8,7 @@ import ink.anh.api.messages.MessageComponents.MessageBuilder;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.util.OtherComponentBuilder;
 import ink.anh.family.util.StringColorUtils;
 
 public class MessageComponentBuilder {
@@ -159,41 +160,19 @@ public class MessageComponentBuilder {
     
     public static MessageComponents acceptMessageComponent(String messageBase, String baseCommand, String commandAccept, String commandRefuse, Player recipient) {
         String[] langs = getLangs(recipient);
-        
-    	messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageBase, langs), new String[]{recipient.getName()}));
-    	String messageAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_confirm", langs), new String[]{}));
-    	String messageRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_reject", langs), new String[]{}));
-    	
-    	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_confirm_hover", langs), new String[]{}));
-    	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_request_reject_hover", langs), new String[]{}));
 
-    	commandAccept = "/" + baseCommand + " " + commandAccept;
-    	commandRefuse = "/" + baseCommand + " " + commandRefuse;
+        MessageBuilder prefix = prefix(baseCommand, langs);
 
-        return prefix(baseCommand, langs)
-                	.append(MessageComponents.builder()
-                        .content(messageBase)
-                        .hexColor(StringColorUtils.MESSAGE_COLOR)
-                        .build())
-                    .append(MessageComponents.builder()
-                        .content(messageAccept)
-                        .hexColor(StringColorUtils.ACCESS_COLOR_TRUE)
-                        .hoverComponent(MessageComponents.builder().content(hoverAccept).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
-                        .clickActionRunCommand(commandAccept)
-                        .build())
-                    .append(MessageComponents.builder()
-                        .content(" | ")
-                        .hexColor(StringColorUtils.SEPARATOR_COLOR)
-                        .build())
-                    .append(MessageComponents.builder()
-                        .content(messageRefuse)
-                        .hexColor(StringColorUtils.ACCESS_COLOR_FALSE)
-                        .hoverComponent(MessageComponents.builder().content(hoverRefuse).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
-                        .clickActionRunCommand(commandRefuse)
-                        .build())
-                    .build();
+        return OtherComponentBuilder.acceptMessageComponent(
+                prefix,
+                messageBase,
+                baseCommand,
+                commandAccept,
+                commandRefuse,
+                recipient
+        );
     }
-    
+
     private static String[] getLangs(Player recipient) {
     	return recipient != null ? LangUtils.getPlayerLanguage(recipient) : new String[]{manager.getDefaultLang()};
     }

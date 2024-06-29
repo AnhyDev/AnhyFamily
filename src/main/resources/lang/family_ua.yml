@@ -304,6 +304,7 @@ family_symbol_set: "Символ сім'ї встановлено."
 
 
 
+# Обнімашки [ink.anh.family.fdetails.hugs.FamilyHugsManager]
 family_err_no_access_hugs: "Отримуй ляпас від %s за спробу обійняти без дозволу"
 family_you_hugged_player1: "Ти обійняв %s"
 family_you_hugged_player2: "Ти обняла %s"

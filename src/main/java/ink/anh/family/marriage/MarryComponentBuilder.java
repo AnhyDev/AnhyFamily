@@ -7,6 +7,7 @@ import ink.anh.api.messages.MessageComponents.MessageBuilder;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.util.OtherComponentBuilder;
 import ink.anh.family.util.StringColorUtils;
 
 public class MarryComponentBuilder {
@@ -53,44 +54,23 @@ public class MarryComponentBuilder {
     
     public static MessageComponents priestAcceptMessageComponent(MarryPrefixType prefixType, String senderName, Player recipient) {
         String[] langs = getLangs(recipient);
-    	
+
         senderName = translateSenderName(prefixType, senderName, langs);
-        
-    	String messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent", langs), new String[]{recipient.getName()}));
-    	String messageAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent1", langs), new String[]{}));
-    	String messageRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_consent2", langs), new String[]{}));
-    	
-    	String hoverAccept = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_hover_consent1", langs), new String[]{}));
-    	String hoverRefuse = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, "family_groom_hover_consent2", langs), new String[]{}));
+
+        String messageBase = "family_groom_consent";
+        String messageAccept = "family_groom_consent1";
+        String messageRefuse = "family_groom_consent2";
+        String hoverAccept = "family_groom_hover_consent1";
+        String hoverRefuse = "family_groom_hover_consent2";
 
         String commandAccept = "/marry accept";
         String commandRefuse = "/marry refuse";
 
-        return prefix(prefixType, senderName, langs)
-                	.append(MessageComponents.builder()
-                        .content(messageBase)
-                        .hexColor(StringColorUtils.MESSAGE_COLOR)
-                        .build())
-                    .append(MessageComponents.builder()
-                    	.appendNewLine()
-                        .build())
-                    .append(MessageComponents.builder()
-                        .content(messageAccept)
-                        .hexColor(StringColorUtils.ACCESS_COLOR_TRUE)
-                        .hoverComponent(MessageComponents.builder().content(hoverAccept).hexColor(StringColorUtils.ACCESS_COLOR_TRUE).build())
-                        .clickActionRunCommand(commandAccept)
-                        .build())
-                    .append(MessageComponents.builder()
-                        .content(" | ")
-                        .hexColor(StringColorUtils.SEPARATOR_COLOR)
-                        .build())
-                    .append(MessageComponents.builder()
-                        .content(messageRefuse)
-                        .hexColor(StringColorUtils.ACCESS_COLOR_FALSE)
-                        .hoverComponent(MessageComponents.builder().content(hoverRefuse).hexColor(StringColorUtils.ACCESS_COLOR_FALSE).build())
-                        .clickActionRunCommand(commandRefuse)
-                        .build())
-                    .build();
+        MessageBuilder prefix = prefix(prefixType, senderName, langs)
+                .append(MessageComponents.builder().content(" ").build());
+
+        return OtherComponentBuilder.buildComponent(messageBase, commandAccept, commandRefuse, messageAccept, messageRefuse, hoverAccept, hoverRefuse,
+                prefix, StringColorUtils.MESSAGE_COLOR, StringColorUtils.ACCESS_COLOR_TRUE, StringColorUtils.ACCESS_COLOR_FALSE, recipient);
     }
     
     private static String[] getLangs(Player recipient) {
