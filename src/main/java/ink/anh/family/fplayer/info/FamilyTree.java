@@ -66,21 +66,16 @@ public class FamilyTree {
     }
 
     public String buildFamilyTreeString() {
-    	String lastName = getLastName(root.getFamily());
-    	
-    	StringBuilder treeString = new StringBuilder()
-    			.append(ChatColor.GOLD)
-    			.append(" family_tree_title ")
-    			.append(ChatColor.BOLD)
-    			.append(root.getFamily().getRootrNickName())
-    			.append(lastName)
-    			.append(ChatColor.RESET)
-    			.append("\n");
+        StringBuilder treeString = new StringBuilder()
+                .append(ChatColor.GOLD)
+                .append(" family_tree_title ")
+                .append(ChatColor.BOLD)
+                .append(getFormattedName(root.getFamily()))
+                .append(ChatColor.RESET)
+                .append("\n");
 
         buildDescendantsTreeString(root, 0, "", treeString);
-
         resetRoot();
-
         buildFamilyTreeString(root, 0, "", treeString);
         return treeString.toString();
     }
@@ -166,24 +161,32 @@ public class FamilyTree {
         StringBuilder line = new StringBuilder(prefix);
         ChatColor color = determineColor(level, isRepeated ? 1 : 0);
         String repeatedMark = isRepeated ? "*" : "";
-        String lastName = level > 0 ? getLastName(member) : "";
 
         line.append(color)
             .append(branchSymbol)
-            .append(title)
-            .append(member.getRootrNickName())
-            .append(lastName)
-            .append(repeatedMark)
+            .append(title);
+
+        if (level > 0) {
+            line.append(getFormattedName(member));
+        }
+
+        line.append(repeatedMark)
             .append('\n');
 
         return line.toString();
     }
-    
-    private String getLastName(PlayerFamily member) {
-    	return Optional.ofNullable(member.getCurrentSurname())
-                .filter(surname -> !surname.isEmpty())
-                .map(surname -> " " + surname)
-                .orElse("");
+
+    private String getFormattedName(PlayerFamily member) {
+        StringBuilder formattedName = new StringBuilder();
+        if (member.getFirstName() != null && !member.getFirstName().isEmpty()) {
+            formattedName.append(member.getFirstName()).append(" ");
+        }
+        String actualLastName = member.getActualLastName();
+        if (actualLastName != null && !actualLastName.isEmpty()) {
+            formattedName.append(actualLastName).append(" ");
+        }
+        formattedName.append("(").append(member.getRootrNickName()).append(")");
+        return formattedName.toString();
     }
 
     private ChatColor determineColor(int level, int repeatedCount) {
