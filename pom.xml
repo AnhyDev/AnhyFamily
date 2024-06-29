@@ -11,6 +11,7 @@
   <name>AnhyFamily</name>
 
     <build>
+		<finalName>AnhyFamily</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
