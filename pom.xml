@@ -179,5 +179,10 @@
     		<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>ink.anh</groupId>
+			<artifactId>AnhyExtension</artifactId>
+			<version>1.0.0</version>
+		</dependency>
     </dependencies>
 </project>

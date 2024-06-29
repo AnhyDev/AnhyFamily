@@ -82,7 +82,7 @@ family_tree_component: "Information about player %s's family tree, hover to view
 family_surname_selected: "Your surname: %s "
 family_surname_already_exists: "Surname already exists: %s, to change it, contact a priest"
 family_surname_forced_change: "Player %s's surname forcibly set to: %s "
-family_surname_build_failed: "Failed to save surname, possibly one or both options exceed 21 characters"
+family_surname_build_failed: "Failed to save the surname, one or both options may contain invalid characters or exceed 15 characters"
 
 # Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Player %s already has parents, adoption impossible"

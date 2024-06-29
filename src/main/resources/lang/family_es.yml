@@ -82,7 +82,7 @@ family_tree_component: "Información del árbol familiar del jugador %s, pasa el
 family_surname_selected: "Tu apellido: %s "
 family_surname_already_exists: "El apellido ya existe: %s, para cambiarlo, consulta al sacerdote"
 family_surname_forced_change: "El apellido para el jugador %s ha sido cambiado a la fuerza: %s "
-family_surname_build_failed: "No se pudo guardar el apellido, puede que una o ambas opciones superen los 21 caracteres"
+family_surname_build_failed: "No se pudo guardar el apellido, una o ambas opciones pueden contener caracteres no válidos o superar los 15 caracteres"
 
 # Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "El jugador %s ya tiene padres, no se puede adoptar"

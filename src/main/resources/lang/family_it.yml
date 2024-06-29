@@ -82,7 +82,7 @@ family_tree_component: "Informazioni sull'albero genealogico del giocatore %s, p
 family_surname_selected: "Il tuo cognome: %s "
 family_surname_already_exists: "Il cognome esiste già: %s, per cambiarlo, consulta il sacerdote"
 family_surname_forced_change: "Il cognome per il giocatore %s è stato cambiato forzatamente: %s "
-family_surname_build_failed: "Impossibile salvare il cognome, potrebbe essere che una o entrambe le opzioni superino i 21 caratteri"
+family_surname_build_failed: "Impossibile salvare il cognome, una o entrambe le opzioni potrebbero contenere caratteri non validi o superare i 15 caratteri"
 
 # Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "Il giocatore %s ha già dei genitori, non può essere adottato"

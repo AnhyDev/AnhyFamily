@@ -1,6 +1,7 @@
 package ink.anh.family.fplayer;
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
+import ink.anh.family.FamilyConfig;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.db.fplayer.FamilyPlayerField;
@@ -159,10 +161,24 @@ public class Surname extends Sender {
     }
 
     private boolean checkMaxLengthSurname(String[] newFamily) {
-        if (newFamily == null || newFamily.length == 0) return false;
-        final int MAX_LENGTH = 21;
+        if (newFamily == null || newFamily.length == 0) {
+            return false;
+        }
+        
+        final int MAX_LENGTH = 15;
+
+        // Отримання конфігурації
+        FamilyConfig config = GlobalManager.getInstance().getFamilyConfig();
+        String regex = config.getLanguagesLimitation();
+        
         for (String familyString : newFamily) {
+            // Перевірка на максимальну довжину
             if (familyString.length() > MAX_LENGTH) {
+                return false;
+            }
+            
+            // Перевірка на відповідність регулярному виразу
+            if (!Pattern.matches(regex, familyString)) {
                 return false;
             }
         }

@@ -104,4 +104,28 @@ chest:
     - BARREL
   # The distance from the chest to the home point for installation and interaction
   distance_to_home: 20
-  
+ 
+# You can choose one of the provided regular expressions by uncommenting it and ensuring all others remain commented.
+# Only Latin letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[a-zA-Z'-]+$"
+# Only Ukrainian letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[а-щА-ЩЬьЮюЯяЇїІіЄєҐґ'-]+$"
+# Only Spanish letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[a-zA-ZáéíñóúüÁÉÍÑÓÚÜ'-]+$"
+# Only German letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[a-zA-ZäöüßÄÖÜ'-]+$"
+# Only Italian letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[a-zA-Zàèéìíîòóùú'-]+$"
+# Only Chinese characters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[\u4e00-\u9fa5'-]+$"
+# Only Russian letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[а-яА-ЯёЁ'-]+$"
+# Only Cyrillic letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[\p{IsCyrillic}'-]+$"
+# Only Latin and Cyrillic letters, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+# languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')[a-zA-Z\p{IsCyrillic}'-]+$"
+# Only letters from any language, apostrophes, and hyphens are allowed. Other special characters and numbers are forbidden.
+languages_limitation: "^(?!.*[-']{2})(?!.*--)(?!.*'')\\p{L}['-]*[\\p{L}]+$"
+
+
+ 

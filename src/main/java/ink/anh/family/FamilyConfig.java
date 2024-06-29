@@ -56,6 +56,9 @@ public class FamilyConfig {
     //
     private int chestDistanceToHome;
 
+    // Add a new field for languages limitation regex
+    private String languagesLimitation;
+
     private static FamilyConfig instance;
 
     private FamilyConfig(AnhyFamily plugin) {
@@ -91,7 +94,6 @@ public class FamilyConfig {
         this.ceremonyHearingRadius = config.getInt("ceremonyHearingRadius", 100);
         setPrivateCeremonyLocationFromConfig(config);
         
-        
         this.homeChangeTimeoutMinutes = config.getInt("home.timeout", 1440);
         this.homeWorld = config.getBoolean("home.world", false);
 
@@ -102,6 +104,9 @@ public class FamilyConfig {
         // Завантаження дозволених блоків для скринь
         loadChestBlocks(config);
         this.chestDistanceToHome = config.getInt("chest.distance_to_home", 20);
+
+        // Зчитування regex для обмеження мов
+        this.languagesLimitation = config.getString("languages_limitation", "^(?!.*[-']{2})(?!.*--)(?!.*'')\\p{L}['-]*[\\p{L}]+$");
 
         ItemStack[] items = loadItems(plugin);
         
@@ -205,7 +210,11 @@ public class FamilyConfig {
 	public int getChestDistanceToHome() {
 	    return chestDistanceToHome;
 	}
-	
+
+    public String getLanguagesLimitation() {
+        return languagesLimitation;
+    }
+
 	public void setPrivateCeremonyLocationFromConfig(FileConfiguration config) {
 	    // Зчитування параметрів локації для приватного одруження
 	    String worldName = config.getString("privateCeremony.world");

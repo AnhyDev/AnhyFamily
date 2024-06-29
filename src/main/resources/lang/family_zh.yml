@@ -82,7 +82,7 @@ family_tree_component: "玩家 %s 的家族树信息，悬停查看或点击显�
 family_surname_selected: "你的姓氏：%s"
 family_surname_already_exists: "姓氏已经存在：%s，如果要更改，请咨询牧师"
 family_surname_forced_change: "玩家 %s 的姓氏已被强制更改为：%s"
-family_surname_build_failed: "无法保存姓氏，可能一个或两个选项超过了 21 个字符"
+family_surname_build_failed: "无法保存姓氏，一个或两个选项可能包含无效字符或超过15个字符"
 
 # 命令 /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "玩家 %s 已经有父母，无法被收养"
