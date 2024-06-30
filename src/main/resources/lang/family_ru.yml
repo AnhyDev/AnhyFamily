@@ -53,7 +53,7 @@ family_gender_player_reset: "Пол игрока %s сброшен на 'Не о
 family_gender_player_set_to: "Пол игрока %s установлен на как:"
 family_non_binary_not_allowed: "Выбор небинарного пола запрещён в настройках конфигурации"
 
-# Command /family info [classes: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Предыдущая фамилия: "
 family_info_role_father: "Отец:"
 family_info_role_mother: "Мать:"

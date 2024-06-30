@@ -53,7 +53,7 @@ family_gender_player_reset: "Spieler %s's Geschlecht wurde auf 'Unentschieden' z
 family_gender_player_set_to: "Spieler %s's Geschlecht festgelegt auf:"
 family_non_binary_not_allowed: "Die Auswahl eines nicht-binären Geschlechts ist in den Konfigurationseinstellungen nicht erlaubt"
 
-# Befehl /family info [Klassen: ink.anh.family.fplayer.info.FamilyInfoCommandHandler, ink.anh.family.fplayer.info.InfoGenerator]
+# Befehl /family info [Klassen: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.InfoGenerator]
 family_info_previous_lastname: "Vorheriger Nachname: "
 family_info_role_father: "Vater:"
 family_info_role_mother: "Mutter:"

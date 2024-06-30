@@ -35,13 +35,7 @@ public class FamilyInfo extends Sender {
         if (args.length > 1) {
         	targetName = args[1];
         	
-        	Player target = Bukkit.getPlayerExact(targetName);
-        	
-        	if (target != null) {
-            	playerFamily = FamilyUtils.getFamily(target);
-        	} else {
-        		playerFamily = FamilyUtils.getFamily(args[1]);
-        	}
+    		playerFamily = FamilyUtils.getFamily(targetName);
         }
         
         if (playerFamily == null) {
@@ -52,7 +46,7 @@ public class FamilyInfo extends Sender {
         String familyInfo = new InfoGenerator().generateFamilyInfo(playerFamily);
         String treeInfo = new FamilyTree(playerFamily).buildFamilyTreeString();
         
-        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponent("family_tree_status", "/family infos", "/family trees", "family_info_component", "family_tree_component",
+        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponent("family_tree_status", "/family profile", "/family tree", "family_info_component", "family_tree_component",
         		familyInfo + "\n family_print_component", treeInfo + "\n family_print_component", player);
 
         Messenger.sendMessage(libraryManager.getPlugin(), player, messageComponents, "MessageComponents");

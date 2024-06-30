@@ -11,7 +11,8 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.FirstName;
 import ink.anh.family.fplayer.Surname;
-import ink.anh.family.fplayer.info.FamilyInfoCommandHandler;
+import ink.anh.family.fplayer.info.FamilyInfo;
+import ink.anh.family.fplayer.info.FamilyProfileHandler;
 import ink.anh.family.fplayer.info.FamilyTreeCommandHandler;
 import ink.anh.family.marriage.Divorce;
 import ink.anh.family.separate.Separation;
@@ -45,10 +46,10 @@ public class FamilyCommand extends Sender implements CommandExecutor {
     	                    new Separation(familyPlugin).separate(sender, args);
     	                    break;
     	                case "info":
-    	                    new FamilyInfoCommandHandler().handleCommand(sender, args, true);
+    	                    new FamilyInfo().handleInfoCommand(sender, args, true);
     	                    break;
-    	                case "infos":
-    	                    new FamilyInfoCommandHandler().handleCommand(sender, args, false);
+    	                case "profile":
+    	                    new FamilyProfileHandler().handleCommand(sender, args);
     	                    break;
     	                case "tree":
     	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, true);

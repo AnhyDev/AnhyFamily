@@ -8,35 +8,21 @@ import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
-import ink.anh.api.messages.MessageChat;
 
-public class FamilyInfoCommandHandler extends Sender {
+public class FamilyProfileHandler extends Sender {
 
-    public FamilyInfoCommandHandler() {
+    public FamilyProfileHandler() {
     	super(GlobalManager.getInstance());
     }
 
-    public boolean handleCommand(CommandSender sender, String[] args, boolean isInteractive) {
-    	
-		if (!(sender instanceof Player)) {
-			isInteractive = false;
-		}
-		
+    public boolean handleCommand(CommandSender sender, String[] args) {
     	PlayerFamily playerFamily = getTargetFamily(sender, args);
+    	
         if (playerFamily == null) return false;
 
         String familyInfo = translate(sender, new InfoGenerator().generateFamilyInfo(playerFamily));
 
-        if (isInteractive) {
-        	String command  = "/family infos";
-        	String playerName = (args.length > 1) ? args[1] : sender.getName();
-        	command = (args.length > 1) ? (command + " " + playerName) : command;
-            MessageForFormatting message = new MessageForFormatting(translate(sender, "family_info_component"), new String[] {playerName});
-            MessageForFormatting hoverText = new MessageForFormatting(familyInfo, null);
-            MessageChat.sendMessage(GlobalManager.getInstance(), sender, message, hoverText, command, MessageType.NORMAL, false);
-        } else {
-            sendMessage(new MessageForFormatting(familyInfo, new String[] {}), MessageType.NORMAL, false, sender);
-        }
+        sendMessage(new MessageForFormatting(familyInfo, new String[] {}), MessageType.NORMAL, false, sender);
 
         return true;
     }

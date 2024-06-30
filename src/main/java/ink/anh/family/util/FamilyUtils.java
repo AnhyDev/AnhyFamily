@@ -88,7 +88,7 @@ public class FamilyUtils {
 	    if (onlinePlayer != null) {
 		    return getFamily(onlinePlayer);
 	    } else {
-	        PlayerFamily playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamilyByDisplayName(playerName.toLowerCase());
+	        PlayerFamily playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamilyByDisplayName(playerName);
 	        
 	        if (playerFamily != null) {
 	        	return playerFamily;
