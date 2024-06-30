@@ -285,7 +285,7 @@ family_err_chest_not_set: "Место для сундука не установ�
 family_chest_inventory: "Семейный сундук: %s"
 family_err_chest_open_other: "Семейный сундук %s уже открыт игроком %s"
 
-# [ink.anh.family.fdetails.MessageComponentBuilder]
+# [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Проверка доступа по умолчанию для группы"
 family_message_group_access: "У группы %s есть доступ: "
 family_access_player_get: "У %s установлен доступ: "

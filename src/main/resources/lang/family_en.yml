@@ -285,7 +285,7 @@ family_err_chest_not_set: "Chest location not set."
 family_chest_inventory: "Family chest: %s"
 family_err_chest_open_other: "Family chest %s is already opened by player %s"
 
-# [ink.anh.family.fdetails.MessageComponentBuilder]
+# [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Default access check for the group"
 family_message_group_access: "The group %s has access: "
 family_access_player_get: "%s has access set: "

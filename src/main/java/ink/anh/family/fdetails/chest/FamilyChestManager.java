@@ -23,7 +23,7 @@ import ink.anh.family.Permissions;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyStaticDataLoader;
-import ink.anh.family.fdetails.MessageComponentBuilder;
+import ink.anh.family.fdetails.FDetailsComponentBuilder;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
@@ -127,7 +127,7 @@ public class FamilyChestManager extends AbstractDetailsManager {
                 if (playerFamily.getSpouse() != null) {
                     Player spouse = Bukkit.getPlayer(playerFamily.getSpouse());
                     if (spouse != null && spouse.isOnline()) {
-                        MessageComponents messageComponents = MessageComponentBuilder.acceptMessageComponent("family_chest_accept_sent", command, "accept", "refuse", spouse);
+                        MessageComponents messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_chest_accept_sent", command, "accept", "refuse", spouse);
                         sendMessageComponent(player, messageComponents);
                     }
                 }

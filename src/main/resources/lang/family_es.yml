@@ -285,7 +285,7 @@ family_err_chest_not_set: "La ubicación del cofre no está establecida."
 family_chest_inventory: "Cofre familiar: %s"
 family_err_chest_open_other: "El cofre familiar %s ya está abierto por el jugador %s"
 
-# [ink.anh.family.fdetails.MessageComponentBuilder]
+# [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Verificación de acceso predeterminado para el grupo"
 family_message_group_access: "El grupo %s tiene acceso: "
 family_access_player_get: "%s tiene acceso configurado: "

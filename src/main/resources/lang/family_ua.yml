@@ -285,7 +285,7 @@ family_err_chest_not_set: "Місце для скрині не встановл�
 family_chest_inventory: "Сімейна скриня: %s"
 family_err_chest_open_other: "Сімейна скриня %s вже відкрита гравцем %s"
 
-# [ink.anh.family.fdetails.MessageComponentBuilder]
+# [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Перевірка доступу за замовчуванням для групи"
 family_message_group_access: "У групи %s доступ: "
 family_access_player_get: "У %s встановлено доступ: "

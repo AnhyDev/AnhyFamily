@@ -11,7 +11,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.util.OtherComponentBuilder;
 import ink.anh.family.util.StringColorUtils;
 
-public class MessageComponentBuilder {
+public class FDetailsComponentBuilder {
 
     private static GlobalManager manager = GlobalManager.getInstance();
 

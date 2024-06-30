@@ -260,7 +260,7 @@ public abstract class AbstractDetailsManager extends Sender {
         if (senderFamily != null) {
             executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(senderFamily), details -> {
                 Access currentAccess = details.getAccess(targetFamily, component);
-                MessageComponents messageComponents = MessageComponentBuilder.buildCheckAccessMessageComponent(player, nickname, currentAccess, command);
+                MessageComponents messageComponents = FDetailsComponentBuilder.buildCheckAccessMessageComponent(player, nickname, currentAccess, command);
 
                 sendMessageComponent(player, messageComponents);
             });
@@ -284,7 +284,7 @@ public abstract class AbstractDetailsManager extends Sender {
             }
 
             Access currentAccess = accessControl.getChatAccess();
-            MessageComponents messageComponents = MessageComponentBuilder.buildDefaultAccessMessageComponent(player, targetGroup, currentAccess, command);
+            MessageComponents messageComponents = FDetailsComponentBuilder.buildDefaultAccessMessageComponent(player, targetGroup, currentAccess, command);
 
             sendMessageComponent(player, messageComponents);
         });

@@ -18,7 +18,7 @@ import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
-import ink.anh.family.fdetails.MessageComponentBuilder;
+import ink.anh.family.fdetails.FDetailsComponentBuilder;
 import ink.anh.family.fdetails.AbstractDetailsManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
@@ -128,7 +128,7 @@ public class FamilyHomeManager extends AbstractDetailsManager {
 
                 Player spouse = Bukkit.getPlayer(spouseUUID);
                 if (spouse != null && spouse.isOnline()) {
-                    MessageComponents messageComponents = MessageComponentBuilder.acceptMessageComponent("family_home_accept_sent", command, "accept", "refuse", spouse);
+                    MessageComponents messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_home_accept_sent", command, "accept", "refuse", spouse);
                     sendMessageComponent(player, messageComponents);
                 }
 

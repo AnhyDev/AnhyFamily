@@ -285,7 +285,7 @@ family_err_chest_not_set: "Truhenstandort nicht festgelegt."
 family_chest_inventory: "Familienschatz: %s"
 family_err_chest_open_other: "Der Familienschatz %s wird bereits von Spieler %s geöffnet"
 
-# [ink.anh.family.fdetails.MessageComponentBuilder]
+# [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Standard-Zugriffsprüfung für die Gruppe"
 family_message_group_access: "Die Gruppe %s hat Zugriff: "
 family_access_player_get: "%s hat Zugriff festgelegt: "
