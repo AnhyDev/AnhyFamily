@@ -314,6 +314,11 @@ family_hugged_player_you2: "Ти потрапила в обійми до %s"
 family_hugged_player_you3: "Ти потрапило в обійми до %s"
 
 
+family_tree_status: "Сімейні дані гравця %s"
 
+family_tree_component: "Родове дерево"
 
+family_info_component: "Сімейна інформація"
+
+family_print_component: "СіКлікни щоб роздрукувати"
 
