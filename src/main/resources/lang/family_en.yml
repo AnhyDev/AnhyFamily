@@ -53,7 +53,7 @@ family_gender_player_reset: "Player %s's gender reset to 'Undecided'."
 family_gender_player_set_to: "Player %s's gender set to:"
 family_non_binary_not_allowed: "Selecting a non-binary gender is not allowed in the configuration settings"
 
-# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.ProfileStringGenerator]
 family_info_previous_lastname: "Previous surname: "
 family_info_role_father: "Father:"
 family_info_role_mother: "Mother:"
@@ -73,7 +73,7 @@ family_info_children: "Children:"
 family_info_children_none: "none"
 family_info_component: "Family information of player %s, hover to view or click to display in your chat"
 
-# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeHandler, ink.anh.family.fplayer.info.TreeStringGenerator]
 family_tree_title: "Family Tree"
 family_tree_ancestors: "Ancestors"
 family_tree_descendants: "Descendants"

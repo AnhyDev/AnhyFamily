@@ -10,7 +10,7 @@ import ink.anh.family.fplayer.FamilyCacheManager;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 import ink.anh.family.fplayer.gender.Gender;
-import ink.anh.family.fplayer.info.FamilyTree;
+import ink.anh.family.fplayer.info.TreeStringGenerator;
 
 public class FamilyUtils {
 
@@ -121,7 +121,7 @@ public class FamilyUtils {
 	    return family1.getGender() != family2.getGender();
 	}
 
-	public static boolean hasRelatives(FamilyTree treePlayer1, UUID uuidPlayer2) {
+	public static boolean hasRelatives(TreeStringGenerator treePlayer1, UUID uuidPlayer2) {
         return treePlayer1.hasRelativesWithUUID(uuidPlayer2);
     }
 

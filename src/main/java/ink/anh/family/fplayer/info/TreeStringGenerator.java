@@ -10,12 +10,12 @@ import org.bukkit.ChatColor;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 
-public class FamilyTree {
+public class TreeStringGenerator {
     private FamilyRepeated root;
     private Map<UUID, FamilyRepeated> rootParents;
     private Map<UUID, FamilyRepeated> rootOffspring;
 
-    public FamilyTree(UUID rootUuid) {
+    public TreeStringGenerator(UUID rootUuid) {
         this.root = new FamilyRepeated(FamilyUtils.getFamily(rootUuid));
         this.rootParents = new HashMap<>();
         this.rootOffspring = new HashMap<>();
@@ -24,7 +24,7 @@ public class FamilyTree {
         buildAncestorsTree(this.root);
     }
 
-    public FamilyTree(PlayerFamily rootFamily) {
+    public TreeStringGenerator(PlayerFamily rootFamily) {
         this.root = new FamilyRepeated(rootFamily);
         this.rootParents = new HashMap<>();
         this.rootOffspring = new HashMap<>();

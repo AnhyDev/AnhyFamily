@@ -10,9 +10,9 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.messages.MessageChat;
 
-public class FamilyTreeCommandHandler extends Sender {
+public class FamilyTreeHandler extends Sender {
 
-    public FamilyTreeCommandHandler() {
+    public FamilyTreeHandler() {
     	super(GlobalManager.getInstance());
     }
 
@@ -38,8 +38,8 @@ public class FamilyTreeCommandHandler extends Sender {
             return false;
         }
 
-        FamilyTree familyTree = new FamilyTree(playerFamily);
-        String treeInfo = familyTree.buildFamilyTreeString();
+        TreeStringGenerator treeStringGenerator = new TreeStringGenerator(playerFamily);
+        String treeInfo = treeStringGenerator.buildFamilyTreeString();
 
         if (isInteractive) {
         	String command  = "/family trees";

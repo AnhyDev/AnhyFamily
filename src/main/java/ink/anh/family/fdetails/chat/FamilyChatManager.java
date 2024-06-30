@@ -20,7 +20,7 @@ import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.AbstractDetailsManager;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.info.FamilyTree;
+import ink.anh.family.fplayer.info.TreeStringGenerator;
 import ink.anh.family.util.TypeTargetComponent;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.StringColorUtils;
@@ -138,7 +138,7 @@ public class FamilyChatManager extends AbstractDetailsManager {
         
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
         
-        String familyTree = player.isOnline() ? new FamilyTree(FamilyUtils.getFamily(player)).buildFamilyTreeString() : "family_hover_player_offline";
+        String familyTree = player.isOnline() ? new TreeStringGenerator(FamilyUtils.getFamily(player)).buildFamilyTreeString() : "family_hover_player_offline";
         String hoverCopyMessageKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_copy_message", langs), new String[] {symbol});
         String hoverReplyChatKey = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_hover_reply_chat", langs), new String[] {});
         String hoverFamilyTree = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, familyTree, langs), new String[] {});

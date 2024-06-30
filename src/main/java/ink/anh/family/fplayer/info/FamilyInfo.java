@@ -1,6 +1,5 @@
 package ink.anh.family.fplayer.info;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.family.GlobalManager;
@@ -43,10 +42,10 @@ public class FamilyInfo extends Sender {
             return false;
         }
 
-        String familyInfo = new InfoGenerator().generateFamilyInfo(playerFamily);
-        String treeInfo = new FamilyTree(playerFamily).buildFamilyTreeString();
+        String familyInfo = new ProfileStringGenerator().generateFamilyInfo(playerFamily);
+        String treeInfo = new TreeStringGenerator(playerFamily).buildFamilyTreeString();
         
-        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponent("family_tree_status", "/family profile", "/family tree", "family_info_component", "family_tree_component",
+        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponent("family_tree_status", "/family profile [PlayerName]", "/family tree [PlayerName]", "family_info_component", "family_tree_component",
         		familyInfo + "\n family_print_component", treeInfo + "\n family_print_component", player);
 
         Messenger.sendMessage(libraryManager.getPlugin(), player, messageComponents, "MessageComponents");

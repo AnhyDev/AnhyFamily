@@ -13,7 +13,7 @@ import ink.anh.family.fplayer.FirstName;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.fplayer.info.FamilyInfo;
 import ink.anh.family.fplayer.info.FamilyProfileHandler;
-import ink.anh.family.fplayer.info.FamilyTreeCommandHandler;
+import ink.anh.family.fplayer.info.FamilyTreeHandler;
 import ink.anh.family.marriage.Divorce;
 import ink.anh.family.separate.Separation;
 import ink.anh.api.messages.MessageForFormatting;
@@ -52,10 +52,10 @@ public class FamilyCommand extends Sender implements CommandExecutor {
     	                    new FamilyProfileHandler().handleCommand(sender, args);
     	                    break;
     	                case "tree":
-    	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, true);
+    	                    new FamilyTreeHandler().handleTreeCommand(sender, args, true);
     	                    break;
     	                case "trees":
-    	                    new FamilyTreeCommandHandler().handleTreeCommand(sender, args, false);
+    	                    new FamilyTreeHandler().handleTreeCommand(sender, args, false);
     	                    break;
     	                default:
     	                    sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);

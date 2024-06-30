@@ -9,7 +9,7 @@ import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBServsce;
 import ink.anh.family.fplayer.gender.Gender;
-import ink.anh.family.fplayer.info.FamilyTree;
+import ink.anh.family.fplayer.info.TreeStringGenerator;
 import ink.anh.family.util.FamilyUtils;
 
 public class FamilyAdoption {
@@ -109,7 +109,7 @@ public class FamilyAdoption {
     }
 
     public boolean canAdopt(PlayerFamily adopted, PlayerFamily adopter1, PlayerFamily adopter2) {
-        FamilyTree tree = new FamilyTree(adopted.getRoot());
+        TreeStringGenerator tree = new TreeStringGenerator(adopted.getRoot());
         return !FamilyUtils.hasRelatives(tree, adopter1.getRoot())
                 && !FamilyUtils.hasRelatives(tree, adopter2.getRoot())
                 && isGenderCompatibleAdoption(adopter1, adopter2)
@@ -117,7 +117,7 @@ public class FamilyAdoption {
     }
 
     public boolean canAdopt(PlayerFamily adopted, PlayerFamily adopter) {
-        FamilyTree tree = new FamilyTree(adopted.getRoot());
+        TreeStringGenerator tree = new TreeStringGenerator(adopted.getRoot());
         return !FamilyUtils.hasRelatives(tree, adopter.getRoot())
                 && isGenderCompatibleAdoption(adopter)
                 && isParentSlotAvailable(adopted, true, adopter);

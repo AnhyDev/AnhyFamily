@@ -14,7 +14,7 @@ import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
 
-public class InfoGenerator {
+public class ProfileStringGenerator {
 
     private final int ROOT = 0;
     private final int PARENT = 1;
@@ -23,7 +23,7 @@ public class InfoGenerator {
     
     private GlobalManager libraryManager;
 
-    public InfoGenerator() {
+    public ProfileStringGenerator() {
         this.libraryManager = GlobalManager.getInstance();
     }
 

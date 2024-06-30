@@ -53,7 +53,7 @@ family_gender_player_reset: "Стать гравця %s скинуто на 'Н�
 family_gender_player_set_to: "Стать гравця %s встановлено як:"
 family_non_binary_not_allowed: "Вибір небінарної статі заборонено в налаштуваннях конфігурації"
 
-# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.ProfileStringGenerator]
 family_info_previous_lastname: "Попереднє прізвище: "
 family_info_role_father: "Батько:"
 family_info_role_mother: "Мати:"
@@ -73,7 +73,7 @@ family_info_children: "Діти:"
 family_info_children_none: "немає"
 family_info_component: "Сімейна інформація гравця %s, наведіть для перегляду або клікніть для виведення у свій чат"
 
-# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeHandler, ink.anh.family.fplayer.info.TreeStringGenerator]
 family_tree_title: "Сімейне дерево"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Нащадки"
@@ -320,5 +320,7 @@ family_tree_component: "Родове дерево"
 
 family_info_component: "Сімейна інформація"
 
-family_print_component: "СіКлікни щоб роздрукувати"
+family_print_component: "Клікни щоб роздрукувати"
+
+family_print_info: "Клікни для виводу інформації про %s"
 

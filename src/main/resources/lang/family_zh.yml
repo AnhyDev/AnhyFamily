@@ -53,7 +53,7 @@ family_gender_player_reset: "玩家 %s 的性别已被重置为“未决定”�
 family_gender_player_set_to: "玩家 %s 的性别被设定为："
 family_non_binary_not_allowed: "配置设置中不允许选择非二元性别"
 
-# 命令 /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.InfoGenerator]
+# 命令 /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.ProfileStringGenerator]
 family_info_previous_lastname: "之前的姓氏："
 family_info_role_father: "父亲："
 family_info_role_mother: "母亲："
@@ -73,7 +73,7 @@ family_info_children: "孩子："
 family_info_children_none: "没有"
 family_info_component: "玩家 %s 的家庭信息，悬停查看或点击显示在你的聊天框中"
 
-# 命令 /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
+# 命令 /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeHandler, ink.anh.family.fplayer.info.TreeStringGenerator]
 family_tree_title: "家谱树"
 family_tree_ancestors: "祖先"
 family_tree_descendants: "后代"

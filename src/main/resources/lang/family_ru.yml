@@ -53,7 +53,7 @@ family_gender_player_reset: "Пол игрока %s сброшен на 'Не о
 family_gender_player_set_to: "Пол игрока %s установлен на как:"
 family_non_binary_not_allowed: "Выбор небинарного пола запрещён в настройках конфигурации"
 
-# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.InfoGenerator]
+# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.ProfileStringGenerator]
 family_info_previous_lastname: "Предыдущая фамилия: "
 family_info_role_father: "Отец:"
 family_info_role_mother: "Мать:"
@@ -73,7 +73,7 @@ family_info_children: "Дети:"
 family_info_children_none: "нет"
 family_info_component: "Семейная информация игрока %s, наведите для просмотра или клик для вывода в свой чат"
 
-# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeCommandHandler, ink.anh.family.fplayer.info.FamilyTree]
+# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeHandler, ink.anh.family.fplayer.info.TreeStringGenerator]
 family_tree_title: "Семейное древо"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Потомки"
