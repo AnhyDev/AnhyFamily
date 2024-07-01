@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.bukkit.ChatColor;
 
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.gender.Gender;
+import ink.anh.family.fplayer.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
 
 public class TreeStringGenerator {
@@ -176,6 +178,9 @@ public class TreeStringGenerator {
     }
 
     private String getFormattedName(PlayerFamily member) {
+        Gender gender = GenderManager.getGender(member.getRoot());
+        
+        String genderSymbol = Gender.getMinecraftColor(gender) + Gender.getSymbol(gender);
         StringBuilder formattedName = new StringBuilder();
         if (member.getFirstName() != null && !member.getFirstName().isEmpty()) {
             formattedName.append(member.getFirstName()).append(" ");
@@ -185,9 +190,9 @@ public class TreeStringGenerator {
             formattedName.append(actualLastName).append(" ");
         }
         formattedName.append("(").append(member.getRootrNickName()).append(")");
-        return formattedName.toString();
+        return " §r(" + genderSymbol + "§r) " + ChatColor.YELLOW + formattedName.toString();
     }
-
+    
     private ChatColor determineColor(int level, int repeatedCount) {
         if (repeatedCount > 0) {
             return ChatColor.DARK_RED;
@@ -197,6 +202,9 @@ public class TreeStringGenerator {
             case 1: return ChatColor.YELLOW;
             case 2: return ChatColor.BLUE;
             case 3: return ChatColor.AQUA;
+            case 4: return ChatColor.LIGHT_PURPLE;
+            case 5: return ChatColor.DARK_AQUA;
+            case 6: return ChatColor.DARK_PURPLE;
             default: return ChatColor.GRAY;
         }
     }

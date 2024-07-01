@@ -34,7 +34,7 @@ public class ProfileStringGenerator {
     }
 
     public String generateFamilyInfo(Player player) {
-        return Translator.translateKyeWorld(libraryManager, generateFamilyInfo(FamilyUtils.getFamily(player.getUniqueId())), getLangs(player));
+        return Translator.translateKyeWorld(libraryManager, generateFamilyInfo(FamilyUtils.getFamily(player)), getLangs(player));
     }
 
     public String generateFamilyInfo(PlayerFamily playerFamily) {
@@ -77,16 +77,10 @@ public class ProfileStringGenerator {
 
     private String generateFamilyMemberInfo(int relationType, PlayerFamily playerFamily) {
         Gender gender = GenderManager.getGender(playerFamily.getRoot());
-        String genderSymbol = Gender.getMinecraftColor(gender) + Gender.getSymbol(gender);
-
-        String lastName = playerFamily.getCurrentSurname();
-        lastName = (lastName != null && !lastName.isEmpty()) ? lastName : "";
-
-        String oldLastName = FamilyUtils.selectSurname(playerFamily.getOldLastName(), gender);
-        oldLastName = (oldLastName != null && !oldLastName.isEmpty()) ? "\n family_info_previous_lastname " + oldLastName : "";
 
         String relation = getFamilyRole(gender, relationType);
-        return ChatColor.GREEN + relation + " §r(" + genderSymbol + "§r) " + ChatColor.YELLOW + playerFamily.getRootrNickName() + " " + lastName + oldLastName + "\n";
+        
+        return ChatColor.GREEN + relation + getFormattedName(playerFamily) + "\n";
     }
 
     private String getFamilyRole(Gender gender, int roleType) {
@@ -97,6 +91,22 @@ public class ProfileStringGenerator {
             case SPOUSE: return gender == Gender.MALE ? " family_info_role_husband" : gender == Gender.FEMALE ? " family_info_role_wife" : " family_info_role_partner";
             default: return " family_info_role_relative";
         }
+    }
+
+    private String getFormattedName(PlayerFamily member) {
+        Gender gender = GenderManager.getGender(member.getRoot());
+        
+        String genderSymbol = Gender.getMinecraftColor(gender) + Gender.getSymbol(gender);
+        StringBuilder formattedName = new StringBuilder();
+        if (member.getFirstName() != null && !member.getFirstName().isEmpty()) {
+            formattedName.append(member.getFirstName()).append(" ");
+        }
+        String actualLastName = member.getActualLastName();
+        if (actualLastName != null && !actualLastName.isEmpty()) {
+            formattedName.append(actualLastName).append(" ");
+        }
+        formattedName.append("(").append(member.getRootrNickName()).append(")");
+        return " §r(" + genderSymbol + "§r) " + ChatColor.YELLOW + formattedName.toString();
     }
 
     private String[] getLangs(Player player) {

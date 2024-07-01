@@ -7,8 +7,9 @@ import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
-import ink.anh.api.messages.MessageChat;
+import ink.anh.api.messages.MessageComponents;
 
 public class FamilyTreeHandler extends Sender {
 
@@ -16,42 +17,39 @@ public class FamilyTreeHandler extends Sender {
     	super(GlobalManager.getInstance());
     }
 
-    public boolean handleTreeCommand(CommandSender sender, String[] args, boolean isInteractive) {
+    public boolean handleTreeCommand(CommandSender sender, String[] args) {
+    	PlayerFamily playerFamily = getTargetFamily(sender, args);
     	
-		if (!(sender instanceof Player)) {
-			isInteractive = false;
+        if (playerFamily == null) return false;
+    	
+		if (sender instanceof Player) {
+    		Player player = (Player) sender;
+    		
+    		MessageComponents messageComponents = new TreeComponentGenerator(playerFamily).buildFamilyTreeComponent(player);
+            Messenger.sendMessage(libraryManager.getPlugin(), player, messageComponents, "MessageComponents");
+            
+            return true;
 		}
-		
-    	PlayerFamily playerFamily;
-        if (args.length > 1) {
-        	playerFamily = FamilyUtils.getFamily(args[1]);
-        } else {
-            if (!(sender instanceof Player)) {
-                sendMessage(new MessageForFormatting("family_err_command_only_player", new String[] {}), MessageType.WARNING, sender);
-                return false;
-            }
-            playerFamily = FamilyUtils.getFamily((Player) sender);
-        }
+
+        String treeInfo = new TreeStringGenerator(playerFamily).buildFamilyTreeString();
+        sendMessage(new MessageForFormatting(treeInfo, new String[] {}), MessageType.NORMAL, false, sender);
         
-        if (playerFamily == null) {
-            sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
-            return false;
-        }
-
-        TreeStringGenerator treeStringGenerator = new TreeStringGenerator(playerFamily);
-        String treeInfo = treeStringGenerator.buildFamilyTreeString();
-
-        if (isInteractive) {
-        	String command  = "/family trees";
-        	String playerName = (args.length > 1) ? args[1] : sender.getName();
-        	command = (args.length > 1) ? (command + " " + playerName) : command;
-            MessageForFormatting message = new MessageForFormatting("family_tree_component", new String[] {playerName});
-            MessageForFormatting hoverText = new MessageForFormatting(treeInfo, new String[] {});
-            MessageChat.sendMessage(GlobalManager.getInstance(), sender, message, hoverText, command, MessageType.NORMAL, false);
-        } else {
-            sendMessage(new MessageForFormatting(treeInfo, new String[] {}), MessageType.NORMAL, false, sender);
-        }
-
         return true;
+    }
+
+    private PlayerFamily getTargetFamily(CommandSender sender, String[] args) {
+        if (args.length > 2) {
+            PlayerFamily playerFamily = FamilyUtils.getFamily(args[1]);
+            if (playerFamily == null) {
+                sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);
+                return null;
+            }
+            return playerFamily;
+        } else if (sender instanceof Player) {
+            return FamilyUtils.getFamily((Player) sender);
+        } else {
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[] {}), MessageType.WARNING, sender);
+            return null;
+        }
     }
 }

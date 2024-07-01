@@ -38,7 +38,7 @@ public class FamilyProfileHandler extends Sender {
     }
 
     private PlayerFamily getTargetFamily(CommandSender sender, String[] args) {
-        if (args.length > 1) {
+        if (args.length > 2) {
             PlayerFamily playerFamily = FamilyUtils.getFamily(args[1]);
             if (playerFamily == null) {
                 sendMessage(new MessageForFormatting("family_player_not_found_db", new String[] {}), MessageType.WARNING, sender);

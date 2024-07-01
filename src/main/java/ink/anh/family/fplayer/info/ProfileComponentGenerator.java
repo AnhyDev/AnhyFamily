@@ -59,7 +59,10 @@ public class ProfileComponentGenerator {
             builder.append(generateFamilyMemberInfoComponent(SPOUSE, FamilyUtils.getFamily(spouse), player)).appendNewLine();
         } else {
             builder.content(translate("family_info_role_partner", player))
-                   .color("WHITE")
+                   .hexColor("#12ccad")
+                   .append(MessageComponents.builder()
+                           .content(" ")
+                           .build())
                    .append(MessageComponents.builder()
                            .content(translate("family_info_spouse_not_found", player))
                            .color("RED")
@@ -73,7 +76,10 @@ public class ProfileComponentGenerator {
             builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(father), player)).appendNewLine();
         } else {
             builder.content(translate("family_info_role_father", player))
-                   .color("WHITE")
+            		.hexColor("#12ccad")
+            		.append(MessageComponents.builder()
+            				.content(" ")
+            				.build())
                    .append(MessageComponents.builder()
                            .content(translate("family_info_father_unknown", player))
                            .color("RED")
@@ -87,7 +93,10 @@ public class ProfileComponentGenerator {
             builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(mother), player)).appendNewLine();
         } else {
             builder.content(translate("family_info_role_mother", player))
-                   .color("WHITE")
+            		.hexColor("#12ccad")
+            		.append(MessageComponents.builder()
+            				.content(" ")
+            				.build())
                    .append(MessageComponents.builder()
                            .content(translate("family_info_mother_unknown", player))
                            .color("RED")
@@ -99,7 +108,10 @@ public class ProfileComponentGenerator {
         Set<UUID> children = playerFamily.getChildren();
         if (children.isEmpty()) {
             builder.content(translate("family_info_children", player))
-                   .color("WHITE")
+            		.hexColor("#12ccad")
+            		.append(MessageComponents.builder()
+            			.content(" ")
+            			.build())
                    .append(MessageComponents.builder()
                            .content(translate("family_info_children_none", player))
                            .color("RED")
