@@ -77,7 +77,11 @@ family_info_component: "Сімейна інформація гравця %s, н�
 family_tree_title: "Сімейне дерево"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Нащадки"
-family_tree_component: "Інформація про родове дерево гравця %s, наведіть для перегляду або клікніть для виведення у свій чат"
+family_tree_status: "Сімейна інформація %s:"
+family_tree_component: "Родове дерево"
+family_profile_component: "Профіль"
+family_print_component: "Клікни щоб роздрукувати"
+family_print_info: "Сімейна інформація %s:"
 
 # Command /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Ваше прізвище: %s "
@@ -314,13 +318,4 @@ family_hugged_player_you2: "Ти потрапила в обійми до %s"
 family_hugged_player_you3: "Ти потрапило в обійми до %s"
 
 
-family_tree_status: "Сімейна інформація %s:"
-
-family_tree_component: "Родове дерево"
-
-family_profile_component: "Профіль"
-
-family_print_component: "Клікни щоб роздрукувати"
-
-family_print_info: "Сімейна інформація %s:"
 

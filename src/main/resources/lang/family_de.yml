@@ -77,7 +77,11 @@ family_info_component: "Familieninformationen von Spieler %s, zum Anzeigen beweg
 family_tree_title: "Familienstammbaum"
 family_tree_ancestors: "Vorfahren"
 family_tree_descendants: "Nachkommen"
-family_tree_component: "Informationen über Spieler %s's Familienstammbaum, zum Anzeigen bewegen oder zum Anzeigen im Chat klicken"
+family_tree_status: "Familieninformation %s:"
+family_tree_component: "Stammbaum"
+family_profile_component: "Profil"
+family_print_component: "Klicken zum Drucken"
+family_print_info: "Familieninformation %s:"
 
 # Befehl /surname (setsurname) ... [Klasse: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Ihr Nachname: %s "

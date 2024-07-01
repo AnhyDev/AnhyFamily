@@ -13,7 +13,6 @@ import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.api.lingo.Translator;
-import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageComponents;
 
 public class FamilyInfo extends Sender {
@@ -56,8 +55,6 @@ public class FamilyInfo extends Sender {
 
         String cmdProfile = "/family profile " + playerName;
         String smdTree = "/family tree " + playerName;
-        
-        Logger.info(libraryManager.getPlugin(), cmdProfile + "\n" + smdTree);
 
         MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponentHoverString(
                 messageBase, cmdProfile, smdTree, message1, message2, familyInfo, treeInfo, player

@@ -77,7 +77,11 @@ family_info_component: "Семейная информация игрока %s, �
 family_tree_title: "Семейное древо"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Потомки"
-family_tree_component: "Информация о фамильном древе игрока %s, наведите для просмотра или клик для вывода в свой чат"
+family_tree_status: "Семейная информация %s:"
+family_tree_component: "Генеалогическое дерево"
+family_profile_component: "Профиль"
+family_print_component: "Кликни чтобы распечатать"
+family_print_info: "Семейная информация %s:"
 
 # Command /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Ваша фамилия: %s "

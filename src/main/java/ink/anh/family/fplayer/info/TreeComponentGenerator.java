@@ -76,10 +76,6 @@ public class TreeComponentGenerator {
                 .content(translate("family_tree_title", player))
                 .hexColor("#FFD700")  // Золотий колір
                 .decoration("BOLD", true)
-                .appendNewLine()
-                .append(MessageComponents.builder()
-                        .content(getFormattedName(root.getFamily()))
-                        .build())
                 .appendNewLine();
 
         // Спочатку додаємо нащадків
@@ -154,9 +150,9 @@ public class TreeComponentGenerator {
         PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
 
-        String title = (level == 0 ? translate("family_tree_descendants", player) + " " : "");
+        String branchSymbol = level == 0 ? "  ┌─ " + translate("family_tree_descendants", player) : " ".repeat(3 - level) + "┌─ ";
+        String title = level == 0 ? "" : " (♂) " + member.getRootrNickName();
 
-        String branchSymbol = "┌─ ";
         MessageComponents memberLine = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol, player);
         treeBuilder.append(memberLine).appendNewLine();
 
@@ -165,7 +161,7 @@ public class TreeComponentGenerator {
             for (UUID childUuid : childrenUuids) {
                 PlayerFamily child = rootOffspring.get(childUuid).getFamily();
                 if (child != null && !isRepeated) {
-                    buildDescendantsTreeComponent(new FamilyRepeated(child), level + 1, prefix + "  ", treeBuilder, player);
+                    buildDescendantsTreeComponent(new FamilyRepeated(child), level + 1, prefix + " ", treeBuilder, player);
                 }
             }
         }

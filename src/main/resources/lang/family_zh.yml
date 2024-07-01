@@ -77,7 +77,11 @@ family_info_component: "玩家 %s 的家庭信息，悬停查看或点击显示�
 family_tree_title: "家谱树"
 family_tree_ancestors: "祖先"
 family_tree_descendants: "后代"
-family_tree_component: "玩家 %s 的家族树信息，悬停查看或点击显示在你的聊天框中"
+family_tree_status: "家庭信息 %s:"
+family_tree_component: "家谱"
+family_profile_component: "个人资料"
+family_print_component: "点击打印"
+family_print_info: "家庭信息 %s:"
 
 # 命令 /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "你的姓氏：%s"
