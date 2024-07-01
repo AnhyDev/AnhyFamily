@@ -13,12 +13,13 @@ import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageComponents;
 
 public class FamilyInfo extends Sender {
 
     public FamilyInfo() {
-    	super(GlobalManager.getInstance());
+        super(GlobalManager.getInstance());
     }
 
     public boolean handleInfoCommand(CommandSender sender, String[] args, boolean isInteractive) {
@@ -26,7 +27,7 @@ public class FamilyInfo extends Sender {
             sendMessage(new MessageForFormatting("family_err_command_only_player", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
-        
+
         Player player = (Player) sender;
         PlayerFamily playerFamily = null;
         String targetName = null;
@@ -46,24 +47,31 @@ public class FamilyInfo extends Sender {
 
         String playerName = playerFamily.getRootrNickName();
 
-        String messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_tree_status", new String[] {playerName}), langs));
-        String message1 = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_profile_component", new String[] {playerName}), langs));
-        String message2 = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(libraryManager, "family_tree_component", new String[] {playerName}), langs));
-        
-        String familyInfo = new ProfileStringGenerator().generateFamilyInfo(playerFamily) + "\n&6 family_print_component";
-        String treeInfo = new TreeStringGenerator(playerFamily).buildFamilyTreeString() + "\n&6 family_print_component";
-        
-        familyInfo = StringUtils.colorize(Translator.translateKyeWorld(libraryManager, familyInfo, langs));
-        treeInfo = StringUtils.colorize(Translator.translateKyeWorld(libraryManager, treeInfo, langs));
+        String messageBase = formatAndColorize("family_tree_status", new String[]{playerName}, langs);
+        String message1 = formatAndColorize("family_profile_component", new String[]{playerName}, langs);
+        String message2 = formatAndColorize("family_tree_component", new String[]{playerName}, langs);
+
+        String familyInfo = formatAndColorize(new ProfileStringGenerator().generateFamilyInfo(playerFamily) + "\n&6 family_print_component", new String[]{playerName}, langs);
+        String treeInfo = formatAndColorize(new TreeStringGenerator(playerFamily).buildFamilyTreeString() + "\n&6 family_print_component", new String[]{playerName}, langs);
 
         String cmdProfile = "/family profile " + playerName;
         String smdTree = "/family tree " + playerName;
+        
+        Logger.info(libraryManager.getPlugin(), cmdProfile + "\n" + smdTree);
 
-        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponent(messageBase, cmdProfile, smdTree, message1, message2, familyInfo, treeInfo, player);
+        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponentHoverString(
+                messageBase, cmdProfile, smdTree, message1, message2, familyInfo, treeInfo, player
+        );
 
         Messenger.sendMessage(libraryManager.getPlugin(), player, messageComponents, "MessageComponents");
 
         return true;
+    }
+
+    private String formatAndColorize(String messageKey, String[] replace, String[] langs) {
+        String message = Translator.translateKyeWorld(libraryManager, messageKey, langs);
+        message = StringUtils.formatString(message, replace);
+        return StringUtils.colorize(message);
     }
 
     private String[] getLangs(Player recipient) {

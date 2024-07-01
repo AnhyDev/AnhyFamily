@@ -68,14 +68,25 @@ public class OtherComponentBuilder {
         hoverV1 = StringUtils.colorize(Translator.translateKyeWorld(manager, hoverV1, langs));
         hoverV2 = StringUtils.colorize(Translator.translateKyeWorld(manager, hoverV2, langs));
 
+        MessageComponents hoverComponent1 = createHoverComponent(v1Color, hoverV1);
+
+        MessageComponents hoverComponent2 = createHoverComponent(v2Color, hoverV2);
+
+
         return prefix.append(MessageComponents.builder()
                         .content(messageBase)
                         .hexColor(messageColor)
                         .build())
                 .append(MessageComponents.builder()
+                        .appendNewLine()
+                        .build())
+                .append(MessageComponents.builder()
+                        .content(" ")
+                        .build())
+                .append(MessageComponents.builder()
                         .content(messageV1)
                         .hexColor(v1Color)
-                        .hoverComponent(MessageComponents.builder().content(hoverV1).hexColor(v1Color).build())
+                        .hoverComponent(hoverComponent1)
                         .clickActionRunCommand(commandV1)
                         .build())
                 .append(MessageComponents.builder()
@@ -85,7 +96,51 @@ public class OtherComponentBuilder {
                 .append(MessageComponents.builder()
                         .content(messageV2)
                         .hexColor(v2Color)
-                        .hoverComponent(MessageComponents.builder().content(hoverV2).hexColor(v2Color).build())
+                        .hoverComponent(hoverComponent2)
+                        .clickActionRunCommand(commandV2)
+                        .build())
+                .build();
+    }
+
+    private static MessageComponents createHoverComponent(String hexColor, String hoverText) {
+        return MessageComponents.builder().content(hoverText).hexColor(hexColor).build();
+    }
+
+    public static MessageComponents buildComponent(String messageBase, String commandV1, String commandV2,
+                                                    String messageV1, String messageV2, String hoverV1, String hoverV2,
+                                                    MessageBuilder prefix, String messageColor, Player recipient) {
+        String[] langs = getLangs(recipient);
+
+        messageBase = StringUtils.colorize(Translator.translateKyeWorld(manager, messageBase, langs));
+        messageV1 = StringUtils.colorize(Translator.translateKyeWorld(manager, messageV1, langs));
+        messageV2 = StringUtils.colorize(Translator.translateKyeWorld(manager, messageV2, langs));
+        hoverV1 = StringUtils.colorize(Translator.translateKyeWorld(manager, hoverV1, langs));
+        hoverV2 = StringUtils.colorize(Translator.translateKyeWorld(manager, hoverV2, langs));
+
+        return prefix.append(MessageComponents.builder()
+                        .content(messageBase)
+                        .hexColor(messageColor)
+                        .build())
+                .append(MessageComponents.builder()
+                        .appendNewLine()
+                        .build())
+                .append(MessageComponents.builder()
+                        .content(" ")
+                        .build())
+                .append(MessageComponents.builder()
+                        .content(messageV1)
+                        .hexColor(StringColorUtils.ACCESS_COLOR_TRUE)
+                        .hoverMessage(hoverV1)
+                        .clickActionRunCommand(commandV1)
+                        .build())
+                .append(MessageComponents.builder()
+                        .content(" | ")
+                        .hexColor(StringColorUtils.SEPARATOR_COLOR)
+                        .build())
+                .append(MessageComponents.builder()
+                        .content(messageV2)
+                        .hexColor(StringColorUtils.ACCESS_COLOR_DEFAULT)
+                        .hoverMessage(hoverV2)
                         .clickActionRunCommand(commandV2)
                         .build())
                 .build();
@@ -166,6 +221,15 @@ public class OtherComponentBuilder {
 
         return buildComponent(messageBase, commandV1, commandV2, messageV1, messageV2, hoverV1, hoverV2,
                 prefix, StringColorUtils.MESSAGE_COLOR, StringColorUtils.ACCESS_COLOR_TRUE, StringColorUtils.ACCESS_COLOR_DEFAULT, recipient);
+    }
+    
+    public static MessageComponents infoDoubleComponentHoverString(String messageBase, String commandV1, String commandV2,
+            String messageV1, String messageV2, String hoverV1, String hoverV2, Player recipient) {
+    	MessageBuilder prefix = prefixPlugin()
+    			.append(MessageComponents.builder().content(" ").build());
+
+    	return buildComponent(messageBase, commandV1, commandV2, messageV1, messageV2, hoverV1, hoverV2,
+    			prefix, StringColorUtils.MESSAGE_COLOR, recipient);
     }
 
     /**

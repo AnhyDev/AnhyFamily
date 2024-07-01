@@ -9,9 +9,9 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 
-public abstract class FamilyCommandHandler extends Sender {
+public abstract class AbstractInfoHandler extends Sender {
 
-    public FamilyCommandHandler() {
+    public AbstractInfoHandler() {
         super(GlobalManager.getInstance());
     }
 

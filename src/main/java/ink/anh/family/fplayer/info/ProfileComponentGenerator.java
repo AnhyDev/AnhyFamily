@@ -3,7 +3,6 @@ package ink.anh.family.fplayer.info;
 import java.util.UUID;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
@@ -27,15 +26,6 @@ public class ProfileComponentGenerator {
 
     public ProfileComponentGenerator() {
         this.libraryManager = GlobalManager.getInstance();
-    }
-
-    public MessageComponents generateFamilyInfoComponent(UUID playerUUID) {
-        Player player = Bukkit.getPlayer(playerUUID);
-        return generateFamilyInfoComponent(FamilyUtils.getFamily(playerUUID), player);
-    }
-
-    public MessageComponents generateFamilyInfoComponent(Player player) {
-        return generateFamilyInfoComponent(FamilyUtils.getFamily(player.getUniqueId()), player);
     }
 
     public MessageComponents generateFamilyInfoComponent(PlayerFamily playerFamily, Player player) {

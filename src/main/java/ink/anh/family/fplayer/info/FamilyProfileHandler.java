@@ -8,13 +8,13 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
 
-public class FamilyProfileHandler extends FamilyCommandHandler {
+public class FamilyProfileHandler extends AbstractInfoHandler {
 
     @Override
     protected boolean executeCommand(CommandSender sender, PlayerFamily playerFamily) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            MessageComponents messageComponents = new ProfileComponentGenerator().generateFamilyInfoComponent(player);
+            MessageComponents messageComponents = new ProfileComponentGenerator().generateFamilyInfoComponent(playerFamily, player);
             Messenger.sendMessage(libraryManager.getPlugin(), player, messageComponents, "MessageComponents");
             return true;
         }

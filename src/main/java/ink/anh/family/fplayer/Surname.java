@@ -1,6 +1,5 @@
 package ink.anh.family.fplayer;
 
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
@@ -57,8 +56,7 @@ public class Surname extends Sender {
             return false;
         }
 
-        UUID uuid = player.getUniqueId();
-        PlayerFamily playerFamily = FamilyCacheManager.getInstance().getFamilyData(uuid);
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
 
         if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, sender);

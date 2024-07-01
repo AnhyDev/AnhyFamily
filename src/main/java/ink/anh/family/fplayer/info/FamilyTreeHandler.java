@@ -8,7 +8,7 @@ import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
 
-public class FamilyTreeHandler extends FamilyCommandHandler {
+public class FamilyTreeHandler extends AbstractInfoHandler {
 
     @Override
     protected boolean executeCommand(CommandSender sender, PlayerFamily playerFamily) {

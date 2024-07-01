@@ -95,7 +95,6 @@ public class ProfileStringGenerator {
 
     private String getFormattedName(PlayerFamily member) {
         Gender gender = GenderManager.getGender(member.getRoot());
-        
         String genderSymbol = Gender.getMinecraftColor(gender) + Gender.getSymbol(gender);
         StringBuilder formattedName = new StringBuilder();
         if (member.getFirstName() != null && !member.getFirstName().isEmpty()) {
@@ -106,7 +105,7 @@ public class ProfileStringGenerator {
             formattedName.append(actualLastName).append(" ");
         }
         formattedName.append("(").append(member.getRootrNickName()).append(")");
-        return " §r(" + genderSymbol + "§r) " + ChatColor.YELLOW + formattedName.toString();
+        return " " + ChatColor.RESET + "(" + genderSymbol + ChatColor.RESET + ") " + ChatColor.YELLOW + formattedName.toString();
     }
 
     private String[] getLangs(Player player) {
