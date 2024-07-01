@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.gender.Gender;
+import ink.anh.family.fplayer.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
@@ -80,9 +82,18 @@ public class TreeComponentGenerator {
                         .build())
                 .appendNewLine();
 
+        // Спочатку додаємо нащадків
         buildDescendantsTreeComponent(root, 0, "", treeBuilder, player);
-        resetRoot();
+
+        // Потім додаємо центральний елемент
+        treeBuilder.append(MessageComponents.builder()
+                .content(getFormattedName(root.getFamily()))
+                .build())
+                .appendNewLine();
+
+        // Потім додаємо предків
         buildFamilyTreeComponent(root, 0, "", treeBuilder, player);
+
         return treeBuilder.build();
     }
 
@@ -196,6 +207,9 @@ public class TreeComponentGenerator {
     }
 
     private String getFormattedName(PlayerFamily member) {
+        Gender gender = GenderManager.getGender(member.getRoot());
+        
+        String genderSymbol = Gender.getMinecraftColor(gender) + Gender.getSymbol(gender);
         StringBuilder formattedName = new StringBuilder();
         if (member.getFirstName() != null && !member.getFirstName().isEmpty()) {
             formattedName.append(member.getFirstName()).append(" ");
@@ -205,7 +219,7 @@ public class TreeComponentGenerator {
             formattedName.append(actualLastName).append(" ");
         }
         formattedName.append("(").append(member.getRootrNickName()).append(")");
-        return formattedName.toString();
+        return " (" + genderSymbol + ") " + formattedName.toString();
     }
 
     private String determineHexColor(int level, int repeatedCount) {

@@ -42,11 +42,15 @@ public class FamilyInfo extends Sender {
             return false;
         }
 
-        String familyInfo = new ProfileStringGenerator().generateFamilyInfo(playerFamily);
-        String treeInfo = new TreeStringGenerator(playerFamily).buildFamilyTreeString();
+        String familyInfo = new ProfileStringGenerator().generateFamilyInfo(playerFamily) + "\n family_print_component";
+        String treeInfo = new TreeStringGenerator(playerFamily).buildFamilyTreeString() + "\n family_print_component";
         
-        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponent("family_tree_status", "/family profile [PlayerName]", "/family tree [PlayerName]", "family_info_component", "family_tree_component",
-        		familyInfo + "\n family_print_component", treeInfo + "\n family_print_component", player);
+        String playerName = playerFamily.getRootrNickName();
+        String cmdProfile = "/family profile " + playerName;
+        String smdTree = "/family tree " + playerName;
+        
+        MessageComponents messageComponents = OtherComponentBuilder.infoDoubleComponent("family_tree_status", cmdProfile, smdTree,
+        		"family_info_component", "family_tree_component", familyInfo, treeInfo , player);
 
         Messenger.sendMessage(libraryManager.getPlugin(), player, messageComponents, "MessageComponents");
 
