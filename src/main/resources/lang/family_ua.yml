@@ -318,9 +318,9 @@ family_tree_status: "Сімейні дані гравця %s"
 
 family_tree_component: "Родове дерево"
 
-family_info_component: "Сімейна інформація"
+family_profile_component: "Профіль"
 
 family_print_component: "Клікни щоб роздрукувати"
 
-family_print_info: "Клікни для виводу інформації про %s"
+family_print_info: "Сімейна інформація про %s: "
 

@@ -52,7 +52,7 @@ public class FamilyCommand extends Sender implements CommandExecutor {
     	                    new FamilyProfileHandler().handleCommand(sender, args);
     	                    break;
     	                case "tree":
-    	                    new FamilyTreeHandler().handleTreeCommand(sender, args);
+    	                    new FamilyTreeHandler().handleCommand(sender, args);
     	                    break;
     	                default:
     	                    sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);
