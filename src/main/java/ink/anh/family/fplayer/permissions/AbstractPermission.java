@@ -56,19 +56,19 @@ public abstract class AbstractPermission {
         return access == Access.FALSE;
     }
 
-    protected boolean isAllowAll() {
+    public boolean isAllowAll() {
         return allowAll;
     }
 
-    protected void setAllowAll(boolean allowAll) {
+    public void setAllowAll(boolean allowAll) {
         this.allowAll = allowAll;
     }
 
-    protected boolean isDenyAllExceptFamily() {
+    public boolean isDenyAllExceptFamily() {
         return denyAllExceptFamily;
     }
 
-    protected void setDenyAllExceptFamily(boolean denyAllExceptFamily) {
+    public void setDenyAllExceptFamily(boolean denyAllExceptFamily) {
         this.denyAllExceptFamily = denyAllExceptFamily;
     }
 

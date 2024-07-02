@@ -51,7 +51,7 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
 		String[] validateCeremonyConditionsResult = validator.validateCeremonyConditions(proposer, receiver);
 		if (validateCeremonyConditionsResult != null) {
 			 String members = String.join(", ", Arrays.stream(validateCeremonyConditionsResult).skip(1).filter(Objects::nonNull).toArray(String[]::new));
-		        sendMAnnouncement(priestPrefixType, null, validateCeremonyConditionsResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+		        sendMAnnouncement(priestPrefixType, "family_marry_private_priest", validateCeremonyConditionsResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
 		        return ;
 		}
         
@@ -62,7 +62,7 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
                 return;
             } else {
                 String members = String.join(", ", Arrays.copyOfRange(validatePerm, 1, validatePerm.length));
-                sendMAnnouncement(priestPrefixType, null, validatePerm[0], MessageType.ESPECIALLY.getColor(true), new String[] {members}, recipients);
+                sendMAnnouncement(priestPrefixType, "family_marry_private_priest", validatePerm[0], MessageType.ESPECIALLY.getColor(true), new String[] {members}, recipients);
                 return;
             }
         }
@@ -76,7 +76,7 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
                     .filter(Objects::nonNull)
                     .toArray(String[]::new));
 
-            sendMAnnouncement(priestPrefixType, null, validateCompatibilityResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+            sendMAnnouncement(priestPrefixType, "family_marry_private_priest", validateCompatibilityResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
             return;
         }
 
@@ -88,8 +88,8 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
             String proposerName = proposer.getDisplayName() != null ? proposer.getDisplayName() : proposer.getName();
             String receiverName = receiver.getDisplayName() != null ? receiver.getDisplayName() : receiver.getName();
             
-        	sendMAnnouncement(priestPrefixType, null, "family_proposal_sent", MessageType.ESPECIALLY.getColor(true), new String[]{receiverName}, new Player[] {proposer});
-        	sendMAnnouncement(priestPrefixType, null, "family_proposal_received", MessageType.ESPECIALLY.getColor(true), new String[]{proposerName}, new Player[] {receiver});
+        	sendMAnnouncement(priestPrefixType, "family_marry_private_priest", "family_proposal_sent", MessageType.ESPECIALLY.getColor(true), new String[]{receiverName}, new Player[] {proposer});
+        	sendMAnnouncement(priestPrefixType, "family_marry_private_priest", "family_proposal_received", MessageType.ESPECIALLY.getColor(true), new String[]{proposerName}, new Player[] {receiver});
         } else {
             sendMessage(new MessageForFormatting("family_proposal_failed", new String[]{receiver.getName()}), MessageType.WARNING, sender); // +
         }
@@ -124,10 +124,10 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
 
         Player proposer = proposal.getProposer();
         
-    	sendMAnnouncement(priestPrefixType, null, "family_proposal_refused", MessageType.NORMAL.getColor(true),
+    	sendMAnnouncement(priestPrefixType, "family_marry_private_priest", "family_proposal_refused", MessageType.NORMAL.getColor(true),
     			new String[]{proposer.getDisplayName() != null ? proposer.getDisplayName() : proposer.getName()}, new Player[] {receiver});
         
-    	sendMAnnouncement(priestPrefixType, null, "family_proposal_refused_sender", MessageType.NORMAL.getColor(true),
+    	sendMAnnouncement(priestPrefixType, "family_marry_private_priest", "family_proposal_refused_sender", MessageType.NORMAL.getColor(true),
     			new String[]{receiver.getDisplayName() != null ? receiver.getDisplayName() : receiver.getName()}, new Player[] {proposer});
 		return true;
     }
@@ -154,7 +154,7 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
 
         	String[] paymentFailedResult = validator.paymentFailed(marryBase, marriageManager);
         	if (paymentFailedResult != null) {
-        	    sendMAnnouncement(priestPrefixType, null, paymentFailedResult[0], MessageType.WARNING.getColor(true), Arrays.copyOfRange(paymentFailedResult, 1, paymentFailedResult.length), players);
+        	    sendMAnnouncement(priestPrefixType, "family_marry_private_priest", paymentFailedResult[0], MessageType.WARNING.getColor(true), Arrays.copyOfRange(paymentFailedResult, 1, paymentFailedResult.length), players);
         	    return;
         	}
         	
@@ -168,13 +168,13 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
                     String proposerName = players[0].getDisplayName() != null ? players[0].getDisplayName() : players[0].getName();
                     String receiverName = players[1].getDisplayName() != null ? players[1].getDisplayName() : players[1].getName();
                     
-                	sendMAnnouncement(priestPrefixType, null, "family_proposal_refused_sender", MessageType.IMPORTANT.getColor(true),
+                	sendMAnnouncement(priestPrefixType, "family_marry_private_priest", "family_proposal_refused_sender", MessageType.IMPORTANT.getColor(true),
                 			new String[]{proposerName}, new Player[] {players[1]});
                     
-                	sendMAnnouncement(priestPrefixType, null, "family_proposal_accepted", MessageType.NORMAL.getColor(true),
+                	sendMAnnouncement(priestPrefixType, "family_marry_private_priest", "family_proposal_accepted", MessageType.NORMAL.getColor(true),
                 			new String[]{receiverName}, new Player[] {players[0]});
                     
-                	sendMAnnouncement(priestPrefixType, null, "family_marriage_successful", MessageType.NORMAL.getColor(true),
+                	sendMAnnouncement(priestPrefixType, "family_marry_private_priest", "family_marriage_successful", MessageType.NORMAL.getColor(true),
                 			new String[]{proposerName, receiverName}, players);
                 });
             } else {

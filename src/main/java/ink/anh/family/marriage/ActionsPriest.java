@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.api.messages.MessageForFormatting;
@@ -52,7 +53,7 @@ public class ActionsPriest extends AbstractMarriageSender {
 		final String bride2Name = bride2.getDisplayName() != null ? bride2.getDisplayName() : bride2.getName();
 
         PlayerFamily priestFamily = FamilyUtils.getFamily(priest);
-        priestPrefixType = MarryPrefixType.getMarryPrefixType(priestFamily != null ? priestFamily.getGender() : null, 0);
+        priestPrefixType = MarryPrefixType.getMarryPrefixType(priestFamily != null ? priestFamily.getGender() : Gender.UNDECIDED, 0);
 
         String[] validatePerm = validator.validatePermissions(bride1, bride2, recipients);
         if (validatePerm != null) {
@@ -84,7 +85,7 @@ public class ActionsPriest extends AbstractMarriageSender {
         	String members = String.join(", ", Arrays.stream(Arrays.copyOfRange(validateCompatibilityResult, 1, validateCompatibilityResult.length))
                     .filter(Objects::nonNull)
                     .toArray(String[]::new));
-            sendMAnnouncement(priestPrefixType, null, validateCompatibilityResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
+            sendMAnnouncement(priestPrefixType, priestName, validateCompatibilityResult[0], MessageType.WARNING.getColor(true), new String[] {members}, recipients);
             return false;
         }
         

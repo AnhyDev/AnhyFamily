@@ -4,6 +4,7 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.chat.FamilyChatTabCompleter;
 import ink.anh.family.fdetails.chest.FamilyChestTabCompleter;
 import ink.anh.family.fdetails.home.FamilyHomeTabCompleter;
+import ink.anh.family.fdetails.hugs.FamilyHugsTabCompleter;
 import ink.anh.family.fdetails.symbol.FamilySymbolTabCompleter;
 
 public class CommandManager {
@@ -42,5 +43,6 @@ public class CommandManager {
     	familiPlugin.getCommand("fprefix").setTabCompleter(new FamilySymbolTabCompleter());
     	
     	familiPlugin.getCommand("fhugs").setExecutor(new FamilyHugsCommand(familiPlugin));
+    	familiPlugin.getCommand("fhugs").setTabCompleter(new FamilyHugsTabCompleter());
     }
 }
