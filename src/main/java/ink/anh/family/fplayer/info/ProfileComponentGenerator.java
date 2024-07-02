@@ -40,13 +40,13 @@ public class ProfileComponentGenerator {
                 .content("=========================================").color("GREEN").appendNewLine();
         
         // Root
-        builder.append(generateFamilyMemberInfoComponent(ROOT, playerFamily, player)).appendNewLine();
+        builder.append(generateFamilyMemberInfoComponent(ROOT, playerFamily, player, true)).appendNewLine();
         builder.content("-----------------------------------------").color("GREEN").appendNewLine();
 
         // Spouse
         UUID spouse = playerFamily.getSpouse();
         if (spouse != null) {
-            builder.append(generateFamilyMemberInfoComponent(SPOUSE, FamilyUtils.getFamily(spouse), player)).appendNewLine();
+            builder.append(generateFamilyMemberInfoComponent(SPOUSE, FamilyUtils.getFamily(spouse), player, false)).appendNewLine();
         } else {
             builder.content(translate("family_info_role_partner", player))
                    .hexColor("#12ccad")
@@ -63,7 +63,7 @@ public class ProfileComponentGenerator {
         // Father
         UUID father = playerFamily.getFather();
         if (father != null) {
-            builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(father), player)).appendNewLine();
+            builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(father), player, false)).appendNewLine();
         } else {
             builder.content(translate("family_info_role_father", player))
             		.hexColor("#12ccad")
@@ -80,7 +80,7 @@ public class ProfileComponentGenerator {
         // Mother
         UUID mother = playerFamily.getMother();
         if (mother != null) {
-            builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(mother), player)).appendNewLine();
+            builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(mother), player, false)).appendNewLine();
         } else {
             builder.content(translate("family_info_role_mother", player))
             		.hexColor("#12ccad")
@@ -110,14 +110,14 @@ public class ProfileComponentGenerator {
         } else {
             builder.content(translate("family_info_children", player)).color("WHITE").appendNewLine();
             for (UUID childId : children) {
-                builder.append(generateFamilyMemberInfoComponent(CHILD, FamilyUtils.getFamily(childId), player)).appendNewLine();
+                builder.append(generateFamilyMemberInfoComponent(CHILD, FamilyUtils.getFamily(childId), player, false)).appendNewLine();
             }
         }
 
         return builder.build();
     }
 
-    private MessageComponents generateFamilyMemberInfoComponent(int relationType, PlayerFamily playerFamily, Player player) {
+    private MessageComponents generateFamilyMemberInfoComponent(int relationType, PlayerFamily playerFamily, Player player, boolean isRoot) {
         Gender gender = GenderManager.getGender(playerFamily.getRoot());
 
         String firstName = playerFamily.getFirstName();
@@ -143,7 +143,10 @@ public class ProfileComponentGenerator {
         String fullName = fullNameBuilder.toString();
         String relation = translate(getFamilyRole(gender, relationType), player);
         
-        String hoverInfo = StringUtils.formatString(Translator.translateKyeWorld(libraryManager,"family_print_info", getLangs(player)), nickName);
+        String[] langs = getLangs(player);
+        String hoverInfo = isRoot ? "family_tree_status" : "family_print_info";
+        hoverInfo = StringUtils.formatString(Translator.translateKyeWorld(libraryManager,hoverInfo, langs), nickName);
+        String command = isRoot ? "/family tree " : "/family profile ";
 
         return MessageComponents.builder()
                 .content(relation)
@@ -164,7 +167,7 @@ public class ProfileComponentGenerator {
                         .content(fullName)
                         .color("YELLOW")
                         .hoverComponent(MessageComponents.builder().content(hoverInfo).hexColor("#12ccad").build())
-                        .clickActionRunCommand("/family profile " + nickName)
+                        .clickActionRunCommand(command + nickName)
                         .build())
                 .build();
     }

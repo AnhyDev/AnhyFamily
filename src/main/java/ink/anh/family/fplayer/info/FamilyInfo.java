@@ -46,7 +46,7 @@ public class FamilyInfo extends Sender {
 
         String playerName = playerFamily.getRootrNickName();
 
-        String messageBase = formatAndColorize("family_tree_status", new String[]{playerName}, langs);
+        String messageBase = formatAndColorize("family_print_info", new String[]{playerName}, langs);
         String message1 = formatAndColorize("family_profile_component", new String[]{playerName}, langs);
         String message2 = formatAndColorize("family_tree_component", new String[]{playerName}, langs);
 

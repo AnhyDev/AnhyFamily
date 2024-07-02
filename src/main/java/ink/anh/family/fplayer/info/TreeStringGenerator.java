@@ -67,7 +67,9 @@ public class TreeStringGenerator {
     }
 
     public String buildFamilyTreeString() {
-        StringBuilder treeString = new StringBuilder()
+        StringBuilder treeString = new StringBuilder();
+        
+        StringBuilder rootString = new StringBuilder()
                 .append(ChatColor.GOLD)
                 .append(" family_tree_title ")
                 .append(ChatColor.BOLD)
@@ -76,12 +78,13 @@ public class TreeStringGenerator {
                 .append("\n");
 
         buildDescendantsTreeString(root, 0, "", treeString);
+        treeString.append(rootString);
         resetRoot();
-        buildFamilyTreeString(root, 0, "", treeString);
+        buildAncestorsTreeString(root, 0, "", treeString);
         return treeString.toString();
     }
 
-    private void buildFamilyTreeString(FamilyRepeated memberFam, int level, String prefix, StringBuilder treeString) {
+    private void buildAncestorsTreeString(FamilyRepeated memberFam, int level, String prefix, StringBuilder treeString) {
         PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
         String title = (level == 0 ? "family_tree_ancestors " : "");
@@ -97,14 +100,14 @@ public class TreeStringGenerator {
             if (fatherUuid != null) {
                 PlayerFamily father = rootParents.get(fatherUuid).getFamily();
                 if (father != null) {
-                    buildFamilyTreeString(new FamilyRepeated(father), level + 1, prefix + "  ", treeString);
+                	buildAncestorsTreeString(new FamilyRepeated(father), level + 1, prefix + "  ", treeString);
                 }
             }
 
             if (motherUuid != null) {
                 PlayerFamily mother = rootParents.get(motherUuid).getFamily();
                 if (mother != null) {
-                    buildFamilyTreeString(new FamilyRepeated(mother), level + 1, prefix + "  ", treeString);
+                	buildAncestorsTreeString(new FamilyRepeated(mother), level + 1, prefix + "  ", treeString);
                 }
             }
         }
@@ -138,23 +141,23 @@ public class TreeStringGenerator {
         PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
 
-        String title = (level == 0 ? "family_tree_descendants " : "");
-        
-        String branchSymbol = "┌─ ";
-        String line = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol);
-        treeString.insert(0, line);
-
+        // Рекурсивно додаємо всіх дітей спочатку
         Set<UUID> childrenUuids = member.getChildren();
         if (childrenUuids != null) {
             for (UUID childUuid : childrenUuids) {
-            	
                 PlayerFamily child = rootOffspring.get(childUuid).getFamily();
-                
                 if (child != null && !isRepeated) {
-                    buildDescendantsTreeString(new FamilyRepeated(child), level + 1, prefix + "  ", treeString);
+                    buildDescendantsTreeString(new FamilyRepeated(child), level + 1, prefix + " ", treeString);
                 }
             }
         }
+
+        // Додаємо інформацію про нащадків після обробки дітей
+        String title = (level == 0 ? "family_tree_descendants " : "");
+        String branchSymbol = level == 0 ? "┌─ " : prefix + "┌─ ";
+        String line = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol);
+        treeString.append(line);
+
         memberFam.increaseRepeated();
     }
 

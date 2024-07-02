@@ -22,7 +22,6 @@ public class TreeComponentGenerator {
     private FamilyRepeated root;
     private Map<UUID, FamilyRepeated> rootParents;
     private Map<UUID, FamilyRepeated> rootOffspring;
-    private GlobalManager libraryManager;
 
     public TreeComponentGenerator(UUID rootUuid) {
         this.root = new FamilyRepeated(FamilyUtils.getFamily(rootUuid));
@@ -72,31 +71,32 @@ public class TreeComponentGenerator {
     }
 
     public MessageComponents buildFamilyTreeComponent(Player player) {
-        MessageBuilder treeBuilder = MessageComponents.builder()
-                .content(translate("family_tree_title", player))
+        MessageBuilder treeBuilder = MessageComponents.builder().content("");
+        
+        MessageBuilder rootBuilder = MessageComponents.builder()
+                .content(translate(" family_tree_title ", new String[] {}, player))
                 .hexColor("#FFD700")  // Золотий колір
                 .decoration("BOLD", true)
+                .append(getFormattedName(root.getFamily(), "#029952", 0, player))
                 .appendNewLine();
 
         // Спочатку додаємо нащадків
-        buildDescendantsTreeComponent(root, 0, "", treeBuilder, player);
+        buildDescendantsTreeComponent(root, 0, " ", treeBuilder, player);
 
         // Потім додаємо центральний елемент
-        treeBuilder.append(MessageComponents.builder()
-                .content(getFormattedName(root.getFamily()))
-                .build())
-                .appendNewLine();
+        treeBuilder.append(rootBuilder.build());
 
+        root.setRepeated(0);
         // Потім додаємо предків
-        buildFamilyTreeComponent(root, 0, "", treeBuilder, player);
+        buildAncestorsTreeComponent(root, 0, " ", treeBuilder, player);
 
         return treeBuilder.build();
     }
 
-    private void buildFamilyTreeComponent(FamilyRepeated memberFam, int level, String prefix, MessageBuilder treeBuilder, Player player) {
+    private void buildAncestorsTreeComponent(FamilyRepeated memberFam, int level, String prefix, MessageBuilder treeBuilder, Player player) {
         PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
-        String title = (level == 0 ? translate("family_tree_ancestors", player) + " " : "");
+        String title = (level == 0 ? translate("family_tree_ancestors", new String[] {}, player) + " " : "");
 
         String branchSymbol = "└─ ";
         MessageComponents memberLine = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol, player);
@@ -109,14 +109,14 @@ public class TreeComponentGenerator {
             if (fatherUuid != null) {
                 FamilyRepeated father = rootParents.get(fatherUuid);
                 if (father != null) {
-                    buildFamilyTreeComponent(father, level + 1, prefix + "  ", treeBuilder, player);
+                	buildAncestorsTreeComponent(father, level + 1, prefix + "  ", treeBuilder, player);
                 }
             }
 
             if (motherUuid != null) {
                 FamilyRepeated mother = rootParents.get(motherUuid);
                 if (mother != null) {
-                    buildFamilyTreeComponent(mother, level + 1, prefix + "  ", treeBuilder, player);
+                	buildAncestorsTreeComponent(mother, level + 1, prefix + "  ", treeBuilder, player);
                 }
             }
         }
@@ -150,12 +150,7 @@ public class TreeComponentGenerator {
         PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
 
-        String branchSymbol = level == 0 ? "  ┌─ " + translate("family_tree_descendants", player) : " ".repeat(3 - level) + "┌─ ";
-        String title = level == 0 ? "" : " (♂) " + member.getRootrNickName();
-
-        MessageComponents memberLine = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol, player);
-        treeBuilder.append(memberLine).appendNewLine();
-
+        // Рекурсивно додаємо всіх дітей спочатку
         Set<UUID> childrenUuids = member.getChildren();
         if (childrenUuids != null) {
             for (UUID childUuid : childrenUuids) {
@@ -165,31 +160,33 @@ public class TreeComponentGenerator {
                 }
             }
         }
+
+        // Додаємо інформацію про нащадків після обробки дітей
+        String translateTitle = translate("family_tree_descendants", new String[] {}, player);
+        String title = (level == 0 ? translateTitle + " " : "");
+        String branchSymbol = level == 0 ? "┌─ " : prefix + "┌─ ";
+        MessageComponents memberLine = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol, player);
+        treeBuilder.append(memberLine).appendNewLine();
+
         memberFam.increaseRepeated();
     }
 
     private MessageComponents buildMemberLine(PlayerFamily member, int level, String prefix, boolean isRepeated, String title, String branchSymbol, Player player) {
+    	String hexColor = determineHexColor(level, isRepeated ? 1 : 0);
+    	
         MessageBuilder lineBuilder = MessageComponents.builder()
                 .content(prefix)
                 .append(MessageComponents.builder()
                         .content(branchSymbol)
-                        .hexColor(determineHexColor(level, isRepeated ? 1 : 0))
+                        .hexColor(hexColor)
                         .build())
                 .append(MessageComponents.builder()
                         .content(title)
+                        .hexColor(hexColor)
                         .build());
 
         if (level > 0) {
-        	String nickName = member.getRootrNickName();
-        	
-            String hoverInfo = StringUtils.formatString(Translator.translateKyeWorld(libraryManager,"family_print_info", getLangs(player)), nickName);
-        	
-            lineBuilder.append(MessageComponents.builder()
-                    .content(getFormattedName(member))
-                    .hexColor(determineHexColor(level, isRepeated ? 1 : 0))
-                    .hoverComponent(MessageComponents.builder().content(hoverInfo).hexColor("#12ccad").build())
-                    .clickActionRunCommand("/family tree " + nickName)
-                    .build());
+            lineBuilder.append(getFormattedName(member, hexColor, level, player)).build();
         }
 
         if (isRepeated) {
@@ -202,20 +199,45 @@ public class TreeComponentGenerator {
         return lineBuilder.build();
     }
 
-    private String getFormattedName(PlayerFamily member) {
+    private MessageComponents getFormattedName(PlayerFamily member, String hexColor, int level, Player player) {
         Gender gender = GenderManager.getGender(member.getRoot());
         
-        String genderSymbol = Gender.getMinecraftColor(gender) + Gender.getSymbol(gender);
         StringBuilder formattedName = new StringBuilder();
+        
         if (member.getFirstName() != null && !member.getFirstName().isEmpty()) {
             formattedName.append(member.getFirstName()).append(" ");
         }
+        
         String actualLastName = member.getActualLastName();
         if (actualLastName != null && !actualLastName.isEmpty()) {
             formattedName.append(actualLastName).append(" ");
         }
-        formattedName.append("(").append(member.getRootrNickName()).append(")");
-        return " (" + genderSymbol + ") " + formattedName.toString();
+        
+        String nickName = member.getRootrNickName();
+        formattedName.append("(").append(nickName).append(")");
+        String command = level == 0 ? "/family profile " + nickName : "/family tree " + nickName;
+        String hoverInfo = level == 0 ? translate("family_print_info", new String[] {nickName}, player) :  translate("family_tree_title", new String[] {nickName}, player);
+        
+        MessageComponents playerComponent = MessageComponents.builder()
+                .content("(")
+                .hexColor(hexColor)
+                .append(MessageComponents.builder()
+                        .content(Gender.getSymbol(gender))
+                        .hexColor(Gender.getColor(gender))
+                        .build())
+                .append(MessageComponents.builder()
+                        .content(") ")
+                        .hexColor(hexColor)
+                        .build())
+                .append(MessageComponents.builder()
+                        .content(formattedName.toString())
+                        .hexColor(hexColor)
+                        .hoverComponent(MessageComponents.builder().content(hoverInfo).hexColor("#12ccad").build())
+                        .clickActionRunCommand(command)
+                        .build())
+                .build();
+        
+        return playerComponent;
     }
 
     private String determineHexColor(int level, int repeatedCount) {
@@ -234,13 +256,11 @@ public class TreeComponentGenerator {
         }
     }
 
-    private String[] getLangs(Player player) {
-        return player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
-    }
-
-    private String translate(String key, Player player) {
-        String[] langs = getLangs(player);
-        return StringUtils.colorize(Translator.translateKyeWorld(libraryManager, key, langs));
+    private String translate(String messageKey, String[] replace, Player player) {
+        String[] langs = LangUtils.getPlayerLanguage(player);
+        String message = Translator.translateKyeWorld(GlobalManager.getInstance(), messageKey, langs);
+        message = StringUtils.formatString(message, replace);
+        return StringUtils.colorize(message);
     }
 
     public PlayerFamily getMember(UUID uuid) {
