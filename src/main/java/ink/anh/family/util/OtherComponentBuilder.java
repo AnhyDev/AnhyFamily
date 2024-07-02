@@ -99,6 +99,7 @@ public class OtherComponentBuilder {
                         .hoverComponent(hoverComponent2)
                         .clickActionRunCommand(commandV2)
                         .build())
+                .appendNewLine()
                 .build();
     }
 
@@ -143,6 +144,7 @@ public class OtherComponentBuilder {
                         .hoverMessage(hoverV2)
                         .clickActionRunCommand(commandV2)
                         .build())
+                .appendNewLine()
                 .build();
     }
 

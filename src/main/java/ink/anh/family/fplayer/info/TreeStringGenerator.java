@@ -67,7 +67,7 @@ public class TreeStringGenerator {
     }
 
     public String buildFamilyTreeString() {
-        StringBuilder treeString = new StringBuilder();
+        StringBuilder treeString = new StringBuilder().append("\n");
         
         StringBuilder rootString = new StringBuilder()
                 .append(ChatColor.GOLD)

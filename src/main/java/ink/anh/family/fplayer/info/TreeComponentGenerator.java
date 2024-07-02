@@ -71,7 +71,7 @@ public class TreeComponentGenerator {
     }
 
     public MessageComponents buildFamilyTreeComponent(Player player) {
-        MessageBuilder treeBuilder = MessageComponents.builder().content("");
+        MessageBuilder treeBuilder = MessageComponents.builder().appendNewLine();
         
         MessageBuilder rootBuilder = MessageComponents.builder()
                 .content(translate(" family_tree_title ", new String[] {}, player))
@@ -86,7 +86,7 @@ public class TreeComponentGenerator {
         // Потім додаємо центральний елемент
         treeBuilder.append(rootBuilder.build());
 
-        root.setRepeated(0);
+        resetRoot();
         // Потім додаємо предків
         buildAncestorsTreeComponent(root, 0, " ", treeBuilder, player);
 

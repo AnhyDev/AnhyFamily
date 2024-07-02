@@ -17,11 +17,16 @@ import ink.anh.api.lingo.Translator;
 
 public class ProfileComponentGenerator {
 
-    private final int ROOT = 0;
-    private final int PARENT = 1;
-    private final int CHILD = 2;
-    private final int SPOUSE = 3;
-    
+    public static final String GREEN_COLOR = "#00FF00";
+    public static final String WHITE_COLOR = "#FFFFFF";
+    public static final String YELLOW_COLOR = "#FFFF00";
+    public static final String RED_COLOR = "#FF0000";
+    public static final String ACCENT_COLOR = "#12ccad";
+
+    private enum FamilyRole {
+        ROOT, PARENT, CHILD, SPOUSE
+    }
+
     private GlobalManager libraryManager;
 
     public ProfileComponentGenerator() {
@@ -29,33 +34,43 @@ public class ProfileComponentGenerator {
     }
 
     public MessageComponents generateFamilyInfoComponent(PlayerFamily playerFamily, Player player) {
+        String familyNotFound = translate("family_info_family_not_found", player);
+        String rolePartner = translate("family_info_role_partner", player);
+        String spouseNotFound = translate("family_info_spouse_not_found", player);
+        String roleFather = translate("family_info_role_father", player);
+        String fatherUnknown = translate("family_info_father_unknown", player);
+        String roleMother = translate("family_info_role_mother", player);
+        String motherUnknown = translate("family_info_mother_unknown", player);
+        String roleChildren = translate("family_info_children", player);
+        String childrenNone = translate("family_info_children_none", player);
+
         if (playerFamily == null) {
             return MessageComponents.builder()
-                    .content(translate("family_info_family_not_found", player))
-                    .color("RED")
+                    .content(familyNotFound)
+                    .hexColor(RED_COLOR)
                     .build();
         }
 
         MessageBuilder builder = MessageComponents.builder()
-                .content("=========================================").color("GREEN").appendNewLine();
-        
+                .content("=========================================").hexColor(GREEN_COLOR).appendNewLine();
+
         // Root
-        builder.append(generateFamilyMemberInfoComponent(ROOT, playerFamily, player, true)).appendNewLine();
-        builder.content("-----------------------------------------").color("GREEN").appendNewLine();
+        builder.append(generateFamilyMemberInfoComponent(FamilyRole.ROOT, playerFamily, player, true)).appendNewLine();
+        builder.content("-----------------------------------------").hexColor(GREEN_COLOR).appendNewLine();
 
         // Spouse
         UUID spouse = playerFamily.getSpouse();
         if (spouse != null) {
-            builder.append(generateFamilyMemberInfoComponent(SPOUSE, FamilyUtils.getFamily(spouse), player, false)).appendNewLine();
+            builder.append(generateFamilyMemberInfoComponent(FamilyRole.SPOUSE, FamilyUtils.getFamily(spouse), player, false)).appendNewLine();
         } else {
-            builder.content(translate("family_info_role_partner", player))
-                   .hexColor("#12ccad")
+            builder.content(" " + rolePartner)
+                   .hexColor(ACCENT_COLOR)
                    .append(MessageComponents.builder()
                            .content(" ")
                            .build())
                    .append(MessageComponents.builder()
-                           .content(translate("family_info_spouse_not_found", player))
-                           .color("RED")
+                           .content(spouseNotFound)
+                           .hexColor(RED_COLOR)
                            .build())
                    .appendNewLine();
         }
@@ -63,16 +78,16 @@ public class ProfileComponentGenerator {
         // Father
         UUID father = playerFamily.getFather();
         if (father != null) {
-            builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(father), player, false)).appendNewLine();
+            builder.append(generateFamilyMemberInfoComponent(FamilyRole.PARENT, FamilyUtils.getFamily(father), player, false)).appendNewLine();
         } else {
-            builder.content(translate("family_info_role_father", player))
-            		.hexColor("#12ccad")
-            		.append(MessageComponents.builder()
-            				.content(" ")
-            				.build())
+            builder.content(" " + roleFather)
+                   .hexColor(ACCENT_COLOR)
                    .append(MessageComponents.builder()
-                           .content(translate("family_info_father_unknown", player))
-                           .color("RED")
+                           .content(" ")
+                           .build())
+                   .append(MessageComponents.builder()
+                           .content(fatherUnknown)
+                           .hexColor(RED_COLOR)
                            .build())
                    .appendNewLine();
         }
@@ -80,16 +95,16 @@ public class ProfileComponentGenerator {
         // Mother
         UUID mother = playerFamily.getMother();
         if (mother != null) {
-            builder.append(generateFamilyMemberInfoComponent(PARENT, FamilyUtils.getFamily(mother), player, false)).appendNewLine();
+            builder.append(generateFamilyMemberInfoComponent(FamilyRole.PARENT, FamilyUtils.getFamily(mother), player, false)).appendNewLine();
         } else {
-            builder.content(translate("family_info_role_mother", player))
-            		.hexColor("#12ccad")
-            		.append(MessageComponents.builder()
-            				.content(" ")
-            				.build())
+            builder.content(" " + roleMother)
+                   .hexColor(ACCENT_COLOR)
                    .append(MessageComponents.builder()
-                           .content(translate("family_info_mother_unknown", player))
-                           .color("RED")
+                           .content(" ")
+                           .build())
+                   .append(MessageComponents.builder()
+                           .content(motherUnknown)
+                           .hexColor(RED_COLOR)
                            .build())
                    .appendNewLine();
         }
@@ -97,27 +112,33 @@ public class ProfileComponentGenerator {
         // Children
         Set<UUID> children = playerFamily.getChildren();
         if (children.isEmpty()) {
-            builder.content(translate("family_info_children", player))
-            		.hexColor("#12ccad")
-            		.append(MessageComponents.builder()
-            			.content(" ")
-            			.build())
+            builder.content(" " + roleChildren)
+                   .hexColor(ACCENT_COLOR)
                    .append(MessageComponents.builder()
-                           .content(translate("family_info_children_none", player))
-                           .color("RED")
+                       .content(" ")
+                       .build())
+                   .append(MessageComponents.builder()
+                           .content(childrenNone)
+                           .hexColor(RED_COLOR)
                            .build())
                    .appendNewLine();
         } else {
-            builder.content(translate("family_info_children", player)).color("WHITE").appendNewLine();
+            builder.content(" " + roleChildren).hexColor(ACCENT_COLOR).appendNewLine();
             for (UUID childId : children) {
-                builder.append(generateFamilyMemberInfoComponent(CHILD, FamilyUtils.getFamily(childId), player, false)).appendNewLine();
+                builder.append(generateFamilyMemberInfoComponent(FamilyRole.CHILD, FamilyUtils.getFamily(childId), player, false, true)).appendNewLine();
             }
         }
+
+        builder.content("=========================================").hexColor(GREEN_COLOR).appendNewLine();
 
         return builder.build();
     }
 
-    private MessageComponents generateFamilyMemberInfoComponent(int relationType, PlayerFamily playerFamily, Player player, boolean isRoot) {
+    private MessageComponents generateFamilyMemberInfoComponent(FamilyRole relationType, PlayerFamily playerFamily, Player player, boolean isRoot) {
+        return generateFamilyMemberInfoComponent(relationType, playerFamily, player, isRoot, false);
+    }
+
+    private MessageComponents generateFamilyMemberInfoComponent(FamilyRole relationType, PlayerFamily playerFamily, Player player, boolean isRoot, boolean isChild) {
         Gender gender = GenderManager.getGender(playerFamily.getRoot());
 
         String firstName = playerFamily.getFirstName();
@@ -141,19 +162,21 @@ public class ProfileComponentGenerator {
         }
 
         String fullName = fullNameBuilder.toString();
-        String relation = translate(getFamilyRole(gender, relationType), player);
-        
-        String[] langs = getLangs(player);
-        String hoverInfo = isRoot ? "family_tree_status" : "family_print_info";
-        hoverInfo = StringUtils.formatString(Translator.translateKyeWorld(libraryManager,hoverInfo, langs), nickName);
-        String command = isRoot ? "/family tree " : "/family profile ";
+        String relation = " " + translate(getFamilyRole(gender, relationType), player);
 
+        String[] langs = getLangs(player);
+        String hoverInfo = "family_print_info";
+        hoverInfo = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, hoverInfo, langs), nickName);
+        String command = "/family info " + nickName;
+
+        String prefix = isChild ? "  " : "";
+        
         return MessageComponents.builder()
-                .content(relation)
-                .color("GREEN")
+                .content(prefix + relation)
+                .hexColor(GREEN_COLOR)
                 .append(MessageComponents.builder()
                         .content(" (")
-                        .color("WHITE")
+                        .hexColor(WHITE_COLOR)
                         .build())
                 .append(MessageComponents.builder()
                         .content(Gender.getSymbol(gender))
@@ -161,18 +184,18 @@ public class ProfileComponentGenerator {
                         .build())
                 .append(MessageComponents.builder()
                         .content(") ")
-                        .color("WHITE")
+                        .hexColor(WHITE_COLOR)
                         .build())
                 .append(MessageComponents.builder()
                         .content(fullName)
-                        .color("YELLOW")
-                        .hoverComponent(MessageComponents.builder().content(hoverInfo).hexColor("#12ccad").build())
-                        .clickActionRunCommand(command + nickName)
+                        .hexColor(YELLOW_COLOR)
+                        .hoverComponent(MessageComponents.builder().content(hoverInfo).hexColor(ACCENT_COLOR).build())
+                        .clickActionRunCommand(command)
                         .build())
                 .build();
     }
 
-    private String getFamilyRole(Gender gender, int roleType) {
+    private String getFamilyRole(Gender gender, FamilyRole roleType) {
         switch (roleType) {
             case ROOT: return "";
             case PARENT: return gender == Gender.MALE ? "family_info_role_father" : gender == Gender.FEMALE ? "family_info_role_mother" : "family_info_role_guardian";
