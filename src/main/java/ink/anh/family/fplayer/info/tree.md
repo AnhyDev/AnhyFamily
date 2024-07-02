@@ -1,68 +1,64 @@
-Зрозуміло. Давайте проаналізуємо, як ваш клас `TreeComponentGenerator` працює і будує дерево сім'ї.
+### Analysis of the `TreeComponentGenerator` Class
 
-### Аналіз класу `TreeComponentGenerator`
+#### General Structure
 
-#### Загальна структура
+1. **Field `root`**: The root element of the family tree, initialized in the constructor.
+2. **Maps `rootParents` and `rootOffspring`**: Map UUIDs to `FamilyRepeated` objects for ancestors and descendants, respectively.
+3. **Methods `buildDescendantsTreeComponent` and `buildAncestorsTreeComponent`**: Responsible for building the descendants and ancestors trees, respectively.
+4. **Methods `buildDescendantsTree` and `buildAncestorsTree`**: Recursively gather data about descendants and ancestors.
 
-1. **Поле `root`**: Кореневий елемент дерева сім'ї, який ініціалізується в конструкторі.
-2. **Карти `rootParents` та `rootOffspring`**: Відображають UUID на об'єкти `FamilyRepeated` для предків та нащадків відповідно.
-3. **Методи `buildDescendantsTreeComponent` і `buildAncestorsTreeComponent`**: Відповідальні за побудову дерева нащадків і предків відповідно.
-4. **Методи `buildDescendantsTree` і `buildAncestorsTree`**: Рекурсивно збирають дані про нащадків і предків.
+#### Constructor
 
-#### Конструктор
+- Initializes the root element, as well as the maps for ancestors and descendants.
+- Calls methods to build the descendants and ancestors trees.
 
-- Ініціалізує кореневий елемент, а також карти предків та нащадків.
-- Викликає методи для побудови дерев нащадків та предків.
+#### Method `buildFamilyTreeComponent`
 
-#### Метод `buildFamilyTreeComponent`
+- Initial method called to build the complete family tree.
+- Builds the header for the family tree.
+- Calls methods to build the descendants and ancestors components, adding them to the overall tree.
 
-- Початковий метод, що викликається для побудови повного дерева сім'ї.
-- Будує заголовок для дерева сім'ї.
-- Викликає методи для побудови компонентів нащадків та предків, додаючи їх до загального дерева.
+#### Method `buildDescendantsTreeComponent`
 
-#### Метод `buildDescendantsTreeComponent`
+1. **Recursion**:
+   - First adds all child elements (descendants).
+   - Recursively dives deep into the tree for each descendant.
 
-1. **Рекурсія**:
-   - Спочатку додає всі дочірні елементи (нащадків).
-   - Відбувається рекурсивне занурення в глибину дерева для кожного нащадка.
+2. **Adding Components**:
+   - After processing all descendants, adds the current element.
+   - Uses one space for each level of indentation, creating the correct hierarchy.
 
-2. **Додавання компонентів**:
-   - Після обробки всіх нащадків додає поточний елемент.
-   - Використовує один пробіл для кожного рівня відступу, що створює правильну ієрархію.
+3. **Translates Headers**:
+   - Uses the `translate` method to translate the descendants' headers.
 
-3. **Перекладає заголовки**:
-   - Використовує метод `translate` для перекладу заголовків нащадків.
+#### Method `buildAncestorsTreeComponent`
 
-#### Метод `buildAncestorsTreeComponent`
+1. **Recursion**:
+   - First adds all parents and their ancestors.
+   - Recursively dives deep into the tree for each ancestor.
 
-1. **Рекурсія**:
-   - Спочатку додає всіх батьків та їх предків.
-   - Виконує рекурсивне занурення в глибину дерева для кожного предка.
+2. **Adding Components**:
+   - After processing all ancestors, adds the current element.
+   - Uses one space for each level of indentation, creating the correct hierarchy.
 
-2. **Додавання компонентів**:
-   - Після обробки всіх предків додає поточний елемент.
-   - Використовує один пробіл для кожного рівня відступу, що створює правильну ієрархію.
+3. **Translates Headers**:
+   - Uses the `translate` method to translate the ancestors' headers.
 
-3. **Перекладає заголовки**:
-   - Використовує метод `translate` для перекладу заголовків предків.
+#### Method `buildMemberLine`
 
-#### Метод `buildMemberLine`
+- Creates a component for each family member.
+- Adds formatting, color, and click actions.
+- Checks if the element is repeated and adds the corresponding mark.
 
-- Створює компонент для кожного члена сім'ї.
-- Додає форматування, колір та дії при натисканні (клік-акції).
-- Перевіряє, чи елемент є повторюваним, і додає відповідну позначку.
+#### Method `getFormattedName`
 
-#### Метод `getFormattedName`
+- Formats the family member's name considering gender and color.
+- Adds hover information and click actions.
 
-- Форматує ім'я члена сім'ї з урахуванням статі та кольору.
-- Додає ховер-інформацію та дії при натисканні.
+#### Method `determineHexColor`
 
-#### Метод `determineHexColor`
+- Determines color based on the level and number of repetitions.
 
-- Визначає колір на основі рівня та кількості повторів.
+### Conclusion
 
-### Висновок
-
-Ваш клас `TreeComponentGenerator` успішно будує дерево сім'ї, дотримуючись ієрархії та правильних відступів для кожного рівня. Ви використовуєте рекурсію для обробки нащадків та предків, і додаєте відповідні компоненти до загального дерева з використанням форматування та перекладу.
-
-Це дозволяє створювати повноцінне дерево сім'ї з правильним відображенням кожного члена сім'ї та їх відносин.
+The `TreeComponentGenerator` class successfully builds a family tree, maintaining the hierarchy and correct indentations for each level. It uses recursion to process descendants and ancestors, adding the appropriate components to the overall tree with formatting and translation.
