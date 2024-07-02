@@ -123,7 +123,7 @@ public class ProfileComponentGenerator {
                            .build())
                    .appendNewLine();
         } else {
-            builder.content(" " + roleChildren).hexColor(ACCENT_COLOR).appendNewLine();
+            builder.content(" " + roleChildren).hexColor(GREEN_COLOR).appendNewLine();
             for (UUID childId : children) {
                 builder.append(generateFamilyMemberInfoComponent(FamilyRole.CHILD, FamilyUtils.getFamily(childId), player, false, true)).appendNewLine();
             }
@@ -164,13 +164,21 @@ public class ProfileComponentGenerator {
         String fullName = fullNameBuilder.toString();
         String relation = " " + translate(getFamilyRole(gender, relationType), player);
 
+        if (isRoot) {
+            fullName = "✔ " + fullName;
+        }
+
         String[] langs = getLangs(player);
         String hoverInfo = "family_print_info";
         hoverInfo = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, hoverInfo, langs), nickName);
+        if (hoverInfo.endsWith(":")) {
+            hoverInfo = hoverInfo.substring(0, hoverInfo.length() - 1);
+        }
+
         String command = "/family info " + nickName;
 
         String prefix = isChild ? "  " : "";
-        
+
         return MessageComponents.builder()
                 .content(prefix + relation)
                 .hexColor(GREEN_COLOR)

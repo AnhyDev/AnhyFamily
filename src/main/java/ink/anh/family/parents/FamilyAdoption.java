@@ -7,7 +7,7 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.PlayerFamilyDBServsce;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.info.TreeStringGenerator;
 import ink.anh.family.util.FamilyUtils;
@@ -60,8 +60,8 @@ public class FamilyAdoption {
             }
         }
 
-        PlayerFamilyDBServsce.savePlayerFamily(adopter, FamilyPlayerField.CHILDREN);
-        PlayerFamilyDBServsce.savePlayerFamily(adopted, null);
+        PlayerFamilyDBService.savePlayerFamily(adopter, FamilyPlayerField.CHILDREN);
+        PlayerFamilyDBService.savePlayerFamily(adopted, null);
 
         String rawMessage = Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_single", langs);
         String message = StringUtils.formatString(rawMessage, new String[]{adopter.getLoverCaseName(), adopted.getLoverCaseName()});
@@ -100,9 +100,9 @@ public class FamilyAdoption {
         adopter1.addChild(adopted.getRoot());
         adopter2.addChild(adopted.getRoot());
 
-        PlayerFamilyDBServsce.savePlayerFamily(adopter1, FamilyPlayerField.CHILDREN);
-        PlayerFamilyDBServsce.savePlayerFamily(adopter2, FamilyPlayerField.CHILDREN);
-        PlayerFamilyDBServsce.savePlayerFamily(adopted, null);
+        PlayerFamilyDBService.savePlayerFamily(adopter1, FamilyPlayerField.CHILDREN);
+        PlayerFamilyDBService.savePlayerFamily(adopter2, FamilyPlayerField.CHILDREN);
+        PlayerFamilyDBService.savePlayerFamily(adopted, null);
 
         Logger.info(familiPlugin, adopter1.getRootrNickName() + ", " + adopter2.getRootrNickName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_between", langs) + adopted.getLoverCaseName());
         return true;

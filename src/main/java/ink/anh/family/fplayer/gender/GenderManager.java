@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.PlayerFamilyDBServsce;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.util.FamilyUtils;
 
 public class GenderManager {
@@ -52,13 +52,13 @@ public class GenderManager {
     public static boolean setGender(UUID uuid, Gender gender) {
     	PlayerFamily playerFamily = FamilyUtils.getFamily(uuid);
     	playerFamily.setGender(gender);
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, FamilyPlayerField.GENDER);
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.GENDER);
         return true;
     }
 
     public static boolean setGender(PlayerFamily playerFamily, Gender gender) {
     	playerFamily.setGender(gender);
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, FamilyPlayerField.GENDER);
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.GENDER);
         return true;
     }
 }

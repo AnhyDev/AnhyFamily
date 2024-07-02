@@ -87,7 +87,7 @@ public class FirstName extends Sender {
     private void handleFirstNameChange(Player player, PlayerFamily playerFamily, String firstName, CommandSender sender) {
         SyncExecutor.runAsync(() -> {
             playerFamily.setFirstName(firstName);
-            PlayerFamilyDBServsce.savePlayerFamily(playerFamily, FamilyPlayerField.FIRST_NAME);
+            PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.FIRST_NAME);
 
             sendMessage(new MessageForFormatting("family_firstname_selected", new String[]{firstName}), MessageType.IMPORTANT, sender);
         });

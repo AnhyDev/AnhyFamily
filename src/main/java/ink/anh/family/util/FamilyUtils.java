@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import ink.anh.family.fplayer.FamilyCacheManager;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.PlayerFamilyDBServsce;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.info.TreeStringGenerator;
 
@@ -20,7 +20,7 @@ public class FamilyUtils {
         String displayName = player.getName();
 
         PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
         if (player.isOnline()) {
             FamilyCacheManager.getInstance().addFamily(playerFamily);
         }
@@ -33,7 +33,7 @@ public class FamilyUtils {
         String displayName = offlinePlayer.getName();
 
         PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
         return playerFamily;
     }
 
@@ -45,7 +45,7 @@ public class FamilyUtils {
 		UUID playerUUID = onlinePlayer.getUniqueId();
 	    PlayerFamily playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
 	    if (playerFamily == null) {
-	        playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamily(playerUUID, onlinePlayer.getDisplayName());
+	        playerFamily = PlayerFamilyDBService.getFamilyPlayerTable().getFamily(playerUUID, onlinePlayer.getDisplayName());
 	        if (playerFamily == null) {
                 playerFamily = createNewFamily(onlinePlayer);
 	        }
@@ -62,7 +62,7 @@ public class FamilyUtils {
 	    try {
 	        playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
 	        if (playerFamily == null) {
-	            playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamily(playerUUID);
+	            playerFamily = PlayerFamilyDBService.getFamilyPlayerTable().getFamily(playerUUID);
 	            if (playerFamily == null) {
 	                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
 	                if (offlinePlayer.hasPlayedBefore()) {
@@ -88,7 +88,7 @@ public class FamilyUtils {
 	    if (onlinePlayer != null) {
 		    return getFamily(onlinePlayer);
 	    } else {
-	        PlayerFamily playerFamily = PlayerFamilyDBServsce.getFamilyPlayerTable().getFamilyByDisplayName(playerName);
+	        PlayerFamily playerFamily = PlayerFamilyDBService.getFamilyPlayerTable().getFamilyByDisplayName(playerName);
 	        
 	        if (playerFamily != null) {
 	        	return playerFamily;

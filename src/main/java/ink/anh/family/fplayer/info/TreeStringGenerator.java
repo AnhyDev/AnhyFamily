@@ -141,22 +141,29 @@ public class TreeStringGenerator {
         PlayerFamily member = memberFam.getFamily();
         boolean isRepeated = memberFam.getRepeated() > 0;
 
-        // Рекурсивно додаємо всіх дітей спочатку
+        // Рекурсивно додаємо всіх дітей
         Set<UUID> childrenUuids = member.getChildren();
         if (childrenUuids != null) {
             for (UUID childUuid : childrenUuids) {
                 PlayerFamily child = rootOffspring.get(childUuid).getFamily();
                 if (child != null && !isRepeated) {
-                    buildDescendantsTreeString(new FamilyRepeated(child), level + 1, prefix + " ", treeString);
+                    buildDescendantsTreeString(new FamilyRepeated(child), level + 1, prefix + "  ", treeString);
                 }
             }
         }
 
-        // Додаємо інформацію про нащадків після обробки дітей
-        String title = (level == 0 ? "family_tree_descendants " : "");
-        String branchSymbol = level == 0 ? "┌─ " : prefix + "┌─ ";
-        String line = buildMemberLine(member, level, prefix, isRepeated, title, branchSymbol);
-        treeString.append(line);
+        // Додаємо інформацію про поточного члена сім'ї, якщо це не кореневий гравець
+        if (level > 0) {
+            String branchSymbol = prefix + "┌─ ";
+            String line = buildMemberLine(member, level, "", isRepeated, "", branchSymbol);
+            treeString.append(line);
+        }
+
+        // Якщо це кореневий гравець, додаємо заголовок
+        if (level == 0) {
+            String title = determineColor(level, 0) + "┌─ family_tree_descendants \n";
+            treeString.append(title);
+        }
 
         memberFam.increaseRepeated();
     }
@@ -193,7 +200,7 @@ public class TreeStringGenerator {
             formattedName.append(actualLastName).append(" ");
         }
         formattedName.append("(").append(member.getRootrNickName()).append(")");
-        return " §r(" + genderSymbol + "§r) " + ChatColor.YELLOW + formattedName.toString();
+        return "§r(" + genderSymbol + "§r) " + ChatColor.YELLOW + formattedName.toString();
     }
     
     private ChatColor determineColor(int level, int repeatedCount) {

@@ -3,7 +3,7 @@ package ink.anh.family.util;
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.PlayerFamilyDBServsce;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -138,7 +138,7 @@ public class FamilySeparationUtils {
         }
 
         playerFamily.setChildren(new HashSet<UUID>());
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, FamilyPlayerField.CHILDREN);
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.CHILDREN);
         modifiedFamilies.add(playerFamily);
         return modifiedFamilies;
     }
@@ -156,7 +156,7 @@ public class FamilySeparationUtils {
             childFamily.setMother(null);
         }
 
-        PlayerFamilyDBServsce.savePlayerFamily(childFamily, null);
+        PlayerFamilyDBService.savePlayerFamily(childFamily, null);
     }
 
     public static Set<PlayerFamily> removeParents(PlayerFamily playerFamily, Set<PlayerFamily> parents) {
@@ -164,13 +164,13 @@ public class FamilySeparationUtils {
 
         for (PlayerFamily parentFamily : parents) {
             parentFamily.getChildren().remove(playerFamily.getRoot());
-            PlayerFamilyDBServsce.savePlayerFamily(parentFamily, FamilyPlayerField.CHILDREN);
+            PlayerFamilyDBService.savePlayerFamily(parentFamily, FamilyPlayerField.CHILDREN);
             modifiedFamilies.add(parentFamily);
         }
 
         playerFamily.setFather(null);
         playerFamily.setMother(null);;
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
         modifiedFamilies.add(playerFamily);
         return modifiedFamilies;
     }
@@ -184,7 +184,7 @@ public class FamilySeparationUtils {
                 spouseFamily.setLastName(spouseFamily.getOldLastName());
                 spouseFamily.setOldLastName(new String[2]);
             }
-            PlayerFamilyDBServsce.savePlayerFamily(spouseFamily, null);
+            PlayerFamilyDBService.savePlayerFamily(spouseFamily, null);
             modifiedFamilies.add(spouseFamily);
         }
 
@@ -195,7 +195,7 @@ public class FamilySeparationUtils {
         } else {
             playerFamily.setLastName(new String[2]);
         }
-        PlayerFamilyDBServsce.savePlayerFamily(playerFamily, null);
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
         modifiedFamilies.add(playerFamily);
         return modifiedFamilies;
     }

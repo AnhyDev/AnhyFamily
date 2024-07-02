@@ -6,7 +6,7 @@ import ink.anh.family.db.fplayer.FamilyPlayerTable;
 import ink.anh.api.database.TableField;
 import java.util.UUID;
 
-public class PlayerFamilyDBServsce {
+public class PlayerFamilyDBService {
 
     private static FamilyPlayerTable familyPlayerTable = (FamilyPlayerTable) GlobalManager.getInstance().getDatabaseManager().getTable(PlayerFamily.class);
 

@@ -13,7 +13,7 @@ import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fdetails.FamilyDetailsService;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.PlayerFamilyDBServsce;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.family.util.FamilyUtils;
@@ -130,8 +130,8 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
         familyBride1.setSpouse(familyBride2.getRoot());
         familyBride2.setSpouse(familyBride1.getRoot());
 
-        PlayerFamilyDBServsce.savePlayerFamily(familyBride1, null);
-        PlayerFamilyDBServsce.savePlayerFamily(familyBride2, null);
+        PlayerFamilyDBService.savePlayerFamily(familyBride1, null);
+        PlayerFamilyDBService.savePlayerFamily(familyBride2, null);
     }
 
     private void setMarriageConsent(MarryPublic marryPublic, int one) {

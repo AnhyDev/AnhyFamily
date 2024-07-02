@@ -123,9 +123,9 @@ public class Surname extends Sender {
         }
 
         SyncExecutor.runAsync(() -> {
-            if (playerFamily.getLastName() == null || playerFamily.getLastName()[0] == null) {
+            if (playerFamily.getLastName() == null || playerFamily.getLastName()[0] == null || player == null) {
                 playerFamily.setLastName(newSurname);
-                PlayerFamilyDBServsce.savePlayerFamily(playerFamily, FamilyPlayerField.LAST_NAME);
+                PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.LAST_NAME);
 
                 String myfam = String.join(" / ", newSurname);
                 sendMessage(new MessageForFormatting("family_surname_selected", new String[]{myfam}), MessageType.IMPORTANT, sender);
