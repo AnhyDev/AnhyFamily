@@ -77,7 +77,7 @@ family_info_component: "Familieninformationen von Spieler %s, zum Anzeigen beweg
 family_tree_title: "Familienstammbaum"
 family_tree_ancestors: "Vorfahren"
 family_tree_descendants: "Nachkommen"
-family_tree_status: "Familieninformation %s:"
+family_tree_status: "Stammbaum %s"
 family_tree_component: "Stammbaum"
 family_profile_component: "Profil"
 family_print_component: "Klicken zum Drucken"
@@ -303,4 +303,13 @@ family_symbol_request_sent: "Symboländerungsanfrage gesendet. Ihr Ehepartner mu
 family_err_request_symbol_not_confirmed: "Die Symboländerungsanfrage wurde nicht rechtzeitig bestätigt."
 family_err_symbol_already_set: "Familiensymbol ist bereits gesetzt."
 family_symbol_set: "Familiensymbol gesetzt."
+
+# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
+family_err_no_access_hugs: "Erhalte eine Ohrfeige von %s für den Versuch, ohne Erlaubnis zu umarmen"
+family_you_hugged_player1: "Du hast %s umarmt"
+family_you_hugged_player2: "Du hast %s umarmt"
+family_you_hugged_player3: "Du hast %s umarmt"
+family_hugged_player_you1: "Du wurdest von %s umarmt"
+family_hugged_player_you2: "Du wurdest von %s umarmt"
+family_hugged_player_you3: "Du wurdest von %s umarmt"
 

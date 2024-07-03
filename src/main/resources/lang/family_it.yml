@@ -77,7 +77,7 @@ family_info_component: "Informazioni sulla famiglia del giocatore %s, passa il m
 family_tree_title: "Albero genealogico"
 family_tree_ancestors: "Antenati"
 family_tree_descendants: "Discendenti"
-family_tree_status: "Informazioni familiari %s:"
+family_tree_status: "Albero genealogico %s"
 family_tree_component: "Albero genealogico"
 family_profile_component: "Profilo"
 family_print_component: "Clicca per stampare"
@@ -303,4 +303,13 @@ family_symbol_request_sent: "Richiesta di modifica del simbolo inviata. Il tuo c
 family_err_request_symbol_not_confirmed: "La richiesta di modifica del simbolo non è stata confermata in tempo."
 family_err_symbol_already_set: "Il simbolo della famiglia è già impostato."
 family_symbol_set: "Simbolo della famiglia impostato."
+
+# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
+family_err_no_access_hugs: "Ricevi uno schiaffo da %s per aver tentato di abbracciare senza permesso"
+family_you_hugged_player1: "Hai abbracciato %s"
+family_you_hugged_player2: "Hai abbracciato %s"
+family_you_hugged_player3: "Hai abbracciato %s"
+family_hugged_player_you1: "Sei stato abbracciato da %s"
+family_hugged_player_you2: "Sei stata abbracciata da %s"
+family_hugged_player_you3: "Sei stato abbracciato da %s"
 

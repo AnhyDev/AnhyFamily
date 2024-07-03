@@ -77,7 +77,7 @@ family_info_component: "Family information of player %s, hover to view or click 
 family_tree_title: "Family Tree"
 family_tree_ancestors: "Ancestors"
 family_tree_descendants: "Descendants"
-family_tree_status: "Family information %s:"
+family_tree_status: "Family tree %s"
 family_tree_component: "Family tree"
 family_profile_component: "Profile"
 family_print_component: "Click to print"
@@ -304,4 +304,12 @@ family_err_request_symbol_not_confirmed: "The symbol change request was not conf
 family_err_symbol_already_set: "Family symbol is already set."
 family_symbol_set: "Family symbol set."
 
+# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
+family_err_no_access_hugs: "Receive a slap from %s for attempting to hug without permission"
+family_you_hugged_player1: "You hugged %s"
+family_you_hugged_player2: "You hugged %s"
+family_you_hugged_player3: "You hugged %s"
+family_hugged_player_you1: "You were hugged by %s"
+family_hugged_player_you2: "You were hugged by %s"
+family_hugged_player_you3: "You were hugged by %s"
 

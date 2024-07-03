@@ -77,7 +77,7 @@ family_info_component: "玩家 %s 的家庭信息，悬停查看或点击显示�
 family_tree_title: "家谱树"
 family_tree_ancestors: "祖先"
 family_tree_descendants: "后代"
-family_tree_status: "家庭信息 %s:"
+family_tree_status: "家谱 %s"
 family_tree_component: "家谱"
 family_profile_component: "个人资料"
 family_print_component: "点击打印"
@@ -303,4 +303,13 @@ family_symbol_request_sent: "符号更改请求已发送。您的配偶必须在
 family_err_request_symbol_not_confirmed: "符号更改请求未及时确认。"
 family_err_symbol_already_set: "家庭符号已设置。"
 family_symbol_set: "家庭符号已设置。"
+
+# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
+family_err_no_access_hugs: "因试图未经许可拥抱而受到来自 %s 的一记耳光"
+family_you_hugged_player1: "你拥抱了 %s"
+family_you_hugged_player2: "你拥抱了 %s"
+family_you_hugged_player3: "你拥抱了 %s"
+family_hugged_player_you1: "你被 %s 拥抱了"
+family_hugged_player_you2: "你被 %s 拥抱了"
+family_hugged_player_you3: "你被 %s 拥抱了"
 

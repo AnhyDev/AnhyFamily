@@ -77,7 +77,7 @@ family_info_component: "Сімейна інформація гравця %s, н�
 family_tree_title: "Сімейне дерево"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Нащадки"
-family_tree_status: "Сімейна інформація %s:"
+family_tree_status: "Сімейна дерево %s"
 family_tree_component: "Родове дерево"
 family_profile_component: "Профіль"
 family_print_component: "Клікни щоб роздрукувати"
@@ -305,10 +305,7 @@ family_err_request_symbol_not_confirmed: "Запит на зміну симво�
 family_err_symbol_already_set: "Символ сім'ї вже встановлено."
 family_symbol_set: "Символ сім'ї встановлено."
 
-
-
-
-# Обнімашки [ink.anh.family.fdetails.hugs.FamilyHugsManager]
+# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
 family_err_no_access_hugs: "Отримуй ляпас від %s за спробу обійняти без дозволу"
 family_you_hugged_player1: "Ти обійняв %s"
 family_you_hugged_player2: "Ти обняла %s"
@@ -318,5 +315,4 @@ family_hugged_player_you2: "Ти потрапила в обійми до %s"
 family_hugged_player_you3: "Ти потрапило в обійми до %s"
 
 
-family_tree_status: "Сімейна дерево %s" # дубль...
 

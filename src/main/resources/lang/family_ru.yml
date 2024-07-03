@@ -77,7 +77,7 @@ family_info_component: "Семейная информация игрока %s, �
 family_tree_title: "Семейное древо"
 family_tree_ancestors: "Предки"
 family_tree_descendants: "Потомки"
-family_tree_status: "Семейная информация %s:"
+family_tree_status: "Генеалогическое дерево %s"
 family_tree_component: "Генеалогическое дерево"
 family_profile_component: "Профиль"
 family_print_component: "Кликни чтобы распечатать"
@@ -303,4 +303,13 @@ family_symbol_request_sent: "Запрос на изменение символа
 family_err_request_symbol_not_confirmed: "Запрос на изменение символа не был подтвержден вовремя."
 family_err_symbol_already_set: "Семейный символ уже установлен."
 family_symbol_set: "Семейный символ установлен."
+
+# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
+family_err_no_access_hugs: "Получай пощёчину от %s за попытку обнять без разрешения"
+family_you_hugged_player1: "Ты обнял %s"
+family_you_hugged_player2: "Ты обняла %s"
+family_you_hugged_player3: "Ты обняло %s"
+family_hugged_player_you1: "Ты попал в объятия %s"
+family_hugged_player_you2: "Ты попала в объятия %s"
+family_hugged_player_you3: "Ты попало в объятия %s"
 

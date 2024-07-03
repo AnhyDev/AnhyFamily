@@ -77,7 +77,7 @@ family_info_component: "Información familiar del jugador %s, pasa el ratón par
 family_tree_title: "Árbol genealógico"
 family_tree_ancestors: "Ancestros"
 family_tree_descendants: "Descendientes"
-family_tree_status: "Información familiar %s:"
+family_tree_status: "Árbol genealógico %s"
 family_tree_component: "Árbol genealógico"
 family_profile_component: "Perfil"
 family_print_component: "Haz clic para imprimir"
@@ -303,4 +303,13 @@ family_symbol_request_sent: "Solicitud de cambio de símbolo enviada. Tu cónyug
 family_err_request_symbol_not_confirmed: "La solicitud de cambio de símbolo no fue confirmada a tiempo."
 family_err_symbol_already_set: "El símbolo de la familia ya está establecido."
 family_symbol_set: "Símbolo de la familia establecido."
+
+# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
+family_err_no_access_hugs: "Recibe una bofetada de %s por intentar abrazar sin permiso"
+family_you_hugged_player1: "Abrazaste a %s"
+family_you_hugged_player2: "Abrazaste a %s"
+family_you_hugged_player3: "Abrazaste a %s"
+family_hugged_player_you1: "Fuiste abrazado por %s"
+family_hugged_player_you2: "Fuiste abrazada por %s"
+family_hugged_player_you3: "Fuiste abrazado por %s"
 
