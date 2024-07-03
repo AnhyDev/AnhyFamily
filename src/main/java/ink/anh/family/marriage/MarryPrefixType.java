@@ -1,19 +1,20 @@
 package ink.anh.family.marriage;
 
 import ink.anh.family.fplayer.gender.Gender;
+import ink.anh.family.util.StringColorUtils;
 
 public enum MarryPrefixType {
-    PRIEST_MALE("family_marry_priest_male", "#0a71f0", "#ADD8E6"),
-    PRIEST_FEMALE("family_marry_priest_female", "#800080", "#FF69B4"), // Purple for prefix, Hot Pink for nickname
-    PRIEST_NON_BINARY("family_marry_priest_nonbinary", "#808080", "#32CD32"), // Gray for prefix, Lime Green for nickname
+    PRIEST_MALE("family_marry_priest_male", StringColorUtils.MARRY_PRIEST_MALE_PREFIX_COLOR, StringColorUtils.MARRY_PRIEST_MALE_NICKNAME_COLOR),
+    PRIEST_FEMALE("family_marry_priest_female", StringColorUtils.MARRY_PRIEST_FEMALE_PREFIX_COLOR, StringColorUtils.MARRY_PRIEST_FEMALE_NICKNAME_COLOR),
+    PRIEST_NON_BINARY("family_marry_priest_nonbinary", StringColorUtils.MARRY_PRIEST_NONBINARY_PREFIX_COLOR, StringColorUtils.MARRY_PRIEST_NONBINARY_NICKNAME_COLOR),
 
-    PRIVATE_MARRY_PREFIX("family_marry_private_prefix", "#8B4513", "#F4A460"), // SaddleBrown for prefix, SandyBrown for nickname
+    PRIVATE_MARRY_PREFIX("family_marry_private_prefix", StringColorUtils.PRIVATE_MARRY_PREFIX_COLOR, StringColorUtils.PRIVATE_MARRY_NICKNAME_COLOR),
     
-    BRIDE_MALE("family_marry_groom_male", "#b59018", "#3db6b8"),
-    BRIDE_FEMALE("family_marry_groom_female", "#FFC0CB", "#FF1493"), // Pink for prefix, Deep Pink for nickname
-    BRIDE_NON_BINARY("family_marry_groom_nonbinary", "#40E0D0", "#20B2AA"), // Turquoise for prefix, Light Sea Green for nickname
+    BRIDE_MALE("family_marry_groom_male", StringColorUtils.BRIDE_MALE_PREFIX_COLOR, StringColorUtils.BRIDE_MALE_NICKNAME_COLOR),
+    BRIDE_FEMALE("family_marry_groom_female", StringColorUtils.BRIDE_FEMALE_PREFIX_COLOR, StringColorUtils.BRIDE_FEMALE_NICKNAME_COLOR),
+    BRIDE_NON_BINARY("family_marry_groom_nonbinary", StringColorUtils.BRIDE_NONBINARY_PREFIX_COLOR, StringColorUtils.BRIDE_NONBINARY_NICKNAME_COLOR),
     
-    DEFAULT("", "#FFA500", "#FFD700"); // Orange for prefix, Gold for nickname
+    DEFAULT("", StringColorUtils.DEFAULT_PREFIX_COLOR, StringColorUtils.DEFAULT_NICKNAME_COLOR);
 
     private final String key;
     private final String prefixColor;

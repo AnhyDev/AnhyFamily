@@ -12,6 +12,7 @@ import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.StringColorUtils;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.api.messages.MessageComponents;
@@ -75,9 +76,9 @@ public class TreeComponentGenerator {
         
         MessageBuilder rootBuilder = MessageComponents.builder()
                 .content(translate(" family_tree_title ", new String[] {}, player))
-                .hexColor("#FFD700")  // Золотий колір
+                .hexColor(StringColorUtils.TREE_TITLE_COLOR)  // Використовуємо TREE_TITLE_COLOR
                 .decoration("BOLD", true)
-                .append(getFormattedName(root.getFamily(), "#029952", 0, player))
+                .append(getFormattedName(root.getFamily(), StringColorUtils.TREE_MEMBER_NAME_COLOR, 0, player))
                 .appendNewLine();
 
         // Спочатку додаємо нащадків
@@ -172,8 +173,8 @@ public class TreeComponentGenerator {
     }
 
     private MessageComponents buildMemberLine(PlayerFamily member, int level, String prefix, boolean isRepeated, String title, String branchSymbol, Player player) {
-    	String hexColor = determineHexColor(level, isRepeated ? 1 : 0);
-    	
+        String hexColor = determineHexColor(level, isRepeated ? 1 : 0);
+        
         MessageBuilder lineBuilder = MessageComponents.builder()
                 .content(prefix)
                 .append(MessageComponents.builder()
@@ -192,7 +193,7 @@ public class TreeComponentGenerator {
         if (isRepeated) {
             lineBuilder.append(MessageComponents.builder()
                     .content("*")
-                    .hexColor("#8B0000")  // Темно-червоний колір
+                    .hexColor(StringColorUtils.TREE_REPEATED_COLOR)  // Використовуємо TREE_REPEATED_COLOR
                     .build());
         }
 
@@ -242,17 +243,17 @@ public class TreeComponentGenerator {
 
     private String determineHexColor(int level, int repeatedCount) {
         if (repeatedCount > 0) {
-            return "#8B0000";  // Темно-червоний
+            return StringColorUtils.TREE_REPEATED_COLOR;  // Темно-червоний
         }
         switch (level) {
-            case 0: return "#00FF00";  // Зелений
-            case 1: return "#FFD700";  // Золотий
-            case 2: return "#1E90FF";  // Блакитний
-            case 3: return "#00FFFF";  // Бірюзовий
-            case 4: return "#FF69B4";  // Яскраво-рожевий
-            case 5: return "#FF4500";  // Помаранчево-червоний
-            case 6: return "#ADFF2F";  // Зелено-жовтий
-            default: return "#808080";  // Сірий
+            case 0: return StringColorUtils.TREE_LEVEL0_COLOR;  // Зелений
+            case 1: return StringColorUtils.TREE_LEVEL1_COLOR;  // Золотий
+            case 2: return StringColorUtils.TREE_LEVEL2_COLOR;  // Блакитний
+            case 3: return StringColorUtils.TREE_LEVEL3_COLOR;  // Бірюзовий
+            case 4: return StringColorUtils.TREE_LEVEL4_COLOR;  // Яскраво-рожевий
+            case 5: return StringColorUtils.TREE_LEVEL5_COLOR;  // Помаранчево-червоний
+            case 6: return StringColorUtils.TREE_LEVEL6_COLOR;  // Зелено-жовтий
+            default: return StringColorUtils.TREE_DEFAULT_COLOR;  // Сірий
         }
     }
 

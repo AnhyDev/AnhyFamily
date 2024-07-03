@@ -1,15 +1,17 @@
 package ink.anh.family.fplayer.gender;
 
+import ink.anh.family.util.StringColorUtils;
+
 /**
  * Enum representing different genders with associated metadata.
  * Each gender has a unique key, symbol, and color code.
  */
 public enum Gender {
-    MALE("family_gender_male", "♂", "#1E90FF", "§9"),
-    FEMALE("family_gender_female", "♀", "#FF69B4", "§d"),
-    NON_BINARY("family_gender_non-binary", "⚧", "#8B4513", "§a"),
-    UNDECIDED("family_gender_undecided", "?", "#808080", "§7");
-
+    MALE("family_gender_male", "♂", StringColorUtils.GENDER_MALE_COLOR, "§9"),
+    FEMALE("family_gender_female", "♀", StringColorUtils.GENDER_FEMALE_COLOR, "§d"),
+    NON_BINARY("family_gender_non_binary", "⚧", StringColorUtils.GENDER_NON_BINARY_COLOR, "§a"),
+    UNDECIDED("family_gender_undecided", "?", StringColorUtils.GENDER_UNDECIDED_COLOR, "§7");
+    
     private final String key;     // The key representing the gender (used for localization or references)
     private final String symbol;  // The symbol representing the gender
     private final String color;   // The color code associated with the gender

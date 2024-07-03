@@ -14,96 +14,105 @@ import ink.anh.family.fplayer.info.TreeStringGenerator;
 
 public class FamilyUtils {
 
-    // Для Player
-    public static PlayerFamily createNewFamily(Player player) {
-        UUID playerUUID = player.getUniqueId();
-        String displayName = player.getName();
-
-        PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
-        if (player.isOnline()) {
-            FamilyCacheManager.getInstance().addFamily(playerFamily);
-        }
-        return playerFamily;
-    }
-
-    // Для OfflinePlayer
-    public static PlayerFamily createNewFamily(OfflinePlayer offlinePlayer) {
-        UUID playerUUID = offlinePlayer.getUniqueId();
-        String displayName = offlinePlayer.getName();
-
-        PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
-        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
-        return playerFamily;
-    }
-
 	public static PlayerFamily getFamily(Player onlinePlayer) {
-		if (onlinePlayer == null) {
-			return null;
-		}
-		
-		UUID playerUUID = onlinePlayer.getUniqueId();
-	    PlayerFamily playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
+	    if (onlinePlayer == null) {
+	        return null;
+	    }
+
+	    UUID playerUUID = onlinePlayer.getUniqueId();
+	    PlayerFamily playerFamily = getFamilyFromCacheOrDB(playerUUID);
 	    if (playerFamily == null) {
-	        playerFamily = PlayerFamilyDBService.getFamilyPlayerTable().getFamily(playerUUID, onlinePlayer.getDisplayName());
-	        if (playerFamily == null) {
-                playerFamily = createNewFamily(onlinePlayer);
-	        }
+	        playerFamily = createNewFamily(onlinePlayer);
 	    }
 	    return playerFamily;
 	}
 
 	public static PlayerFamily getFamily(UUID playerUUID) {
-		if (playerUUID == null) {
-			return null;
-		}
-		
+	    if (playerUUID == null) {
+	        return null;
+	    }
+
+	    PlayerFamily playerFamily = getFamilyFromCacheOrDB(playerUUID);
+	    if (playerFamily == null) {
+	        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
+	        if (offlinePlayer.hasPlayedBefore()) {
+	            playerFamily = createNewFamily(offlinePlayer);
+	        }
+	    }
+	    return playerFamily;
+	}
+
+	public static PlayerFamily getFamily(String playerName) {
+	    if (playerName == null || playerName.isEmpty()) {
+	        return null;
+	    }
+
+	    Player onlinePlayer = Bukkit.getPlayerExact(playerName);
+	    if (onlinePlayer != null) {
+	        return getFamily(onlinePlayer);
+	    } else {
+	        PlayerFamily playerFamily = PlayerFamilyDBService.getFamilyPlayerTable().getFamilyByDisplayName(playerName);
+	        if (playerFamily != null) {
+	            return playerFamily;
+	        }
+
+	        @SuppressWarnings("deprecation")
+	        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
+	        if (offlinePlayer != null && (offlinePlayer.hasPlayedBefore() || offlinePlayer.isOnline())) {
+	            UUID playerUUID = offlinePlayer.getUniqueId();
+	            return getFamily(playerUUID);
+	        }
+	    }
+	    return null;
+	}
+
+	public static PlayerFamily getFamily(OfflinePlayer offlinePlayer) {
+	    if (offlinePlayer == null) {
+	        return null;
+	    }
+
+	    UUID playerUUID = offlinePlayer.getUniqueId();
+	    PlayerFamily playerFamily = getFamilyFromCacheOrDB(playerUUID);
+	    if (playerFamily == null && offlinePlayer.hasPlayedBefore()) {
+	        playerFamily = createNewFamily(offlinePlayer);
+	    }
+	    return playerFamily;
+	}
+
+	private static PlayerFamily getFamilyFromCacheOrDB(UUID playerUUID) {
 	    PlayerFamily playerFamily = null;
 	    try {
 	        playerFamily = FamilyCacheManager.getInstance().getFamilyData(playerUUID);
 	        if (playerFamily == null) {
 	            playerFamily = PlayerFamilyDBService.getFamilyPlayerTable().getFamily(playerUUID);
-	            if (playerFamily == null) {
-	                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
-	                if (offlinePlayer.hasPlayedBefore()) {
-	                    playerFamily = createNewFamily(offlinePlayer);
-	                }
-	            }
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-
 	    return playerFamily;
 	}
 
-	public static PlayerFamily getFamily(String playerName) {
-		if (playerName == null) {
-			return null;
-		}
-		
-	    Player onlinePlayer = Bukkit.getPlayerExact(playerName);
-	    UUID playerUUID;
+	// Для Player
+	public static PlayerFamily createNewFamily(Player player) {
+	    UUID playerUUID = player.getUniqueId();
+	    String displayName = player.getName();
 
-	    if (onlinePlayer != null) {
-		    return getFamily(onlinePlayer);
-	    } else {
-	        PlayerFamily playerFamily = PlayerFamilyDBService.getFamilyPlayerTable().getFamilyByDisplayName(playerName);
-	        
-	        if (playerFamily != null) {
-	        	return playerFamily;
-	        }
-	        
-	        @SuppressWarnings("deprecation")
-	        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
-	        if (offlinePlayer != null && (offlinePlayer.hasPlayedBefore() || offlinePlayer.isOnline())) {
-	            playerUUID = offlinePlayer.getUniqueId();
-	        } else {
-	            return null;
-	        }
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
+	    PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
+	    if (player.isOnline()) {
+	        FamilyCacheManager.getInstance().addFamily(playerFamily);
 	    }
+	    return playerFamily;
+	}
 
-	    return getFamily(playerUUID);
+	// Для OfflinePlayer
+	public static PlayerFamily createNewFamily(OfflinePlayer offlinePlayer) {
+	    UUID playerUUID = offlinePlayer.getUniqueId();
+	    String displayName = offlinePlayer.getName();
+
+	    PlayerFamily playerFamily = new PlayerFamily(playerUUID, displayName);
+	    PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
+	    return playerFamily;
 	}
 
 	public static boolean areGendersCompatibleForTraditional(PlayerFamily family1) {

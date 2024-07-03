@@ -11,17 +11,19 @@ import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.gender.GenderManager;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.family.util.StringColorUtils;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageComponents.MessageBuilder;
 import ink.anh.api.lingo.Translator;
 
 public class ProfileComponentGenerator {
 
-    public static final String GREEN_COLOR = "#00FF00";
-    public static final String WHITE_COLOR = "#FFFFFF";
-    public static final String YELLOW_COLOR = "#FFFF00";
-    public static final String RED_COLOR = "#FF0000";
-    public static final String ACCENT_COLOR = "#12ccad";
+	public static String GREEN_COLOR = StringColorUtils.PROFILE_COMPONENT_COLOR1;
+	public static String WHITE_COLOR = StringColorUtils.PROFILE_COMPONENT_COLOR2;
+	public static String YELLOW_COLOR = StringColorUtils.PROFILE_COMPONENT_COLOR3;
+	public static String RED_COLOR = StringColorUtils.PROFILE_COMPONENT_COLOR4;
+	public static String ACCENT_COLOR = StringColorUtils.PROFILE_COMPONENT_COLOR5;
+
 
     private enum FamilyRole {
         ROOT, PARENT, CHILD, SPOUSE

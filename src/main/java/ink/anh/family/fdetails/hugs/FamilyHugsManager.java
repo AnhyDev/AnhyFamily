@@ -26,6 +26,7 @@ import ink.anh.family.fplayer.permissions.HugsPermission;
 import ink.anh.family.fdetails.AbstractDetailsManager;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.RelationshipDegree;
+import ink.anh.family.util.StringColorUtils;
 import ink.anh.family.util.TypeTargetComponent;
 
 public class FamilyHugsManager extends AbstractDetailsManager {
@@ -131,20 +132,20 @@ public class FamilyHugsManager extends AbstractDetailsManager {
                     // Спавнування частинок вздовж вектора руху
                     spawnParticlesAlongVector(player, Particle.VILLAGER_ANGRY, direction, 5.0, 10, 2);
 
-                    sendActionBarMessage(player, new MessageForFormatting(getInvalidAccessMessage(), new String[]{target.getName()}), "#820419");
+                    sendActionBarMessage(player, new MessageForFormatting(getInvalidAccessMessage(), new String[]{target.getName()}), StringColorUtils.HUGS_DENY);
 
                     return true;
                 }
 
                 Particle particle = Particle.SPELL_WITCH;
-                String hexColor = "#a40cf0";
+                String hexColor = StringColorUtils.HUGS_OTHER;
                 
                 if (FamilyUtils.getRelationshipDegree(playerFamily, target.getUniqueId()) == RelationshipDegree.SPOUSE) {
                     particle = Particle.HEART;
-                    hexColor = "#f24607";
+                    hexColor = StringColorUtils.HUGS_SPOUSE;
                 } else if (playerFamily.isFamilyMember(targetFamily.getRoot())) {
                     particle = Particle.VILLAGER_HAPPY;
-                    hexColor = "#62fc03";
+                    hexColor = StringColorUtils.HUGS_RELATIVE;
                 }
                 
                 // Спавнити частинки на рівні плечей

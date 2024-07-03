@@ -130,11 +130,11 @@ public class FamilyChatManager extends AbstractDetailsManager {
         String playerName = player.getName();
         String commandBase = "/fchat #" + symbol + " ";
         
-        String symbolColor = "#0bdebb";
-        String arrowColor = "#8a690f";
-        String treeColor = "#228B22";
-        String playerNameColor = "#fac32a";
-        String messageColor = "#2ab1fa";
+        String symbolColor = StringColorUtils.SYMBOL_COLOR;
+        String arrowColor = StringColorUtils.ARROW_COLOR;
+        String treeColor = StringColorUtils.TREE_COLOR;
+        String playerNameColor = StringColorUtils.PLAYER_NAME_COLOR;
+        String messageColor = StringColorUtils.FAMILY_CHAT_COLOR;
         
         String[] langs = player != null ? LangUtils.getPlayerLanguage(player) : new String[]{libraryManager.getDefaultLang()};
         

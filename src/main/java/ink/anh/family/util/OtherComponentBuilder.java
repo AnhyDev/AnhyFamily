@@ -62,11 +62,13 @@ public class OtherComponentBuilder {
                                                     MessageBuilder prefix, String messageColor, String v1Color, String v2Color, Player recipient) {
         String[] langs = getLangs(recipient);
 
-        messageBase = StringUtils.colorize(Translator.translateKyeWorld(manager, messageBase, langs));
-        messageV1 = StringUtils.colorize(Translator.translateKyeWorld(manager, messageV1, langs));
-        messageV2 = StringUtils.colorize(Translator.translateKyeWorld(manager, messageV2, langs));
-        hoverV1 = StringUtils.colorize(Translator.translateKyeWorld(manager, hoverV1, langs));
-        hoverV2 = StringUtils.colorize(Translator.translateKyeWorld(manager, hoverV2, langs));
+        String recpientName = recipient.getName();
+        
+        messageBase = StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageBase, langs), new String[]{recpientName}));
+        messageV1 =   StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageV1,   langs), new String[]{recpientName}));
+        messageV2 =   StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, messageV2,   langs), new String[]{recpientName}));
+        hoverV1 =     StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, hoverV1,     langs), new String[]{recpientName}));
+        hoverV2 =     StringUtils.colorize(StringUtils.formatString(Translator.translateKyeWorld(manager, hoverV2,     langs), new String[]{recpientName}));
 
         MessageComponents hoverComponent1 = createHoverComponent(v1Color, hoverV1);
 
@@ -169,7 +171,7 @@ public class OtherComponentBuilder {
 
         MessageBuilder prefix = prefixPlugin()
                 .append(MessageComponents.builder().content(" ").build())
-                .append(subPrefix(baseCommand, "#0bdebb").build());
+                .append(subPrefix(baseCommand, StringColorUtils.OTHER_SUB_PREFIX_COLOR).build());
 
         return buildComponent(messageBase, commandAccept, commandRefuse, messageAccept, messageRefuse, hoverAccept, hoverRefuse,
                 prefix, StringColorUtils.MESSAGE_COLOR, StringColorUtils.ACCESS_COLOR_TRUE, StringColorUtils.ACCESS_COLOR_FALSE, recipient);
