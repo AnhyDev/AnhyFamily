@@ -1,5 +1,6 @@
 package ink.anh.family;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ink.anh.family.command.CommandManager;
@@ -13,6 +14,7 @@ public class AnhyFamily extends JavaPlugin {
     private static AnhyFamily instance;
     
     private EconomyHandler economyHandler;
+    private static boolean isProtocolLibEnabled;
 
     @Override
     public void onLoad() {
@@ -37,6 +39,8 @@ public class AnhyFamily extends JavaPlugin {
         
         new ListenersRegistry(this).register();
         new CommandManager(this).registerCommands();
+        
+        isProtocolLibEnabled = (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null);
     }
 
     @Override
@@ -68,4 +72,8 @@ public class AnhyFamily extends JavaPlugin {
     public EconomyHandler getEconomyHandler() {
         return economyHandler;
     }
+
+	public static boolean isProtocolLibEnabled() {
+		return isProtocolLibEnabled;
+	}
 }

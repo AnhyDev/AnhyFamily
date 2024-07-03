@@ -17,6 +17,7 @@ import ink.anh.family.fdetails.FamilyStaticDataLoader;
 import ink.anh.family.lang.LangMessage;
 import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.ParentManager;
+import ink.anh.family.util.StringColorUtils;
 import net.md_5.bungee.api.ChatColor;
 
 public class GlobalManager extends LibraryManager {
@@ -111,6 +112,7 @@ public class GlobalManager extends LibraryManager {
     }
 
     private void loadFields(AnhyFamily familyPlugin) {
+    	StringColorUtils.reloadColors();
         defaultLang = familyPlugin.getConfig().getString("language", "en");
         pluginName = ChatColor.translateAlternateColorCodes('&', familyPlugin.getConfig().getString("plugin_name", "AnhyFamily"));
         debug = familyPlugin.getConfig().getBoolean("debug", false);

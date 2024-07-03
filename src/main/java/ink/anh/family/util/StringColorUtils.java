@@ -30,7 +30,10 @@ public class StringColorUtils {
     public static String BRIDE_PREFIX = "#db7bc8";
     public static String BRIDE_NAME = "#FFB6F5";
     public static String BRIDE_NONBINARY_PREFIX = "#40E0D0";
-    public static String BRIDE_NONBINARY_NAME = "#20B2AA";  
+    public static String BRIDE_NONBINARY_NAME = "#20B2AA";
+    public static String DEFAULT_PREFIX_COLOR = "#FFA500";
+    public static String DEFAULT_NICKNAME_COLOR = "#FFD700";
+    public static String OTHER_SUB_PREFIX_COLOR = "#0bdebb";
     public static String MESSAGE_COLOR = "#0bdebb";
     public static String GROUP_COLOR = "#0bdebb";
     public static String ACCESS_COLOR_TRUE = "#00FF00";
@@ -70,13 +73,7 @@ public class StringColorUtils {
     public static String TREE_LEVEL5_COLOR = "#FF4500";
     public static String TREE_LEVEL6_COLOR = "#ADFF2F";
     public static String TREE_DEFAULT_COLOR = "#808080";
-    
 
-    public static String DEFAULT_PREFIX_COLOR = "#FFA500";
-    public static String DEFAULT_NICKNAME_COLOR = "#FFD700";
-    public static String OTHER_SUB_PREFIX_COLOR = "#0bdebb";
-
-    
     public static void initialize(File dataFolder) {
         configFile = new File(dataFolder, "colors.yml");
         if (!configFile.exists()) {
@@ -110,6 +107,9 @@ public class StringColorUtils {
         BRIDE_NAME = getColorFromConfig(config, "bride_name", BRIDE_NAME);
         BRIDE_NONBINARY_PREFIX = getColorFromConfig(config, "bride_nonbinary_prefix", BRIDE_NONBINARY_PREFIX);
         BRIDE_NONBINARY_NAME = getColorFromConfig(config, "bride_nonbinary_name", BRIDE_NONBINARY_NAME);
+        DEFAULT_PREFIX_COLOR = getColorFromConfig(config, "default_prefix_color", DEFAULT_PREFIX_COLOR);
+        DEFAULT_NICKNAME_COLOR = getColorFromConfig(config, "default_nickname_color", DEFAULT_NICKNAME_COLOR);
+        OTHER_SUB_PREFIX_COLOR = getColorFromConfig(config, "other_sub_prefix_color", OTHER_SUB_PREFIX_COLOR);
         MESSAGE_COLOR = getColorFromConfig(config, "message_color", MESSAGE_COLOR);
         GROUP_COLOR = getColorFromConfig(config, "group_color", GROUP_COLOR);
         ACCESS_COLOR_TRUE = getColorFromConfig(config, "access_color_true", ACCESS_COLOR_TRUE);
@@ -149,9 +149,6 @@ public class StringColorUtils {
         TREE_LEVEL5_COLOR = getColorFromConfig(config, "tree_level5_color", TREE_LEVEL5_COLOR);
         TREE_LEVEL6_COLOR = getColorFromConfig(config, "tree_level6_color", TREE_LEVEL6_COLOR);
         TREE_DEFAULT_COLOR = getColorFromConfig(config, "tree_default_color", TREE_DEFAULT_COLOR);
-        DEFAULT_PREFIX_COLOR = getColorFromConfig(config, "default_prefix_color", DEFAULT_PREFIX_COLOR);
-        DEFAULT_NICKNAME_COLOR = getColorFromConfig(config, "default_nickname_color", DEFAULT_NICKNAME_COLOR);
-        OTHER_SUB_PREFIX_COLOR = getColorFromConfig(config, "other_sub_prefix_color", OTHER_SUB_PREFIX_COLOR);
 
     }
 
