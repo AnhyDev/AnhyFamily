@@ -4,15 +4,15 @@ import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.StringColorUtils;
 
 public enum MarryPrefixType {
-    PRIEST_MALE("family_marry_priest_male", StringColorUtils.MARRY_PRIEST_MALE_PREFIX_COLOR, StringColorUtils.MARRY_PRIEST_MALE_NICKNAME_COLOR),
-    PRIEST_FEMALE("family_marry_priest_female", StringColorUtils.MARRY_PRIEST_FEMALE_PREFIX_COLOR, StringColorUtils.MARRY_PRIEST_FEMALE_NICKNAME_COLOR),
-    PRIEST_NON_BINARY("family_marry_priest_nonbinary", StringColorUtils.MARRY_PRIEST_NONBINARY_PREFIX_COLOR, StringColorUtils.MARRY_PRIEST_NONBINARY_NICKNAME_COLOR),
+    PRIEST_MALE("family_marry_priest_male", StringColorUtils.PRIEST_PREFIX, StringColorUtils.PRIEST_NAME),
+    PRIEST_FEMALE("family_marry_priest_female", StringColorUtils.PRIESTESS_PREFIX, StringColorUtils.PRIESTESS_NAME),
+    PRIEST_NON_BINARY("family_marry_priest_nonbinary", StringColorUtils.PRIEST_NONBINARY_PREFIX, StringColorUtils.PRIEST_NONBINARY_NAME),
 
-    PRIVATE_MARRY_PREFIX("family_marry_private_prefix", StringColorUtils.PRIVATE_MARRY_PREFIX_COLOR, StringColorUtils.PRIVATE_MARRY_NICKNAME_COLOR),
+    PRIVATE_MARRY_PREFIX("family_marry_private_prefix", StringColorUtils.PRIEST_PRIVATE_PREFIX, StringColorUtils.PRIEST_PRIVATE_NAME),
     
-    BRIDE_MALE("family_marry_groom_male", StringColorUtils.BRIDE_MALE_PREFIX_COLOR, StringColorUtils.BRIDE_MALE_NICKNAME_COLOR),
-    BRIDE_FEMALE("family_marry_groom_female", StringColorUtils.BRIDE_FEMALE_PREFIX_COLOR, StringColorUtils.BRIDE_FEMALE_NICKNAME_COLOR),
-    BRIDE_NON_BINARY("family_marry_groom_nonbinary", StringColorUtils.BRIDE_NONBINARY_PREFIX_COLOR, StringColorUtils.BRIDE_NONBINARY_NICKNAME_COLOR),
+    BRIDE_MALE("family_marry_groom_male", StringColorUtils.GROOM_PREFIX, StringColorUtils.GROOM_NAME),
+    BRIDE_FEMALE("family_marry_groom_female", StringColorUtils.BRIDE_PREFIX, StringColorUtils.BRIDE_NAME),
+    BRIDE_NON_BINARY("family_marry_groom_nonbinary", StringColorUtils.BRIDE_NONBINARY_PREFIX, StringColorUtils.BRIDE_NONBINARY_NAME),
     
     DEFAULT("", StringColorUtils.DEFAULT_PREFIX_COLOR, StringColorUtils.DEFAULT_NICKNAME_COLOR);
 
