@@ -42,7 +42,6 @@ public class PermissionModifier {
         if (permission != null) {
             permission.setPermission(uuid, access);
             permissionsMap.put(action, permission);
-            playerFamily.setPermissionsMap(permissionsMap);
 
             // Збереження змін у базі даних
             PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.PERMISSIONS_MAP);

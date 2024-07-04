@@ -89,7 +89,9 @@ public class FamilyHugsSubCommand extends Sender {
             return;
         }
 
-        PermissionModifier.setPermission(targetFamily, targetFamily.getRoot(), ActionsPermissions.HUGS_TO_ALL_PLAYERS, Access.TRUE);
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+        
+        PermissionModifier.setPermission(playerFamily, targetFamily.getRoot(), ActionsPermissions.HUGS_TO_ALL_PLAYERS, Access.TRUE);
         sendMessage(new MessageForFormatting("family_hugs_access_allowed", new String[]{targetName}), MessageType.NORMAL, player);
     }
 
@@ -107,19 +109,27 @@ public class FamilyHugsSubCommand extends Sender {
             return;
         }
 
-        PermissionModifier.setPermission(targetFamily, targetFamily.getRoot(), ActionsPermissions.HUGS_TO_ALL_PLAYERS, Access.FALSE);
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+        
+        PermissionModifier.setPermission(playerFamily, targetFamily.getRoot(), ActionsPermissions.HUGS_TO_ALL_PLAYERS, Access.FALSE);
         sendMessage(new MessageForFormatting("family_hugs_access_denied", new String[]{targetName}), MessageType.NORMAL, player);
     }
 
     private void handleAllowAll(Player player, String[] args) {
+        boolean allowAll = false;
+
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs allowall <true|false>"}), MessageType.WARNING, player);
-            return;
+            allowAll = true;
+        } else {
+            try {
+                allowAll = Boolean.parseBoolean(args[1]);
+            } catch (IllegalArgumentException e) {
+                sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs allowall <true|false>"}), MessageType.WARNING, player);
+                return;
+            }
         }
 
-        boolean allowAll = Boolean.parseBoolean(args[1]);
-
-        PlayerFamily playerFamily = FamilyUtils.getFamily(player.getName());
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
         if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, player);
             return;
@@ -131,18 +141,24 @@ public class FamilyHugsSubCommand extends Sender {
             hugsPermission.setDenyAllExceptFamily(false);
         }
 
-        sendMessage(new MessageForFormatting(allowAll ? "family_hugs_allow_all_enabled" : "family_hugs_allow_all_disabled", new String[]{}), MessageType.NORMAL, player);
+        sendMessage(new MessageForFormatting("family_hugs_allow_all_enabled", new String[]{Boolean.toString(allowAll)}), MessageType.NORMAL, player);
     }
 
     private void handleDenyAll(Player player, String[] args) {
+        boolean denyAll = false;
+
         if (args.length < 2) {
-            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs denyall <true|false>"}), MessageType.WARNING, player);
-            return;
+            denyAll = true;
+        } else {
+            try {
+                denyAll = Boolean.parseBoolean(args[1]);
+            } catch (IllegalArgumentException e) {
+                sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs denyall <true|false>"}), MessageType.WARNING, player);
+                return;
+            }
         }
 
-        boolean denyAll = Boolean.parseBoolean(args[1]);
-
-        PlayerFamily playerFamily = FamilyUtils.getFamily(player.getName());
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
         if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, player);
             return;
@@ -154,7 +170,7 @@ public class FamilyHugsSubCommand extends Sender {
             hugsPermission.setAllowAll(false);
         }
 
-        sendMessage(new MessageForFormatting(denyAll ? "family_hugs_deny_all_enabled" : "family_hugs_deny_all_disabled", new String[]{}), MessageType.NORMAL, player);
+        sendMessage(new MessageForFormatting("family_hugs_deny_all_enabled", new String[]{Boolean.toString(denyAll)}), MessageType.NORMAL, player);
     }
 
     private void handleCheckHugsPermission(Player player) {
@@ -172,7 +188,7 @@ public class FamilyHugsSubCommand extends Sender {
 
                     boolean canHug = permission.checkPermission(playerFamily, details, TypeTargetComponent.HUGS);
 
-                    sendMessage(new MessageForFormatting(canHug ? "family_hugs_permission_allowed" : "family_hugs_permission_denied", new String[]{targetPlayer.getName()}), canHug ? MessageType.NORMAL : MessageType.WARNING, player);
+                    sendMessage(new MessageForFormatting(canHug ? "family_hugs_permission_allowed" : "family_hugs_permission_denied", new String[]{targetPlayer.getName(), player.getName()}), canHug ? MessageType.NORMAL : MessageType.WARNING, player);
                 });
             } else {
                 String commandUsage = "\n| /fhugs access <args> \n| /fhugs default <args> \n| /fhugs check <NickName> \n| /fhugs defaultcheck <children|parents> \n| /fhugs allow <NickName> \n| /fhugs deny <NickName> \n| /fhugs allowall <true|false> \n| /fhugs denyall <true|false>";

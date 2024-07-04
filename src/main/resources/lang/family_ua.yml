@@ -313,6 +313,14 @@ family_you_hugged_player3: "Ти обняло %s"
 family_hugged_player_you1: "Ти потрапив в обійми до %s"
 family_hugged_player_you2: "Ти потрапила в обійми до %s"
 family_hugged_player_you3: "Ти потрапило в обійми до %s"
-
+family_hugs_access_set: "Доступ до обнімашок для %s встановлено на %s."
+family_default_hugs_access_set: "Доступ до обнімашок за замовчуванням встановлено для %s: %s."
+family_default_hugs_access_check: "Перевірка доступу до обнімашок за замовчуванням для групи"
+family_hugs_access_allowed: "Для гравця %s дозволено обнімашки"
+family_hugs_access_denied: "Для гравця %s заборонено обнімашки"
+family_hugs_allow_all_enabled: "Груповий дозвіл обнімашок 'Для всіх' встановлено на %s"
+family_hugs_deny_all_enabled: "Групова заборона обнімашок 'Для всіх, крім родини' встановлено на %s"
+family_hugs_permission_allowed: "%s дозволяє тобі обіймати його"
+family_hugs_permission_denied: "%s забороняє тобі обіймати його"
 
 

@@ -16,7 +16,6 @@ import ink.anh.api.enums.Access;
 import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
-import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
@@ -165,7 +164,7 @@ public class FamilyHugsManager extends AbstractDetailsManager {
                 sendActionBarMessage(target, new MessageForFormatting(huggedMesageYou, new String[]{player.getName()}), hexColor);
 
                 if (AnhyFamily.isProtocolLibEnabled()) {
-                	SyncExecutor.runSync(() -> ZombieArmAnimator.toggleZombieArms(player, 20L, familyPlugin));
+                	// SyncExecutor.runSync(() -> ZombieArmAnimator.toggleZombieArms(player, 20L, familyPlugin));
                 }
                 return true;
             }

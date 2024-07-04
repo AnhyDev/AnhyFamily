@@ -21,9 +21,11 @@ public class ZombieArmAnimator {
         WrappedDataWatcher watcher = new WrappedDataWatcher(player);
         WrappedDataWatcherObject obj = new WrappedDataWatcherObject(0, WrappedDataWatcher.Registry.get(Byte.class));
 
-        byte b = 0x00;
+        byte b = watcher.getByte(0);
         if (active) {
-            b = 0x20; // флаг для "arms raised" як у зомбі
+            b |= 0x20; // встановлюємо 6-й біт (arms raised)
+        } else {
+            b &= ~0x20; // скидаємо 6-й біт
         }
         watcher.setObject(obj, b);
         packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
@@ -41,3 +43,4 @@ public class ZombieArmAnimator {
         Bukkit.getScheduler().runTaskLater(plugin, () -> setZombieArms(player, false), duration);
     }
 }
+
