@@ -20,20 +20,21 @@ public class PermissionModifier {
         PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.PERMISSIONS_MAP);
     }
 
-    // Метод для видалення дозволу
-    public static void removePermission(PlayerFamily playerFamily, ActionsPermissions action) {
-        Map<ActionsPermissions, AbstractPermission> permissionsMap = playerFamily.getPermissionsMap();
-        permissionsMap.remove(action);
-        playerFamily.setPermissionsMap(permissionsMap);
+    // Метод для видалення дозволу конкретного користувача
+    public static void removePermission(PlayerFamily playerFamily, UUID uuid, ActionsPermissions action) {
+        AbstractPermission permission = playerFamily.getPermissionsMap().get(action);
 
-        // Збереження змін у базі даних
-        PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.PERMISSIONS_MAP);
+        if (permission != null) {
+            permission.removePermissionMap(uuid);
+
+            // Збереження змін у базі даних
+            PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.PERMISSIONS_MAP);
+        }
     }
 
     // Метод для зміни дозволу
     public static void setPermission(PlayerFamily playerFamily, UUID uuid, ActionsPermissions action, Access access) {
-        Map<ActionsPermissions, AbstractPermission> permissionsMap = playerFamily.getPermissionsMap();
-        AbstractPermission permission = permissionsMap.get(action);
+        AbstractPermission permission = playerFamily.getPermissionsMap().get(action);
 
         if (permission == null) {
             permission = PermissionManager.createPermission(action, playerFamily);
@@ -41,21 +42,10 @@ public class PermissionModifier {
 
         if (permission != null) {
             permission.setPermission(uuid, access);
-            permissionsMap.put(action, permission);
+            playerFamily.getPermissionsMap().put(action, permission);
 
             // Збереження змін у базі даних
             PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.PERMISSIONS_MAP);
         }
-    }
-
-    // Метод для отримання дозволу
-    public static Access getPermission(PlayerFamily playerFamily, UUID uuid, ActionsPermissions action) {
-        Map<ActionsPermissions, AbstractPermission> permissionsMap = playerFamily.getPermissionsMap();
-        AbstractPermission permission = permissionsMap.get(action);
-
-        if (permission != null) {
-            return permission.getPermission(playerFamily, null, null);
-        }
-        return Access.DEFAULT;
     }
 }

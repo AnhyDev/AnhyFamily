@@ -1,5 +1,7 @@
 package ink.anh.family.fdetails.hugs;
 
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import org.bukkit.command.Command;
@@ -16,6 +18,7 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.api.enums.Access;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.permissions.AbstractPermission;
 import ink.anh.family.fplayer.permissions.ActionsPermissions;
 import ink.anh.family.fplayer.permissions.PermissionModifier;
 import ink.anh.family.fplayer.permissions.HugsPermission;
@@ -25,6 +28,10 @@ import ink.anh.family.util.TypeTargetComponent;
 public class FamilyHugsSubCommand extends Sender {
 
     private AnhyFamily familyPlugin;
+    
+    private static String commandUsage = "\n| /fhugs access <args> \n| /fhugs default <args> \n| /fhugs check <NickName> \n| /fhugs defaultcheck <children|parents> "
+    		+ "\n| /fhugs allow <NickName> \n| /fhugs deny <NickName> \n| /fhugs allowall <true|false> \n| /fhugs denyall <true|false> \n| /fhugs remove <NickName> "
+    		+ "\n| /fhugs list \n| /fhugs globalstatus <allowall|denyall>";
 
     public FamilyHugsSubCommand(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
@@ -61,8 +68,17 @@ public class FamilyHugsSubCommand extends Sender {
                         case "denyall":
                             handleDenyAll(player, args);
                             break;
+                        case "remove":
+                            handleRemoveHugs(player, args);
+                            break;
+                        case "list":
+                            handleListPermissions(player, args);
+                            break;
+                        case "globalstatus":
+                            handleCheckGlobalHugsStatus(player, args);
+                            break;
                         default:
-                            hugsManager.sendMessageWithConditions();
+                            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{commandUsage}), MessageType.WARNING, player);
                     }
                 } else {
                     handleCheckHugsPermission(player);
@@ -73,6 +89,74 @@ public class FamilyHugsSubCommand extends Sender {
         });
 
         return true;
+    }
+
+    // Новий метод для перевірки глобального статусу доступу
+    private void handleCheckGlobalHugsStatus(Player player, String[] args) {
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs globalstatus <allowall|denyall>"}), MessageType.WARNING, player);
+            return;
+        }
+
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+        if (playerFamily == null) {
+            sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+
+        HugsPermission hugsPermission = (HugsPermission) playerFamily.getPermission(ActionsPermissions.HUGS_TO_ALL_PLAYERS);
+        boolean status;
+
+        switch (args[1].toLowerCase()) {
+            case "allowall":
+                status = hugsPermission.isAllowAll();
+                sendMessage(new MessageForFormatting("family_hugs_allow_all_status", new String[]{Boolean.toString(status)}), MessageType.NORMAL, player);
+                break;
+            case "denyall":
+                status = hugsPermission.isDenyAllExceptFamily();
+                sendMessage(new MessageForFormatting("family_hugs_deny_all_status", new String[]{Boolean.toString(status)}), MessageType.NORMAL, player);
+                break;
+            default:
+                sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs globalstatus <allowall|denyall>"}), MessageType.WARNING, player);
+                break;
+        }
+    }
+
+    private void handleListPermissions(Player player, String[] args) {
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+
+        AbstractPermission permission = playerFamily.getPermissionsMap().get(ActionsPermissions.HUGS_TO_ALL_PLAYERS);
+
+        if (permission != null && permission.getPermissionsMap() != null && !permission.getPermissionsMap().isEmpty()) {
+            for (Map.Entry<UUID, Access> entry : permission.getPermissionsMap().entrySet()) {
+                if (entry.getKey() != null) {
+                    String targetName = FamilyUtils.getFamily(entry.getKey()).getRootrNickName();
+                    sendMessage(new MessageForFormatting("family_hugs_access_list", new String[]{targetName, entry.getValue().name()}), MessageType.NORMAL, player);
+                }
+            }
+        } else {
+            sendMessage(new MessageForFormatting("family_hugs_access_list_empty", new String[]{}), MessageType.NORMAL, player);
+        }
+    }
+
+    private void handleRemoveHugs(Player player, String[] args) {
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fhugs remove <NickName>"}), MessageType.WARNING, player);
+            return;
+        }
+
+        String targetName = args[1];
+
+        PlayerFamily targetFamily = FamilyUtils.getFamily(targetName);
+        if (targetFamily == null) {
+            sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+
+        PermissionModifier.removePermission(playerFamily, targetFamily.getRoot(), ActionsPermissions.HUGS_TO_ALL_PLAYERS);
+        sendMessage(new MessageForFormatting("family_hugs_access_removed", new String[]{targetName}), MessageType.NORMAL, player);
     }
 
     private void handleAllowHugs(Player player, String[] args) {
@@ -90,7 +174,7 @@ public class FamilyHugsSubCommand extends Sender {
         }
 
         PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-        
+
         PermissionModifier.setPermission(playerFamily, targetFamily.getRoot(), ActionsPermissions.HUGS_TO_ALL_PLAYERS, Access.TRUE);
         sendMessage(new MessageForFormatting("family_hugs_access_allowed", new String[]{targetName}), MessageType.NORMAL, player);
     }
@@ -110,7 +194,7 @@ public class FamilyHugsSubCommand extends Sender {
         }
 
         PlayerFamily playerFamily = FamilyUtils.getFamily(player);
-        
+
         PermissionModifier.setPermission(playerFamily, targetFamily.getRoot(), ActionsPermissions.HUGS_TO_ALL_PLAYERS, Access.FALSE);
         sendMessage(new MessageForFormatting("family_hugs_access_denied", new String[]{targetName}), MessageType.NORMAL, player);
     }
@@ -191,7 +275,6 @@ public class FamilyHugsSubCommand extends Sender {
                     sendMessage(new MessageForFormatting(canHug ? "family_hugs_permission_allowed" : "family_hugs_permission_denied", new String[]{targetPlayer.getName(), player.getName()}), canHug ? MessageType.NORMAL : MessageType.WARNING, player);
                 });
             } else {
-                String commandUsage = "\n| /fhugs access <args> \n| /fhugs default <args> \n| /fhugs check <NickName> \n| /fhugs defaultcheck <children|parents> \n| /fhugs allow <NickName> \n| /fhugs deny <NickName> \n| /fhugs allowall <true|false> \n| /fhugs denyall <true|false>";
                 sendMessage(new MessageForFormatting("family_err_command_format", new String[]{commandUsage}), MessageType.WARNING, player);
             }
         });

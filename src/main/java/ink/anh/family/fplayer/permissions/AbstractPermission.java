@@ -133,4 +133,8 @@ public abstract class AbstractPermission {
     public void removePermissionMap(UUID uuid) {
         permissionsMap.remove(uuid);
     }
+
+	public Map<UUID, Access> getPermissionsMap() {
+		return permissionsMap;
+	}
 }
