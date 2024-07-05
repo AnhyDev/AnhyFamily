@@ -13,12 +13,13 @@ import java.util.stream.Collectors;
 public class FamilyHugsTabCompleter implements TabCompleter {
 
     private static final List<String> COMMANDS = Arrays.asList(
-            "access", "default", "check", "defaultcheck", "allow", "deny", "allowall", "denyall", "remove", "list"
+            "access", "default", "check", "defaultcheck", "allow", "deny", "allowall", "denyall", "remove", "list", "globalstatus"
     );
 
     private static final List<String> ALLOW_DENY_DEFAULT = Arrays.asList("allow", "deny", "default");
     private static final List<String> CHILDREN_PARENTS = Arrays.asList("children", "parents");
     private static final List<String> TRUE_FALSE = Arrays.asList("true", "false");
+    private static final List<String> GLOBAL_STATUS_OPTIONS = Arrays.asList("allowall", "denyall");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
@@ -41,6 +42,8 @@ public class FamilyHugsTabCompleter implements TabCompleter {
                 case "allowall":
                 case "denyall":
                     return TRUE_FALSE;
+                case "globalstatus":
+                    return GLOBAL_STATUS_OPTIONS;
                 default:
                     return Collections.emptyList();
             }
