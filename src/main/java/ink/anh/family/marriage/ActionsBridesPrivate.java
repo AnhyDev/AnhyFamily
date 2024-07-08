@@ -89,6 +89,7 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
             
         	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_sent", MessageType.ESPECIALLY.getColor(true), new String[]{receiverName}, new Player[] {proposer});
         	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_received", MessageType.ESPECIALLY.getColor(true), new String[]{proposerName}, new Player[] {receiver});
+        	sendPriestAcceptMessage(priestPrefixType, priestName, new Player[] {receiver});
         } else {
             sendMessage(new MessageForFormatting("family_proposal_failed", new String[]{receiver.getName()}), MessageType.WARNING, sender); // +
         }
@@ -121,6 +122,8 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         }
 
         Player proposer = proposal.getProposer();
+
+        marriageManager.removeProposal(proposal);
         
     	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_refused", MessageType.NORMAL.getColor(true),
     			new String[]{proposer.getDisplayName() != null ? proposer.getDisplayName() : proposer.getName()}, new Player[] {receiver});

@@ -12,8 +12,9 @@ import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
-import ink.anh.family.fplayer.FamilySeparation;
+import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
@@ -27,11 +28,8 @@ import ink.anh.api.utils.SyncExecutor;
 
 public class Divorce extends Sender {
 
-    private AnhyFamily familyPlugin;
-
     public Divorce(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
-        this.familyPlugin = familyPlugin;
     }
 
     public boolean separate(CommandSender sender) {
@@ -71,7 +69,7 @@ public class Divorce extends Sender {
         MessageForFormatting messageDivorceFalse = new MessageForFormatting("family_error_generic", new String[]{});
         CommandSender[] senders = {sender, Bukkit.getPlayer(spouseUUID)};
 
-        Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.getRelatives(playerFamily, FamilySeparationReason.DIVORCE);
+        Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.getRelatives(playerFamily, FamilySeparationReason.DIVORCE_RELATIVE);
         
         SyncExecutor.runSync(() -> {
     	    FamilySeparationEvent event = new FamilySeparationEvent(playerFamily, FamilyDetailsGet.getRootFamilyDetails(playerFamily), modifiedFamilies,
@@ -93,15 +91,17 @@ public class Divorce extends Sender {
                 SyncExecutor.runAsync(() -> {
                     FamilyDetailsService.removeCrossFamilyRelations(initiatorFamily, modifiedFamilies, false, false);
                     FamilyDetailsService.removeCrossFamilyRelations(spouseFamily, modifiedFamilies, false, false);
+                    initiatorFamily.setFamilyId(null);
+                    spouseFamily.setFamilyId(null);
 
                     FamilyDetailsService.handleDivorce(spouseFamily);
 
-                    FamilySeparation utilsDivorce = new FamilySeparation(familyPlugin);
-
-                    if (utilsDivorce.separateSpouses(initiatorFamily)) {
+                    if (FamilySeparationUtils.separateSpouses(initiatorFamily, spouseFamily)) {
                         messageType[0] = MessageType.IMPORTANT;
                         sendMessage(divorceTrue, messageType[0], senders);
                     } else {
+                        PlayerFamilyDBService.savePlayerFamily(initiatorFamily, FamilyPlayerField.FAMILY_ID);
+                        PlayerFamilyDBService.savePlayerFamily(spouseFamily, FamilyPlayerField.FAMILY_ID);
                         sendMessage(messageDivorceFalse, messageType[0], senders);
                     }
                 });

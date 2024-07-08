@@ -319,7 +319,13 @@ family_hugs_access_allowed: "Hugs are allowed for player %s"
 family_hugs_access_denied: "Hugs are denied for player %s"
 family_hugs_allow_all_enabled: "Group hug permission 'For all' is set to %s"
 family_hugs_deny_all_enabled: "Group hug prohibition 'For all except family' is set to %s"
-family_hugs_permission_allowed: "%s allows you to hug them"
-family_hugs_permission_denied: "%s denies you from hugging them"
+family_hugs_permission_allowed: "%s allows you to hug"
+family_hugs_permission_denied: "%s forbids you to hug"
+family_hugs_access_list: "%s has permission: %s for hugs"
+family_hugs_access_list_empty: "Your personal hug permissions/prohibitions list is empty"
+family_hugs_allow_all_status: "Global hug permission: %s"
+family_hugs_deny_all_status: "Global hug prohibition: %s"
+family_hugs_access_removed: "Personal hug permissions/prohibitions for %s removed"
+
 
 

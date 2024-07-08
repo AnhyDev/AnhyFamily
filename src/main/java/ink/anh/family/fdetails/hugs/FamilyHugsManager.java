@@ -22,6 +22,7 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
+import ink.anh.family.fplayer.permissions.ActionsPermissions;
 import ink.anh.family.fplayer.permissions.HugsPermission;
 import ink.anh.family.fdetails.AbstractDetailsManager;
 import ink.anh.family.util.FamilyUtils;
@@ -109,7 +110,7 @@ public class FamilyHugsManager extends AbstractDetailsManager {
                 PlayerFamily targetFamily = FamilyUtils.getFamily(target);
                 PlayerFamily playerFamily = FamilyUtils.getFamily(player);
 
-                HugsPermission permission = new HugsPermission();
+                HugsPermission permission = (HugsPermission) targetFamily.getPermission(ActionsPermissions.HUGS_TO_ALL_PLAYERS);
                 FamilyDetails details = FamilyDetailsGet.getRootFamilyDetails(targetFamily);
 
                 if (!permission.checkPermission(playerFamily, details, getTypeTargetComponent())) {
@@ -127,7 +128,7 @@ public class FamilyHugsManager extends AbstractDetailsManager {
                     player.damage(1.0, slapDamageSource);
 
                     // Ефект VILLAGER_ANGRY перед очима гравця
-                    player.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, player.getLocation().add(0, 1.5, 0), 1, 0.2, 0.2, 0.2, 0.05);
+                    player.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, player.getLocation().add(0, 0.0, 0), 1, 0.2, 0.2, 0.2, 0.05);
 
                     // Спавнування частинок вздовж вектора руху
                     spawnParticlesAlongVector(player, Particle.VILLAGER_ANGRY, direction, 5.0, 10, 2);

@@ -2,6 +2,8 @@ package ink.anh.family.util;
 
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.FamilySeparationReason;
+import ink.anh.family.fdetails.FamilyDetails;
+import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBService;
 
@@ -11,192 +13,207 @@ import java.util.UUID;
 
 public class FamilySeparationUtils {
 
-    public static Set<PlayerFamily> getRelatives(PlayerFamily playerFamily, FamilySeparationReason reason) {
-        Set<PlayerFamily> relatives = new HashSet<>();
+	public static Set<PlayerFamily> getRelatives(PlayerFamily playerFamily, FamilySeparationReason reason) {
+	    Set<PlayerFamily> relatives = new HashSet<>();
 
-        if (playerFamily == null) return relatives;
+	    if (playerFamily == null) return relatives;
 
-        switch (reason) {
-            case DIVORCE:
-                UUID spouseId = playerFamily.getSpouse();
-                if (spouseId != null) {
-                    PlayerFamily spouse = FamilyUtils.getFamily(spouseId);
-                    if (spouse != null) {
-                        relatives.add(spouse);
-                    }
-                }
-                break;
+	    switch (reason) {
+	        case DIVORCE:
+	            UUID spouseId = playerFamily.getSpouse();
+	            if (spouseId != null) {
+	                PlayerFamily spouse = FamilyUtils.getFamily(spouseId);
+	                if (spouse != null) {
+	                    relatives.add(spouse);
+	                }
+	            }
+	            break;
 
-            case DISOWN_CHILD:
-                if (playerFamily.getChildren() != null) {
-                    for (UUID childId : playerFamily.getChildren()) {
-                        PlayerFamily childFamily = FamilyUtils.getFamily(childId);
-                        if (childFamily != null) {
-                            relatives.add(childFamily);
-                        }
-                    }
-                }
-                break;
+	        case DIVORCE_RELATIVE:
+	            UUID familyId = playerFamily.getFamilyId();
+	            
+	            FamilyDetails details = FamilyDetailsGet.getFamilyDetails(familyId);
+	            
+	            if (details == null) {
+	                details = FamilyDetailsGet.getRootFamilyDetails(playerFamily.getRoot());
+	            }
 
-            case DISOWN_PARENT:
-                UUID fatherId = playerFamily.getFather();
-                UUID motherId = playerFamily.getMother();
+	            if (details != null) {
+	                // Додавання родичів з мап childrenAccessMap
+	                for (UUID childId : details.getChildrenAccessMap().keySet()) {
+	                    PlayerFamily childFamily = FamilyUtils.getFamily(childId);
+	                    if (childFamily != null) {
+	                        relatives.add(childFamily);
+	                    }
+	                }
 
-                if (fatherId != null) {
-                    PlayerFamily fatherFamily = FamilyUtils.getFamily(fatherId);
-                    if (fatherFamily != null) {
-                        relatives.add(fatherFamily);
-                    }
-                }
+	                // Додавання родичів з мап ancestorsAccessMap
+	                for (UUID ancestorId : details.getAncestorsAccessMap().keySet()) {
+	                    PlayerFamily ancestorFamily = FamilyUtils.getFamily(ancestorId);
+	                    if (ancestorFamily != null) {
+	                        relatives.add(ancestorFamily);
+	                    }
+	                }
+	            }
+	            break;
 
-                if (motherId != null) {
-                    PlayerFamily motherFamily = FamilyUtils.getFamily(motherId);
-                    if (motherFamily != null) {
-                        relatives.add(motherFamily);
-                    }
-                }
-                break;
+	        case DISOWN_CHILD:
+	            if (playerFamily.getChildren() != null) {
+	                for (UUID childId : playerFamily.getChildren()) {
+	                    PlayerFamily childFamily = FamilyUtils.getFamily(childId);
+	                    if (childFamily != null) {
+	                        relatives.add(childFamily);
+	                    }
+	                }
+	            }
+	            break;
 
-            case FULL_SEPARATION:
-                // Додавання всіх дітей
-                if (playerFamily.getChildren() != null) {
-                    for (UUID childId : playerFamily.getChildren()) {
-                        PlayerFamily childFamily = FamilyUtils.getFamily(childId);
-                        if (childFamily != null) {
-                            relatives.add(childFamily);
-                        }
-                    }
-                }
+	        case DISOWN_PARENT:
+	            UUID fatherId = playerFamily.getFather();
+	            UUID motherId = playerFamily.getMother();
 
-                // Додавання батьків
-                UUID fId = playerFamily.getFather();
-                UUID mId = playerFamily.getMother();
+	            if (fatherId != null) {
+	                PlayerFamily fatherFamily = FamilyUtils.getFamily(fatherId);
+	                if (fatherFamily != null) {
+	                    relatives.add(fatherFamily);
+	                }
+	            }
 
-                if (fId != null) {
-                    PlayerFamily fFamily = FamilyUtils.getFamily(fId);
-                    if (fFamily != null) {
-                        relatives.add(fFamily);
-                    }
-                }
+	            if (motherId != null) {
+	                PlayerFamily motherFamily = FamilyUtils.getFamily(motherId);
+	                if (motherFamily != null) {
+	                    relatives.add(motherFamily);
+	                }
+	            }
+	            break;
 
-                if (mId != null) {
-                    PlayerFamily mFamily = FamilyUtils.getFamily(mId);
-                    if (mFamily != null) {
-                        relatives.add(mFamily);
-                    }
-                }
+	        case FULL_SEPARATION:
+	            // Додавання всіх дітей
+	            if (playerFamily.getChildren() != null) {
+	                for (UUID childId : playerFamily.getChildren()) {
+	                    PlayerFamily childFamily = FamilyUtils.getFamily(childId);
+	                    if (childFamily != null) {
+	                        relatives.add(childFamily);
+	                    }
+	                }
+	            }
 
-                // Додавання подружжя
-                UUID spId = playerFamily.getSpouse();
-                if (spId != null) {
-                    PlayerFamily spouse = FamilyUtils.getFamily(spId);
-                    if (spouse != null) {
-                        relatives.add(spouse);
-                    }
-                }
-                break;
+	            // Додавання батьків
+	            UUID fId = playerFamily.getFather();
+	            UUID mId = playerFamily.getMother();
+
+	            if (fId != null) {
+	                PlayerFamily fFamily = FamilyUtils.getFamily(fId);
+	                if (fFamily != null) {
+	                    relatives.add(fFamily);
+	                }
+	            }
+
+	            if (mId != null) {
+	                PlayerFamily mFamily = FamilyUtils.getFamily(mId);
+	                if (mFamily != null) {
+	                    relatives.add(mFamily);
+	                }
+	            }
+
+	            // Додавання подружжя
+	            UUID spId = playerFamily.getSpouse();
+	            if (spId != null) {
+	                PlayerFamily spouse = FamilyUtils.getFamily(spId);
+	                if (spouse != null) {
+	                    relatives.add(spouse);
+	                }
+	            }
+	            break;
+	    }
+
+	    return relatives;
+	}
+
+    public static void removeChildAndParent(PlayerFamily parentFamily, PlayerFamily childFamily) {
+        FamilyPlayerField fieldToUpdate = removeOneParents(parentFamily, childFamily, false);
+
+        if (fieldToUpdate != null) {
+        	PlayerFamilyDBService.savePlayerFamily(childFamily, fieldToUpdate);
         }
-
-        return relatives;
+        
+        if (removeOneChildren(parentFamily, childFamily, false)) {
+        	PlayerFamilyDBService.savePlayerFamily(parentFamily, FamilyPlayerField.CHILDREN);
+        }
     }
 
-    public static Set<PlayerFamily> clearRelatives(PlayerFamily playerFamily, FamilySeparationReason reason) {
-        Set<PlayerFamily> modifiedFamilies = new HashSet<>();
-
-        if (playerFamily == null) return modifiedFamilies;
-
-        Set<PlayerFamily> relatives = getRelatives(playerFamily, reason);
-        switch (reason) {
-            case DIVORCE:
-                modifiedFamilies.addAll(removeSpouseAndRestoreLastName(playerFamily, relatives));
-                break;
-
-            case DISOWN_CHILD:
-                modifiedFamilies.addAll(clearAllChildren(playerFamily, relatives));
-                break;
-
-            case DISOWN_PARENT:
-                modifiedFamilies.addAll(removeParents(playerFamily, relatives));
-                break;
-
-            case FULL_SEPARATION:
-                modifiedFamilies.addAll(clearAllChildren(playerFamily, relatives));
-                modifiedFamilies.addAll(removeParents(playerFamily, relatives));
-                modifiedFamilies.addAll(removeSpouseAndRestoreLastName(playerFamily, relatives));
-                break;
-        }
-
-        return modifiedFamilies;
-    }
-
-    public static Set<PlayerFamily> clearAllChildren(PlayerFamily playerFamily, Set<PlayerFamily> children) {
-        Set<PlayerFamily> modifiedFamilies = new HashSet<>();
-
-        for (PlayerFamily childFamily : children) {
-            removeChildFromParents(playerFamily, childFamily);
-            modifiedFamilies.add(childFamily);
-        }
-
-        playerFamily.setChildren(new HashSet<UUID>());
-        PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.CHILDREN);
-        modifiedFamilies.add(playerFamily);
-        return modifiedFamilies;
-    }
-
-    public static void removeChildFromParents(PlayerFamily parentFamily, PlayerFamily childFamily) {
-        if (parentFamily == null || childFamily == null) return;
+    public static FamilyPlayerField removeOneParents(PlayerFamily parentFamily, PlayerFamily childFamily, boolean orSave) {
+        FamilyPlayerField fieldToUpdate = null;
+        
+        if (parentFamily == null || childFamily == null) return fieldToUpdate;
 
         // Перевірка та видалення зв'язку з батьком
         if (childFamily.getFather() != null && childFamily.getFather().equals(parentFamily.getRoot())) {
             childFamily.setFather(null);
+            fieldToUpdate = FamilyPlayerField.FATHER;
         }
 
         // Перевірка та видалення зв'язку з матір'ю
         if (childFamily.getMother() != null && childFamily.getMother().equals(parentFamily.getRoot())) {
             childFamily.setMother(null);
+            fieldToUpdate = FamilyPlayerField.MOTHER;
         }
-
-        PlayerFamilyDBService.savePlayerFamily(childFamily, null);
+        
+        if (orSave && fieldToUpdate != null) {
+        	PlayerFamilyDBService.savePlayerFamily(parentFamily, fieldToUpdate);
+        }
+		return fieldToUpdate;
     }
 
-    public static Set<PlayerFamily> removeParents(PlayerFamily playerFamily, Set<PlayerFamily> parents) {
-        Set<PlayerFamily> modifiedFamilies = new HashSet<>();
-
-        for (PlayerFamily parentFamily : parents) {
-            parentFamily.getChildren().remove(playerFamily.getRoot());
-            PlayerFamilyDBService.savePlayerFamily(parentFamily, FamilyPlayerField.CHILDREN);
-            modifiedFamilies.add(parentFamily);
+    public static boolean removeOneChildren(PlayerFamily parentFamily, PlayerFamily childFamily, boolean orSave) {
+        if (parentFamily == null || childFamily == null) return false;
+        FamilyPlayerField fieldToUpdate = null;
+        
+        if (parentFamily.getChildren().remove(childFamily.getRoot())) {
+        	fieldToUpdate = FamilyPlayerField.CHILDREN;
         }
-
-        playerFamily.setFather(null);
-        playerFamily.setMother(null);;
-        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
-        modifiedFamilies.add(playerFamily);
-        return modifiedFamilies;
+        
+        if (orSave && fieldToUpdate != null) {
+        	PlayerFamilyDBService.savePlayerFamily(parentFamily, FamilyPlayerField.CHILDREN);
+        }
+        
+		return fieldToUpdate != null;
     }
 
-    public static Set<PlayerFamily> removeSpouseAndRestoreLastName(PlayerFamily playerFamily, Set<PlayerFamily> spouses) {
+    public static Set<PlayerFamily> removeSpouseAndRestoreLastName(Set<PlayerFamily> spouses) {
         Set<PlayerFamily> modifiedFamilies = new HashSet<>();
 
         for (PlayerFamily spouseFamily : spouses) {
-            spouseFamily.setSpouse(null);
-            if (spouseFamily.getOldLastName() != null && spouseFamily.getOldLastName().length > 0) {
-                spouseFamily.setLastName(spouseFamily.getOldLastName());
-                spouseFamily.setOldLastName(new String[2]);
-            }
-            PlayerFamilyDBService.savePlayerFamily(spouseFamily, null);
-            modifiedFamilies.add(spouseFamily);
+        	if (spouseFamily != null ) {
+                spouseFamily.setSpouse(null);
+                if (spouseFamily.getOldLastName() != null && spouseFamily.getOldLastName().length > 0) {
+                    spouseFamily.setLastName(spouseFamily.getOldLastName());
+                    spouseFamily.setOldLastName(new String[2]);
+                }
+                PlayerFamilyDBService.savePlayerFamily(spouseFamily, null);
+                modifiedFamilies.add(spouseFamily);
+        	}
+        }
+        return modifiedFamilies;
+    }
+
+    public static boolean separateSpouses(PlayerFamily spouse1Family, PlayerFamily spouse2Family) {
+    	boolean isSeparate = false;
+    	
+        Set<PlayerFamily> spouses = new HashSet<>();
+
+        if (spouse1Family != null) {
+            spouses.add(spouse1Family);
+            isSeparate = true;
         }
 
-        playerFamily.setSpouse(null);
-        if (playerFamily.getOldLastName() != null && playerFamily.getOldLastName().length > 0) {
-            playerFamily.setLastName(playerFamily.getOldLastName());
-            playerFamily.setOldLastName(new String[2]);
-        } else {
-            playerFamily.setLastName(new String[2]);
+        if (spouse2Family != null) {
+            spouses.add(spouse2Family);
+            isSeparate = true;
         }
-        PlayerFamilyDBService.savePlayerFamily(playerFamily, null);
-        modifiedFamilies.add(playerFamily);
-        return modifiedFamilies;
+
+        removeSpouseAndRestoreLastName(spouses);
+        
+        return isSeparate;
     }
 }

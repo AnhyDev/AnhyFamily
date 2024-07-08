@@ -181,32 +181,32 @@ public class FamilyDetailsService {
     	if (symbol != null) FamilySymbolManager.removeSymbol(symbol);
     }
 
-    public static void removeCrossFamilyRelations(PlayerFamily spouseFamily, Set<PlayerFamily> relatives, boolean removeRelative, boolean initiatorSave) {
+    public static void removeCrossFamilyRelations(PlayerFamily target, Set<PlayerFamily> relatives, boolean removeRelative, boolean initiatorSave) {
         boolean shouldSaveSpouseFamilyDetails = false;
 
         for (PlayerFamily relative : relatives) {
-            boolean isRelativeOfSpouse1 = relative.getRoot().equals(spouseFamily.getFather()) || 
-                                          relative.getRoot().equals(spouseFamily.getMother()) || 
-                                          spouseFamily.getChildren().contains(relative.getRoot());
+            boolean isRelativeOfSpouse = relative.getRoot().equals(target.getFather()) || 
+                                          relative.getRoot().equals(target.getMother()) || 
+                                          target.getChildren().contains(relative.getRoot());
 
-            boolean shouldRemove = (removeRelative && isRelativeOfSpouse1) || (!removeRelative && !isRelativeOfSpouse1);
+            boolean shouldRemove = (removeRelative && isRelativeOfSpouse) || (!removeRelative && !isRelativeOfSpouse);
 
             if (shouldRemove) {
-                shouldSaveSpouseFamilyDetails |= removeFamilyFromRelative(spouseFamily, relative, false);
-                removeFamilyFromRelative(relative, spouseFamily, true);
+                shouldSaveSpouseFamilyDetails |= removeFamilyFromRelative(target, relative, false);
+                removeFamilyFromRelative(relative, target, true);
             }
         }
 
         if (shouldSaveSpouseFamilyDetails && initiatorSave) {
-            FamilyDetails spouseDetails = FamilyDetailsGet.getRootFamilyDetails(spouseFamily);
-            if (spouseDetails != null) {
-                FamilyDetailsSave.saveFamilyDetails(spouseDetails, null);
+            FamilyDetails targetDetails = FamilyDetailsGet.getRootFamilyDetails(target);
+            if (targetDetails != null) {
+                FamilyDetailsSave.saveFamilyDetails(targetDetails, null);
             }
         }
     }
 
-    private static boolean removeFamilyFromRelative(PlayerFamily spouseFamily, PlayerFamily relative, boolean shouldSave) {
-        UUID spouseRoot = spouseFamily.getRoot();
+    private static boolean removeFamilyFromRelative(PlayerFamily target, PlayerFamily relative, boolean shouldSave) {
+        UUID spouseRoot = target.getRoot();
 
         if (relative.getFamilyId() != null) {
             FamilyDetails relativeDetails = FamilyDetailsGet.getRootFamilyDetails(relative);

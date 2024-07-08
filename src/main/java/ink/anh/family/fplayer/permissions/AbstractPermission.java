@@ -47,9 +47,9 @@ public abstract class AbstractPermission {
      *             <li>If the global restriction {@code denyAllExceptFamily} is set to {@code true}, and the access from {@link FamilyDetails} is not {@link Access#TRUE}, {@link Access#FALSE} is returned.</li>
      *         </ul>
      *     </li>
-     *     <li>Personal permission {@code null} or {@link Access#DEFAULT} and access from {@link FamilyDetails} not {@link Access#FALSE}:
+     *     <li>Access from {@link FamilyDetails} is {@link Access#TRUE}:
      *         <ul>
-     *             <li>If the personal permission is absent (i.e., {@code null}) or set to {@link Access#DEFAULT}, and the access from {@link FamilyDetails} is not {@link Access#FALSE}, {@link Access#TRUE} is returned.</li>
+     *             <li>If the access from {@link FamilyDetails} is {@link Access#TRUE}, {@link Access#TRUE} is returned.</li>
      *         </ul>
      *     </li>
      *     <li>Returning {@link Access#FALSE} by default:
@@ -76,7 +76,7 @@ public abstract class AbstractPermission {
             return Access.FALSE;
         }
 
-        if ((access == null || access == Access.DEFAULT) && detailsAccess != Access.FALSE) {
+        if (detailsAccess == Access.TRUE) {
             return Access.TRUE;
         }
 

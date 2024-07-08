@@ -7,8 +7,8 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
-import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
@@ -21,16 +21,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public class ParentSeparation extends Sender {
 
-    private AnhyFamily familyPlugin;
-
     public ParentSeparation(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
-        this.familyPlugin = familyPlugin;
     }
 
     public boolean separate(CommandSender sender, String[] args) {
@@ -39,80 +37,91 @@ public class ParentSeparation extends Sender {
             return false;
         }
 
-        if (args.length < 3) {
-            sendMessage(new MessageForFormatting("family_err_command_format /family separate parent <player>", new String[] {}), MessageType.WARNING, sender);
-            return false;
-        }
-
         Player player = (Player) sender;
         UUID playerUUID = player.getUniqueId();
-        PlayerFamily playerFamily = FamilyUtils.getFamily(playerUUID);
+        PlayerFamily senderFamily = FamilyUtils.getFamily(playerUUID);
 
-        if (playerFamily == null) {
+        if (senderFamily == null) {
             sendMessage(new MessageForFormatting("family_info_family_not_found", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
 
-        String targetPlayerName = args[2];
-        PlayerFamily targetFamily = FamilyUtils.getFamily(targetPlayerName);
-
-        if (targetFamily == null) {
-            sendMessage(new MessageForFormatting("family_err_no_family_found_for_target", new String[] {}), MessageType.WARNING, sender);
+        if (senderFamily.getFather() == null && senderFamily.getMother() == null) {
+            sendMessage(new MessageForFormatting("family_err_dont_have_parents", new String[] {}), MessageType.WARNING, sender);
             return false;
         }
+        return separate(player, senderFamily);
+    }
 
-        UUID targetUUID = targetFamily.getRoot();
-        Player targetPlayer = Bukkit.getPlayer(targetUUID);
+    public boolean separate(Player player, PlayerFamily senderFamily, PlayerFamily targetFamily) {
+        final Set<PlayerFamily> modifiedFamilies;
 
-        // Виклик обробки події
+        if (targetFamily != null) {
+            modifiedFamilies = new HashSet<>();
+            modifiedFamilies.add(targetFamily);
+        } else {
+            modifiedFamilies = FamilySeparationUtils.getRelatives(senderFamily, FamilySeparationReason.DISOWN_PARENT);
+        }
+
         ActionInitiator initiator = ActionInitiator.PLAYER_SELF;
-        FamilyDetails familyDetails = FamilyDetailsGet.getRootFamilyDetails(playerFamily);
-        Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.getRelatives(playerFamily, FamilySeparationReason.DISOWN_PARENT);
-        
+        FamilyDetails familyDetails = FamilyDetailsGet.getRootFamilyDetails(senderFamily);
+
         SyncExecutor.runSync(() -> {
-            FamilySeparationEvent event = new FamilySeparationEvent(playerFamily, familyDetails, modifiedFamilies, FamilySeparationReason.DISOWN_PARENT, initiator);
-            handleParentSeparation(event, playerFamily, targetFamily, sender, targetPlayer);
+            FamilySeparationEvent event = new FamilySeparationEvent(senderFamily, familyDetails, modifiedFamilies, FamilySeparationReason.DISOWN_PARENT, initiator);
+            handleParentSeparation(event, senderFamily, player, targetFamily == null);
         });
 
         return true;
     }
 
-    private void handleParentSeparation(FamilySeparationEvent event, PlayerFamily senderFamily, PlayerFamily targetFamily, CommandSender sender, Player targetPlayer) {
-        final MessageType[] messageType = {MessageType.IMPORTANT, MessageType.WARNING};
+    public boolean separate(Player player, PlayerFamily senderFamily) {
+        return separate(player, senderFamily, null);
+    }
+
+    private void handleParentSeparation(FamilySeparationEvent event, PlayerFamily senderFamily, Player player, boolean everyone) {
         try {
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
-                	
-                    FamilySeparation familySeparation = new FamilySeparation(familyPlugin);
-                    boolean success;
+                    Set<Player> uniqueMembers = new HashSet<>();
+                    boolean success = false;
+                    boolean resultRemoveChildren = false;
+                    boolean resultRemoveParents = false;
 
-                    UUID playerUUID = senderFamily.getRoot();
-                    UUID targetUUID = targetFamily.getRoot();
+                    for (PlayerFamily family : event.getModifiedFamilies()) {
+                        Player member = Bukkit.getPlayer(family.getRoot());
+                        if (member != null) {
+                            uniqueMembers.add(member);
+                        }
+                        
+                        if (!everyone) {
+                            resultRemoveParents |= FamilySeparationUtils.removeOneParents(senderFamily, family, true) != null;
+                        }
 
-                    if (playerUUID.equals(targetFamily.getFather()) || playerUUID.equals(targetFamily.getMother())) {
-                        // Якщо виконавець команди є одним із батьків цільового гравця
-                        success = familySeparation.separateChildFromParent(targetUUID, playerUUID);
-                    } else {
-                        sendMessage(new MessageForFormatting("family_err_no_parent_child_relationship", new String[] {}), MessageType.WARNING, sender);
-                        return;
+                        resultRemoveChildren |= FamilySeparationUtils.removeOneChildren(family, senderFamily, true);
                     }
 
-                    MessageForFormatting messageTrue = new MessageForFormatting("family_success_separation_completed", new String[] {});
-                    MessageForFormatting messageFalse = new MessageForFormatting("family_err_separation_failed", new String[] {});
-                    CommandSender[] senders = {sender, targetPlayer};
+                    if (everyone) {
+                    	senderFamily.setFather(null);
+                    	senderFamily.setMother(null);
+                    	PlayerFamilyDBService.savePlayerFamily(senderFamily, null);
+                    }
+
+                    success = resultRemoveParents || resultRemoveChildren;
+
+                    uniqueMembers.add(player);
+                    Player[] members = uniqueMembers.toArray(new Player[0]);
 
                     if (success) {
                         FamilyDetailsService.removeCrossFamilyRelations(senderFamily, event.getModifiedFamilies(), true, true);
-                        messageType[0] = MessageType.IMPORTANT;
-                        sendMessage(messageTrue, messageType[0], senders);
+                        sendMessage(new MessageForFormatting("family_success_separation_completed", new String[] {}), MessageType.IMPORTANT, members);
                     } else {
-                        sendMessage(messageFalse, messageType[1], senders);
+                        sendMessage(new MessageForFormatting("family_err_separation_failed", new String[] {}), MessageType.WARNING, members);
                     }
                 });
             } else {
-                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[] {}), MessageType.WARNING, sender);
+                sendMessage(new MessageForFormatting("family_err_event_is_canceled", new String[] {}), MessageType.WARNING, player);
             }
         } catch (Exception e) {
             Bukkit.getLogger().severe("Exception in handleParentSeparation: " + e.getMessage());

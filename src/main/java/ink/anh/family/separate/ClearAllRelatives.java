@@ -19,18 +19,14 @@ import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
-import ink.anh.family.fplayer.FamilySeparation;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.FamilySeparationUtils;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class ClearAllRelatives extends Sender {
-	private AnhyFamily familiPlugin;
-	
 	public ClearAllRelatives(AnhyFamily familiPlugin) {
 		super(GlobalManager.getInstance());
-		this.familiPlugin = familiPlugin;
 	}
 	
 	public void exeClearFamily(CommandSender sender, String[] args) {
@@ -83,7 +79,7 @@ public class ClearAllRelatives extends Sender {
             	separateAllRelations(playerFamily, event.getModifiedFamilies());
 
                 Set<Player> playersSet = new HashSet<>();
-                Set<PlayerFamily> modifiedFamilies = FamilySeparationUtils.clearRelatives(playerFamily, FamilySeparationReason.FULL_SEPARATION);
+                Set<PlayerFamily> modifiedFamilies = event.getModifiedFamilies();
 
                 for (PlayerFamily modifieFamily : modifiedFamilies) {
                     UUID playerId = modifieFamily.getRoot();
@@ -114,7 +110,6 @@ public class ClearAllRelatives extends Sender {
         
         FamilyDetailsService.handleDivorce(playerFamily);
 
-        FamilySeparation utilsDivorce = new FamilySeparation(familiPlugin);
-        utilsDivorce.separateSpouses(playerFamily);
+        FamilySeparationUtils.separateSpouses(playerFamily, FamilyUtils.getFamily(playerFamily.getSpouse()));
     }
 }

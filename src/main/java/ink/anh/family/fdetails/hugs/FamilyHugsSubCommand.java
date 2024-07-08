@@ -14,10 +14,12 @@ import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.api.enums.Access;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fplayer.permissions.AbstractPermission;
 import ink.anh.family.fplayer.permissions.ActionsPermissions;
 import ink.anh.family.fplayer.permissions.PermissionModifier;
@@ -225,6 +227,8 @@ public class FamilyHugsSubCommand extends Sender {
             hugsPermission.setDenyAllExceptFamily(false);
         }
 
+        // Збереження змін у базі даних
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.PERMISSIONS_MAP);
         sendMessage(new MessageForFormatting("family_hugs_allow_all_enabled", new String[]{Boolean.toString(allowAll)}), MessageType.NORMAL, player);
     }
 
@@ -254,16 +258,25 @@ public class FamilyHugsSubCommand extends Sender {
             hugsPermission.setAllowAll(false);
         }
 
+        // Збереження змін у базі даних
+        PlayerFamilyDBService.savePlayerFamily(playerFamily, FamilyPlayerField.PERMISSIONS_MAP);
         sendMessage(new MessageForFormatting("family_hugs_deny_all_enabled", new String[]{Boolean.toString(denyAll)}), MessageType.NORMAL, player);
     }
 
     private void handleCheckHugsPermission(Player player) {
         SyncExecutor.runSync(() -> {
-            RayTraceResult rayTraceResult = player.getWorld().rayTraceEntities(player.getEyeLocation(), player.getEyeLocation().getDirection(), 5.0);
+            // Використовуємо метод rayTraceEntities з фільтром для виключення самого гравця
+            RayTraceResult rayTraceResult = player.getWorld().rayTraceEntities(
+                player.getEyeLocation(),
+                player.getEyeLocation().getDirection(),
+                5.0,
+                entity -> entity instanceof Player && entity != player
+            );
 
             if (rayTraceResult != null && rayTraceResult.getHitEntity() instanceof Player) {
+                Player targetPlayer = (Player) rayTraceResult.getHitEntity();
+
                 SyncExecutor.runAsync(() -> {
-                    Player targetPlayer = (Player) rayTraceResult.getHitEntity();
                     PlayerFamily targetFamily = FamilyUtils.getFamily(targetPlayer);
                     PlayerFamily playerFamily = FamilyUtils.getFamily(player);
 
@@ -279,5 +292,4 @@ public class FamilyHugsSubCommand extends Sender {
             }
         });
     }
-
 }
