@@ -94,7 +94,7 @@ public class ParentSeparation extends Sender {
                         if (member != null) {
                             uniqueMembers.add(member);
                         }
-                        
+
                         if (!everyone) {
                             resultRemoveParents |= FamilySeparationUtils.removeOneParents(senderFamily, family, true) != null;
                         }
@@ -103,9 +103,9 @@ public class ParentSeparation extends Sender {
                     }
 
                     if (everyone) {
-                    	senderFamily.setFather(null);
-                    	senderFamily.setMother(null);
-                    	PlayerFamilyDBService.savePlayerFamily(senderFamily, null);
+                        senderFamily.setFather(null);
+                        senderFamily.setMother(null);
+                        PlayerFamilyDBService.savePlayerFamily(senderFamily, null);
                     }
 
                     success = resultRemoveParents || resultRemoveChildren;

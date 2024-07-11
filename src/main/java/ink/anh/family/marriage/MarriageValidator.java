@@ -27,9 +27,6 @@ public class MarriageValidator extends Sender {
 	private Player priest = null;
     private boolean isPublic;
 
-    private PlayerFamily familyBride1;
-    private PlayerFamily familyBride2;
-
     public MarriageValidator(AnhyFamily familyPlugin, boolean isPublic) {
 		super(GlobalManager.getInstance());
 		this.familyPlugin = familyPlugin;
@@ -180,19 +177,21 @@ public class MarriageValidator extends Sender {
         return true;
     }
 
-    public ProcessLastName processLastNameArgs(String[] args) {
+    public ProcessLastName processLastNameArgs(String[] args, PlayerFamily familyBride1, PlayerFamily familyBride2) {
         ProcessLastName result = new ProcessLastName();
 
-        if (args.length > 2) {
+        if (args.length > 3) {
             try {
-                int numberLastName = Integer.parseInt(args[2]);
-                if (numberLastName != 0 && numberLastName != 1 && numberLastName != 2) {
+                int numberLastName = Integer.parseInt(args[3]);
+                if (numberLastName < 0 || numberLastName > 2) {
                     numberLastName = 0;
                 }
                 result.setNumberLastName(numberLastName);
             } catch (NumberFormatException e) {
                 result.setNumberLastName(0);
             }
+        } else {
+            result.setNumberLastName(1);
         }
 
         int numberLastName = result.getNumberLastName();
@@ -200,17 +199,9 @@ public class MarriageValidator extends Sender {
         if (numberLastName == 0) {
             result.setLastName(new String[] {null});
         } else if (numberLastName == 1) {
-            if (familyBride1 == null || familyBride1.getLastName() == null || familyBride1.getLastName().length == 0) {
-                result.setLastName(new String[] {null});
-            } else {
-                result.setLastName(new String[] {familyBride1.getLastName()[0]});
-            }
+            result.setLastName(familyBride1.getLastName());
         } else if (numberLastName == 2) {
-            if (familyBride2 == null || familyBride2.getLastName() == null || familyBride2.getLastName().length == 0) {
-                result.setLastName(new String[] {null});
-            } else {
-                result.setLastName(new String[] {familyBride2.getLastName()[0]});
-            }
+            result.setLastName(familyBride2.getLastName());
         }
 
         return result;

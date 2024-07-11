@@ -41,7 +41,7 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
 
         int one = 0;
 
-        if (marryPublic.getProposer() != null && marryPublic.getReceiver().getUniqueId().equals(uuidBride1)) {
+        if (marryPublic.getReceiver() != null && marryPublic.getReceiver().getUniqueId().equals(uuidBride1)) {
             one = 1;
         }
 

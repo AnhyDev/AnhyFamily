@@ -1,7 +1,10 @@
 package ink.anh.family.marriage;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import ink.anh.family.AnhyFamily;
@@ -9,12 +12,12 @@ import ink.anh.family.AnhyFamily;
 public class MarriageManager {
 
     private static MarriageManager instance;
-    private List<MarryPublic> marryList;
-    private List<MarryPrivate> proposals;
+    private Set<MarryPublic> marryList;
+    private Set<MarryPrivate> proposals;
 
     private MarriageManager(AnhyFamily plugin) {
-        marryList = new ArrayList<>();
-        proposals = new ArrayList<>();
+        marryList = new HashSet<>();
+        proposals = new HashSet<>();
     }
 
     public static synchronized MarriageManager getInstance(AnhyFamily plugin) {
@@ -55,7 +58,7 @@ public class MarriageManager {
         return marryList.removeIf(marry -> marry.isParticipant(obj));
     }
 
-    public synchronized List<MarryPublic> getMarryList() {
+    public synchronized Set<MarryPublic> getMarryList() {
         return marryList;
     }
 

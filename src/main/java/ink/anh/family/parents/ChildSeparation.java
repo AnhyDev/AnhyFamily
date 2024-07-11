@@ -97,21 +97,22 @@ public class ChildSeparation extends Sender {
                         if (member != null) {
                             uniqueMembers.add(member);
                         }
-                        
+
                         if (!everyone) {
-                        	resultRemoveChildren |= FamilySeparationUtils.removeOneChildren(senderFamily, family, true);
+                            resultRemoveChildren |= FamilySeparationUtils.removeOneChildren(senderFamily, family, true);
                         }
+
                         resultRemoveParents |= FamilySeparationUtils.removeOneParents(family, senderFamily, true) != null;
                     }
 
                     if (everyone) {
-                    	senderFamily.setChildren(new HashSet<>());
-                    	PlayerFamilyDBService.savePlayerFamily(senderFamily, FamilyPlayerField.CHILDREN);
-                    	resultRemoveChildren = true;
+                        senderFamily.setChildren(new HashSet<>());
+                        PlayerFamilyDBService.savePlayerFamily(senderFamily, FamilyPlayerField.CHILDREN);
+                        resultRemoveChildren = true;
                     }
-                    
+
                     success = resultRemoveParents || resultRemoveChildren;
-                    
+
                     uniqueMembers.add(player);
                     Player[] members = uniqueMembers.toArray(new Player[0]);
 

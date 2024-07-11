@@ -66,8 +66,8 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
             }
         }
 
-        PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer.getUniqueId());
-        PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver.getUniqueId());
+        PlayerFamily proposerFamily = FamilyUtils.getFamily(proposer);
+        PlayerFamily receiverFamily = FamilyUtils.getFamily(receiver);
         
         String[] validateCompatibilityResult = validator.validateMarriageCompatibility(proposerFamily, receiverFamily, recipients);
         if (validateCompatibilityResult != null) {

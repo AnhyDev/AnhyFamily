@@ -332,8 +332,6 @@ family_hugs_access_removed: "Персональні дозволи/заборо�
 
 family_separation_divorce_relative: "Розлучення, розрив з ріднею подружжя"
 
-family_err_no_family_found_for_target: "" # Видалити
-
 family_err_dont_have_parents: "У тебе немає батьків."
 
 family_err_dont_have_children: "У тебе немає дітей."

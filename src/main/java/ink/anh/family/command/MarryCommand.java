@@ -37,7 +37,7 @@ public class MarryCommand extends Sender implements CommandExecutor {
                 switch (type) {
                     case "public":
                         if (args.length < 3) {
-                            sendMessage(new MessageForFormatting("family_err_command_format '/marry public player1 player2'", new String[]{}), MessageType.WARNING, sender);
+                            sendMessage(new MessageForFormatting("family_err_command_format '/marry public player1 player2 [0|1|2]'", new String[]{}), MessageType.WARNING, sender);
                         } else {
                             handlePublicMarriage(sender, args);
                         }

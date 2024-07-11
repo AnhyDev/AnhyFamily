@@ -89,7 +89,7 @@ public class ActionsPriest extends AbstractMarriageSender {
             return false;
         }
         
-        ProcessLastName processLastName = validator.processLastNameArgs(args);
+        ProcessLastName processLastName = validator.processLastNameArgs(args, bride1Family, bride2Family);
         String lastName[] = processLastName.getLastName();
         int surnameChoice = processLastName.getNumberLastName();
         
