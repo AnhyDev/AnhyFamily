@@ -54,25 +54,6 @@ ceremonyRadius: 20
 # The radius in which the message in the chat about marriage will be visible. If 0, then to all players who are online. 
 ceremonyHearingRadius: 200
 
-# You can add your options and additional languages
-answers:
-  yes:
-    - "ТАК!"  # uk
-    - "YES!"  # en
-    - "¡SÍ!"  # es
-    - "JA!"   # de
-    - "SÌ!"   # it
-    - "是的！" # zh
-    - "ДА!"   # ru
-  no:
-    - "НІ!"   # uk
-    - "NO!"   # en
-    - "¡NO!"  # es
-    - "NEIN!" # de
-    - "NO!"   # it
-    - "不！"   # zh
-    - "НЕТ!"  # ru
-
 marriedSymbol: "⚭"
 
 privateCeremony:

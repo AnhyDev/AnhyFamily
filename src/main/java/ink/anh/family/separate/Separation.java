@@ -32,9 +32,9 @@ public class Separation extends Sender {
         
         if (args.length < 2 || args[1].equalsIgnoreCase("spouse")) {
             return new Divorce(familyPlugin).separate(sender);
-        } else if (args.length > 2 && args[1].equalsIgnoreCase("child")) {
+        } else if (args.length > 2 && args[1].equalsIgnoreCase("children")) {
         	return new ChildSeparation(familyPlugin).separate(sender, args);
-        } else if (args.length > 2 && args[1].equalsIgnoreCase("parent")) {
+        } else if (args.length > 2 && args[1].equalsIgnoreCase("parents")) {
         	return new ParentSeparation(familyPlugin).separate(sender, args);
         } else if (args.length > 2) {
         	return separateNickName(sender, args);

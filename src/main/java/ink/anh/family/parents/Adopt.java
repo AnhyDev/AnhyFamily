@@ -275,7 +275,7 @@ public class Adopt extends Sender {
         }
 
         if (args.length < 3) {
-            sendMessage(new MessageForFormatting("family_err_command_format /family forceadopt <adoptedPlayer> <adopterPlayer>", new String[]{}), MessageType.WARNING, sender);
+            sendMessage(new MessageForFormatting("family_err_command_format /anhyfam forceadopt <adoptedPlayer> <adopterPlayer>", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
 

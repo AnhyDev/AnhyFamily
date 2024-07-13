@@ -41,7 +41,7 @@ public class AdoptionCommand extends Sender implements CommandExecutor {
                         new Adopt(familyPlugin).cancelAdoption(sender);
                         break;
                     default:
-                    	sendMessage(new MessageForFormatting("family_err_command_format /adoption [invite|accept|decline|cancel|forceadopt]", new String[] {}), MessageType.WARNING, sender);
+                    	sendMessage(new MessageForFormatting("family_err_command_format /adoption [invite|accept|decline|cancel]", new String[] {}), MessageType.WARNING, sender);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
