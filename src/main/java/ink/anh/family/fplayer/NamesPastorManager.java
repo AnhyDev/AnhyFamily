@@ -119,6 +119,11 @@ public class NamesPastorManager extends Sender {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             UUID playerId = player.getUniqueId();
+            NameRequest request = nameRequests.get(playerId);
+            
+            if (request == null) return false;
+            
+            sendMessage(new MessageForFormatting("family_name_change_proposal_refuse", new String[]{player.getName()}), MessageType.WARNING, player, request.getSender());
             return nameRequests.remove(playerId) != null;
         }
         return false;

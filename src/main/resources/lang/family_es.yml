@@ -231,6 +231,9 @@ family_separation_divorce: "Divorcio"
 family_separation_disown_child: "Renegar de un hijo"
 family_separation_disown_parent: "Renegar de los padres"
 family_separation_full_separation: "Ruptura completa de todos los lazos familiares"
+family_separation_divorce_relative: "Divorcio, separación de los familiares del cónyuge"
+family_err_dont_have_parents: "No tienes padres."
+family_err_dont_have_children: "No tienes hijos."
 
 # Comandos para hogares familiares [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "Detalles familiares no encontrados."
@@ -326,5 +329,12 @@ family_hugs_access_list_empty: "Tu lista de permisos/prohibiciones personales pa
 family_hugs_allow_all_status: "Permiso global de abrazos: %s"
 family_hugs_deny_all_status: "Prohibición global de abrazos: %s"
 family_hugs_access_removed: "Permisos/prohibiciones personales para abrazos de %s eliminados"
+
+# NamesPastorManager
+family_name_replacement_sent: "Propuesta de cambio de nombre/apellido enviada al jugador %s"
+family_err_there_already_offer: "La propuesta de cambio de nombre/apellido para el jugador %s está esperando confirmación"
+family_name_change_proposal_refuse: "Propuesta de cambio de nombre/apellido rechazada"
+family_name_change_proposal: "El pastor %s propone cambiar tu nombre a %s."
+family_lastname_change_proposal: "El pastor %s propone cambiar tu apellido a %s."
 
 

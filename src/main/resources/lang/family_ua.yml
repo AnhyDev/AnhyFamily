@@ -231,6 +231,9 @@ family_separation_divorce: "Розлучення"
 family_separation_disown_child: "Відмова від дитини"
 family_separation_disown_parent: "Відмова від батьків"
 family_separation_full_separation: "Повне розірвання всіх сімейних зв'язків"
+family_separation_divorce_relative: "Розлучення, розрив з ріднею подружжя"
+family_err_dont_have_parents: "У тебе немає батьків."
+family_err_dont_have_children: "У тебе немає дітей."
 
 # Команди для сімейних хомів [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "Сімейні деталі не знайдені."
@@ -330,15 +333,11 @@ family_hugs_access_removed: "Персональні дозволи/заборо�
 
 
 
-family_separation_divorce_relative: "Розлучення, розрив з ріднею подружжя"
-
-family_err_dont_have_parents: "У тебе немає батьків."
-
-family_err_dont_have_children: "У тебе немає дітей."
 
 # NamesPastorManager
 family_name_replacement_sent: "Пропозицію по заміні імені/прізвища гравцю %s відправлено"
 family_err_there_already_offer: "Пропозиція по заміні імені/прізвища гравцю %s чекає підтвердження"
+family_name_change_proposal_refuse: "Пропозиція по заміні імені/прізвища відхилена"
 family_name_change_proposal: "Священник %s пропонує замініти тобі ім'я на %s."
 family_lastname_change_proposal: "Священник %s пропонує замініти тобі прізвище на %s."
 

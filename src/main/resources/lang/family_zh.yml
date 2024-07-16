@@ -231,6 +231,9 @@ family_separation_divorce: "离婚"
 family_separation_disown_child: "断绝子女关系"
 family_separation_disown_parent: "断绝父母关系"
 family_separation_full_separation: "完全断绝所有家庭关系"
+family_separation_divorce_relative: "离婚，与配偶的亲戚分离"
+family_err_dont_have_parents: "你没有父母。"
+family_err_dont_have_children: "你没有孩子。"
 
 # 家庭住宅的命令 [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "未找到家庭详细信息。"
@@ -326,5 +329,12 @@ family_hugs_access_list_empty: "你的个人拥抱权限/禁止列表为空"
 family_hugs_allow_all_status: "全球拥抱权限：%s"
 family_hugs_deny_all_status: "全球拥抱禁止：%s"
 family_hugs_access_removed: "已移除 %s 的个人拥抱权限/禁止"
+
+# NamesPastorManager
+family_name_replacement_sent: "已向玩家 %s 发送姓名/姓氏更改提议"
+family_err_there_already_offer: "对玩家 %s 的姓名/姓氏更改提议正在等待确认"
+family_name_change_proposal_refuse: "姓名/姓氏更改提议被拒绝"
+family_name_change_proposal: "牧师 %s 提议将你的名字改为 %s。"
+family_lastname_change_proposal: "牧师 %s 提议将你的姓氏改为 %s。"
 
 
