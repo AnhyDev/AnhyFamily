@@ -10,7 +10,14 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageComponents;
+import ink.anh.api.messages.MessageForFormatting;
+import ink.anh.api.messages.Messenger;
+import ink.anh.api.utils.LangUtils;
+import ink.anh.api.utils.StringUtils;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.GlobalManager;
 
 public class OtherUtils {
 
@@ -61,4 +68,18 @@ public class OtherUtils {
 	        }
 	    }, delay);
 	}
+
+	public static void sendActionBarMessage(Player player, MessageForFormatting textForFormatting, String hexColor) {
+		GlobalManager libraryManager = GlobalManager.getInstance();
+    	String[] langs = LangUtils.getPlayerLanguage(player);
+    	
+    	String message = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, textForFormatting.getTemplate(), langs), textForFormatting.getReplacements());
+    	
+        MessageComponents messageComponents = MessageComponents.builder()
+            .content(message)
+            .hexColor(hexColor)
+            .build();
+        
+        Messenger.sendActionBar(libraryManager.getPlugin(), player, messageComponents, message);
+    }
 }

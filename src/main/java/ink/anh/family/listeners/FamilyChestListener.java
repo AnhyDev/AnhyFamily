@@ -1,7 +1,9 @@
 package ink.anh.family.listeners;
 
+import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.Permissions;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
@@ -9,14 +11,18 @@ import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.chest.FamilyChest;
 import ink.anh.family.fdetails.chest.FamilyChestManager;
 import ink.anh.family.fdetails.chest.FamilyChestOpenManager;
+import ink.anh.family.util.OtherUtils;
+
 import java.util.UUID;
 
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
@@ -31,6 +37,17 @@ public class FamilyChestListener implements Listener {
 
     public FamilyChestListener(AnhyFamily familyPlugin) {
         this.familyPlugin = familyPlugin;
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        Location blockLocation = event.getBlock().getLocation();
+        Player player = event.getPlayer();
+        
+        if (FamilyChestManager.isFamilyChest(blockLocation) && player.hasPermission(Permissions.FAMILY_CHEST_BREAK)) {
+            event.setCancelled(true);
+            OtherUtils.sendActionBarMessage(player, new MessageForFormatting("family_forbidden_break_family_chest", new String[]{player.getName()}), "#820419");
+        }
     }
 
     @EventHandler
