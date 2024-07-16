@@ -41,16 +41,7 @@ public class Surname extends Sender {
             return false;
         }
 
-        StringBuilder inputBuilder = new StringBuilder();
-        for (int i = 1; i < args.length; i++) {
-            inputBuilder.append(args[i]);
-            if (i < args.length - 1) {
-                inputBuilder.append(" ");
-            }
-        }
-
-        String input = inputBuilder.toString();
-        String[] newFamily = buildSurname(input);
+        String[] newFamily = processInput(args, 1);
         if (newFamily == null) {
             sendMessage(new MessageForFormatting("family_surname_build_failed", new String[]{}), MessageType.WARNING, sender);
             return false;
@@ -73,6 +64,23 @@ public class Surname extends Sender {
         return true;
     }
 
+	public boolean suggesSurname(CommandSender sender, String[] args) {
+
+        Player player = (Player) sender;
+
+        String[] newFamily = processInput(args, 3);
+
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+
+        if (playerFamily == null) {
+            sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, sender);
+            return false;
+        }
+
+        SyncExecutor.runSync(() -> handleSurnameChange(player, playerFamily, newFamily, ActionInitiator.PLAYER_SELF, sender));
+        return true;
+    }
+
     public boolean setSurnameFromConsole(CommandSender sender, String[] args) {
 
         if (sender instanceof Player) {
@@ -87,29 +95,19 @@ public class Surname extends Sender {
 
         String playerName = args[1];
 
-        StringBuilder surnameBuilder = new StringBuilder();
-        for (int i = 2; i < args.length; i++) {
-            surnameBuilder.append(args[i]);
-            if (i < args.length - 1) {
-                surnameBuilder.append(" ");
-            }
-        }
-
-        String stringSurname = surnameBuilder.toString();
-
         PlayerFamily playerFamily = FamilyUtils.getFamily(playerName);
         if (playerFamily == null) {
             sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
 
-        String[] newSurname = buildSurname(stringSurname);
-        if (newSurname == null) {
+        String[] newFamily = processInput(args, 2);
+        if (newFamily == null) {
             sendMessage(new MessageForFormatting("family_surname_build_failed", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
 
-        SyncExecutor.runSync(() -> handleSurnameChange(null, playerFamily, newSurname, ActionInitiator.CONSOLE, sender));
+        SyncExecutor.runSync(() -> handleSurnameChange(null, playerFamily, newFamily, ActionInitiator.CONSOLE, sender));
         return true;
     }
 
@@ -135,7 +133,20 @@ public class Surname extends Sender {
         });
     }
 
-    private String[] buildSurname(String input) {
+    public static String[] processInput(String[] args, int index) {
+        StringBuilder inputBuilder = new StringBuilder();
+        for (int i = index; i < args.length; i++) {
+            inputBuilder.append(args[i]);
+            if (i < args.length - 1) {
+                inputBuilder.append(" ");
+            }
+        }
+        String input = inputBuilder.toString();
+        String[] newFamily = buildSurname(input);
+        return newFamily;
+    }
+
+    public static String[] buildSurname(String input) {
         String processedInput = input.replaceAll("\\s+", " ");
         String[] newFamily;
         int slashIndex = processedInput.indexOf("/");
@@ -158,7 +169,7 @@ public class Surname extends Sender {
         return newFamily;
     }
 
-    private boolean checkMaxLengthSurname(String[] newFamily) {
+    public static boolean checkMaxLengthSurname(String[] newFamily) {
         if (newFamily == null || newFamily.length == 0) {
             return false;
         }

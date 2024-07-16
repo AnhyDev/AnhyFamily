@@ -5,11 +5,14 @@ import java.util.concurrent.CompletableFuture;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.FirstName;
+import ink.anh.family.fplayer.NamesPastorManager;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.fplayer.info.FamilyInfo;
 import ink.anh.family.fplayer.info.FamilyProfileHandler;
@@ -39,6 +42,9 @@ public class FamilyCommand extends Sender implements CommandExecutor {
     	                case "surname":
     	                    new Surname().setSurname(sender, args);
     	                    break;
+                    	case "sugges":
+                    		sugges(sender, args);
+                    		break;
     	                case "divorce":
     	                    new Divorce(familyPlugin).separate(sender);
     	                    break;
@@ -55,7 +61,7 @@ public class FamilyCommand extends Sender implements CommandExecutor {
     	                    new FamilyTreeHandler().handleCommand(sender, args);
     	                    break;
     	                default:
-    	                    sendMessage(new MessageForFormatting("family_err_command_format /family <param>", new String[] {}), MessageType.WARNING, sender);
+    	                    sendMessage(new MessageForFormatting("family_err_command_format ", new String[] {"/family <param>"}), MessageType.WARNING, sender);
     	            }
     	        }
             } catch (Exception e) {
@@ -63,5 +69,27 @@ public class FamilyCommand extends Sender implements CommandExecutor {
             }
 	    });
 	    return true;
+	}
+	
+	private void sugges(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sendMessage(new MessageForFormatting("family_err_command_only_player", new String[] {}), MessageType.WARNING, sender);
+            return;
+        }
+        
+	    boolean isFirstOrSurname = args.length > 3 && 
+	                               (args[1].equalsIgnoreCase("firstname") || args[1].equalsIgnoreCase("surname"));
+	    boolean isAcceptOrRefuse = args.length == 2 && 
+	                               (args[1].equalsIgnoreCase("accept") || args[1].equalsIgnoreCase("refuse"));
+	    
+	    if (isFirstOrSurname || isAcceptOrRefuse) {
+	        if (NamesPastorManager.getInstance(familyPlugin).sugges(sender, args)) {
+	        	return;
+	        }
+	    }
+	    
+	    sendMessage(new MessageForFormatting("family_err_command_format ", 
+	        new String[] {"\n/family sugges [firstname|surname] <PlayerName> <param> \n/family sugges [accept|refuse]"}), 
+	        MessageType.WARNING, sender);
 	}
 }

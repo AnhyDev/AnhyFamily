@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageType;
+import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.FamilyConfig;
@@ -12,6 +13,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.util.FamilyUtils;
+import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class FirstName extends Sender {
@@ -55,6 +57,27 @@ public class FirstName extends Sender {
         return true;
     }
 
+    public boolean suggesFirstName(CommandSender sender, String[] args) {
+
+        Player player = (Player) sender;
+
+        String firstName = args[3];
+
+        PlayerFamily playerFamily = FamilyUtils.getFamily(player);
+
+        if (playerFamily == null) {
+            sendMessage(new MessageForFormatting("family_player_not_found_db", new String[]{}), MessageType.WARNING, sender);
+            return false;
+        }
+
+        SyncExecutor.runSync(() -> handleFirstNameChange(player, playerFamily, firstName, sender));
+        return true;
+    }
+
+    protected void sendMessageComponent(Player recipient, MessageComponents messageComponents) {
+        Messenger.sendMessage(libraryManager.getPlugin(), recipient, messageComponents, "MessageComponents");
+    }
+
     public boolean setFirstNameFromConsole(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, sender);
@@ -93,7 +116,7 @@ public class FirstName extends Sender {
         });
     }
 
-    private boolean checkMaxLengthFirstName(String firstName) {
+    public static boolean checkMaxLengthFirstName(String firstName) {
         final int MAX_LENGTH = 12;
 
         // Перевірка на максимальну довжину

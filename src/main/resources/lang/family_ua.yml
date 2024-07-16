@@ -336,5 +336,9 @@ family_err_dont_have_parents: "У тебе немає батьків."
 
 family_err_dont_have_children: "У тебе немає дітей."
 
-
+# NamesPastorManager
+family_name_replacement_sent: "Пропозицію по заміні імені/прізвища гравцю %s відправлено"
+family_err_there_already_offer: "Пропозиція по заміні імені/прізвища гравцю %s чекає підтвердження"
+family_name_change_proposal: "Священник %s пропонує замініти тобі ім'я на %s."
+family_lastname_change_proposal: "Священник %s пропонує замініти тобі прізвище на %s."
 
