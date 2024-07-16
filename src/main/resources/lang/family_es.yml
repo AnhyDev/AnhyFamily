@@ -291,6 +291,7 @@ family_err_chest_click_disabled: "Abrir el cofre haciendo clic está deshabilita
 family_err_chest_not_set: "La ubicación del cofre no está establecida."
 family_chest_inventory: "Cofre familiar: %s"
 family_err_chest_open_other: "El cofre familiar %s ya está abierto por el jugador %s"
+family_forbidden_break_family_chest: "¡No puedes romper el cofre familiar!"
 
 # [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Verificación de acceso predeterminado para el grupo"

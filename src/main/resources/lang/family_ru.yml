@@ -291,6 +291,7 @@ family_err_chest_click_disabled: "Открытие сундука щелчком
 family_err_chest_not_set: "Место для сундука не установлено."
 family_chest_inventory: "Семейный сундук: %s"
 family_err_chest_open_other: "Семейный сундук %s уже открыт игроком %s"
+family_forbidden_break_family_chest: "Вы не можете ломать семейный сундук!"
 
 # [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Проверка доступа по умолчанию для группы"

@@ -291,6 +291,7 @@ family_err_chest_click_disabled: "L'apertura del forziere tramite clic è disabi
 family_err_chest_not_set: "Posizione del forziere non impostata."
 family_chest_inventory: "Forziere familiare: %s"
 family_err_chest_open_other: "Il forziere familiare %s è già aperto dal giocatore %s"
+family_forbidden_break_family_chest: "Non puoi rompere il forziere familiare!"
 
 # [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Controllo di accesso predefinito per il gruppo"

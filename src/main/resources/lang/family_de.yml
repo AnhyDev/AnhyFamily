@@ -291,6 +291,7 @@ family_err_chest_click_disabled: "Das Öffnen der Truhe durch Klicken ist deakti
 family_err_chest_not_set: "Truhenstandort nicht festgelegt."
 family_chest_inventory: "Familienschatz: %s"
 family_err_chest_open_other: "Der Familienschatz %s wird bereits von Spieler %s geöffnet"
+family_forbidden_break_family_chest: "Du kannst die Familienschatztruhe nicht zerstören!"
 
 # [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Standard-Zugriffsprüfung für die Gruppe"

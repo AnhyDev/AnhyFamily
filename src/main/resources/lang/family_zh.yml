@@ -291,6 +291,7 @@ family_err_chest_click_disabled: "禁用点击打开箱子。"
 family_err_chest_not_set: "箱子位置未设定。"
 family_chest_inventory: "家庭宝箱：%s"
 family_err_chest_open_other: "家庭宝箱 %s 已被玩家 %s 打开"
+family_forbidden_break_family_chest: "你不能打破家庭宝箱！"
 
 # [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "组的默认访问检查"

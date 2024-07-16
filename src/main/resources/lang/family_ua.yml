@@ -291,6 +291,7 @@ family_err_chest_click_disabled: "Відкриття скрині кліком �
 family_err_chest_not_set: "Місце для скрині не встановлено."
 family_chest_inventory: "Сімейна скриня: %s"
 family_err_chest_open_other: "Сімейна скриня %s вже відкрита гравцем %s"
+family_forbidden_break_family_chest: "Ви не можете ламати сімейну скриню!"
 
 # [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Перевірка доступу за замовчуванням для групи"
@@ -339,6 +340,5 @@ family_name_change_proposal: "Священник %s пропонує замін�
 family_lastname_change_proposal: "Священник %s пропонує замініти тобі прізвище на %s."
 
 
-family_forbidden_break_family_chest: "Ви не можете ламати сімейну скриню!"
 
 

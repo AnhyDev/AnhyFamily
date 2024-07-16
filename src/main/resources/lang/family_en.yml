@@ -291,6 +291,7 @@ family_err_chest_click_disabled: "Opening the chest by clicking is disabled."
 family_err_chest_not_set: "Chest location not set."
 family_chest_inventory: "Family chest: %s"
 family_err_chest_open_other: "Family chest %s is already opened by player %s"
+family_forbidden_break_family_chest: "You cannot break the family chest!"
 
 # [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Default access check for the group"
