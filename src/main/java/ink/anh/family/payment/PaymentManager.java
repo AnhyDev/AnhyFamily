@@ -1,4 +1,4 @@
-package ink.anh.family.util;
+package ink.anh.family.payment;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,6 +9,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.Currency;
 import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.Prices;
+import ink.anh.family.util.EconomyHandler;
 
 import java.math.BigInteger;
 

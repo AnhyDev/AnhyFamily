@@ -1,4 +1,4 @@
-package ink.anh.family.util;
+package ink.anh.family.events;
 
 public enum RelationshipDegree {
     SPOUSE,

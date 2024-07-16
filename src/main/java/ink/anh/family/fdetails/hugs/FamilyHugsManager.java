@@ -17,6 +17,7 @@ import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.events.RelationshipDegree;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
@@ -26,7 +27,6 @@ import ink.anh.family.fplayer.permissions.ActionsPermissions;
 import ink.anh.family.fplayer.permissions.HugsPermission;
 import ink.anh.family.fdetails.AbstractDetailsManager;
 import ink.anh.family.util.FamilyUtils;
-import ink.anh.family.util.RelationshipDegree;
 import ink.anh.family.util.StringColorUtils;
 import ink.anh.family.util.TypeTargetComponent;
 

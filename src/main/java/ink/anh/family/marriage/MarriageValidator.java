@@ -17,9 +17,9 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.payment.PaymentManager;
 import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
-import ink.anh.family.util.PaymentManager;
 
 public class MarriageValidator extends Sender {
 
