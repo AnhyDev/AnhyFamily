@@ -1,4 +1,4 @@
-package ink.anh.family.command;
+package ink.anh.family.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

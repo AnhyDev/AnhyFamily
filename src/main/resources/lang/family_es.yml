@@ -40,7 +40,7 @@ family_request_reject: " [RECHAZAR]"
 family_request_confirm_hover: "Haz clic para confirmar %s"
 family_request_reject_hover: "Haz clic para rechazar %s"
 
-# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
+# Command /gender ... [classes: ink.anh.family.commands.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Masculino"
 family_gender_female: "Femenino"
 family_gender_non-binary: "No binario"

@@ -40,7 +40,7 @@ family_request_reject: " [ВІДХИЛИТИ]"
 family_request_confirm_hover: "Клікни щоб підтвердити %s"
 family_request_reject_hover: "Клікни щоб відхилити %s"
 
-# Command /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
+# Command /gender ... [classes: ink.anh.family.commands.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Чоловіча"
 family_gender_female: "Жіноча"
 family_gender_non-binary: "Небінарне"

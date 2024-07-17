@@ -1,4 +1,4 @@
-package ink.anh.family.command;
+package ink.anh.family.commands;
 
 import java.util.concurrent.CompletableFuture;
 

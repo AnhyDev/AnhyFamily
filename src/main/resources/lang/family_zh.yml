@@ -40,7 +40,7 @@ family_request_reject: " [拒绝]"
 family_request_confirm_hover: "点击确认 %s"
 family_request_reject_hover: "点击拒绝 %s"
 
-# 命令 /gender ... [classes: ink.anh.family.command.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
+# 命令 /gender ... [classes: ink.anh.family.commands.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "男性"
 family_gender_female: "女性"
 family_gender_non-binary: "非二元"

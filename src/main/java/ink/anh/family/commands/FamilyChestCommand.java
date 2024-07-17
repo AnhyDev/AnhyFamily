@@ -1,4 +1,4 @@
-package ink.anh.family.command;
+package ink.anh.family.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,15 +10,15 @@ import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
-import ink.anh.family.fdetails.symbol.FamilySymbolSubCommand;
+import ink.anh.family.fdetails.chest.FamilyChestSubCommand;
 
-public class FamilySymbolCommand extends Sender implements CommandExecutor {
-	
-    private AnhyFamily familiPlugin;
+public class FamilyChestCommand extends Sender implements CommandExecutor {
 
-    public FamilySymbolCommand(AnhyFamily familiPlugin) {
+    private AnhyFamily familyPlugin;
+
+    public FamilyChestCommand(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
-        this.familiPlugin = familiPlugin;
+        this.familyPlugin = familyPlugin;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class FamilySymbolCommand extends Sender implements CommandExecutor {
             player = (Player) sender;
 
             if (player != null) {
-                return new FamilySymbolSubCommand(familiPlugin).onCommand(player, cmd, args);
+                return new FamilyChestSubCommand(familyPlugin).onCommand(player, cmd, args);
             }
         }
 

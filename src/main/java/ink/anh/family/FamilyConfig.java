@@ -3,15 +3,11 @@ package ink.anh.family;
 import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +19,6 @@ import ink.anh.family.payment.Prices;
 public class FamilyConfig {
 
     private Prices prices;
-    private Map<String, Boolean> answers;
     
     private String marriedSymbol;
     private String marriedColor;
@@ -78,8 +73,6 @@ public class FamilyConfig {
 
     private void loadConfig(AnhyFamily plugin) {
         FileConfiguration config = plugin.getConfig();
-
-        this.answers = parseAnswers(config.getConfigurationSection("answers"));
         
         this.marriedSymbol = config.getString("marriedSymbol", "⚭");
         this.marriedColor = config.getString("marriedColor", "&6");
@@ -107,14 +100,13 @@ public class FamilyConfig {
 
         // Зчитування regex для обмеження мов
         this.languagesLimitation = config.getString("languages_limitation", "^(?!.*[-']{2})(?!.*--)(?!.*'')\\p{L}['-]*[\\p{L}]+$");
-
-        ItemStack[] items = loadItems(plugin);
         
         Currency currency = Currency.valueOf(config.getString("prices.currency", "ITEM"));
         if (plugin.getEconomyHandler() == null && currency == Currency.VIRTUAL) {
             currency = Currency.ITEM;
         }
-        
+
+        ItemStack[] items = loadItems(plugin);
         this.prices = new Prices(
             currency,
             BigInteger.valueOf(config.getLong("prices.marriage", 0)),
@@ -129,10 +121,6 @@ public class FamilyConfig {
     // Getters
     public Prices getPrices() {
         return prices;
-    }
-
-    public Map<String, Boolean> getAnswers() {
-        return answers;
     }
 
     public String getMarriedSymbol() {
@@ -230,32 +218,6 @@ public class FamilyConfig {
 	    
 	    this.privateCeremonyLocation = new Location(world, x, y, z);
 	}
-
-    // Method to check the answer
-    public int checkAnswer(String word) {
-        if (answers.containsKey(word)) {
-            return answers.get(word) ? 1 : 2;
-        }
-        return 0;
-    }
-
-    // Helper methods
-    private static Map<String, Boolean> parseAnswers(ConfigurationSection answersConfig) {
-        Map<String, Boolean> answers = new HashMap<>();
-        if (answersConfig != null) {
-            for (String key : answersConfig.getKeys(false)) {
-                List<?> list = answersConfig.getList(key);
-                if (list != null) {
-                    for (Object obj : list) {
-                        if (obj instanceof String) {
-                            answers.put((String) obj, "yes".equals(key));
-                        }
-                    }
-                }
-            }
-        }
-        return answers;
-    }
 
     private static ItemStack[] loadItems(AnhyFamily plugin) {
         ItemStack[] items = new ItemStack[3];
