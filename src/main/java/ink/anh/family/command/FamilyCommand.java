@@ -12,12 +12,12 @@ import ink.anh.api.messages.Sender;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.FirstName;
-import ink.anh.family.fplayer.NamesPastorManager;
+import ink.anh.family.fplayer.PriestNameChanger;
 import ink.anh.family.fplayer.Surname;
 import ink.anh.family.fplayer.info.FamilyInfo;
 import ink.anh.family.fplayer.info.FamilyProfileHandler;
 import ink.anh.family.fplayer.info.FamilyTreeHandler;
-import ink.anh.family.marriage.Divorce;
+import ink.anh.family.separate.Divorce;
 import ink.anh.family.separate.Separation;
 import ink.anh.api.messages.MessageForFormatting;
 
@@ -83,7 +83,7 @@ public class FamilyCommand extends Sender implements CommandExecutor {
 	                               (args[1].equalsIgnoreCase("accept") || args[1].equalsIgnoreCase("refuse"));
 	    
 	    if (isFirstOrSurname || isAcceptOrRefuse) {
-	        if (NamesPastorManager.getInstance(familyPlugin).sugges(sender, args)) {
+	        if (PriestNameChanger.getInstance(familyPlugin).sugges(sender, args)) {
 	        	return;
 	        }
 	    }

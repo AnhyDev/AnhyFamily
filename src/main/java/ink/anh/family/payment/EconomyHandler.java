@@ -1,4 +1,4 @@
-package ink.anh.family.util;
+package ink.anh.family.payment;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

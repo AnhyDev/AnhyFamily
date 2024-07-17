@@ -1,4 +1,4 @@
-package ink.anh.family.fplayer;
+package ink.anh.family.payment;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

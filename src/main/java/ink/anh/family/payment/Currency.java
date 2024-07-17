@@ -1,4 +1,4 @@
-package ink.anh.family.fplayer;
+package ink.anh.family.payment;
 
 public enum Currency {
     VIRTUAL,

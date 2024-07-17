@@ -18,21 +18,21 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NamesPastorManager extends Sender {
+public class PriestNameChanger extends Sender {
 
-    private static NamesPastorManager instance;
+    private static PriestNameChanger instance;
     private final AnhyFamily familyPlugin;
     private final Map<UUID, NameRequest> nameRequests;
 
-    private NamesPastorManager(AnhyFamily familyPlugin) {
+    private PriestNameChanger(AnhyFamily familyPlugin) {
         super(GlobalManager.getInstance());
         this.familyPlugin = familyPlugin;
         this.nameRequests = new ConcurrentHashMap<>();
     }
 
-    public static NamesPastorManager getInstance(AnhyFamily familyPlugin) {
+    public static PriestNameChanger getInstance(AnhyFamily familyPlugin) {
         if (instance == null) {
-            instance = new NamesPastorManager(familyPlugin);
+            instance = new PriestNameChanger(familyPlugin);
         }
         return instance;
     }

@@ -17,8 +17,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.api.items.ItemStackSerializer;
-import ink.anh.family.fplayer.Currency;
-import ink.anh.family.fplayer.Prices;
+import ink.anh.family.payment.Currency;
+import ink.anh.family.payment.Prices;
 
 public class FamilyConfig {
 

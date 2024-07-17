@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ink.anh.family.command.CommandManager;
 import ink.anh.family.listeners.ListenersRegistry;
-import ink.anh.family.util.EconomyHandler;
+import ink.anh.family.payment.EconomyHandler;
 import ink.anh.family.util.StringColorUtils;
 
 
