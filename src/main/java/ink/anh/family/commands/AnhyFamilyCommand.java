@@ -21,6 +21,7 @@ import ink.anh.family.fplayer.gender.GenderCommandHandler;
 import ink.anh.family.marriage.MarriageManager;
 import ink.anh.family.parents.Adopt;
 import ink.anh.family.parents.ParentManager;
+import ink.anh.family.payment.ItemSubCommand;
 import ink.anh.family.separate.ClearAllRelatives;
 
 public class AnhyFamilyCommand extends Sender implements CommandExecutor {
@@ -69,9 +70,12 @@ public class AnhyFamilyCommand extends Sender implements CommandExecutor {
                             	new GenderCommandHandler(familyPlugin).handleResetGender(sender, args[1]);
                             }
                             break;
+    	                case "item":
+    	                    new ItemSubCommand(familyPlugin).onCommand(sender, args);
+    	                    break;
     	                default:
     	                    sendMessage(new MessageForFormatting(
-    	                    		"family_err_command_format /anhyfamily <reload|parentinfo|marriageinfo|forcesurname|clearfamily|forceadopt|forcegender|genderreset>",
+    	                    		"family_err_command_format /anhyfamily <reload|parentinfo|marriageinfo|forcesurname|clearfamily|forceadopt|forcegender|genderreset|item>",
     	                    		new String[] {}), MessageType.WARNING, sender);
     	            }
     	        }

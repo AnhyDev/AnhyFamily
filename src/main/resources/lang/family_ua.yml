@@ -349,5 +349,7 @@ family_item_get_failure: "Ключ %s не знайдено."
 family_item_remove_success: "Ключ %s успішно видалено."
 family_item_remove_save_failure: "Не вдалося зберегти файл після видалення ключа %s."
 family_item_remove_failure: "Ключ %s не знайдено."
+family_err_invalid_key: "Ключ %s недійсний. Будь ласка, використовуйте дійсний ключ із переліку: %s."
+
 
 
