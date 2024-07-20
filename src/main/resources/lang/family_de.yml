@@ -338,4 +338,14 @@ family_name_change_proposal_refuse: "Namens-/Nachnamensänderungsvorschlag abgel
 family_name_change_proposal: "Pastor %s schlägt vor, deinen Namen in %s zu ändern."
 family_lastname_change_proposal: "Pastor %s schlägt vor, deinen Nachnamen in %s zu ändern."
 
+family_item_add_success: "Gegenstand erfolgreich mit Schlüssel hinzugefügt/überschrieben: %s"
+family_item_add_failure: "Fehler beim Hinzufügen/Überschreiben des Gegenstands. Stelle sicher, dass du den Gegenstand in der Hand hältst."
+family_item_clear_success: "Datei item_prices.yml erfolgreich geleert."
+family_item_clear_failure: "Fehler beim Leeren der Datei item_prices.yml."
+family_item_get_success: "Wert für Schlüssel %s: %s"
+family_item_get_failure: "Schlüssel %s nicht gefunden."
+family_item_remove_success: "Schlüssel %s erfolgreich entfernt."
+family_item_remove_save_failure: "Fehler beim Speichern der Datei nach Entfernen des Schlüssels %s."
+family_item_remove_failure: "Schlüssel %s nicht gefunden."
+family_err_invalid_key: "Schlüssel %s ist ungültig. Bitte verwende einen gültigen Schlüssel aus der Liste: %s."
 

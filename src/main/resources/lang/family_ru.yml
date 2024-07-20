@@ -338,4 +338,14 @@ family_name_change_proposal_refuse: "Предложение по замене и
 family_name_change_proposal: "Священник %s предлагает изменить тебе имя на %s."
 family_lastname_change_proposal: "Священник %s предлагает изменить тебе фамилию на %s."
 
+family_item_add_success: "Предмет успешно добавлен/перезаписан по ключу: %s"
+family_item_add_failure: "Не удалось добавить/перезаписать предмет. Убедись, что ты держишь предмет в руке."
+family_item_clear_success: "Файл item_prices.yml успешно очищен."
+family_item_clear_failure: "Не удалось очистить файл item_prices.yml."
+family_item_get_success: "Значение для ключа %s: %s"
+family_item_get_failure: "Ключ %s не найден."
+family_item_remove_success: "Ключ %s успешно удалён."
+family_item_remove_save_failure: "Не удалось сохранить файл после удаления ключа %s."
+family_item_remove_failure: "Ключ %s не найден."
+family_err_invalid_key: "Ключ %s недействителен. Пожалуйста, используйте действительный ключ из списка: %s."
 

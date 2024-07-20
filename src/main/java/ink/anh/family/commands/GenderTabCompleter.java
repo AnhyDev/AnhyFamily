@@ -20,13 +20,12 @@ public class GenderTabCompleter implements TabCompleter {
             // Додавання можливих варіантів для першого аргументу
             completions.add("set");
             completions.add("info");
-            completions.add("reset");
         } else if (args.length == 2) {
             // Додавання варіантів для другого аргументу
             if (args[0].equalsIgnoreCase("set")) {
                 completions.add("MALE");
                 completions.add("FEMALE");
-            } else if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("reset")) {
+            } else if (args[0].equalsIgnoreCase("info")) {
                 String inputName = args[1].toLowerCase();
                 completions.addAll(Bukkit.getOnlinePlayers().stream()
                         .map(Player::getName)

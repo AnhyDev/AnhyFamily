@@ -37,6 +37,7 @@ database:
 prices:
   # VIRTUAL, ITEM, CRYPTO(not yet implemented)
   currency: VIRTUAL
+  # Settings for virtual currency:
   marriage: 0
   divorce: 0
   adoption: 0

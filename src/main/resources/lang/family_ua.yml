@@ -339,7 +339,6 @@ family_name_change_proposal_refuse: "Пропозиція по заміні ім
 family_name_change_proposal: "Священник %s пропонує замініти тобі ім'я на %s."
 family_lastname_change_proposal: "Священник %s пропонує замініти тобі прізвище на %s."
 
-
 family_item_add_success: "Предмет успішно додано/перезаписано за ключем: %s"
 family_item_add_failure: "Не вдалося додати/перезаписати предмет. Переконайся, що ти тримаєш предмет у руці."
 family_item_clear_success: "Файл item_prices.yml успішно очищено."

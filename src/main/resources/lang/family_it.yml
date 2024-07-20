@@ -338,4 +338,15 @@ family_name_change_proposal_refuse: "Proposta di cambio di nome/cognome rifiutat
 family_name_change_proposal: "Il pastore %s propone di cambiare il tuo nome in %s."
 family_lastname_change_proposal: "Il pastore %s propone di cambiare il tuo cognome in %s."
 
+family_item_add_success: "Elemento aggiunto/sovrascritto con successo con la chiave: %s"
+family_item_add_failure: "Impossibile aggiungere/sovrascrivere l'elemento. Assicurati di tenere l'elemento in mano."
+family_item_clear_success: "File item_prices.yml cancellato con successo."
+family_item_clear_failure: "Impossibile cancellare il file item_prices.yml."
+family_item_get_success: "Valore per la chiave %s: %s"
+family_item_get_failure: "Chiave %s non trovata."
+family_item_remove_success: "Chiave %s rimossa con successo."
+family_item_remove_save_failure: "Impossibile salvare il file dopo aver rimosso la chiave %s."
+family_item_remove_failure: "Chiave %s non trovata."
+family_err_invalid_key: "Chiave %s non valida. Per favore usa una chiave valida dalla lista: %s."
+
 

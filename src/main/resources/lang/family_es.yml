@@ -338,4 +338,15 @@ family_name_change_proposal_refuse: "Propuesta de cambio de nombre/apellido rech
 family_name_change_proposal: "El pastor %s propone cambiar tu nombre a %s."
 family_lastname_change_proposal: "El pastor %s propone cambiar tu apellido a %s."
 
+family_item_add_success: "Elemento agregado/sobrescrito con éxito con la clave: %s"
+family_item_add_failure: "No se pudo agregar/sobrescribir el elemento. Asegúrate de tener el elemento en la mano."
+family_item_clear_success: "Archivo item_prices.yml borrado con éxito."
+family_item_clear_failure: "No se pudo borrar el archivo item_prices.yml."
+family_item_get_success: "Valor para la clave %s: %s"
+family_item_get_failure: "Clave %s no encontrada."
+family_item_remove_success: "Clave %s eliminada con éxito."
+family_item_remove_save_failure: "No se pudo guardar el archivo después de eliminar la clave %s."
+family_item_remove_failure: "Clave %s no encontrada."
+family_err_invalid_key: "Clave %s no válida. Por favor, usa una clave válida de la lista: %s."
+
 
