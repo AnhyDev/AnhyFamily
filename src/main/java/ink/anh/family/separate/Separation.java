@@ -29,7 +29,7 @@ public class Separation extends Sender {
 
 	public boolean separate(CommandSender sender, String[] args) {
         
-		if (args.length >= 2) {
+		if (args.length > 1) {
             switch (args[1].toLowerCase()) {
         	case "spouse":
         		return new Divorce(familyPlugin).separate(sender);

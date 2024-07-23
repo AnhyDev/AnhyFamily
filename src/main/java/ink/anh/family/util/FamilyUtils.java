@@ -135,6 +135,20 @@ public class FamilyUtils {
         return treePlayer1.hasRelativesWithUUID(uuidPlayer2);
     }
 
+	public static boolean hasRelatives(TreeStringGenerator treePlayer1, PlayerFamily familyPlayer2) {
+		if (treePlayer1 == null || familyPlayer2 == null) {
+			return true;
+		}
+		
+		UUID uuidPlayer2 = familyPlayer2.getRoot();
+		UUID spousePlayer2 = familyPlayer2.getSpouse();
+		
+		boolean isRelatives = hasRelatives(treePlayer1, uuidPlayer2);
+		boolean isSpouses = spousePlayer2 != null ? hasRelatives(treePlayer1, spousePlayer2) : false;
+
+        return isRelatives && isSpouses;
+    }
+
 	public static String getPriestTitle(Player player) {
 		if (player == null) {
 			return "family_marry_private_prefix";

@@ -248,7 +248,7 @@ public class TreeStringGenerator {
     }
 
     public boolean hasRelativesWithUUID(UUID uuid) {
-        return rootParents.containsKey(uuid) || rootOffspring.containsKey(uuid);
+        return rootParents.containsKey(uuid) || rootOffspring.containsKey(uuid) || root.getFamily().getRoot().equals(uuid);
     }
     
     class FamilyRepeated {

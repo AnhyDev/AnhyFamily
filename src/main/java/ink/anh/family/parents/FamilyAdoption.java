@@ -64,14 +64,13 @@ public class FamilyAdoption {
         PlayerFamilyDBService.savePlayerFamily(adopted, null);
 
         String rawMessage = Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_single", langs);
-        String message = StringUtils.formatString(rawMessage, new String[]{adopter.getLoverCaseName(), adopted.getLoverCaseName()});
+        String message = StringUtils.formatString(rawMessage, new String[]{adopter.getRootrNickName(), adopted.getRootrNickName()});
         Logger.info(familiPlugin, message);
         return true;
     }
 
     private boolean coupleAdoption(PlayerFamily adopted, PlayerFamily adopter1, PlayerFamily adopter2) {
         if (!canAdopt(adopted, adopter1, adopter2)) {
-            Logger.warn(familiPlugin, adopter1.getRootrNickName() + ", " + adopter2.getRootrNickName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_impossible_between", langs) + adopted.getLoverCaseName());
             return false;
         }
 
@@ -104,21 +103,21 @@ public class FamilyAdoption {
         PlayerFamilyDBService.savePlayerFamily(adopter2, FamilyPlayerField.CHILDREN);
         PlayerFamilyDBService.savePlayerFamily(adopted, null);
 
-        Logger.info(familiPlugin, adopter1.getRootrNickName() + ", " + adopter2.getRootrNickName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_between", langs) + adopted.getLoverCaseName());
+        Logger.info(familiPlugin, adopter1.getRootrNickName() + ", " + adopter2.getRootrNickName() + Translator.translateKyeWorld(globalManager, "family_log_adoption_successful_between", langs) + adopted.getRootrNickName());
         return true;
     }
 
     public boolean canAdopt(PlayerFamily adopted, PlayerFamily adopter1, PlayerFamily adopter2) {
         TreeStringGenerator tree = new TreeStringGenerator(adopted.getRoot());
-        return !FamilyUtils.hasRelatives(tree, adopter1.getRoot())
-                && !FamilyUtils.hasRelatives(tree, adopter2.getRoot())
+        return !FamilyUtils.hasRelatives(tree, adopter1)
+                && !FamilyUtils.hasRelatives(tree, adopter2)
                 && isGenderCompatibleAdoption(adopter1, adopter2)
                 && isParentSlotAvailable(adopted, false, null);
     }
 
     public boolean canAdopt(PlayerFamily adopted, PlayerFamily adopter) {
         TreeStringGenerator tree = new TreeStringGenerator(adopted.getRoot());
-        return !FamilyUtils.hasRelatives(tree, adopter.getRoot())
+        return !FamilyUtils.hasRelatives(tree, adopter)
                 && isGenderCompatibleAdoption(adopter)
                 && isParentSlotAvailable(adopted, true, adopter);
     }
