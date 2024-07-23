@@ -29,15 +29,18 @@ public class Separation extends Sender {
 
 	public boolean separate(CommandSender sender, String[] args) {
         
-        if (args.length < 2 || args[1].equalsIgnoreCase("spouse")) {
-            return new Divorce(familyPlugin).separate(sender);
-        } else if (args.length > 2 && args[1].equalsIgnoreCase("children")) {
-        	return new ChildSeparation(familyPlugin).separate(sender, args);
-        } else if (args.length > 2 && args[1].equalsIgnoreCase("parents")) {
-        	return new ParentSeparation(familyPlugin).separate(sender, args);
-        } else if (args.length > 2) {
-        	return separateNickName(sender, args);
-        }
+		if (args.length >= 2) {
+            switch (args[1].toLowerCase()) {
+        	case "spouse":
+        		return new Divorce(familyPlugin).separate(sender);
+            case "children":
+            	return new ChildSeparation(familyPlugin).separate(sender, args);
+        	case "parents":
+        		return new ParentSeparation(familyPlugin).separate(sender, args);
+            default:
+            	return separateNickName(sender, args);
+            }
+		}
         
         sendMessage(new MessageForFormatting("family_error_command_line", new String[] {}), MessageType.WARNING, sender);
         return false;
