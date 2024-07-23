@@ -65,7 +65,7 @@ public class Separation extends Sender {
         UUID playerUUID = senderFamily.getRoot();
         UUID targetUUID = targetFamily.getRoot();
         
-        if (senderFamily.getSpouse().equals(targetUUID)) {
+        if (senderFamily.getSpouse() != null && senderFamily.getSpouse().equals(targetUUID)) {
         	return new Divorce(familyPlugin).separate(sender);
         } else if (senderFamily.getChildren().contains(targetUUID)) {
         	return new ChildSeparation(familyPlugin).separate(player, senderFamily, targetFamily);
