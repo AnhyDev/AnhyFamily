@@ -14,6 +14,7 @@ import ink.anh.family.GlobalManager;
 import ink.anh.family.Permissions;
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fplayer.FamilySeparationUtils;
+import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBService;
@@ -89,6 +90,13 @@ public class Divorce extends Sender {
 
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
+                	String[] paymentResult = FamilyUtils.paymentFailed((Player) senders[0], FamilyService.DIVORCE);
+                	
+                	if (paymentResult != null && paymentResult.length == 2) {
+                        sendMessage(new MessageForFormatting(paymentResult[0], new String[]{paymentResult[1]}), MessageType.WARNING, senders);
+                		return;
+                	}
+                	
                     FamilyDetailsService.removeCrossFamilyRelations(initiatorFamily, modifiedFamilies, false, false);
                     FamilyDetailsService.removeCrossFamilyRelations(spouseFamily, modifiedFamilies, false, false);
                     initiatorFamily.setFamilyId(null);

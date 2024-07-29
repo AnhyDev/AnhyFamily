@@ -348,4 +348,5 @@ family_item_remove_success: "Ключ %s успешно удалён."
 family_item_remove_save_failure: "Не удалось сохранить файл после удаления ключа %s."
 family_item_remove_failure: "Ключ %s не найден."
 family_err_invalid_key: "Ключ %s недействителен. Пожалуйста, используйте действительный ключ из списка: %s."
+family_payment_failed: "Не удалось получить оплату за услугу от %s, действие отменяется"
 

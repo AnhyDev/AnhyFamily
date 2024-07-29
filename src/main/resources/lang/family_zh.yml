@@ -348,4 +348,5 @@ family_item_remove_success: "键 %s 成功删除。"
 family_item_remove_save_failure: "删除键 %s 后保存文件失败。"
 family_item_remove_failure: "未找到键 %s。"
 family_err_invalid_key: "键 %s 无效。请使用列表中的有效键：%s。"
+family_payment_failed: "未能收到来自 %s 的服务付款，操作取消"
 

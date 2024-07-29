@@ -348,4 +348,5 @@ family_item_remove_success: "Schlüssel %s erfolgreich entfernt."
 family_item_remove_save_failure: "Fehler beim Speichern der Datei nach Entfernen des Schlüssels %s."
 family_item_remove_failure: "Schlüssel %s nicht gefunden."
 family_err_invalid_key: "Schlüssel %s ist ungültig. Bitte verwende einen gültigen Schlüssel aus der Liste: %s."
+family_payment_failed: "Zahlung für den Dienst von %s konnte nicht empfangen werden, Aktion wird abgebrochen"
 

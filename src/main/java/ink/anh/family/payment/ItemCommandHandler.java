@@ -36,6 +36,7 @@ public class ItemCommandHandler extends Sender {
             sendMessage(new MessageForFormatting("family_item_add_failure", new String[]{}), MessageType.WARNING, player);
         }
 
+        reload();
         return true;
     }
 
@@ -46,6 +47,7 @@ public class ItemCommandHandler extends Sender {
             return true;
         } else {
             sendMessage(new MessageForFormatting("family_item_clear_failure", new String[]{}), MessageType.WARNING, player);
+            reload();
             return false;
         }
     }
@@ -96,6 +98,12 @@ public class ItemCommandHandler extends Sender {
             sendMessage(new MessageForFormatting("family_item_remove_failure", new String[]{key}), MessageType.WARNING, player);
         }
 
+        reload();
         return true;
+    }
+    
+    private void reload() {
+		GlobalManager manager = (GlobalManager) libraryManager;
+		manager.reload();
     }
 }

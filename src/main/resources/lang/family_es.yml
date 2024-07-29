@@ -348,5 +348,6 @@ family_item_remove_success: "Clave %s eliminada con éxito."
 family_item_remove_save_failure: "No se pudo guardar el archivo después de eliminar la clave %s."
 family_item_remove_failure: "Clave %s no encontrada."
 family_err_invalid_key: "Clave %s no válida. Por favor, usa una clave válida de la lista: %s."
+family_payment_failed: "No se pudo recibir el pago por el servicio de %s, la acción se cancela"
 
 

@@ -348,4 +348,5 @@ family_item_remove_success: "Key %s successfully removed."
 family_item_remove_save_failure: "Failed to save file after removing key %s."
 family_item_remove_failure: "Key %s not found."
 family_err_invalid_key: "Key %s is invalid. Please use a valid key from the list: %s."
+family_payment_failed: "Failed to receive payment for the service from %s, action is canceled"
 

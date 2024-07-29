@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import ink.anh.api.messages.Logger;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.FamilyService;
@@ -44,6 +45,7 @@ public class PaymentManager {
         if (canAfford(player, action)) {
             BigInteger cost = prices.getAmountForService(action);
             ItemStack item = prices.getItemForService(action);
+            Logger.info(AnhyFamily.getInstance(), player.getName() + " payment item for " + action.name() + ": Material = " + item.getType() + ", Amount = " + item.getAmount());
 
             if (prices.getCurrency() == Currency.VIRTUAL && economyHandler != null) {
                 if (cost.equals(BigInteger.ZERO)) {

@@ -18,6 +18,7 @@ import ink.anh.family.events.AdoptionEvent;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
+import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.api.messages.Logger;
@@ -156,6 +157,13 @@ public class Adopt extends Sender {
     }
 
     private boolean adoptionScheduler(Player player, ParentManager manager) {
+    	String[] paymentResult = FamilyUtils.paymentFailed(player, FamilyService.ADOPTION);
+    	
+    	if (paymentResult != null && paymentResult.length == 2) {
+            sendMessage(new MessageForFormatting(paymentResult[0], new String[]{paymentResult[1]}), MessageType.WARNING, player);
+    		return false;
+    	}
+    	
         UUID uuid = player.getUniqueId();
 
         Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {

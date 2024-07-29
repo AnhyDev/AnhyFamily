@@ -13,6 +13,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.api.items.ItemStackSerializer;
+import ink.anh.api.messages.Logger;
+import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.payment.Currency;
 import ink.anh.family.payment.Prices;
 
@@ -220,12 +222,17 @@ public class FamilyConfig {
 	}
 
     private static ItemStack[] loadItems(AnhyFamily plugin) {
-        ItemStack[] items = new ItemStack[3];
+    	ItemStack[] items = new ItemStack[FamilyService.values().length];
         ItemStack defaultStack = new ItemStack(Material.AIR);
         File itemPricesFile = new File(plugin.getDataFolder(), "item_prices.yml");
         FileConfiguration itemPricesConfig = itemPricesFile.exists() ? YamlConfiguration.loadConfiguration(itemPricesFile) : null;
 
-        String[] keys = new String[]{"marriage", "divorce", "adoption"};
+        // Отримуємо значення переліку FamilyService у нижньому регістрі
+        String[] keys = new String[FamilyService.values().length];
+        for (int i = 0; i < FamilyService.values().length; i++) {
+            keys[i] = FamilyService.values()[i].name().toLowerCase();
+        }
+
         for (int i = 0; i < keys.length; i++) {
             if (itemPricesConfig != null) {
                 String serializedItem = itemPricesConfig.getString(keys[i]);
@@ -240,6 +247,12 @@ public class FamilyConfig {
             }
         }
 
+        for (int i = 0; i < items.length; i++) {
+            ItemStack item = items[i];
+            String material = item.getType().name();
+            int amount = item.getAmount();
+            Logger.info(AnhyFamily.getInstance(), "Item for " + keys[i] + ": Material = " + material + ", Amount = " + amount);
+        }
         return items;
     }
     
