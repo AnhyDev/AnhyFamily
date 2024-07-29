@@ -19,10 +19,10 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.AbstractDetailsManager;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.info.TreeStringGenerator;
 import ink.anh.family.util.TypeTargetComponent;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.StringColorUtils;
 
 public class FamilyChatManager extends AbstractDetailsManager {

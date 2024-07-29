@@ -19,9 +19,9 @@ import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
+import ink.anh.family.fplayer.FamilySeparationUtils;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.FamilySeparationUtils;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class ClearAllRelatives extends Sender {

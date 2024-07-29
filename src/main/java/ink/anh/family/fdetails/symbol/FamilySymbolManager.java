@@ -23,8 +23,8 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.FDetailsComponentBuilder;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.TypeTargetComponent;
 
 public class FamilySymbolManager extends AbstractDetailsManager {

@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 import ink.anh.api.lingo.Translator;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.family.GlobalManager;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.gender.GenderManager;
-import ink.anh.family.util.FamilyUtils;
 
 public class ProfileStringGenerator {
 

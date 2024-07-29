@@ -18,13 +18,13 @@ import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.api.enums.Access;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fplayer.permissions.AbstractPermission;
 import ink.anh.family.fplayer.permissions.ActionsPermissions;
 import ink.anh.family.fplayer.permissions.PermissionModifier;
 import ink.anh.family.fplayer.permissions.HugsPermission;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.TypeTargetComponent;
 
 public class FamilyHugsSubCommand extends Sender {

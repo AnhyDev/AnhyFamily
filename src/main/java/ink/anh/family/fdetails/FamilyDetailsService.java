@@ -4,9 +4,9 @@ import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.fdetails.chest.FamilyChestManager;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
 import ink.anh.family.fdetails.symbol.UUIDToUniqueString;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBService;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.enums.Access;
 
 import java.util.HashMap;

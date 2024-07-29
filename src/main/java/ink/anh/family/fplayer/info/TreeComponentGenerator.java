@@ -8,10 +8,10 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 import ink.anh.family.GlobalManager;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.gender.GenderManager;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.StringColorUtils;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;

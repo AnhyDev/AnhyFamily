@@ -18,8 +18,8 @@ import ink.anh.family.events.AdoptionEvent;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.Logger;
 import ink.anh.api.messages.MessageForFormatting;
 

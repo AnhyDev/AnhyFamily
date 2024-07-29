@@ -1,4 +1,4 @@
-package ink.anh.family.util;
+package ink.anh.family.fplayer;
 
 import ink.anh.api.messages.Logger;
 import ink.anh.family.AnhyFamily;
@@ -6,8 +6,6 @@ import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
-import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.PlayerFamilyDBService;
 
 import java.util.HashSet;
 import java.util.Set;

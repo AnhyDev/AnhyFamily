@@ -15,7 +15,6 @@ import ink.anh.family.Permissions;
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.SurnameSelectEvent;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 
 public class Surname extends Sender {

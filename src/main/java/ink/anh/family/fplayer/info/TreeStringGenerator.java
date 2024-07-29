@@ -7,10 +7,10 @@ import java.util.UUID;
 
 import org.bukkit.ChatColor;
 
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.gender.GenderManager;
-import ink.anh.family.util.FamilyUtils;
 
 public class TreeStringGenerator {
     private FamilyRepeated root;

@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
 
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.OtherUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;

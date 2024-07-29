@@ -12,11 +12,11 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.MarriageEvent;
 import ink.anh.family.fdetails.FamilyDetailsService;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.util.OtherUtils;
-import ink.anh.family.util.FamilyUtils;
 
 public class ActionsBridesPublic extends AbstractMarriageSender {
 

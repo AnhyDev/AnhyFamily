@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 import ink.anh.family.db.fplayer.FamilyPlayerField;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBService;
-import ink.anh.family.util.FamilyUtils;
 
 public class GenderManager {
 

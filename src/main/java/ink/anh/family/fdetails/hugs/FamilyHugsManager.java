@@ -21,12 +21,12 @@ import ink.anh.family.events.RelationshipDegree;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.permissions.ActionsPermissions;
 import ink.anh.family.fplayer.permissions.HugsPermission;
 import ink.anh.family.fdetails.AbstractDetailsManager;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.StringColorUtils;
 import ink.anh.family.util.TypeTargetComponent;
 

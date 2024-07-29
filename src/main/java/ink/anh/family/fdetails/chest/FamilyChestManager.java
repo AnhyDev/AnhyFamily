@@ -28,9 +28,9 @@ import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.AbstractDetailsManager;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
-import ink.anh.family.util.FamilyUtils;
 
 public class FamilyChestManager extends AbstractDetailsManager {
 

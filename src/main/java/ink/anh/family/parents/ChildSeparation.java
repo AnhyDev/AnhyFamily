@@ -8,13 +8,13 @@ import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.ActionInitiator;
 import ink.anh.family.events.FamilySeparationEvent;
 import ink.anh.family.events.FamilySeparationReason;
+import ink.anh.family.fplayer.FamilySeparationUtils;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsService;
-import ink.anh.family.util.FamilySeparationUtils;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.utils.SyncExecutor;
 

@@ -2,8 +2,8 @@ package ink.anh.family.fdetails;
 
 import ink.anh.family.GlobalManager;
 import ink.anh.family.db.fdetails.FamilyDetailsTable;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.FamilyUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,9 +20,9 @@ import ink.anh.family.fdetails.FamilyDetailsGet;
 import ink.anh.family.fdetails.FamilyDetailsSave;
 import ink.anh.family.fdetails.FDetailsComponentBuilder;
 import ink.anh.family.fdetails.AbstractDetailsManager;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
 import ink.anh.family.util.TypeTargetComponent;
-import ink.anh.family.util.FamilyUtils;
 
 import java.util.Map;
 import java.util.UUID;

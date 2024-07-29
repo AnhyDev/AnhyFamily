@@ -1,4 +1,4 @@
-package ink.anh.family.util;
+package ink.anh.family.fplayer;
 
 import java.util.UUID;
 
@@ -6,12 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import ink.anh.family.AnhyFamily;
 import ink.anh.family.events.RelationshipDegree;
-import ink.anh.family.fplayer.FamilyCacheManager;
-import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.fplayer.PlayerFamilyDBService;
 import ink.anh.family.fplayer.gender.Gender;
 import ink.anh.family.fplayer.info.TreeStringGenerator;
+import ink.anh.family.payment.PaymentManager;
 
 public class FamilyUtils {
 
@@ -253,5 +252,14 @@ public class FamilyUtils {
         }
 
         return RelationshipDegree.UNKNOWN;
+    }
+
+    public static String[] paymentFailed(Player player, FamilyService familyService) {    
+        PaymentManager pay = new PaymentManager(AnhyFamily.getInstance());
+
+        if (!pay.makePayment(player, familyService)) {
+            return new String[] {"family_payment_failed", player.getDisplayName()};
+        }
+        return null;
     }
 }

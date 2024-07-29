@@ -18,8 +18,8 @@ import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.db.fdetails.FamilyDetailsField;
 import ink.anh.family.fdetails.symbol.FamilySymbolManager;
+import ink.anh.family.fplayer.FamilyUtils;
 import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.FamilyUtils;
 import ink.anh.family.util.StringColorUtils;
 import ink.anh.family.util.TypeTargetComponent;
 
