@@ -96,7 +96,7 @@ public class ParentSeparation extends Sender {
                         }
 
                         if (!everyone) {
-                            resultRemoveParents |= FamilySeparationUtils.removeOneParents(senderFamily, family, true) != null;
+                            resultRemoveParents |= FamilySeparationUtils.removeOneParents(family, senderFamily, true) != null;
                         }
 
                         resultRemoveChildren |= FamilySeparationUtils.removeOneChildren(family, senderFamily, true);

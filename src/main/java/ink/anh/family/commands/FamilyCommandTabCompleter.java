@@ -34,8 +34,8 @@ public class FamilyCommandTabCompleter implements TabCompleter {
                     break;
                 case "separate":
                     completions.add("spouse");
-                    completions.add("child");
-                    completions.add("parent");
+                    completions.add("children");
+                    completions.add("parents");
                     completions.addAll(getPlayerNames(args[1]));
                     break;
                 case "sugges":

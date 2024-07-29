@@ -169,7 +169,7 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
                     String proposerName = players[0].getDisplayName() != null ? players[0].getDisplayName() : players[0].getName();
                     String receiverName = players[1].getDisplayName() != null ? players[1].getDisplayName() : players[1].getName();
                     
-                	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_refused_sender", MessageType.IMPORTANT.getColor(true),
+                	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_accepted_sender", MessageType.IMPORTANT.getColor(true),
                 			new String[]{proposerName}, new Player[] {players[1]});
                     
                 	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_accepted", MessageType.NORMAL.getColor(true),

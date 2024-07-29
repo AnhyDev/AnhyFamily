@@ -102,7 +102,7 @@ public class ChildSeparation extends Sender {
                             resultRemoveChildren |= FamilySeparationUtils.removeOneChildren(senderFamily, family, true);
                         }
 
-                        resultRemoveParents |= FamilySeparationUtils.removeOneParents(family, senderFamily, true) != null;
+                        resultRemoveParents |= FamilySeparationUtils.removeOneParents(senderFamily, family, true) != null;
                     }
 
                     if (everyone) {

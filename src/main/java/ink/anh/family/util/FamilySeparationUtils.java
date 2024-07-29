@@ -1,5 +1,7 @@
 package ink.anh.family.util;
 
+import ink.anh.api.messages.Logger;
+import ink.anh.family.AnhyFamily;
 import ink.anh.family.db.fplayer.FamilyPlayerField;
 import ink.anh.family.events.FamilySeparationReason;
 import ink.anh.family.fdetails.FamilyDetails;
@@ -147,20 +149,29 @@ public class FamilySeparationUtils {
         
         if (parentFamily == null || childFamily == null) return fieldToUpdate;
 
+        Logger.info(AnhyFamily.getInstance(), "Start remove parent");
+        Logger.info(AnhyFamily.getInstance(), "parentFamily: " + parentFamily.getRoot());
+        Logger.info(AnhyFamily.getInstance(), "parentFamily Father: " + parentFamily.getFather());
+        Logger.info(AnhyFamily.getInstance(), "parentFamily Mother: " + parentFamily.getMother());
+        Logger.info(AnhyFamily.getInstance(), "childFamily: " + childFamily.getRoot());
+        Logger.info(AnhyFamily.getInstance(), "childFamily Father: " + childFamily.getFather());
+        Logger.info(AnhyFamily.getInstance(), "childFamily Mother: " + childFamily.getMother());
         // Перевірка та видалення зв'язку з батьком
         if (childFamily.getFather() != null && childFamily.getFather().equals(parentFamily.getRoot())) {
             childFamily.setFather(null);
             fieldToUpdate = FamilyPlayerField.FATHER;
+            Logger.info(AnhyFamily.getInstance(), "getFather: " + childFamily.getFather());
         }
 
         // Перевірка та видалення зв'язку з матір'ю
         if (childFamily.getMother() != null && childFamily.getMother().equals(parentFamily.getRoot())) {
             childFamily.setMother(null);
             fieldToUpdate = FamilyPlayerField.MOTHER;
+            Logger.info(AnhyFamily.getInstance(), "getMother: " + childFamily.getMother());
         }
         
         if (orSave && fieldToUpdate != null) {
-        	PlayerFamilyDBService.savePlayerFamily(parentFamily, fieldToUpdate);
+        	PlayerFamilyDBService.savePlayerFamily(childFamily, fieldToUpdate);
         }
 		return fieldToUpdate;
     }
