@@ -90,6 +90,15 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_sent", MessageType.ESPECIALLY.getColor(true), new String[]{receiverName}, new Player[] {proposer});
         	sendMAnnouncement(priestPrefixType, priestName, "family_proposal_received", MessageType.ESPECIALLY.getColor(true), new String[]{proposerName}, new Player[] {receiver});
         	sendPriestAcceptMessage(priestPrefixType, priestName, new Player[] {receiver});
+        	
+        	// Додаємо таймер для видалення пропозиції через хвилину, якщо вона не була прийнята
+            Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
+                if (marriageManager.getProposal(receiver) != null) {
+                    marriageManager.removeProposal(proposal);
+                    sendMessage(new MessageForFormatting("family_err_proposal_timeout", new String[]{proposerName, receiverName}), MessageType.WARNING, proposer, receiver);
+                }
+            }, 1200L); // 1200 тіків = 60 секунд
+
         } else {
             sendMessage(new MessageForFormatting("family_proposal_failed", new String[]{receiver.getName()}), MessageType.WARNING, sender); // +
         }

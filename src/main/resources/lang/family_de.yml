@@ -210,6 +210,7 @@ family_groom_consent1: " [Antworten JA!] "
 family_groom_consent2: " [Antworten NEIN!]"
 family_groom_hover_consent1: "Klicke zum Bestätigen, \noder sende den Befehl /marry accept"
 family_groom_hover_consent2: "Klicke zum Ablehnen, \noder sende den Befehl /marry refuse"
+family_err_proposal_timeout: "Der Heiratsantrag zwischen %s und %s wurde abgebrochen, da er nicht innerhalb einer Minute angenommen oder abgelehnt wurde."
 
 # Private Heiratsanträge [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Kein Heiratsantrag."

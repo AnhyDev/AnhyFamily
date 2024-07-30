@@ -210,6 +210,7 @@ family_groom_consent1: " [Reply YES!] "
 family_groom_consent2: " [Reply NO!]"
 family_groom_hover_consent1: "Click to confirm, \nor send the command /marry accept"
 family_groom_hover_consent2: "Click to refuse, \nor send the command /marry refuse"
+family_err_proposal_timeout: "The marriage proposal between %s and %s was canceled because it was not accepted or declined within a minute."
 
 # Private Marriage Proposals [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "No marriage proposal."

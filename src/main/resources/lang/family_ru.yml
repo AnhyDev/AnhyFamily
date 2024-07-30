@@ -210,6 +210,7 @@ family_groom_consent1: " [Ответить ДА!] "
 family_groom_consent2: " [Ответить НЕТ!]"
 family_groom_hover_consent1: "Для подтверждения нажми, \nили отправь команду /marry accept"
 family_groom_hover_consent2: "Для отказа нажми, \nили отправь команду /marry refuse"
+family_err_proposal_timeout: "Предложение о браке между %s и %s было отменено, так как не было принято или отклонено в течение минуты."
 
 # Предложения частного брака [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Нет предложения о браке."

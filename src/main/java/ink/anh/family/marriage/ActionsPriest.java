@@ -105,6 +105,7 @@ public class ActionsPriest extends AbstractMarriageSender {
 		    return false;
 		}
 
+    	MarryPublic marryProposal = new MarryPublic(bride1, bride2, priest, surnameChoice, lastName);
     	if (!marriageManager.add(bride1, bride2, priest, surnameChoice, lastName)) {
             sendMessage(new MessageForFormatting("family_marry_already_started", new String[] {bride1Name, bride2Name}), MessageType.WARNING, true, priest);
             return false;
@@ -115,6 +116,14 @@ public class ActionsPriest extends AbstractMarriageSender {
 		Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () -> {
 		    sendMAnnouncement(priestPrefixType, priestName, "family_marry_start_success", MessageType.IMPORTANT.getColor(true), new String[] {bride1Name, bride2Name}, recipients);
 		    sendPriestAcceptMessage(priestPrefixType, priestName, new Player[] {bride1, bride2});
+		    
+		    // Додаємо таймер для видалення пропозиції через хвилину, якщо хоча б один із наречених не дав згоду
+            Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
+                if (!marryProposal.areBothConsentsGiven()) {
+                    marriageManager.remove(marryProposal);
+                    sendMessage(new MessageForFormatting("family_err_proposal_timeout", new String[]{bride1Name, bride2Name}), MessageType.WARNING, recipients);
+                }
+            }, 1200L); // 1200 тіків = 60 секунд
 		    
 		}, 10L);
 

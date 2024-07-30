@@ -210,6 +210,7 @@ family_groom_consent1: " [Відповісти ТАК!] "
 family_groom_consent2: " [Відповісти НІ!]"
 family_groom_hover_consent1: "Для підтвердження клікни, \nабо відправ команду /marry accept"
 family_groom_hover_consent2: "Для відмови клікни, \nабо відправ команду /marry refuseІ"
+family_err_proposal_timeout: "Заявка про шлюб між %s та %s скасована, тому що не була прийнята чи відхилена за хвилину"
 
 # Пропозиції приватного шлюбу [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "Немає пропозиції про шлюб."

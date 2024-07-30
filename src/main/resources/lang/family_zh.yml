@@ -210,6 +210,7 @@ family_groom_consent1: " [回复是！] "
 family_groom_consent2: " [回复否！]"
 family_groom_hover_consent1: "点击确认，\n或发送命令 /marry accept"
 family_groom_hover_consent2: "点击拒绝，\n或发送命令 /marry refuse"
+family_err_proposal_timeout: "由于在一分钟内未被接受或拒绝，%s 和 %s 之间的婚姻提议已被取消。"
 
 # 私人婚姻提议 [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "没有婚姻提议。"
