@@ -42,7 +42,7 @@ public class FamilySymbolManager extends AbstractDetailsManager {
     }
 
     protected void handleSymbolRequest(FamilyDetails details, String newSymbol) {
-        if (details.getFamilySymbol() != null && details.getFamilySymbol().length() >= 6) {
+        if (details.getFamilySymbol() != null && details.getFamilySymbol().length() < 6) {
             sendMessage(new MessageForFormatting("family_err_symbol_already_set", new String[] {}), MessageType.WARNING, player);
             return;
         }
@@ -55,11 +55,12 @@ public class FamilySymbolManager extends AbstractDetailsManager {
         }
 
         symbolRequests.put(details.getFamilyId(), new SymbolRequest(newSymbol, player.getUniqueId()));
+        sendMessage(new MessageForFormatting("family_symbol_request_sent", new String[] {}), MessageType.NORMAL, player);
         
         Player spouse = Bukkit.getPlayer(spouseUUID);
         if (spouse != null && spouse.isOnline()) {
-            MessageComponents messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_symbol_request_sent", command, "accept", "refuse", spouse);
-            sendMessageComponent(player, messageComponents);
+            MessageComponents messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_symbol_accept_sent", command, "accept", "refuse", spouse);
+            sendMessageComponent(spouse, messageComponents);
         }
 
         familyPlugin.getServer().getScheduler().runTaskLater(familyPlugin, () -> {

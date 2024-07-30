@@ -52,12 +52,15 @@ public class FamilyCommand extends Sender implements CommandExecutor {
     	                    new Separation(familyPlugin).separate(sender, args);
     	                    break;
     	                case "info":
+    	                case "i":
     	                    new FamilyInfo().handleInfoCommand(sender, args, true);
     	                    break;
     	                case "profile":
+    	                case "p":
     	                    new FamilyProfileHandler().handleCommand(sender, args);
     	                    break;
     	                case "tree":
+    	                case "t":
     	                    new FamilyTreeHandler().handleCommand(sender, args);
     	                    break;
     	                default:

@@ -128,7 +128,7 @@ public class FamilyChestManager extends AbstractDetailsManager {
                     Player spouse = Bukkit.getPlayer(playerFamily.getSpouse());
                     if (spouse != null && spouse.isOnline()) {
                         MessageComponents messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_chest_accept_sent", command, "accept", "refuse", spouse);
-                        sendMessageComponent(player, messageComponents);
+                        sendMessageComponent(spouse, messageComponents);
                     }
                 }
 

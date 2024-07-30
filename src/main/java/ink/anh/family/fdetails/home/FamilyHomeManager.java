@@ -129,7 +129,7 @@ public class FamilyHomeManager extends AbstractDetailsManager {
                 Player spouse = Bukkit.getPlayer(spouseUUID);
                 if (spouse != null && spouse.isOnline()) {
                     MessageComponents messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_home_accept_sent", command, "accept", "refuse", spouse);
-                    sendMessageComponent(player, messageComponents);
+                    sendMessageComponent(spouse, messageComponents);
                 }
 
                 Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
