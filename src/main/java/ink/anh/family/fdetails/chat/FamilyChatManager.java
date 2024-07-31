@@ -178,7 +178,7 @@ public class FamilyChatManager extends AbstractDetailsManager {
         	notifyPlayerOnMention(recipient, args);
         });
         MessageComponents messageComponents = buildInteractiveMessage(details, message, recipient);
-        sendMessageComponent(player, messageComponents);
+        sendMessageComponent(recipient, messageComponents);
     }
 
     private void notifyPlayerOnMention(Player target, String[] args) {
