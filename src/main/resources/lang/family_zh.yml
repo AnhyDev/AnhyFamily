@@ -1,21 +1,8 @@
-#
-# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
-# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
-# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
-# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
-# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
-# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
-
-# 可以使用颜色代码：&6 或 §6
-
-# 1 通用
 family_err_not_have_permission: "你无权使用此命令。"
 family_err_not_alloved_config: "该命令在配置中不被允许。"
 family_err_command_only_player: "此命令只能由玩家执行。"
 family_err_command_format: "命令格式：%s"
 family_request_rejected: "请求被拒绝。"
-
-# 2 加载配置
 family_err_folder_is_empty: "文件夹为空或读取时出错。"
 family_err_folder_is_notexist: "文件夹不存在或不是文件夹。"
 family_err_reloading_configuration: "重新加载配置时出错。"
@@ -23,8 +10,6 @@ family_created_default_configuration: "创建了默认配置。"
 family_configuration_reloaded: "配置已重新加载。"
 family_plugin_reloaded: "插件已重新加载。"
 family_language_reloaded: "语言文件和配置已重新加载。"
-
-# 3 杂项
 family_player: "玩家 "
 family_player_not_found: " 未找到或不在线。"
 family_player_not_found_full: "玩家 %s 未找到或不在线。"
@@ -39,8 +24,6 @@ family_request_confirm: "[确认] "
 family_request_reject: " [拒绝]"
 family_request_confirm_hover: "点击确认 %s"
 family_request_reject_hover: "点击拒绝 %s"
-
-# 命令 /gender ... [classes: ink.anh.family.commands.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "男性"
 family_gender_female: "女性"
 family_gender_non-binary: "非二元"
@@ -52,8 +35,6 @@ family_gender_incorrectly_specified: "性别指定错误。请使用 MALE、FEMA
 family_gender_player_reset: "玩家 %s 的性别已被重置为“未决定”。"
 family_gender_player_set_to: "玩家 %s 的性别被设定为："
 family_non_binary_not_allowed: "配置设置中不允许选择非二元性别"
-
-# 命令 /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.ProfileStringGenerator]
 family_info_previous_lastname: "之前的姓氏："
 family_info_role_father: "父亲："
 family_info_role_mother: "母亲："
@@ -72,8 +53,6 @@ family_info_mother_unknown: "未知"
 family_info_children: "孩子："
 family_info_children_none: "没有"
 family_info_component: "玩家 %s 的家庭信息，悬停查看或点击显示在你的聊天框中"
-
-# 命令 /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeHandler, ink.anh.family.fplayer.info.TreeStringGenerator]
 family_tree_title: "家谱树"
 family_tree_ancestors: "祖先"
 family_tree_descendants: "后代"
@@ -82,8 +61,6 @@ family_tree_component: "家谱"
 family_profile_component: "个人资料"
 family_print_component: "点击打印"
 family_print_info: "家庭信息 %s:"
-
-# 命令 /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "你的姓氏：%s"
 family_surname_already_exists: "姓氏已经存在：%s，如果要更改，请咨询牧师"
 family_surname_forced_change: "玩家 %s 的姓氏已被强制更改为：%s"
@@ -91,8 +68,6 @@ family_surname_build_failed: "无法保存姓氏，一个或两个选项可能�
 family_err_firstname_not_set: "要设置姓氏，首先需要设置名字：%s"
 family_firstname_too_long: "名字不能超过10个字符，并且不能包含空格或数字。"
 family_firstname_selected: "名字已成功设置：%s。"
-
-# 命令 /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "玩家 %s 已经有父母，无法被收养"
 family_adopt_error_self_adoption: "无法收养自己"
 family_adopt_error_duplicate_requests: "两个未来的父母已经提交了请求"
@@ -103,13 +78,9 @@ family_adopt_request_already_sent: "你已经发送了请求，请等待决定"
 family_adopt_adoption_applications: "收养申请："
 family_adopt_no_applications_adoption: "没有收养申请"
 family_err_adoption_failed: "玩家 %s 不能成为 %s 的父母"
-
-# 命令 /adoption cancel [class: ink.anh.family.parents.Adopt]
 family_cancel_adoption_error_no_request: "取消收养时出错，没有请求"
 family_cancel_adoption_partial_success: "%s 取消了对 %s 的收养申请，另一个父母 %s 的申请仍然有效"
 family_cancel_adoption_full_success: "%s 取消了对 %s 的收养申请，收养程序已完全取消"
-
-# 命令 /adoption accept [class: ink.anh.family.parents.Adopt]
 family_accept_error_no_parents: "未来的父母尚未表达他们的收养意愿"
 family_accept_error_parent1_missing: "未在数据库中找到第一位父母。"
 family_accept_error_parent2_missing: "未在数据库中找到第二位父母。"
@@ -118,20 +89,12 @@ family_accept_error_parrent_not_online: "其中一位未来的父母已经离开
 family_accept_success: "玩家 %s 和 %s 现在是 %s 的父母"
 family_accept_success_adoption: "玩家 %s 成功被玩家 %s 收养"
 family_accept_adoption_close: "由于缺乏回应，收养程序已自动取消"
-
-# 命令 /adoption forceadopt [classes: ink.anh.family.parents.FamilyAdoption]
 family_log_adoption_impossible_single: "玩家 %s 无法收养玩家 %s"
 family_log_adoption_successful_single: "玩家 %s 成功被玩家 %s 收养"
-
-# 命令 /adoption decline [classes: ink.anh.family.parents.Adopt]
 family_decline_notify_parent: "你对 %s 的收养申请被拒绝了"
 family_decline_success: "你拒绝了收养提议"
-
-# 10 清除家庭
 family_clear_relative_success: "成功删除家庭关系"
 family_clear_relative_missing: "未找到要删除的家庭关系"
-
-# 11 分离家庭
 family_err_no_family_found_for_target: "未找到目标的家庭。"
 family_err_no_parent_child_relationship: "未找到父母-子女关系。"
 family_success_separation_completed: "成功结束关系。"
@@ -143,8 +106,6 @@ family_separation_successful: "成功解除家庭关系。"
 family_spouse_not_found: "你没有伴侣，无法离婚。"
 family_separation_spouse_successful: "你已经离婚了。"
 family_error_command_line: "命令不完整或错误"
-
-# 12 新婚行动
 family_marry_refuse: "不！我拒绝婚礼！"
 family_marry_failed: "玩家 %s 和 %s 之间的婚礼未能举行，众神愤怒了！忏悔吧，罪人。"
 family_member_missing: "一位或多位参与者已离开，仪式取消！"
@@ -176,20 +137,14 @@ family_marry_vows_nonbinary: |
   忘掉孩子吧，我们中的一个可以照顾家！
   一起建造一个家，共享喜悦和悲伤，并携手一起走过人生旅程！
   让全世界都知道我们的结合坚固且不可动摇，直到永远！
-
 family_marry_success: "众神听到了 %s 和 %s 的祈祷和誓言！从现在开始直到永远，你们已经在婚姻中结合了！众神祝福你们的结合！祝你们幸福、爱情、和谐与繁荣！"
 family_marry_payment_failed: "其中一位新婚夫妇试图藏钱！众神现在拒绝进行仪式。"
-
-# 牧师
 family_marry_priest_male: "牧师"
 family_marry_priest_female: "女牧师"
 family_marry_priest_nonbinary: "圣人"
-# 新婚夫妇
 family_marry_groom_male: "新郎"
 family_marry_groom_female: "新娘"
 family_marry_groom_nonbinary: "新婚者"
-
-# 13 家庭婚姻
 family_marry_failed_myself: "你不能对自己进行仪式，请找另一位牧师。"
 family_marry_failed_traditional: "这里只允许传统家庭，男人和女人！"
 family_marry_failed_last_name: "由于未找到家庭姓氏，目前无法举行婚礼！"
@@ -198,7 +153,6 @@ family_mary_not_have_permission: "你还没有创建家庭的权限"
 family_mary_not_have_permission_members: "由于 %s%s%s 无法获得结婚许可，目前无法举行婚礼！"
 family_marry_payment_failed_check: "由于新婚夫妇没有足够的钱支付仪式，目前无法举行婚礼。"
 family_marry_already_started: "%s 和 %s 之间的婚礼仪式已经开始。"
-
 family_marry_start_success: |
   众神已同意在 %s 和 %s 之间举行婚礼仪式，
   新婚夫妇，大声说（是的！）以确认你的同意。之后将发表誓言。
@@ -211,8 +165,6 @@ family_groom_consent2: " [回复否！]"
 family_groom_hover_consent1: "点击确认，\n或发送命令 /marry accept"
 family_groom_hover_consent2: "点击拒绝，\n或发送命令 /marry refuse"
 family_err_proposal_timeout: "由于在一分钟内未被接受或拒绝，%s 和 %s 之间的婚姻提议已被取消。"
-
-# 私人婚姻提议 [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "没有婚姻提议。"
 family_proposal_sent: "已向 %s 发送提议。"
 family_proposal_received: "您收到来自 %s 的婚姻提议。"
@@ -222,12 +174,9 @@ family_proposal_accepted_sender: "%s 接受了您的婚姻提议。"
 family_proposal_refused: "您拒绝了来自 %s 的婚姻提议。"
 family_proposal_refused_sender: "%s 拒绝了您的婚姻提议。"
 family_marriage_successful: "%s 和 %s 刚刚秘密结婚了。"
-
 family_marry_private_prefix: "☁☀☁"
 family_marry_private_priest: "圣瓦伦丁"
 family_err_event_is_canceled: "事件因外部因素被取消"
-
-# Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
 family_separation_divorce: "离婚"
 family_separation_disown_child: "断绝子女关系"
 family_separation_disown_parent: "断绝父母关系"
@@ -235,8 +184,6 @@ family_separation_full_separation: "完全断绝所有家庭关系"
 family_separation_divorce_relative: "离婚，与配偶的亲戚分离"
 family_err_dont_have_parents: "你没有父母。"
 family_err_dont_have_children: "你没有孩子。"
-
-# 家庭住宅的命令 [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "未找到家庭详细信息。"
 family_err_home_already_set: "更改家庭点的超时时间尚未到期。"
 family_err_home_not_set: "家庭点未设定。"
@@ -253,8 +200,6 @@ family_err_nickname_not_found_in_access_maps: "在访问映射中找不到昵称
 family_default_home_access_set: "默认家庭访问设置为 %s：%s。"
 family_err_invalid_group: "无效的组：%s。请使用 children 或 parents。"
 family_home_accept_sent: "通过命令确认设置家庭住所：&e%s"
-
-# 家庭前缀的命令 [ink.anh.family.fdetails.symbol.FamilySymbolManager]
 family_err_invalid_prefix: "无效的前缀。它应该是 3 到 5 个拉丁字母。"
 family_prefix_request_sent: "已发送家庭前缀更改请求。你的伴侣必须在60秒内使用命令确认请求：%s。"
 family_err_request_prefix_not_confirmed: "前缀更改请求在60秒内未被确认。"
@@ -265,8 +210,6 @@ family_err_prefix_not_found: "未找到前缀 %s。"
 family_prefix_info: "玩家 %s 属于家庭 %s，点击复制"
 family_prefix_info_hover: "复制玩家 %s 的家庭前缀 %s 到剪贴板"
 family_err_no_family_prefix: "玩家 %s 没有家庭前缀"
-
-# 家庭聊天的命令 [ink.anh.family.fdetails.chat.FamilyChatManager]
 family_chat_access_set: "对 %s 的聊天访问设置为 %s。"
 family_default_chat_access_set: "默认聊天访问设置为 %s：%s。"
 family_hover_copy_message: "点击复制前缀 '%s' 到剪贴板"
@@ -274,8 +217,6 @@ family_hover_reply_chat: "回复此聊天"
 family_hover_player_reply: "回复此聊天中的 '%s'"
 family_hover_player_offline: "玩家 '%s' 不在线"
 family_notify_family_chat: "亲戚 %s 在家庭群聊中提到了你"
-
-# 家庭箱子的命令 [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "家庭箱可以是以下块：&e%s"
 family_err_chest_home_distance: "箱子离家庭住所太远"
 family_chest_accept_sent: "通过命令确认设置家庭箱：&e%s"
@@ -293,14 +234,11 @@ family_err_chest_not_set: "箱子位置未设定。"
 family_chest_inventory: "家庭宝箱：%s"
 family_err_chest_open_other: "家庭宝箱 %s 已被玩家 %s 打开"
 family_forbidden_break_family_chest: "你不能打破家庭宝箱！"
-
-# [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "组的默认访问检查"
 family_message_group_access: "组 %s 拥有访问权限: "
 family_access_player_get: "%s 已设置访问权限: "
 family_hover_set_default: "设置访问 %s"
 family_access_change: ".\n 更改访问权限: "
-
 family_err_invalid_symbol: "提供的符号无效。它必须包含 3 到 5 个大写字母。"
 family_err_symbol_taken: "符号 '%s' 已被占用。"
 family_err_no_spouse: "你必须有一个配偶。"
@@ -309,8 +247,6 @@ family_symbol_request_sent: "前缀更改请求已发送。您的配偶必须在
 family_err_request_symbol_not_confirmed: "符号更改请求未及时确认。"
 family_err_symbol_already_set: "家庭符号已设置。"
 family_symbol_set: "家庭符号已设置。"
-
-# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
 family_err_no_access_hugs: "因试图未经许可拥抱而受到来自 %s 的一记耳光"
 family_you_hugged_player1: "你拥抱了 %s"
 family_you_hugged_player2: "你拥抱了 %s"
@@ -332,14 +268,11 @@ family_hugs_access_list_empty: "你的个人拥抱权限/禁止列表为空"
 family_hugs_allow_all_status: "全球拥抱权限：%s"
 family_hugs_deny_all_status: "全球拥抱禁止：%s"
 family_hugs_access_removed: "已移除 %s 的个人拥抱权限/禁止"
-
-# NamesPastorManager
 family_name_replacement_sent: "已向玩家 %s 发送姓名/姓氏更改提议"
 family_err_there_already_offer: "对玩家 %s 的姓名/姓氏更改提议正在等待确认"
 family_name_change_proposal_refuse: "姓名/姓氏更改提议被拒绝"
 family_name_change_proposal: "牧师 %s 提议将你的名字改为 %s。"
 family_lastname_change_proposal: "牧师 %s 提议将你的姓氏改为 %s。"
-
 family_item_add_success: "物品成功添加/覆盖，键为：%s"
 family_item_add_failure: "添加/覆盖物品失败。请确保你手里拿着物品。"
 family_item_clear_success: "文件 item_prices.yml 成功清除。"

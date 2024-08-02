@@ -1,21 +1,8 @@
-#
-# ░█████╗░███╗░░██╗██╗░░██╗██╗░░░██╗███████╗░█████╗░███╗░░░███╗██╗██╗░░██╗░░░██╗
-# ██╔══██╗████╗░██║██║░░██║╚██╗░██╔╝██╔════╝██╔══██╗████╗░████║██║██║░░╚██╗░██╔╝
-# ███████║██╔██╗██║███████║░╚████╔╝░█████╗░░███████║██╔████╔██║██║██║░░░╚████╔╝░
-# ██╔══██║██║╚████║██╔══██║░░╚██╔╝░░██╔══╝░░██╔══██║██║╚██╔╝██║██║██║░░░░╚██╔╝░░
-# ██║░░██║██║░╚███║██║░░██║░░░██║░░░██║░░░░░██║░░██║██║░╚═╝░██║██║███████╗██║░░░
-# ╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░░
-
-# Se pueden usar códigos de colores como: &6 o §6
-
-# 1 General
 family_err_not_have_permission: "No tienes permiso para usar este comando."
 family_err_not_alloved_config: "El comando no está permitido en la configuración."
 family_err_command_only_player: "Este comando solo puede ser ejecutado por un jugador."
 family_err_command_format: "Formato del comando: %s"
 family_request_rejected: "Solicitud rechazada."
-
-# 2 Carga de configuraciones
 family_err_folder_is_empty: "La carpeta está vacía o ocurrió un error al leerla."
 family_err_folder_is_notexist: "La carpeta no existe o no es una carpeta."
 family_err_reloading_configuration: "Error al recargar la configuración."
@@ -23,8 +10,6 @@ family_created_default_configuration: "Configuración predeterminada creada."
 family_configuration_reloaded: "Configuración recargada."
 family_plugin_reloaded: "Plugin recargado."
 family_language_reloaded: "Archivos de idioma y configuración recargados."
-
-# 3 Varios
 family_player: "Jugador "
 family_player_not_found: " no encontrado o no está en línea."
 family_player_not_found_full: "Jugador %s no encontrado o no está en línea."
@@ -39,8 +24,6 @@ family_request_confirm: "[CONFIRMAR] "
 family_request_reject: " [RECHAZAR]"
 family_request_confirm_hover: "Haz clic para confirmar %s"
 family_request_reject_hover: "Haz clic para rechazar %s"
-
-# Command /gender ... [classes: ink.anh.family.commands.GenderCommand, ink.anh.family.fplayer.gender.GenderManager]
 family_gender_male: "Masculino"
 family_gender_female: "Femenino"
 family_gender_non-binary: "No binario"
@@ -52,8 +35,6 @@ family_gender_incorrectly_specified: "Género especificado incorrectamente. Usa 
 family_gender_player_reset: "El género del jugador %s ha sido restablecido a 'No decidido'."
 family_gender_player_set_to: "El género del jugador %s ha sido establecido como:"
 family_non_binary_not_allowed: "La selección de género no binario no está permitida en la configuración"
-
-# Command /family info [classes: ink.anh.family.fplayer.info.FamilyProfileHandler, ink.anh.family.fplayer.info.ProfileStringGenerator]
 family_info_previous_lastname: "Apellido anterior: "
 family_info_role_father: "Padre:"
 family_info_role_mother: "Madre:"
@@ -72,8 +53,6 @@ family_info_mother_unknown: "desconocida"
 family_info_children: "Niños:"
 family_info_children_none: "ninguno"
 family_info_component: "Información familiar del jugador %s, pasa el ratón para ver o haz clic para mostrar en tu chat"
-
-# Command /family tree  [classes: ink.anh.family.fplayer.info.FamilyTreeHandler, ink.anh.family.fplayer.info.TreeStringGenerator]
 family_tree_title: "Árbol genealógico"
 family_tree_ancestors: "Ancestros"
 family_tree_descendants: "Descendientes"
@@ -82,8 +61,6 @@ family_tree_component: "Árbol genealógico"
 family_profile_component: "Perfil"
 family_print_component: "Haz clic para imprimir"
 family_print_info: "Información familiar %s:"
-
-# Command /surname (setsurname) ... [class: ink.anh.family.fplayer.Surname]
 family_surname_selected: "Tu apellido: %s "
 family_surname_already_exists: "El apellido ya existe: %s, para cambiarlo, consulta al sacerdote"
 family_surname_forced_change: "El apellido para el jugador %s ha sido cambiado a la fuerza: %s "
@@ -91,8 +68,6 @@ family_surname_build_failed: "No se pudo guardar el apellido, una o ambas opcion
 family_err_firstname_not_set: "Para establecer el apellido, primero debes establecer el nombre: %s"
 family_firstname_too_long: "El nombre no puede exceder los 10 caracteres, y no puede contener espacios ni números."
 family_firstname_selected: "El nombre ha sido establecido con éxito: %s."
-
-# Command /adoption invite (forceadopt) [class: ink.anh.family.parents.Adopt]
 family_adopt_error_already_has_parents: "El jugador %s ya tiene padres, no se puede adoptar"
 family_adopt_error_self_adoption: "No puedes adoptarte a ti mismo"
 family_adopt_error_duplicate_requests: "Ambos futuros padres ya han presentado solicitudes"
@@ -103,13 +78,9 @@ family_adopt_request_already_sent: "Ya has enviado una solicitud, espera la deci
 family_adopt_adoption_applications: "Solicitudes de adopción: "
 family_adopt_no_applications_adoption: "No hay solicitudes de adopción"
 family_err_adoption_failed: "El jugador %s no puede ser padre de %s"
-
-# Command /adoption cancel [class: ink.anh.family.parents.Adopt]
 family_cancel_adoption_error_no_request: "Error al cancelar la adopción, no hay solicitud"
 family_cancel_adoption_partial_success: "%s canceló su solicitud para adoptar a %s, la solicitud del otro padre %s está activa"
 family_cancel_adoption_full_success: "%s canceló su solicitud para adoptar a %s, el procedimiento de adopción ha sido cancelado por completo"
-
-# Command /adoption accept [class: ink.anh.family.parents.Adopt]
 family_accept_error_no_parents: "Los futuros padres aún no han expresado su deseo de adoptarte"
 family_accept_error_parent1_missing: "No se encontró al primer padre en la BD."
 family_accept_error_parent2_missing: "No se encontró al segundo padre en la BD."
@@ -118,20 +89,12 @@ family_accept_error_parrent_not_online: "Uno de los futuros padres nos ha dejado
 family_accept_success: "Los jugadores %s y %s ahora son padres de %s"
 family_accept_success_adoption: "Adopción exitosa del jugador %s por parte del jugador %s"
 family_accept_adoption_close: "El procedimiento de adopción ha sido cancelado automáticamente debido a la falta de respuesta"
-
-# Command /adoption forceadopt [classes: ink.anh.family.parents.FamilyAdoption]
 family_log_adoption_impossible_single: "El jugador %s no puede adoptar al jugador %s"
 family_log_adoption_successful_single: "Adopción exitosa del jugador %s por parte del jugador %s"
-
-# Command /adoption decline [classes: ink.anh.family.parents.Adopt]
 family_decline_notify_parent: "Tu solicitud para adoptar a %s ha sido rechazada"
 family_decline_success: "Has rechazado la oferta de adopción"
-
-# 10 Family clear
 family_clear_relative_success: "Eliminación de vínculos familiares exitosa"
 family_clear_relative_missing: "No se encontraron vínculos familiares para eliminar"
-
-# 11 Family separate
 family_err_no_family_found_for_target: "No se encontró familia para el objetivo."
 family_err_no_parent_child_relationship: "No se encontró relación padre-hijo."
 family_success_separation_completed: "Relación terminada con éxito."
@@ -143,8 +106,6 @@ family_separation_successful: "Vínculos familiares terminados con éxito."
 family_spouse_not_found: "No tienes pareja, no hay con quién divorciarse."
 family_separation_spouse_successful: "Te has divorciado."
 family_error_command_line: "Comando incompleto o incorrecto"
-
-# 12 Acciones de los recién casados
 family_marry_refuse: "¡NO! ¡Me niego a la boda!"
 family_marry_failed: "La boda entre %s y %s no pudo realizarse, ¡los dioses están furiosos! Arrepiéntanse, pecadores."
 family_member_missing: "Uno o más participantes se han ido, ¡la ceremonia está cancelada!"
@@ -176,20 +137,14 @@ family_marry_vows_nonbinary: |
   ¡Olvídate de los niños, y alguno de nosotros puede cuidar de la casa!
   ¡Construir un hogar juntos, compartiendo alegrías y penas, y caminar juntos de la mano por la vida!
   ¡Que el mundo sepa que nuestra unión es fuerte e inquebrantable, por siempre y para siempre!
-
 family_marry_success: "Los dioses han escuchado las oraciones y votos de %s y %s. ¡Desde ahora y para siempre están unidos en matrimonio! ¡Los dioses han bendecido su unión! Les deseamos felicidad, amor, armonía y prosperidad."
 family_marry_payment_failed: "¡Uno de los recién casados intentó esconder el dinero! Los dioses se niegan a realizar el ritual ahora."
-
-# Sacerdotes
 family_marry_priest_male: "Sacerdote"
 family_marry_priest_female: "Sacerdotisa"
 family_marry_priest_nonbinary: "Persona sagrada"
-# Recién casados
 family_marry_groom_male: "Novio"
 family_marry_groom_female: "Novia"
 family_marry_groom_nonbinary: "Prometide"
-
-# 13 Matrimonio familiar
 family_marry_failed_myself: "No puedes realizar el ritual sobre ti mismo, llama a otro sacerdote."
 family_marry_failed_traditional: "Aquí solo se permiten familias tradicionales, ¡hombre y mujer!"
 family_marry_failed_last_name: "La boda no es posible ahora porque no se encontró un apellido familiar."
@@ -198,7 +153,6 @@ family_mary_not_have_permission: "Todavía no tienes permiso para formar una fam
 family_mary_not_have_permission_members: "La boda no es posible ahora porque %s%s%s no tiene permiso para casarse."
 family_marry_payment_failed_check: "La boda no es posible ahora porque los recién casados no tienen suficiente dinero para pagar el ritual."
 family_marry_already_started: "La ceremonia de boda entre %s y %s ya ha comenzado."
-
 family_marry_start_success: |
   Los dioses han accedido a realizar el ritual de boda entre %s y %s,
   recién casados, digan en voz alta (¡SÍ!) para confirmar su consentimiento. Después de eso, se pronunciarán los votos.
@@ -211,8 +165,6 @@ family_groom_consent2: " [Responder NO!]"
 family_groom_hover_consent1: "Haz clic para confirmar, \no envía el comando /marry accept"
 family_groom_hover_consent2: "Haz clic para rechazar, \no envía el comando /marry refuse"
 family_err_proposal_timeout: "La propuesta de matrimonio entre %s y %s fue cancelada porque no fue aceptada ni rechazada dentro de un minuto."
-
-# Propuestas de matrimonio privadas [classes: ink.anh.family.marriage.ActionsBridesPrivate]
 family_err_no_proposal: "No hay propuesta de matrimonio."
 family_proposal_sent: "Propuesta enviada a %s."
 family_proposal_received: "Has recibido una propuesta de matrimonio de %s."
@@ -222,12 +174,9 @@ family_proposal_accepted_sender: "%s aceptó tu propuesta de matrimonio."
 family_proposal_refused: "Has rechazado la propuesta de matrimonio de %s."
 family_proposal_refused_sender: "%s rechazó tu propuesta de matrimonio."
 family_marriage_successful: "%s y %s acaban de casarse en secreto."
-
 family_marry_private_prefix: "☁☀☁"
 family_marry_private_priest: "San Valentín"
 family_err_event_is_canceled: "El evento ha sido cancelado por fuerzas externas"
-
-# Family Separation Reasons [classes: ink.anh.family.events.FamilySeparationReason]
 family_separation_divorce: "Divorcio"
 family_separation_disown_child: "Renegar de un hijo"
 family_separation_disown_parent: "Renegar de los padres"
@@ -235,8 +184,6 @@ family_separation_full_separation: "Ruptura completa de todos los lazos familiar
 family_separation_divorce_relative: "Divorcio, separación de los familiares del cónyuge"
 family_err_dont_have_parents: "No tienes padres."
 family_err_dont_have_children: "No tienes hijos."
-
-# Comandos para hogares familiares [ink.anh.family.fdetails.home.FamilyHomeManager]
 family_err_details_not_found: "Detalles familiares no encontrados."
 family_err_home_already_set: "El tiempo de espera para cambiar el punto de hogar aún no ha expirado."
 family_err_home_not_set: "Punto de hogar no establecido."
@@ -253,8 +200,6 @@ family_err_nickname_not_found_in_access_maps: "El apodo %s no se encontró en lo
 family_default_home_access_set: "Acceso al hogar por defecto establecido para %s: %s."
 family_err_invalid_group: "Grupo inválido: %s. Usa children o parents."
 family_home_accept_sent: "Confirme la configuración de la casa familiar con el comando: &e%s"
-
-# Comandos para el prefijo familiar [ink.anh.family.fdetails.symbol.FamilySymbolManager]
 family_err_invalid_prefix: "Prefijo inválido. Debe tener de 3 a 5 letras latinas."
 family_prefix_request_sent: "Solicitud de cambio de prefijo familiar enviada. Tu pareja debe confirmar la solicitud dentro de los 60 segundos usando el comando: %s."
 family_err_request_prefix_not_confirmed: "Solicitud de cambio de prefijo no confirmada dentro de los 60 segundos."
@@ -265,8 +210,6 @@ family_err_prefix_not_found: "Prefijo %s no encontrado."
 family_prefix_info: "El jugador %s pertenece a la familia %s, haz clic para copiar"
 family_prefix_info_hover: "Copiar el prefijo familiar %s del jugador %s al portapapeles"
 family_err_no_family_prefix: "El jugador %s no tiene un prefijo familiar"
-
-# Comandos para chats familiares [ink.anh.family.fdetails.chat.FamilyChatManager]
 family_chat_access_set: "Acceso al chat para %s establecido en %s."
 family_default_chat_access_set: "Acceso al chat por defecto establecido para %s: %s."
 family_hover_copy_message: "Haz clic para copiar el prefijo '%s' al portapapeles"
@@ -274,8 +217,6 @@ family_hover_reply_chat: "Responder a este chat"
 family_hover_player_reply: "Responder a '%s' en este chat"
 family_hover_player_offline: "El jugador '%s' está desconectado"
 family_notify_family_chat: "El pariente %s te mencionó en el chat familiar"
-
-# Comandos para cofres familiares [ink.anh.family.fdetails.chest.FamilyChestManager]
 family_err_invalid_chest_location: "El cofre familiar puede ser los siguientes bloques: &e%s"
 family_err_chest_home_distance: "El cofre está demasiado lejos de la casa familiar"
 family_chest_accept_sent: "Confirme la configuración del cofre familiar con el comando: &e%s"
@@ -293,14 +234,11 @@ family_err_chest_not_set: "La ubicación del cofre no está establecida."
 family_chest_inventory: "Cofre familiar: %s"
 family_err_chest_open_other: "El cofre familiar %s ya está abierto por el jugador %s"
 family_forbidden_break_family_chest: "¡No puedes romper el cofre familiar!"
-
-# [ink.anh.family.fdetails.FDetailsComponentBuilder]
 family_default_chat_access_check: "Verificación de acceso predeterminado para el grupo"
 family_message_group_access: "El grupo %s tiene acceso: "
 family_access_player_get: "%s tiene acceso configurado: "
 family_hover_set_default: "Establecer acceso %s"
 family_access_change: ".\n Cambiar acceso: "
-
 family_err_invalid_symbol: "El símbolo proporcionado no es válido. Debe contener entre 3 y 5 letras mayúsculas."
 family_err_symbol_taken: "El símbolo '%s' ya está en uso."
 family_err_no_spouse: "Debes tener un cónyuge."
@@ -309,8 +247,6 @@ family_symbol_request_sent: "Solicitud de cambio de prefijo enviada. Tu cónyuge
 family_err_request_symbol_not_confirmed: "La solicitud de cambio de símbolo no fue confirmada a tiempo."
 family_err_symbol_already_set: "El símbolo de la familia ya está establecido."
 family_symbol_set: "Símbolo de la familia establecido."
-
-# [ink.anh.family.fdetails.hugs.FamilyHugsManager]
 family_err_no_access_hugs: "Recibe una bofetada de %s por intentar abrazar sin permiso"
 family_you_hugged_player1: "Abrazaste a %s"
 family_you_hugged_player2: "Abrazaste a %s"
@@ -332,14 +268,11 @@ family_hugs_access_list_empty: "Tu lista de permisos/prohibiciones personales pa
 family_hugs_allow_all_status: "Permiso global de abrazos: %s"
 family_hugs_deny_all_status: "Prohibición global de abrazos: %s"
 family_hugs_access_removed: "Permisos/prohibiciones personales para abrazos de %s eliminados"
-
-# NamesPastorManager
 family_name_replacement_sent: "Propuesta de cambio de nombre/apellido enviada al jugador %s"
 family_err_there_already_offer: "La propuesta de cambio de nombre/apellido para el jugador %s está esperando confirmación"
 family_name_change_proposal_refuse: "Propuesta de cambio de nombre/apellido rechazada"
 family_name_change_proposal: "El pastor %s propone cambiar tu nombre a %s."
 family_lastname_change_proposal: "El pastor %s propone cambiar tu apellido a %s."
-
 family_item_add_success: "Elemento agregado/sobrescrito con éxito con la clave: %s"
 family_item_add_failure: "No se pudo agregar/sobrescribir el elemento. Asegúrate de tener el elemento en la mano."
 family_item_clear_success: "Archivo item_prices.yml borrado con éxito."

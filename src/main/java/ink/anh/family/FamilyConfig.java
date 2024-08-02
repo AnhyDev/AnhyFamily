@@ -13,7 +13,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.api.items.ItemStackSerializer;
-import ink.anh.api.messages.Logger;
 import ink.anh.family.fplayer.FamilyService;
 import ink.anh.family.payment.Currency;
 import ink.anh.family.payment.Prices;
@@ -251,7 +250,6 @@ public class FamilyConfig {
             ItemStack item = items[i];
             String material = item.getType().name();
             int amount = item.getAmount();
-            Logger.info(AnhyFamily.getInstance(), "Item for " + keys[i] + ": Material = " + material + ", Amount = " + amount);
         }
         return items;
     }
