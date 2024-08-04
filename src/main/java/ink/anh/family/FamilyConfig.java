@@ -245,12 +245,6 @@ public class FamilyConfig {
                 items[i] = defaultStack;
             }
         }
-
-        for (int i = 0; i < items.length; i++) {
-            ItemStack item = items[i];
-            String material = item.getType().name();
-            int amount = item.getAmount();
-        }
         return items;
     }
     
