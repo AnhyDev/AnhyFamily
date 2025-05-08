@@ -128,24 +128,24 @@ public class FamilyHugsManager extends AbstractDetailsManager {
                     player.damage(1.0, slapDamageSource);
 
                     // Ефект VILLAGER_ANGRY перед очима гравця
-                    player.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, player.getLocation().add(0, 0.0, 0), 1, 0.2, 0.2, 0.2, 0.05);
+                    player.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, player.getLocation().add(0, 0.0, 0), 1, 0.2, 0.2, 0.2, 0.05);
 
                     // Спавнування частинок вздовж вектора руху
-                    spawnParticlesAlongVector(player, Particle.VILLAGER_ANGRY, direction, 5.0, 10, 2);
+                    spawnParticlesAlongVector(player, Particle.ANGRY_VILLAGER, direction, 5.0, 10, 2);
 
                     sendActionBarMessage(player, new MessageForFormatting(getInvalidAccessMessage(), new String[]{target.getName()}), StringColorUtils.HUGS_DENY);
 
                     return true;
                 }
 
-                Particle particle = Particle.SPELL_WITCH;
+                Particle particle = Particle.WITCH;
                 String hexColor = StringColorUtils.HUGS_OTHER;
                 
                 if (FamilyUtils.getRelationshipDegree(playerFamily, target.getUniqueId()) == RelationshipDegree.SPOUSE) {
                     particle = Particle.HEART;
                     hexColor = StringColorUtils.HUGS_SPOUSE;
                 } else if (playerFamily.isFamilyMember(targetFamily.getRoot())) {
-                    particle = Particle.VILLAGER_HAPPY;
+                    particle = Particle.HAPPY_VILLAGER;
                     hexColor = StringColorUtils.HUGS_RELATIVE;
                 }
                 

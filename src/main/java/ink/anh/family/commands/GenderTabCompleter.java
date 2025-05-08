@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import ink.anh.family.GlobalManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +27,9 @@ public class GenderTabCompleter implements TabCompleter {
             if (args[0].equalsIgnoreCase("set")) {
                 completions.add("MALE");
                 completions.add("FEMALE");
+                if (GlobalManager.getInstance().getFamilyConfig().isNonBinary()) {
+                	completions.add("NON_BINARY");
+                }
             } else if (args[0].equalsIgnoreCase("info")) {
                 String inputName = args[1].toLowerCase();
                 completions.addAll(Bukkit.getOnlinePlayers().stream()

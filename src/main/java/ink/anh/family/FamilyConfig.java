@@ -80,9 +80,9 @@ public class FamilyConfig {
         this.heartSymbol = config.getString("heartSymbol", "❤");
         this.heartColor = config.getString("heartColor", "&5");
         
-        this.nonBinary = config.getBoolean("non_binary", false);
-        this.nonBinaryAdopt = config.getBoolean("non_binary_adoption", false);
-        this.nonBinaryMarry = config.getBoolean("non_binary_marriage", false);
+        this.nonBinary = config.getConfigurationSection("gender").getBoolean("non_binary", false);
+        this.nonBinaryAdopt = config.getConfigurationSection("gender").getBoolean("non_binary_adoption", false);
+        this.nonBinaryMarry = config.getConfigurationSection("gender").getBoolean("non_binary_marriage", false);
         
         this.ceremonyRadius = config.getInt("ceremonyRadius", 20);
         this.ceremonyHearingRadius = config.getInt("ceremonyHearingRadius", 100);

@@ -9,7 +9,7 @@ import ink.anh.family.util.StringColorUtils;
 public enum Gender {
     MALE("family_gender_male", "♂", StringColorUtils.GENDER_MALE_COLOR, "§9"),
     FEMALE("family_gender_female", "♀", StringColorUtils.GENDER_FEMALE_COLOR, "§d"),
-    NON_BINARY("family_gender_non_binary", "⚧", StringColorUtils.GENDER_NON_BINARY_COLOR, "§a"),
+    NON_BINARY("family_gender_non-binary", "⚧", StringColorUtils.GENDER_NON_BINARY_COLOR, "§a"),
     UNDECIDED("family_gender_undecided", "?", StringColorUtils.GENDER_UNDECIDED_COLOR, "§7");
     
     private final String key;     // The key representing the gender (used for localization or references)

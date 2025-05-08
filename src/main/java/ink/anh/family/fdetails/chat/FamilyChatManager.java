@@ -194,7 +194,7 @@ public class FamilyChatManager extends AbstractDetailsManager {
                     sendActionBarMessage(target, new MessageForFormatting("family_notify_family_chat", new String[]{player.getName()}), StringColorUtils.PREFIX_CHAT_COLOR);
 
                     Location particleLocation = target.getLocation().add(0, 1.6, 0);
-                    target.spawnParticle(Particle.VILLAGER_HAPPY, particleLocation, 8, 0.4, 0.4, 0.4, 0.08);
+                    target.spawnParticle(Particle.HAPPY_VILLAGER, particleLocation, 8, 0.4, 0.4, 0.4, 0.08);
                     notify = true;
                     break;
                 }
