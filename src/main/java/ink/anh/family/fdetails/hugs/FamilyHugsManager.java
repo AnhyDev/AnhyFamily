@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.damage.DamageSource;
@@ -93,7 +94,11 @@ public class FamilyHugsManager extends AbstractDetailsManager {
 
     public boolean tryHug(Player target) {
 
-        if (player.getLocation().getPitch() > 0 && player.getLocation().getPitch() < 70 && player.isSneaking() && player.getLocation().distance(target.getLocation()) < 2) {
+        if (player.getLocation().getPitch() > 0 && 
+        		player.getLocation().getPitch() < 70 && 
+        		player.isSneaking() && player.getLocation().distance(target.getLocation()) < 2 &&
+        		player.getInventory().getItemInMainHand().getType() == Material.AIR &&
+        		player.getInventory().getItemInOffHand().getType() == Material.AIR) {
 
             if (!cooldownPlayers.contains(player)) {
                 

@@ -32,16 +32,17 @@ public class MarriageManager {
         proposals.clear();
     }
 
-    public synchronized boolean add(Player bride1, Player bride2, Player priest, int surnameChoice, String[] chosenSurname) {
-        // Перевірка, чи один з гравців вже бере участь у шлюбі
-        if (contains(bride1) || contains(bride2)) {
+    public synchronized boolean add(MarryPublic marryPublic) {
+        if (marryPublic == null) {
             return false;
         }
 
-        // Створення нового об'єкту MarryPublic
-        MarryPublic marryPublic = new MarryPublic(bride1, bride2, priest, surnameChoice, chosenSurname);
+        // Перевірка, чи один з гравців вже бере участь у шлюбі
+        if (contains(marryPublic.getProposer()) || contains(marryPublic.getReceiver())) {
+            return false;
+        }
 
-        // Додавання об'єкту MarryPublic до списку
+        // Додавання переданого об'єкту MarryPublic до списку
         return marryList.add(marryPublic);
     }
 
@@ -55,6 +56,9 @@ public class MarriageManager {
     }
 
     public synchronized boolean remove(Object obj) {
+        if (obj instanceof MarryPublic) {
+            return marryList.remove(obj);
+        }
         return marryList.removeIf(marry -> marry.isParticipant(obj));
     }
 

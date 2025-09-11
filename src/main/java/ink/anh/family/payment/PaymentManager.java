@@ -5,9 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import ink.anh.api.messages.Logger;
+import ink.anh.api.utils.LangUtils;
 import ink.anh.family.AnhyFamily;
 import ink.anh.family.GlobalManager;
 import ink.anh.family.fplayer.FamilyService;
+import ink.anh.lingo.AnhyLingo;
+import ink.anh.lingo.item.TranslateItemStack;
 
 import java.math.BigInteger;
 
@@ -15,10 +18,12 @@ public class PaymentManager {
 
     private EconomyHandler economyHandler;
     private Prices prices;
+    private AnhyLingo lingo;
 
     public PaymentManager(AnhyFamily familiPlugin) {
         this.economyHandler = familiPlugin.getEconomyHandler();
         this.prices = GlobalManager.getInstance().getFamilyConfig().getPrices();
+        this.lingo = AnhyLingo.getInstance();
     }
 
     public boolean canAfford(Player player, FamilyService action) {
@@ -64,8 +69,12 @@ public class PaymentManager {
 
     private int getItemCountInInventory(Player player, ItemStack item) {
         int count = 0;
+        TranslateItemStack translator = new TranslateItemStack(lingo);
+        ItemStack itemTranslated = item.clone();
+        translator.modifyItem(LangUtils.getLangs(player), item, true);
+        
         for (ItemStack inventoryItem : player.getInventory().getContents()) {
-            if (inventoryItem != null && inventoryItem.isSimilar(item)) {
+            if (inventoryItem != null && inventoryItem.isSimilar(itemTranslated)) {
                 count += inventoryItem.getAmount();
             }
         }

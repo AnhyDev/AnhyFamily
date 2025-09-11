@@ -2,18 +2,19 @@ package ink.anh.family.fplayer.info;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import ink.anh.family.GlobalManager;
-import ink.anh.family.fplayer.FamilyUtils;
-import ink.anh.family.fplayer.PlayerFamily;
-import ink.anh.family.util.OtherComponentBuilder;
+
+import ink.anh.api.lingo.Translator;
+import ink.anh.api.messages.MessageComponents;
 import ink.anh.api.messages.MessageForFormatting;
 import ink.anh.api.messages.MessageType;
 import ink.anh.api.messages.Messenger;
 import ink.anh.api.messages.Sender;
 import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
-import ink.anh.api.lingo.Translator;
-import ink.anh.api.messages.MessageComponents;
+import ink.anh.family.GlobalManager;
+import ink.anh.family.fplayer.FamilyUtils;
+import ink.anh.family.fplayer.PlayerFamily;
+import ink.anh.family.util.OtherComponentBuilder;
 
 public class FamilyInfo extends Sender {
 
@@ -61,8 +62,8 @@ public class FamilyInfo extends Sender {
         );
 
         Messenger.sendMessage(libraryManager.getPlugin(), player, messageComponents, "MessageComponents");
-
-        return true;
+        
+        return true; 
     }
 
     private String formatAndColorize(String messageKey, String[] replace, String[] langs) {

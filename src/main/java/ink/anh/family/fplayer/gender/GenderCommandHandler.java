@@ -1,5 +1,6 @@
 package ink.anh.family.fplayer.gender;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ink.anh.api.messages.MessageForFormatting;
@@ -101,7 +102,7 @@ public class GenderCommandHandler extends Sender {
 
         try {
             GenderSelectEvent event = new GenderSelectEvent(playerFamily, Gender.getKey(gender), initiator);
-
+            Bukkit.getServer().getPluginManager().callEvent(event);
             if (!event.isCancelled()) {
                 SyncExecutor.runAsync(() -> {
                     if (player != null) {

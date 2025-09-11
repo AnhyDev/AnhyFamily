@@ -105,11 +105,11 @@ public class ActionsPriest extends AbstractMarriageSender {
 		    return false;
 		}
 
-    	MarryPublic marryProposal = new MarryPublic(bride1, bride2, priest, surnameChoice, lastName);
-    	if (!marriageManager.add(bride1, bride2, priest, surnameChoice, lastName)) {
+		final MarryPublic marryProposal = new MarryPublic(bride1, bride2, priest, surnameChoice, lastName);
+        if (!marriageManager.add(marryProposal)) {
             sendMessage(new MessageForFormatting("family_marry_already_started", new String[] {bride1Name, bride2Name}), MessageType.WARNING, true, priest);
             return false;
-    	}
+        }
 
     	sendMessage(new MessageForFormatting("family_marry_start_priest", new String[] {}), MessageType.NORMAL, priest);
     	
