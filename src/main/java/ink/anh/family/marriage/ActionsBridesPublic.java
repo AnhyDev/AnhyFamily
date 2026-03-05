@@ -174,6 +174,9 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
         	}
 
             if (!event.isCancelled()) {
+            	
+            	marriageManager.remove(marryPublic);
+            	
                 SyncExecutor.runAsync(() -> {
                     updateFamilyData(proposerFamily, receiverFamily, marryPublic, one);
 
@@ -182,7 +185,6 @@ public class ActionsBridesPublic extends AbstractMarriageSender {
                     Bukkit.getServer().getScheduler().runTaskLater(familyPlugin, () ->
                     sendMAnnouncement(priestPrefixType, priestName, stringMarry, messageType[1].getColor(true), brides, recipients), 10L);
 
-                    marriageManager.remove(proposerFamily.getRoot());
                 });
             } else {
             	String reason = event.getCancellationReason();

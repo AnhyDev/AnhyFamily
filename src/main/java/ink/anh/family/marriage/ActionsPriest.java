@@ -119,7 +119,7 @@ public class ActionsPriest extends AbstractMarriageSender {
 		    
 		    // Додаємо таймер для видалення пропозиції через хвилину, якщо хоча б один із наречених не дав згоду
             Bukkit.getScheduler().runTaskLater(familyPlugin, () -> {
-                if (!marryProposal.areBothConsentsGiven()) {
+            	if (marriageManager.contains(marryProposal) && !marryProposal.areBothConsentsGiven()) {
                     marriageManager.remove(marryProposal);
                     sendMessage(new MessageForFormatting("family_err_proposal_timeout", new String[]{bride1Name, bride2Name}), MessageType.WARNING, recipients);
                 }

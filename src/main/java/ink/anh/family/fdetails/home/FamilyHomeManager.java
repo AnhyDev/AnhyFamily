@@ -113,6 +113,12 @@ public class FamilyHomeManager extends AbstractDetailsManager {
     }
 
     public void setHome() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             GlobalManager manager = (GlobalManager) libraryManager;
             if (details.getHomeLocation() == null || details.canChangeHome(manager.getFamilyConfig().getHomeChangeTimeoutMinutes())) {
@@ -145,6 +151,12 @@ public class FamilyHomeManager extends AbstractDetailsManager {
     }
 
     public void requestAccept() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             HomeRequest request = homeRequests.get(familyId);
@@ -161,6 +173,12 @@ public class FamilyHomeManager extends AbstractDetailsManager {
     }
     
     public void requestRejected() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             HomeRequest request = homeRequests.get(familyId);
@@ -175,22 +193,60 @@ public class FamilyHomeManager extends AbstractDetailsManager {
     }
 
     public void tpHomeWithConditions() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         handleActionWithConditions();
     }
 
     public void setHomeAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+        if (args.length < 3) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
+            return;
+        }
         setAccess(args[1], args[2], TypeTargetComponent.HOME);
     }
 
     public void setDefaultHomeAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+        if (args.length < 3) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " default <children|parents> <allow|deny>"}), MessageType.WARNING, player);
+            return;
+        }
         setDefaultAccess(args[1], args[2], TypeTargetComponent.HOME);
     }
 
     public void checkAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " check <NickName>"}), MessageType.WARNING, player);
+            return;
+        }
         checkAccess(args[1], TypeTargetComponent.HOME);
     }
 
     public void checkDefaultAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_HOME_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+        if (args.length < 2) {
+            sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " defaultcheck <children|parents>"}), MessageType.WARNING, player);
+            return;
+        }
         checkDefaultAccess(args[1], TypeTargetComponent.HOME);
     }
 

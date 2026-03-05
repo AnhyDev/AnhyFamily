@@ -97,6 +97,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
     
     public void setChest() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         Block targetBlock = getTargetBlock(player, 5);
 
         if (targetBlock == null || !isAllowedChestBlock(targetBlock)) {
@@ -146,6 +152,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
 
     public void requestAccept() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             ChestRequest request = chestRequests.get(familyId);
@@ -175,6 +187,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
     
     public void requestRejected() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         executeWithFamilyDetails(FamilyDetailsGet.getRootFamilyDetails(player), details -> {
             UUID familyId = details.getFamilyId();
             ChestRequest request = chestRequests.get(familyId);
@@ -189,6 +207,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
 
     public void openChestWithConditions() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         handleActionWithConditions();
     }
 
@@ -249,6 +273,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
 
             PlayerFamily playerFamily = FamilyUtils.getFamily(player);
             if (details.hasAccess(playerFamily, TypeTargetComponent.CHEST)) { 
+            	
+            	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+                    sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+                    return;
+                }
+            	
             	if (!player.hasPermission(Permissions.FAMILY_CHEST_CLICK) && !GlobalManager.getInstance().getFamilyConfig().isChestClick()) {
                     sendMessage(new MessageForFormatting("family_err_chest_click_disabled", new String[]{}), MessageType.WARNING, player);
             		return;
@@ -293,6 +323,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
 
     public void setChestAccess() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
             return;
@@ -301,6 +337,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
 
     public void setChestAccessDefault() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " default <children|parents> <allow|deny>"}), MessageType.WARNING, player);
             return;
@@ -309,6 +351,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
 
     public void checkAccess() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         if (args.length < 2) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " check <NickName>"}), MessageType.WARNING, player);
             return;
@@ -317,6 +365,12 @@ public class FamilyChestManager extends AbstractDetailsManager {
     }
 
     public void checkDefaultAccess() {
+    	
+    	if (!player.hasPermission(Permissions.FAMILY_CHEST_CREATE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
+    	
         if (args.length < 2) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/" + command + " defaultcheck <children|parents>"}), MessageType.WARNING, player);
             return;

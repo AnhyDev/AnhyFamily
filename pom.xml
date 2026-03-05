@@ -7,7 +7,7 @@
 
   <groupId>ink.anh</groupId>
   <artifactId>AnhyFamily</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <name>AnhyFamily</name>
 
     <build>
@@ -109,14 +109,14 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.21.7-R0.1-SNAPSHOT</version>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.7-R0.1-SNAPSHOT</version>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         
@@ -125,6 +125,12 @@
 	    	<artifactId>AnhyLingo</artifactId>
 	    	<version>v0.5.0</version>
             <scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+   			 <groupId>com.github.AnhyDev</groupId>
+   		 	<artifactId>AnhyLibAPI</artifactId>
+    		<version>v1.7.1</version>
 		</dependency>
 		
 		<dependency>

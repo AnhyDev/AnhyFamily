@@ -16,6 +16,7 @@ import ink.anh.api.utils.LangUtils;
 import ink.anh.api.utils.StringUtils;
 import ink.anh.api.utils.SyncExecutor;
 import ink.anh.family.AnhyFamily;
+import ink.anh.family.Permissions;
 import ink.anh.family.fdetails.AccessControl;
 import ink.anh.family.fdetails.FamilyDetails;
 import ink.anh.family.fdetails.AbstractDetailsManager;
@@ -77,6 +78,10 @@ public class FamilyChatManager extends AbstractDetailsManager {
     }
 
     public void sendMessageWithConditions() {
+        if (!player.hasPermission(Permissions.FAMILY_CHAT_ACCESS)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
         handleActionWithConditions();
     }
 
@@ -94,6 +99,10 @@ public class FamilyChatManager extends AbstractDetailsManager {
     }
 
     public void setChatAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_CHAT_MANAGE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchat access <NickName> <allow|deny|default>"}), MessageType.WARNING, player);
             return;
@@ -102,6 +111,10 @@ public class FamilyChatManager extends AbstractDetailsManager {
     }
 
     public void setDefaultChatAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_CHAT_MANAGE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
         if (args.length < 3) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchat default <children|parents> <allow|deny>"}), MessageType.WARNING, player);
             return;
@@ -110,6 +123,10 @@ public class FamilyChatManager extends AbstractDetailsManager {
     }
 
     public void checkAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_CHAT_MANAGE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
         if (args.length < 2) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchat check <NickName>"}), MessageType.WARNING, player);
             return;
@@ -118,6 +135,10 @@ public class FamilyChatManager extends AbstractDetailsManager {
     }
 
     public void checkDefaultAccess() {
+        if (!player.hasPermission(Permissions.FAMILY_CHAT_MANAGE)) {
+            sendMessage(new MessageForFormatting("family_err_not_have_permission", new String[]{}), MessageType.WARNING, player);
+            return;
+        }
         if (args.length < 2) {
             sendMessage(new MessageForFormatting("family_err_command_format", new String[]{"/fchat defaultcheck <children|parents>"}), MessageType.WARNING, player);
             return;
