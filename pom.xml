@@ -131,6 +131,7 @@
    			 <groupId>com.github.AnhyDev</groupId>
    		 	<artifactId>AnhyLibAPI</artifactId>
     		<version>v1.7.1</version>
+    		<scope>provided</scope>
 		</dependency>
 		
 		<dependency>
