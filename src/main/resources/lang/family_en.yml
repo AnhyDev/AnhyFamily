@@ -75,6 +75,7 @@ family_adopt_waiting_for_second_parent: "Request for %s sent, awaiting second pa
 family_adopt_parent_offer_received: "Player %s wants to become one of your parents. If you already have 2 offers, use the command /adoption accept - to agree or /adoption decline - to refuse"
 family_adopt_waiting_for_child_decision: "Request for %s sent, awaiting child's decision"
 family_adopt_request_already_sent: "You have already sent a request, wait for the decision"
+family_adopt_error_spouse_conflict: "You cannot adopt your spouse: %s"
 family_adopt_adoption_applications: "Adoption applications: "
 family_adopt_no_applications_adoption: "No adoption applications"
 family_err_adoption_failed: "Player %s cannot be a parent for %s"

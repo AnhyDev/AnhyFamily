@@ -68,6 +68,21 @@ public class Adopt extends Sender {
             sendMessage(new MessageForFormatting("family_player_not_found_full", new String[]{adoptedName}), MessageType.WARNING, sender);
             return false;
         }
+        
+        PlayerFamily adopterFamily = FamilyUtils.getFamily(player);
+        if (adopterFamily == null) {
+            sendMessage(new MessageForFormatting("family_error_generic", new String[]{}), MessageType.WARNING, sender);
+            return false;
+        }
+
+        boolean isSpouseRelation =
+                (adopterFamily.getSpouse() != null && adopterFamily.getSpouse().equals(family1.getRoot())) ||
+                (family1.getSpouse() != null && family1.getSpouse().equals(adopterFamily.getRoot()));
+
+        if (isSpouseRelation) {
+            sendMessage(new MessageForFormatting("family_adopt_error_spouse_conflict", new String[]{adoptedName}), MessageType.WARNING, sender);
+            return false;
+        }
 
         if (family1.getFather() != null || family1.getMother() != null) {
             sendMessage(new MessageForFormatting("family_adopt_error_already_has_parents", new String[]{adoptedName}), MessageType.WARNING, sender);

@@ -76,6 +76,7 @@ family_adopt_parent_offer_received: "Il giocatore %s vuole essere uno dei tuoi g
 family_adopt_waiting_for_child_decision: "Richiesta inviata a %s, in attesa della decisione del bambino"
 family_adopt_request_already_sent: "Hai già inviato una richiesta, attendi la decisione"
 family_adopt_adoption_applications: "Richieste di adozione: "
+family_adopt_error_spouse_conflict: "Non puoi adottare il tuo coniuge: %s"
 family_adopt_no_applications_adoption: "Nessuna richiesta di adozione"
 family_err_adoption_failed: "Il giocatore %s non può essere genitore di %s"
 family_cancel_adoption_error_no_request: "Errore nell'annullamento dell'adozione, nessuna richiesta"

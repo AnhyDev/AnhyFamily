@@ -75,6 +75,7 @@ family_adopt_waiting_for_second_parent: "Solicitud enviada a %s, esperando al se
 family_adopt_parent_offer_received: "El jugador %s quiere ser uno de tus padres. Si ya tienes 2 ofertas, usa el comando /adoption accept para aceptar o /adoption decline para rechazar"
 family_adopt_waiting_for_child_decision: "Solicitud enviada a %s, esperando la decisión del niño"
 family_adopt_request_already_sent: "Ya has enviado una solicitud, espera la decisión"
+family_adopt_error_spouse_conflict: "No puedes adoptar a tu cónyuge: %s"
 family_adopt_adoption_applications: "Solicitudes de adopción: "
 family_adopt_no_applications_adoption: "No hay solicitudes de adopción"
 family_err_adoption_failed: "El jugador %s no puede ser padre de %s"

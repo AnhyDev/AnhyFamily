@@ -86,7 +86,15 @@ public class PriestNameChanger extends Sender {
                     return false;
                 }
 
-                messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_name_change_proposal", "fam sugges", "accept", "refuse", player);
+                messageComponents = FDetailsComponentBuilder.acceptMessageComponent(
+                        "family_name_change_proposal",
+                        "fam sugges",
+                        "accept",
+                        "refuse",
+                        player,
+                        new String[]{sender.getName(), args[3]}
+                );
+                
                 sendMessageComponent(player, messageComponents);
                 return true;
             case "surname":
@@ -94,8 +102,18 @@ public class PriestNameChanger extends Sender {
                     sendMessage(new MessageForFormatting("family_surname_build_failed", new String[]{}), MessageType.WARNING, sender);
                     return false;
                 }
+                
+                String newSurname = String.join(" ", java.util.Arrays.copyOfRange(args, 3, args.length));
 
-                messageComponents = FDetailsComponentBuilder.acceptMessageComponent("family_lastname_change_proposal", "fam sugges", "accept", "refuse", player);
+                messageComponents = FDetailsComponentBuilder.acceptMessageComponent(
+                        "family_lastname_change_proposal",
+                        "fam sugges",
+                        "accept",
+                        "refuse",
+                        player,
+                        new String[]{sender.getName(), newSurname}
+                );
+                
                 sendMessageComponent(player, messageComponents);
                 return true;
             default:

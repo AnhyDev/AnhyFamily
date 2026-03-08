@@ -75,6 +75,7 @@ family_adopt_waiting_for_second_parent: "Запит для %s надіслано
 family_adopt_parent_offer_received: "Гравець %s хоче стати одним з ваших батьків. Якщо у вас вже є 2 пропозиції, введіть команду /adoption accept - для згоди або /adoption decline - для відмови"
 family_adopt_waiting_for_child_decision: "Запит для %s надіслано, чекаємо на рішення дитини"
 family_adopt_request_already_sent: "Ви вже надіслали запит, чекайте на рішення"
+family_adopt_error_spouse_conflict: "Неможливо усиновити/удочерити свого чоловіка/дружину: %s"
 family_adopt_adoption_applications: "Заявки на усиновлення: "
 family_adopt_no_applications_adoption: "Заявки на усиновлення відсутні"
 family_err_adoption_failed: "Гравець %s не може бути батьком для %s"

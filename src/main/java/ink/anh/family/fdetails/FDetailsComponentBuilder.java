@@ -172,6 +172,17 @@ public class FDetailsComponentBuilder {
                 recipient
         );
     }
+    
+    public static MessageComponents acceptMessageComponent(String messageBase, String baseCommand, String commandAccept,
+            String commandRefuse, Player recipient, String[] placeholders) {
+    	
+    		String[] langs = getLangs(recipient);
+    		MessageBuilder prefix = prefix(baseCommand, langs);
+    		
+    		return OtherComponentBuilder.acceptMessageComponent(
+    				prefix, messageBase, baseCommand, commandAccept, commandRefuse, recipient, placeholders
+		);
+    }
 
     private static String[] getLangs(Player recipient) {
     	return recipient != null ? LangUtils.getPlayerLanguage(recipient) : new String[]{manager.getDefaultLang()};

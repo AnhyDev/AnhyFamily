@@ -37,23 +37,23 @@ commands:
         usage: "[AnhyFamily] The command '/fhugs (/familyhugs, /hugs)' execution error, please check the arguments' correctness."
     fprefix:
         aliases: [familyprefix, prefix]
-	    usage: "[AnhyFamily] The command '/fprefix (/familyprefix, /prefix)' execution error, please check the arguments' correctness."
+        usage: "[AnhyFamily] The command '/fprefix (/familyprefix, /prefix)' execution error, please check the arguments' correctness."
 permissions:
-	family.home.create:
-	      description: Allows creating and managing family home and its ACL.
-		  default: op
-	family.home.access:
-		   description: Allows teleporting to family home.
-		   default: true
-	family.chest.create:
-		   description: Allows creating and managing family chest and its ACL.
-		   default: op
-	family.chest.access:
-		   description: Allows opening family chest.
-		   default: true
-	family.chat.manage:
-		   description: Allows managing family chat ACL.
-		   default: op
-	family.chat.access:
-		   description: Allows using family chat.
-		   default: true
+    family.home.create:
+          description: Allows creating and managing family home and its ACL.
+          default: op
+    family.home.access:
+           description: Allows teleporting to family home.
+           default: true
+    family.chest.create:
+           description: Allows creating and managing family chest and its ACL.
+           default: op
+    family.chest.access:
+           description: Allows opening family chest.
+           default: true
+    family.chat.manage:
+           description: Allows managing family chat ACL.
+           default: op
+    family.chat.access:
+           description: Allows using family chat.
+           default: true
