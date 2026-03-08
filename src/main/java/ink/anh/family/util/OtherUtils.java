@@ -71,6 +71,11 @@ public class OtherUtils {
 
 	public static void sendActionBarMessage(Player player, MessageForFormatting textForFormatting, String hexColor) {
 		GlobalManager libraryManager = GlobalManager.getInstance();
+		
+		if (!libraryManager.getFamilyConfig().isActionbarMessages()) {
+	        return;
+	    }
+		
     	String[] langs = LangUtils.getPlayerLanguage(player);
     	
     	String message = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, textForFormatting.getTemplate(), langs), textForFormatting.getReplacements());

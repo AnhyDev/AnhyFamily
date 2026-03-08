@@ -11,6 +11,9 @@ language: en
 # Name of the plugin for display to users in chat:
 plugin_name: AnhyFamily
 
+# Display messages in actionbar.
+actionbar-messages: true
+
 # Database settings:
 database:
    # Choice of database type: 'SQLite' or 'MySQL'

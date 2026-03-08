@@ -297,6 +297,11 @@ public abstract class AbstractDetailsManager extends Sender {
     protected abstract String getDefaultAccessCheckMessageKey(TypeTargetComponent component);
 
     protected void sendActionBarMessage(Player player, MessageForFormatting textForFormatting, String hexColor) {
+    	
+    	if (!GlobalManager.getInstance().getFamilyConfig().isActionbarMessages()) {
+	        return;
+	    }
+    	
     	String[] langs = LangUtils.getPlayerLanguage(player);
     	
     	String message = StringUtils.formatString(Translator.translateKyeWorld(libraryManager, textForFormatting.getTemplate(), langs), textForFormatting.getReplacements());

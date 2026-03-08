@@ -29,6 +29,7 @@ public class FamilyConfig {
     private boolean nonBinary;
     private boolean nonBinaryAdopt;
     private boolean nonBinaryMarry;
+    private boolean actionbarMessages;
     
     private int ceremonyRadius;
     private int ceremonyHearingRadius;
@@ -83,6 +84,7 @@ public class FamilyConfig {
         this.nonBinary = config.getConfigurationSection("gender").getBoolean("non_binary", false);
         this.nonBinaryAdopt = config.getConfigurationSection("gender").getBoolean("non_binary_adoption", false);
         this.nonBinaryMarry = config.getConfigurationSection("gender").getBoolean("non_binary_marriage", false);
+        this.actionbarMessages = config.getBoolean("actionbar-messages", true);
         
         this.ceremonyRadius = config.getInt("ceremonyRadius", 20);
         this.ceremonyHearingRadius = config.getInt("ceremonyHearingRadius", 100);
@@ -150,6 +152,10 @@ public class FamilyConfig {
 
     public boolean isNonBinaryMarry() {
         return nonBinaryMarry;
+    }
+    
+    public boolean isActionbarMessages() {
+    	return actionbarMessages;
     }
 
     public int getCeremonyRadius() {
