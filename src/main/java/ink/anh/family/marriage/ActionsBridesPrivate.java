@@ -169,6 +169,13 @@ public class ActionsBridesPrivate extends AbstractMarriageSender {
         	}
         	
             if (!event.isCancelled()) {
+            	
+            	if (FamilyUtils.areFamiliesRelated(proposerFamily, receiverFamily)) {
+                    sendMAnnouncement(priestPrefixType, priestName, "family_marry_failed_relatives", MessageType.WARNING.getColor(true),
+                            new String[]{proposerFamily.getRootrNickName(), receiverFamily.getRootrNickName()}, players);
+                    return;
+                }
+            	
                 SyncExecutor.runAsync(() -> {
                 	
                 	updateFamilyData(proposerFamily, receiverFamily, marryBase);

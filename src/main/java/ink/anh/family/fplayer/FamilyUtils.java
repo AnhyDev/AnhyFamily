@@ -145,8 +145,19 @@ public class FamilyUtils {
 		boolean isRelatives = hasRelatives(treePlayer1, uuidPlayer2);
 		boolean isSpouses = spousePlayer2 != null ? hasRelatives(treePlayer1, spousePlayer2) : false;
 
-        return isRelatives && isSpouses;
+        return isRelatives || isSpouses;
     }
+	
+	public static boolean areFamiliesRelated(PlayerFamily family1, PlayerFamily family2) {
+		if (family1 == null || family2 == null) {
+			return true;
+		}
+
+		TreeStringGenerator treeFamily1 = new TreeStringGenerator(family1.getRoot());
+		TreeStringGenerator treeFamily2 = new TreeStringGenerator(family2.getRoot());
+
+		return hasRelatives(treeFamily1, family2) || hasRelatives(treeFamily2, family1);
+	}
 
 	public static String getPriestTitle(Player player) {
 		if (player == null) {

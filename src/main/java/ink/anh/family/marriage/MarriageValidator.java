@@ -149,6 +149,10 @@ public class MarriageValidator extends Sender {
         if (!nonTraditionalAllowed && !FamilyUtils.areGendersCompatibleForTraditional(family1, family2)) {
             return new String[] {"family_marry_failed_traditional", ""};
         }
+        
+        if (FamilyUtils.areFamiliesRelated(family1, family2)) {
+            return new String[] {"family_marry_failed_relatives", family1.getRootrNickName(), family2.getRootrNickName()};
+        }
 
         String[] result = null;
 

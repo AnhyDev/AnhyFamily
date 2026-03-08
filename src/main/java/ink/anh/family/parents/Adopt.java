@@ -74,13 +74,9 @@ public class Adopt extends Sender {
             sendMessage(new MessageForFormatting("family_error_generic", new String[]{}), MessageType.WARNING, sender);
             return false;
         }
-
-        boolean isSpouseRelation =
-                (adopterFamily.getSpouse() != null && adopterFamily.getSpouse().equals(family1.getRoot())) ||
-                (family1.getSpouse() != null && family1.getSpouse().equals(adopterFamily.getRoot()));
-
-        if (isSpouseRelation) {
-            sendMessage(new MessageForFormatting("family_adopt_error_spouse_conflict", new String[]{adoptedName}), MessageType.WARNING, sender);
+        
+        if (FamilyUtils.areFamiliesRelated(adopterFamily, family1)) {
+            sendMessage(new MessageForFormatting("family_adopt_error_relatives", new String[]{adopterFamily.getRootrNickName(), family1.getRootrNickName()}), MessageType.WARNING, sender);
             return false;
         }
 
